@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Dashboard</title>
+    <!-- Paths are now direct -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="control-bar">
+            <div class="control-group view-toggle">
+                <label>View By:</label>
+                <button class="btn active" id="view-by-school-btn">School</button>
+                <button class="btn" id="view-by-category-btn">Category</button>
+            </div>
+            <div class="control-group" id="school-selector-group">
+                <label for="school-select">School:</label>
+                <div class="pill-select-wrapper">
+                    <select id="school-select"></select>
+                </div>
+            </div>
+            <div class="control-group" id="category-selector-group" style="display: none;">
+                <label for="category-select">Category:</label>
+                <div class="pill-select-wrapper">
+                    <select id="category-select">
+                        <option value="basic">Basic Info</option>
+                        <option value="enrollment">Enrollment</option>
+                        <option value="building">Building Systems</option>
+                        <option value="playground">Playground</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="accessibility">Accessibility</option>
+                        <option value="childcare">Childcare</option>
+                        <option value="projects">Capital Projects</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <main class="card-grid" id="card-grid"></main>
+
+        <footer class="dashboard-footer" id="footer-timestamp">
+            <!-- Timestamp will be loaded by JS -->
+        </footer>
+    </div>
+    
+    <!-- JS file is loaded at the end -->
+    <script src="app.js"></script>
+</body>
+</html>
