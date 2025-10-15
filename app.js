@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const categoryListSection = document.getElementById('category-list-section');
     const sidebar = document.querySelector('.sidebar');
     const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
     
     let schoolData = {};
     let chartInstances = {};
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Main Initialization ---
     async function initializeApp() {
         try {
+            Chart.register(ChartDataLabels); // Register the datalabels plugin globally
             const response = await fetch('data/schools.json'); 
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             schoolData = await response.json();
@@ -39,8 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function populateSidebarControls() {
         Object.keys(schoolData).forEach((schoolId, index) => {
             const school = schoolData[schoolId];
-            const displayName = `${school.schoolName} ${school.schoolType || ''}`.trim();
-            schoolList.innerHTML += `<label><input type="radio" name="school-filter" value="${schoolId}" ${index === 0 ? 'checked' : ''}><span>${displayName}</span></label>`;
+            schoolList.innerHTML += `<label><input type="radio" name="school-filter" value="${schoolId}" ${index === 0 ? 'checked' : ''}><span>${school.schoolName}</span></label>`;
         });
         Object.entries(categories).forEach(([key, name], index) => {
             categoryList.innerHTML += `<label><input type="radio" name="category-filter" value="${key}" ${index === 0 ? 'checked' : ''}><span>${name}</span></label>`;
@@ -55,12 +56,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createBasicInfoCard(school) {
-        const displayName = `${school.schoolName} ${school.schoolType || ''}`.trim();
         return `
             <div class="data-card wide-card">
                 <img src="${school.headerImage}" alt="${school.schoolName}" class="school-hero-image">
                 <div class="card-body">
-                    <h2 class="school-name-title"><span>${displayName}</span></h2>
+                    <h2 class="school-name-title"><span>${school.schoolName}</span> ${school.schoolType || ''}</h2>
                     <div class="school-info-columns">
                         <div class="contact-info">
                             <h3 class="section-title">Details</h3>
@@ -110,11 +110,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="utilization-container">
                         <div class="utilization-percentage">${utilization}%</div>
-                        <div class="utilization-progress">
-                            <div class="utilization-label">Utilization</div>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar-fill" style="width: ${Math.min(utilization, 100)}%;"></div>
-                            </div>
+                        <div class="utilization-label">Utilization</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" style="width: ${Math.min(utilization, 100)}%;"></div>
                         </div>
                     </div>
                     <div class="enrolment-toggle">
@@ -131,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createSimpleCard(school, viewMode, categoryKey, icon, title) {
-        const schoolNameForHeader = viewMode === 'category' ? `${school.schoolName} ${school.schoolType || ''}`.trim() : null;
+        const schoolNameForHeader = viewMode === 'category' ? school.schoolName : null;
         const data = school[categoryKey];
         const listItems = Array.isArray(data) 
             ? data.map(item => `<li>${item}</li>`).join('')
@@ -140,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createProjectsCard(school, viewMode) {
-        const schoolNameForHeader = viewMode === 'category' ? `${school.schoolName} ${school.schoolType || ''}`.trim() : null;
+        const schoolNameForHeader = viewMode === 'category' ? school.schoolName : null;
         const renderSection = (category) => {
             const sections = [];
             if (category.requested && category.requested.length > 0) sections.push(`<div class="project-status-label">Requested:</div><ul class="project-list">${category.requested.map(item => `<li>${item}</li>`).join('')}</ul>`);
@@ -167,19 +165,30 @@ document.addEventListener('DOMContentLoaded', function() {
         chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
             type: 'line',
             data: { labels: school.enrolment.history.labels, datasets: [{ label: 'Enrolment', data: school.enrolment.history.values, borderColor: 'var(--primary-blue)', backgroundColor: 'rgba(58, 93, 143, 0.1)', fill: true, tension: 0.3 }] },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: false } } }
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true } },
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        anchor: 'end', align: 'top',
+                        formatter: (value) => value,
+                        font: { weight: 'bold' },
+                        color: '#444'
+                    }
+                }
+            }
         });
     }
 
     function renderProjectionChart(school) {
         const chartContainer = document.getElementById(`proj-chart-${school.id}`);
         if (!chartContainer) return;
-        const { capacity, projection } = school.enrolment;
+        const { projection } = school.enrolment;
         const allValues = Object.values(projection).map(v => parseInt(v.split('-')[1] || v));
-        const maxValue = Math.max(capacity, ...allValues) * 1.1;
-        const capacityPosition = (capacity / maxValue) * 100;
+        const maxValue = Math.max(...allValues) * 1.1;
 
-        let rowsHTML = Object.entries(projection).map(([year, value]) => {
+        chartContainer.innerHTML = Object.entries(projection).map(([year, value]) => {
             const barValue = parseInt(value.split('-')[0]);
             const barWidth = (barValue / maxValue) * 100;
             return `<div class="projection-row">
@@ -188,15 +197,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="projection-value">${value}</div>
                     </div>`;
         }).join('');
-        
-        chartContainer.innerHTML = `<div style="position: relative;">
-                                        <div class="capacity-line-container">
-                                            <div class="capacity-line" style="left: calc(${capacityPosition}% + 80px);">
-                                                <div class="capacity-label">Capacity ${capacity}</div>
-                                            </div>
-                                        </div>
-                                        ${rowsHTML}
-                                    </div>`;
     }
 
     // --- Main View Logic ---
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (viewMode === 'school') {
             const selectedSchoolId = document.querySelector('input[name="school-filter"]:checked').value;
             const school = schoolData[selectedSchoolId];
-            mainTitle.textContent = `${school.schoolName} ${school.schoolType || ''}`.trim();
+            mainTitle.textContent = school.schoolName;
             cardGrid.innerHTML = [ createBasicInfoCard(school), createEnrolmentCard(school, viewMode), createSimpleCard(school, viewMode, 'building', 'cogs', 'Building Systems'), createSimpleCard(school, viewMode, 'playground', 'basketball-ball', 'Playground'), createSimpleCard(school, viewMode, 'transportation', 'bus', 'Transportation'), createSimpleCard(school, viewMode, 'accessibility', 'universal-access', 'Accessibility'), createSimpleCard(school, viewMode, 'childcare', 'child', 'Childcare'), createProjectsCard(school, viewMode) ].join('');
         } else {
             const selectedCategoryId = document.querySelector('input[name="category-filter"]:checked').value;
@@ -243,7 +243,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         schoolList.addEventListener('change', updateView);
         categoryList.addEventListener('change', updateView);
-        sidebarToggleBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+        
+        function closeSidebar() { sidebar.classList.remove('open'); }
+        sidebarToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle('open');
+        });
+        sidebarOverlay.addEventListener('click', closeSidebar);
     }
 
     initializeApp();
