@@ -4,17 +4,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const cardGrid = document.getElementById('card-grid');
     const mainTitle = document.getElementById('main-title');
     const footerTimestamp = document.getElementById('footer-timestamp');
-    const viewToggle = document.getElementById('view-toggle');
-    const schoolList = document.getElementById('school-list');
-    const categoryList = document.getElementById('category-list');
-    const schoolListSection = document.getElementById('school-list-section');
-    const categoryListSection = document.getElementById('category-list-section');
     const sidebar = document.querySelector('.sidebar');
     const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
     const sidebarOverlay = document.querySelector('.sidebar-overlay');
-    
+    const navViewSelector = document.querySelector('.nav-view-selector');
+    const schoolListContainer = document.getElementById('school-list-container');
+    const categoryListContainer = document.getElementById('category-list-container');
+
     let schoolData = {};
     let chartInstances = {};
+    let currentViewMode = 'school';
+    let selectedSchoolId = '';
+    let selectedCategoryId = '';
+
     const categories = {
         "basic": "Basic Info", "enrolment": "Enrolment", "building": "Building Systems",
         "playground": "Playground", "transportation": "Transportation",
@@ -28,6 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const response = await fetch('data/schools.json'); 
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             schoolData = await response.json();
+            
+            selectedSchoolId = Object.keys(schoolData)[0];
+            selectedCategoryId = Object.keys(categories)[0];
+
             populateSidebarControls();
             setupEventListeners();
             updateView();
@@ -39,15 +45,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- UI Population ---
     function populateSidebarControls() {
-        Object.keys(schoolData).forEach((schoolId, index) => {
-            schoolList.innerHTML += `<label><input type="radio" name="school-filter" value="${schoolId}" ${index === 0 ? 'checked' : ''}><span>${schoolData[schoolId].schoolName}</span></label>`;
-        });
-        Object.entries(categories).forEach(([key, name], index) => {
-            categoryList.innerHTML += `<label><input type="radio" name="category-filter" value="${key}" ${index === 0 ? 'checked' : ''}><span>${name}</span></label>`;
-        });
+        schoolListContainer.innerHTML = Object.keys(schoolData).map(schoolId => 
+            `<a href="#" class="nav-list-item" data-type="school" data-id="${schoolId}">${schoolData[schoolId].schoolName}</a>`
+        ).join('');
+
+        categoryListContainer.innerHTML = Object.entries(categories).map(([key, name]) => 
+            `<a href="#" class="nav-list-item" data-type="category" data-id="${key}">${name}</a>`
+        ).join('');
     }
 
-    // --- Card Creation Functions ---
+    // --- Card Creation Functions (These are unchanged) ---
     function createCardHeader(icon, title, schoolName = null, isWarning = false) {
         const schoolNameHTML = schoolName ? `<span class="category-card-school-name">${schoolName}</span>` : '';
         const warningIconHTML = isWarning ? `<i class="fas fa-exclamation-triangle warning-icon"></i>` : '';
@@ -142,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return `<div class="data-card wide-card">${createCardHeader('hard-hat', 'Capital Projects', schoolNameForHeader)}<div class="card-body"><div class="projects-container"><div class="project-category"><h3>Provincially Funded</h3>${renderSection(school.projects.provincial)}</div><div class="project-category"><h3>Locally Funded</h3>${renderSection(school.projects.local)}</div></div></div></div>`;
     }
 
-    // --- Chart Rendering ---
+    // --- Chart Rendering (Unchanged) ---
     function renderHistoryChart(school) {
         const canvasId = `hist-chart-${school.id}`;
         if (!document.getElementById(canvasId)) return;
@@ -172,27 +179,32 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.values(chartInstances).forEach(chart => chart.destroy());
         chartInstances = {};
         cardGrid.innerHTML = ''; 
-        const viewMode = document.querySelector('input[name="view-mode"]:checked').value;
 
-        if (viewMode === 'school') {
-            const selectedSchoolId = document.querySelector('input[name="school-filter"]:checked').value;
+        // Update active states in sidebar
+        document.querySelectorAll('.nav-view-link').forEach(link => link.classList.toggle('active', link.dataset.view === currentViewMode));
+        document.querySelectorAll('.nav-list-container').forEach(c => c.classList.toggle('active', c.id.startsWith(currentViewMode)));
+        document.querySelectorAll('.nav-list-item').forEach(item => {
+            const id = (item.dataset.type === 'school') ? selectedSchoolId : selectedCategoryId;
+            item.classList.toggle('active', item.dataset.id === id);
+        });
+
+        if (currentViewMode === 'school') {
             const school = schoolData[selectedSchoolId];
             mainTitle.textContent = school.schoolName;
-            cardGrid.innerHTML = [ createBasicInfoCard(school), createEnrolmentCard(school, viewMode), createSimpleCard(school, viewMode, 'building', 'cogs', 'Building Systems'), createSimpleCard(school, viewMode, 'playground', 'basketball-ball', 'Playground'), createSimpleCard(school, viewMode, 'transportation', 'bus', 'Transportation'), createSimpleCard(school, viewMode, 'accessibility', 'universal-access', 'Accessibility'), createSimpleCard(school, viewMode, 'childcare', 'child', 'Childcare'), createProjectsCard(school, viewMode) ].join('');
+            cardGrid.innerHTML = [ createBasicInfoCard(school), createEnrolmentCard(school, 'school'), createSimpleCard(school, 'school', 'building', 'cogs', 'Building Systems'), createSimpleCard(school, 'school', 'playground', 'basketball-ball', 'Playground'), createSimpleCard(school, 'school', 'transportation', 'bus', 'Transportation'), createSimpleCard(school, 'school', 'accessibility', 'universal-access', 'Accessibility'), createSimpleCard(school, 'school', 'childcare', 'child', 'Childcare'), createProjectsCard(school, 'school') ].join('');
         } else {
-            const selectedCategoryId = document.querySelector('input[name="category-filter"]:checked').value;
             mainTitle.textContent = categories[selectedCategoryId];
             Object.values(schoolData).forEach(school => {
                 let cardHTML = '';
                 switch(selectedCategoryId) {
                     case 'basic': cardHTML = createBasicInfoCard(school); break;
-                    case 'enrolment': cardHTML = createEnrolmentCard(school, viewMode); break;
-                    case 'building': cardHTML = createSimpleCard(school, viewMode, 'building', 'cogs', 'Building Systems'); break;
-                    case 'playground': cardHTML = createSimpleCard(school, viewMode, 'playground', 'basketball-ball', 'Playground'); break;
-                    case 'transportation': cardHTML = createSimpleCard(school, viewMode, 'transportation', 'bus', 'Transportation'); break;
-                    case 'accessibility': cardHTML = createSimpleCard(school, viewMode, 'accessibility', 'universal-access', 'Accessibility'); break;
-                    case 'childcare': cardHTML = createSimpleCard(school, viewMode, 'childcare', 'child', 'Childcare'); break;
-                    case 'projects': cardHTML = createProjectsCard(school, viewMode); break;
+                    case 'enrolment': cardHTML = createEnrolmentCard(school, 'category'); break;
+                    case 'building': cardHTML = createSimpleCard(school, 'category', 'building', 'cogs', 'Building Systems'); break;
+                    case 'playground': cardHTML = createSimpleCard(school, 'category', 'playground', 'basketball-ball', 'Playground'); break;
+                    case 'transportation': cardHTML = createSimpleCard(school, 'category', 'transportation', 'bus', 'Transportation'); break;
+                    case 'accessibility': cardHTML = createSimpleCard(school, 'category', 'accessibility', 'universal-access', 'Accessibility'); break;
+                    case 'childcare': cardHTML = createSimpleCard(school, 'category', 'childcare', 'child', 'Childcare'); break;
+                    case 'projects': cardHTML = createProjectsCard(school, 'category'); break;
                 }
                 cardGrid.innerHTML += cardHTML;
             });
@@ -204,14 +216,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Event Listeners ---
     function setupEventListeners() {
-        viewToggle.addEventListener('change', () => {
-            const viewMode = document.querySelector('input[name="view-mode"]:checked').value;
-            schoolListSection.style.display = viewMode === 'school' ? 'block' : 'none';
-            categoryListSection.style.display = viewMode === 'category' ? 'block' : 'none';
-            updateView();
+        navViewSelector.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = e.target.closest('.nav-view-link');
+            if (target && target.dataset.view !== currentViewMode) {
+                currentViewMode = target.dataset.view;
+                updateView();
+            }
         });
-        schoolList.addEventListener('change', updateView);
-        categoryList.addEventListener('change', updateView);
+
+        schoolListContainer.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = e.target.closest('.nav-list-item');
+            if (target) {
+                selectedSchoolId = target.dataset.id;
+                updateView();
+            }
+        });
+
+        categoryListContainer.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = e.target.closest('.nav-list-item');
+            if (target) {
+                selectedCategoryId = target.dataset.id;
+                updateView();
+            }
+        });
         
         function toggleSidebar() {
             const isOpen = sidebar.classList.toggle('open');
