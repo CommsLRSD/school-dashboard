@@ -1,131 +1,256 @@
-/* --- Root Variables & Global Styles --- */
-:root {
-    --bg-color: #f4f7fa; --card-bg: #ffffff; --sidebar-bg: #ffffff;
-    --primary-blue: #3a5d8f; --accent-red: #d9534f; --text-color: #333;
-    --text-light: #6c757d; --border-color: #e9ecef; --shadow-color: rgba(0, 0, 0, 0.05);
-    --font-title: 'Montserrat', sans-serif; --font-body: 'Poppins', sans-serif;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: var(--font-body); background-color: var(--bg-color); color: var(--text-color); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // --- Global Variables ---
+    const cardGrid = document.getElementById('card-grid');
+    const mainTitle = document.getElementById('main-title');
+    const footerTimestamp = document.getElementById('footer-timestamp');
+    const viewToggle = document.getElementById('view-toggle');
+    const schoolList = document.getElementById('school-list');
+    const categoryList = document.getElementById('category-list');
+    const schoolListSection = document.getElementById('school-list-section');
+    const categoryListSection = document.getElementById('category-list-section');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    
+    let schoolData = {};
+    let chartInstances = {};
+    const categories = {
+        "basic": "Basic Info", "enrolment": "Enrolment", "building": "Building Systems",
+        "playground": "Playground", "transportation": "Transportation",
+        "accessibility": "Accessibility", "childcare": "Childcare", "projects": "Capital Projects"
+    };
 
-/* --- Main Layout --- */
-.dashboard-layout { display: flex; }
-.sidebar { width: 260px; background-color: var(--sidebar-bg); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; height: 100vh; position: fixed; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 200; }
-.main-content { flex-grow: 1; margin-left: 260px; display: flex; flex-direction: column; transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    // --- Main Initialization ---
+    async function initializeApp() {
+        try {
+            Chart.register(ChartDataLabels); // Register the datalabels plugin globally
+            const response = await fetch('data/schools.json'); 
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            schoolData = await response.json();
+            populateSidebarControls();
+            setupEventListeners();
+            updateView();
+        } catch (error) {
+            console.error("Failed to load or initialize school data:", error);
+            cardGrid.innerHTML = `<p style="color: red; text-align: center;">Error: Could not load school data. Check console.</p>`;
+        }
+    }
 
-/* --- Header --- */
-.main-header { display: flex; align-items: center; padding: 1rem 1.5rem; background-color: var(--card-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
-#main-title { font-family: var(--font-title); font-size: 1.5rem; margin-left: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.header-toolbar { margin-left: auto; }
-.header-logo { height: 40px; }
+    // --- UI Population ---
+    function populateSidebarControls() {
+        Object.keys(schoolData).forEach((schoolId, index) => {
+            const school = schoolData[schoolId];
+            schoolList.innerHTML += `<label><input type="radio" name="school-filter" value="${schoolId}" ${index === 0 ? 'checked' : ''}><span>${school.schoolName}</span></label>`;
+        });
+        Object.entries(categories).forEach(([key, name], index) => {
+            categoryList.innerHTML += `<label><input type="radio" name="category-filter" value="${key}" ${index === 0 ? 'checked' : ''}><span>${name}</span></label>`;
+        });
+    }
 
-/* --- Sidebar --- */
-.sidebar-header { display: flex; align-items: center; padding: 1.5rem; border-bottom: 1px solid var(--border-color); }
-.logo-icon { font-size: 1.8rem; color: var(--primary-blue); margin-right: 0.75rem; }
-.sidebar-header h2 { font-family: var(--font-title); font-size: 1.2rem; }
-.sidebar-nav { flex-grow: 1; overflow-y: auto; padding: 1.5rem 0; }
-.nav-section { padding: 0 1.5rem; margin-bottom: 1.5rem; }
-.nav-title { font-family: var(--font-title); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin-bottom: 1rem; }
-.view-toggle { display: flex; background-color: var(--bg-color); border-radius: 8px; padding: 4px; border: 1px solid var(--border-color); }
-.view-toggle label { flex: 1; }
-.view-toggle input { display: none; }
-.view-toggle span { display: block; padding: 0.5rem; border-radius: 6px; cursor: pointer; font-weight: 500; text-align: center; transition: all 0.2s ease-out; color: var(--text-light); }
-.view-toggle input:not(:checked) + span:hover { background-color: #e2e8f0; color: var(--text-color); }
-.view-toggle input:checked + span { background-color: var(--card-bg); color: var(--primary-blue); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); }
-.filter-list label { display: flex; align-items: center; padding: 0.6rem 0.75rem; margin-left: -0.75rem; cursor: pointer; border-radius: 6px; transition: background-color 0.2s ease; }
-.filter-list label:hover { background-color: var(--bg-color); }
-.filter-list input { margin-right: 0.75rem; accent-color: var(--primary-blue); }
-.sidebar-footer { padding: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.8rem; color: var(--text-light); }
+    // --- Card Creation Functions ---
+    function createCardHeader(icon, title, schoolName = null, isWarning = false) {
+        const schoolNameHTML = schoolName ? `<span class="category-card-school-name">${schoolName}</span>` : '';
+        const warningIconHTML = isWarning ? `<i class="fas fa-exclamation-triangle warning-icon"></i>` : '';
+        return `<div class="card-header"><i class="fas fa-${icon}"></i><h2 class="card-title">${title}</h2>${schoolNameHTML}${warningIconHTML}</div>`;
+    }
 
-/* --- Card Grid & States --- */
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); grid-auto-rows: min-content; gap: 1.5rem; padding: 1.5rem; }
-.data-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 6px var(--shadow-color); overflow: hidden; transition: all 0.2s ease-in-out; opacity: 0; animation: fadeIn 0.5s ease forwards; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-.data-card:hover { transform: translateY(-5px); box-shadow: 0 8px 12px rgba(0, 0, 0, 0.08); }
-.data-card.wide-card { grid-column: span 2; }
-.data-card.over-capacity { background-color: #fff6f6; border-color: #f5c6cb; }
+    function createBasicInfoCard(school) {
+        return `
+            <div class="data-card wide-card">
+                <img src="${school.headerImage}" alt="${school.schoolName}" class="school-hero-image">
+                <div class="card-body">
+                    <h2 class="school-name-title"><span>${school.schoolName}</span> ${school.schoolType || ''}</h2>
+                    <div class="school-info-columns">
+                        <div class="contact-info">
+                            <h3 class="section-title">Details</h3>
+                            <div class="info-item"><i class="fas fa-map-marker-alt"></i><span>${school.address}</span></div>
+                            <div class="info-item"><i class="fas fa-phone"></i><span>${school.phone}</span></div>
+                            <div class="info-item"><i class="fas fa-graduation-cap"></i><span>${school.program}</span></div>
+                            <div class="detail-list">${Object.entries(school.details).map(([key, value]) => `<div class="detail-item"><div class="detail-label">${key}</div><div class="detail-value">${value}</div></div>`).join('')}</div>
+                        </div>
+                        <div class="additions-info">
+                            <h3 class="section-title">Additions</h3>
+                            <div class="detail-list">${school.additions.map(a => `<div class="detail-item"><div class="detail-label">${a.year}</div><div class="detail-value">${a.size}</div></div>`).join('') || 'No additions on record.'}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+    }
 
-.card-header { display: flex; align-items: center; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); }
-.card-header i { color: var(--primary-blue); margin-right: 0.75rem; font-size: 1.1rem; }
-.card-title { font-family: var(--font-title); font-size: 1.1rem; }
-.category-card-school-name { font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; color: var(--text-light); margin-left: auto; }
-.warning-icon { font-size: 1.2rem; color: var(--accent-red); margin-left: 0.5rem; animation: pulseWarning 2s infinite; }
-@keyframes pulseWarning { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-.card-body { padding: 1.25rem; }
+    function createEnrolmentCard(school, viewMode) {
+        const { capacity, current } = school.enrolment;
+        const utilization = Math.round((current / capacity) * 100);
+        const isOverCapacity = utilization >= 100;
+        const schoolNameForHeader = viewMode === 'category' ? school.schoolName : null;
+        const cardClass = isOverCapacity ? 'over-capacity' : '';
+        
+        setTimeout(() => {
+            renderHistoryChart(school);
+            renderProjectionChart(school);
+            document.querySelectorAll(`.enrolment-card[data-school-id="${school.id}"] .toggle-btn`).forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const parentCard = this.closest('.enrolment-card');
+                    parentCard.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const viewType = this.dataset.view;
+                    parentCard.querySelectorAll('.enrolment-content').forEach(c => c.classList.remove('active'));
+                    parentCard.querySelector(`#${viewType}-${school.id}`).classList.add('active');
+                });
+            });
+        }, 10);
 
-/* --- Specific Card Styles --- */
-.school-hero-image { width: 100%; height: 180px; object-fit: cover; }
-.school-info-columns { display: flex; gap: 2rem; }
-.contact-info, .additions-info { flex: 1; }
-.school-name-title { font-family: var(--font-title); font-size: 1.6rem; margin-bottom: 1rem; }
-.school-name-title span { color: var(--primary-blue); }
-.section-title { font-family: var(--font-title); font-size: 1rem; margin-bottom: 0.5rem; border-bottom: 2px solid var(--primary-blue); padding-bottom: 0.25rem; }
-.info-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; color: var(--text-light); }
-.info-item i { width: 16px; text-align: center; color: var(--primary-blue); }
-.detail-list { margin-top: 1rem; }
-.detail-item { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
-.detail-item:last-child { border-bottom: none; }
-.detail-label { font-weight: 500; }
-.detail-value { color: var(--text-light); }
+        return `
+            <div class="data-card wide-card enrolment-card ${cardClass}" data-school-id="${school.id}">
+                ${createCardHeader('chart-line', 'Enrolment & Capacity', schoolNameForHeader, isOverCapacity)}
+                <div class="card-body">
+                    <div class="stats-container">
+                        <div class="stat-box"><i class="fas fa-users stat-icon"></i><div class="stat-value">${capacity}</div><div class="stat-label">Classroom Capacity</div></div>
+                        <div class="stat-box"><i class="fas fa-user-graduate stat-icon"></i><div class="stat-value">${current}</div><div class="stat-label">Current Enrolment</div></div>
+                    </div>
+                    <div class="utilization-container">
+                        <div class="utilization-percentage">${utilization}%</div>
+                        <div class="utilization-label">Utilization</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" style="width: ${Math.min(utilization, 100)}%;"></div>
+                        </div>
+                    </div>
+                    <div class="enrolment-toggle">
+                        <button class="toggle-btn active" data-view="history">History</button>
+                        <button class="toggle-btn" data-view="projection">Projection</button>
+                    </div>
+                    <div class="enrolment-display-area">
+                        <div class="enrolment-content active" id="history-${school.id}"><div class="chart-container"><canvas id="hist-chart-${school.id}"></canvas></div></div>
+                        <div class="enrolment-content" id="projection-${school.id}"><div class="projection-chart" id="proj-chart-${school.id}"></div></div>
+                    </div>
+                    <div class="catchment-info"><h3>Catchment Migration</h3><p class="catchment-rate">${school.catchment.migration}</p><p class="catchment-desc">${school.catchment.description}</p></div>
+                </div>
+            </div>`;
+    }
 
-.stats-container { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
-.stat-box { flex: 1; background: var(--bg-color); padding: 1rem; border-radius: 8px; text-align: center; }
-.stat-icon { font-size: 1.5rem; color: var(--primary-blue); margin-bottom: 0.5rem; }
-.stat-value { font-size: 1.5rem; font-weight: 600; }
-.stat-label { font-size: 0.9rem; color: var(--text-light); }
+    function createSimpleCard(school, viewMode, categoryKey, icon, title) {
+        const schoolNameForHeader = viewMode === 'category' ? school.schoolName : null;
+        const data = school[categoryKey];
+        const listItems = Array.isArray(data) 
+            ? data.map(item => `<li>${item}</li>`).join('')
+            : Object.entries(data).map(([key, value]) => `<li>${key}: ${value === "YES" ? '<span class="yes-badge">YES</span>' : value === "NO" ? '<span class="no-badge">NO</span>' : value}</li>`).join('');
+        return `<div class="data-card">${createCardHeader(icon, title, schoolNameForHeader)}<div class="card-body"><ul class="feature-list">${listItems}</ul></div></div>`;
+    }
 
-.utilization-container { text-align: center; margin-bottom: 1.5rem; }
-.utilization-percentage { font-family: var(--font-title); font-size: 2.5rem; font-weight: 700; color: var(--primary-blue); line-height: 1; }
-.utilization-label { font-weight: 600; font-size: 1rem; margin-top: 0.25rem; margin-bottom: 0.75rem; display: block; }
-.progress-bar-container { width: 100%; height: 10px; background-color: var(--border-color); border-radius: 5px; overflow: hidden; }
-.progress-bar-fill { height: 100%; background-color: var(--primary-blue); border-radius: 5px; transition: width 0.5s ease-in-out; }
-.over-capacity .progress-bar-fill { background-color: var(--accent-red); }
-.over-capacity .utilization-percentage { color: var(--accent-red); }
+    function createProjectsCard(school, viewMode) {
+        const schoolNameForHeader = viewMode === 'category' ? school.schoolName : null;
+        const renderSection = (category) => {
+            const sections = [];
+            if (category.requested && category.requested.length > 0) sections.push(`<div class="project-status-label">Requested:</div><ul class="project-list">${category.requested.map(item => `<li>${item}</li>`).join('')}</ul>`);
+            if (category.inProgress && category.inProgress.length > 0) sections.push(`<div class="project-status-label">In Progress:</div><ul class="project-list">${category.inProgress.map(item => `<li>${item}</li>`).join('')}</ul>`);
+            if (category.completed && category.completed.length > 0) sections.push(`<div class="project-status-label">Completed:</div><ul class="project-list">${category.completed.map(item => `<li>${item}</li>`).join('')}</ul>`);
+            return sections.length > 0 ? sections.join('') : '<p>No projects listed</p>';
+        };
+        return `
+            <div class="data-card wide-card">
+                ${createCardHeader('hard-hat', 'Capital Projects', schoolNameForHeader)}
+                <div class="card-body"><div class="projects-container">
+                    <div class="project-category"><h3>Provincially Funded</h3>${renderSection(school.projects.provincial)}</div>
+                    <div class="project-category"><h3>Locally Funded</h3>${renderSection(school.projects.local)}</div>
+                </div></div>
+            </div>`;
+    }
 
-.enrolment-toggle { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
-.toggle-btn { background: none; border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; transition: all 0.2s ease; }
-.toggle-btn.active { background: var(--primary-blue); color: white; border-color: var(--primary-blue); }
-.enrolment-display-area { min-height: 280px; position: relative; }
-.enrolment-content { display: none; }
-.enrolment-content.active { display: block; }
-.chart-container { position: relative; height: 250px; }
-.projection-chart { padding-top: 1rem; }
-.projection-row { display: flex; align-items: center; margin-bottom: 0.75rem; font-size: 0.9rem; }
-.projection-year { width: 80px; text-align: right; margin-right: 1rem; color: var(--text-light); }
-.projection-bar-container { flex-grow: 1; height: 20px; background: var(--bg-color); border-radius: 4px; }
-.projection-bar { height: 100%; background: var(--primary-blue); border-radius: 4px; transition: width 0.5s ease-in-out; }
-.projection-value { width: 80px; margin-left: 1rem; font-weight: 500; }
+    // --- Chart Rendering ---
+    function renderHistoryChart(school) {
+        const canvasId = `hist-chart-${school.id}`;
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+        if (chartInstances[canvasId]) chartInstances[canvasId].destroy();
+        chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+            type: 'line',
+            data: { labels: school.enrolment.history.labels, datasets: [{ label: 'Enrolment', data: school.enrolment.history.values, borderColor: 'var(--primary-blue)', backgroundColor: 'rgba(58, 93, 143, 0.1)', fill: true, tension: 0.3 }] },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true } },
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        anchor: 'end', align: 'top',
+                        formatter: (value) => value,
+                        font: { weight: 'bold' },
+                        color: '#444'
+                    }
+                }
+            }
+        });
+    }
 
-.catchment-info { margin-top: 1.5rem; text-align: center; background: var(--bg-color); padding: 1rem; border-radius: 8px; }
-.catchment-info h3 { font-family: var(--font-title); font-size: 1rem; margin-bottom: 0.5rem; }
-.catchment-rate { font-size: 1.5rem; font-weight: 600; color: var(--primary-blue); }
-.catchment-desc { font-size: 0.8rem; color: var(--text-light); }
+    function renderProjectionChart(school) {
+        const chartContainer = document.getElementById(`proj-chart-${school.id}`);
+        if (!chartContainer) return;
+        const { projection } = school.enrolment;
+        const allValues = Object.values(projection).map(v => parseInt(v.split('-')[1] || v));
+        const maxValue = Math.max(...allValues) * 1.1;
 
-.feature-list { list-style: none; }
-.feature-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
-.feature-list li:last-child { border-bottom: none; }
-.yes-badge, .no-badge { padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; color: white; }
-.yes-badge { background: #28a745; }
-.no-badge { background: var(--accent-red); }
+        chartContainer.innerHTML = Object.entries(projection).map(([year, value]) => {
+            const barValue = parseInt(value.split('-')[0]);
+            const barWidth = (barValue / maxValue) * 100;
+            return `<div class="projection-row">
+                        <div class="projection-year">${year}</div>
+                        <div class="projection-bar-container"><div class="projection-bar" style="width: ${barWidth}%"></div></div>
+                        <div class="projection-value">${value}</div>
+                    </div>`;
+        }).join('');
+    }
 
-.projects-container { display: flex; gap: 2rem; }
-.project-category { flex: 1; }
-.project-category h3 { font-family: var(--font-title); font-size: 1.1rem; margin-bottom: 1rem; }
-.project-status-label { font-weight: 600; margin-top: 1rem; margin-bottom: 0.5rem; font-size: 0.9rem; }
-.project-list { list-style-position: inside; padding-left: 0.5rem; }
-.project-list li { font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.5rem; }
+    // --- Main View Logic ---
+    function updateView() {
+        Object.values(chartInstances).forEach(chart => chart.destroy());
+        chartInstances = {};
+        cardGrid.innerHTML = ''; 
+        const viewMode = document.querySelector('input[name="view-mode"]:checked').value;
 
-/* --- Responsive & Mobile --- */
-.sidebar-toggle-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); }
-.sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); z-index: 199; opacity: 0; transition: opacity 0.3s ease; }
-.sidebar-overlay.visible { display: block; opacity: 1; }
-@media (max-width: 1200px) { .data-card.wide-card { grid-column: span 1; } }
-@media (max-width: 992px) {
-    .sidebar { transform: translateX(-100%); }
-    .sidebar.open { transform: translateX(0); }
-    .main-content { margin-left: 0; }
-    .sidebar-toggle-btn { display: block; }
-    .projects-container { flex-direction: column; }
-}
-@media (max-width: 768px) { .school-info-columns { flex-direction: column; } }
-@media (max-width: 576px) { .card-grid { grid-template-columns: 1fr; } #main-title { font-size: 1.2rem; } }
+        if (viewMode === 'school') {
+            const selectedSchoolId = document.querySelector('input[name="school-filter"]:checked').value;
+            const school = schoolData[selectedSchoolId];
+            mainTitle.textContent = school.schoolName;
+            cardGrid.innerHTML = [ createBasicInfoCard(school), createEnrolmentCard(school, viewMode), createSimpleCard(school, viewMode, 'building', 'cogs', 'Building Systems'), createSimpleCard(school, viewMode, 'playground', 'basketball-ball', 'Playground'), createSimpleCard(school, viewMode, 'transportation', 'bus', 'Transportation'), createSimpleCard(school, viewMode, 'accessibility', 'universal-access', 'Accessibility'), createSimpleCard(school, viewMode, 'childcare', 'child', 'Childcare'), createProjectsCard(school, viewMode) ].join('');
+        } else {
+            const selectedCategoryId = document.querySelector('input[name="category-filter"]:checked').value;
+            mainTitle.textContent = categories[selectedCategoryId];
+            Object.values(schoolData).forEach(school => {
+                let cardHTML = '';
+                switch(selectedCategoryId) {
+                    case 'basic': cardHTML = createBasicInfoCard(school); break;
+                    case 'enrolment': cardHTML = createEnrolmentCard(school, viewMode); break;
+                    case 'building': cardHTML = createSimpleCard(school, viewMode, 'building', 'cogs', 'Building Systems'); break;
+                    case 'playground': cardHTML = createSimpleCard(school, viewMode, 'playground', 'basketball-ball', 'Playground'); break;
+                    case 'transportation': cardHTML = createSimpleCard(school, viewMode, 'transportation', 'bus', 'Transportation'); break;
+                    case 'accessibility': cardHTML = createSimpleCard(school, viewMode, 'accessibility', 'universal-access', 'Accessibility'); break;
+                    case 'childcare': cardHTML = createSimpleCard(school, viewMode, 'childcare', 'child', 'Childcare'); break;
+                    case 'projects': cardHTML = createProjectsCard(school, viewMode); break;
+                }
+                cardGrid.innerHTML += cardHTML;
+            });
+        }
+        const firstSchool = schoolData[Object.keys(schoolData)[0]];
+        if (firstSchool?.meta) footerTimestamp.textContent = `Data updated ${firstSchool.meta.updated}`;
+    }
+
+    // --- Event Listeners ---
+    function setupEventListeners() {
+        viewToggle.addEventListener('change', () => {
+            const viewMode = document.querySelector('input[name="view-mode"]:checked').value;
+            schoolListSection.style.display = viewMode === 'school' ? 'block' : 'none';
+            categoryListSection.style.display = viewMode === 'category' ? 'block' : 'none';
+            updateView();
+        });
+        schoolList.addEventListener('change', updateView);
+        categoryList.addEventListener('change', updateView);
+        
+        function closeSidebar() { sidebar.classList.remove('open'); }
+        sidebarToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle('open');
+        });
+        sidebarOverlay.addEventListener('click', closeSidebar);
+    }
+
+    initializeApp();
+});
