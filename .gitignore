@@ -1,0 +1,30 @@
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Windows thumbnail cache files
+Thumbs.db
+
+# Ignore log files and directories
+*.log
+log/
+logs/
+
+# Ignore user-specific editor/IDE settings
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Ignore dependency directories (VERY IMPORTANT for the future)
+node_modules/
+bower_components/
+
+# Ignore build output directories
+dist/
+build/
+out/
+
+# Ignore environment variables files (for secrets)
+.env
+.env.*
+!.env.example
