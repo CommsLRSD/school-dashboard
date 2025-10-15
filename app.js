@@ -169,10 +169,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Main View Logic ---
     async function updateView(isInitialLoad = false) {
-        const { stagger } = motion;
+        // Use the global 'motion' object provided by the script tag
+        const { animate, stagger } = motion;
+
         const cards = document.querySelectorAll('.data-card');
         if (cards.length > 0) {
-            await motion.animate(cards, { y: 20, opacity: 0 }, { duration: 0.3 }).finished;
+            await animate(cards, { y: 20, opacity: 0 }, { duration: 0.3 }).finished;
         }
         
         Object.values(chartInstances).forEach(chart => chart.destroy());
@@ -207,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Animate new cards in
         const newCards = document.querySelectorAll('.data-card');
         if (newCards.length > 0) {
-            motion.animate(newCards, { y: [20, 0], opacity: [0, 1] }, { duration: 0.5, delay: isInitialLoad ? stagger(0.075) : 0 });
+            animate(newCards, { y: [20, 0], opacity: [0, 1] }, { duration: 0.5, delay: isInitialLoad ? stagger(0.075) : 0 });
         }
 
         const firstSchool = schoolData[Object.keys(schoolData)[0]];
