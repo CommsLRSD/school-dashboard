@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // --- Global Variables ---
     const cardGrid = document.getElementById('card-grid');
-    const mainTitle = document.getElementById('main-title');
+    const contentSubtitle = document.getElementById('content-subtitle');
     const footerTimestamp = document.getElementById('footer-timestamp');
     const sidebar = document.querySelector('.sidebar');
     const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
@@ -54,11 +54,22 @@ document.addEventListener('DOMContentLoaded', function() {
         ).join('');
     }
 
-    // --- Card Creation Functions (These are unchanged) ---
-    function createCardHeader(icon, title, schoolName = null, isWarning = false) {
-        const schoolNameHTML = schoolName ? `<span class="category-card-school-name">${schoolName}</span>` : '';
+    // --- Card Creation Functions ---
+    function createCardHeader(school, icon, title, isWarning = false) {
+        let infoHTML = '';
+        if (currentViewMode === 'category') {
+            infoHTML = `<div class="card-header-info">
+                            <img src="${school.headerImage}" alt="${school.schoolName}" class="card-header-thumbnail">
+                            <span class="category-card-school-name">${school.schoolName}</span>
+                        </div>`;
+        }
         const warningIconHTML = isWarning ? `<i class="fas fa-exclamation-triangle warning-icon"></i>` : '';
-        return `<div class="card-header"><i class="fas fa-${icon}"></i><h2 class="card-title">${title}</h2>${schoolNameHTML}${warningIconHTML}</div>`;
+        return `<div class="card-header">
+                    <i class="fas fa-${icon}"></i>
+                    <h2 class="card-title">${title}</h2>
+                    ${infoHTML}
+                    ${warningIconHTML}
+                </div>`;
     }
 
     function createBasicInfoCard(school) {
@@ -83,11 +94,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>`;
     }
 
-    function createEnrolmentCard(school, viewMode) {
+    function createEnrolmentCard(school) {
         const { capacity, current } = school.enrolment;
         const utilization = Math.round((current / capacity) * 100);
         const isOverCapacity = utilization >= 100;
-        const schoolNameForHeader = viewMode === 'category' ? school.schoolName : null;
         const cardClass = isOverCapacity ? 'over-capacity' : '';
         
         setTimeout(() => {
@@ -106,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 10);
 
         return `<div class="data-card wide-card enrolment-card ${cardClass}" data-school-id="${school.id}">
-                    ${createCardHeader('chart-line', 'Enrolment & Capacity', schoolNameForHeader, isOverCapacity)}
+                    ${createCardHeader(school, 'chart-line', 'Enrolment & Capacity', isOverCapacity)}
                     <div class="card-body">
                         <div class="stats-container">
                             <div class="stat-box"><i class="fas fa-users stat-icon"></i><div class="stat-value">${capacity}</div><div class="stat-label">Classroom Capacity</div></div>
@@ -130,15 +140,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>`;
     }
 
-    function createSimpleCard(school, viewMode, categoryKey, icon, title) {
-        const schoolNameForHeader = viewMode === 'category' ? school.schoolName : null;
+    function createSimpleCard(school, categoryKey, icon, title) {
         const data = school[categoryKey];
         const listItems = Array.isArray(data) ? data.map(item => `<li>${item}</li>`).join('') : Object.entries(data).map(([key, value]) => `<li>${key}: ${value === "YES" ? '<span class="yes-badge">YES</span>' : value === "NO" ? '<span class="no-badge">NO</span>' : value}</li>`).join('');
-        return `<div class="data-card">${createCardHeader(icon, title, schoolNameForHeader)}<div class="card-body"><ul class="feature-list">${listItems}</ul></div></div>`;
+        return `<div class="data-card">${createCardHeader(school, icon, title)}<div class="card-body"><ul class="feature-list">${listItems}</ul></div></div>`;
     }
 
-    function createProjectsCard(school, viewMode) {
-        const schoolNameForHeader = viewMode === 'category' ? school.schoolName : null;
+    function createProjectsCard(school) {
         const renderSection = (category) => {
             const sections = [];
             if (category.requested?.length > 0) sections.push(`<div class="project-status-label">Requested:</div><ul class="project-list">${category.requested.map(item => `<li>${item}</li>`).join('')}</ul>`);
@@ -146,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (category.completed?.length > 0) sections.push(`<div class="project-status-label">Completed:</div><ul class="project-list">${category.completed.map(item => `<li>${item}</li>`).join('')}</ul>`);
             return sections.length > 0 ? sections.join('') : '<p>No projects listed</p>';
         };
-        return `<div class="data-card wide-card">${createCardHeader('hard-hat', 'Capital Projects', schoolNameForHeader)}<div class="card-body"><div class="projects-container"><div class="project-category"><h3>Provincially Funded</h3>${renderSection(school.projects.provincial)}</div><div class="project-category"><h3>Locally Funded</h3>${renderSection(school.projects.local)}</div></div></div></div>`;
+        return `<div class="data-card wide-card">${createCardHeader(school, 'hard-hat', 'Capital Projects')}<div class="card-body"><div class="projects-container"><div class="project-category"><h3>Provincially Funded</h3>${renderSection(school.projects.provincial)}</div><div class="project-category"><h3>Locally Funded</h3>${renderSection(school.projects.local)}</div></div></div></div>`;
     }
 
     // --- Chart Rendering (Unchanged) ---
@@ -190,21 +198,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (currentViewMode === 'school') {
             const school = schoolData[selectedSchoolId];
-            mainTitle.textContent = school.schoolName;
-            cardGrid.innerHTML = [ createBasicInfoCard(school), createEnrolmentCard(school, 'school'), createSimpleCard(school, 'school', 'building', 'cogs', 'Building Systems'), createSimpleCard(school, 'school', 'playground', 'basketball-ball', 'Playground'), createSimpleCard(school, 'school', 'transportation', 'bus', 'Transportation'), createSimpleCard(school, 'school', 'accessibility', 'universal-access', 'Accessibility'), createSimpleCard(school, 'school', 'childcare', 'child', 'Childcare'), createProjectsCard(school, 'school') ].join('');
+            contentSubtitle.textContent = school.schoolName;
+            cardGrid.innerHTML = [ createBasicInfoCard(school), createEnrolmentCard(school), createSimpleCard(school, 'building', 'cogs', 'Building Systems'), createSimpleCard(school, 'playground', 'basketball-ball', 'Playground'), createSimpleCard(school, 'transportation', 'bus', 'Transportation'), createSimpleCard(school, 'accessibility', 'universal-access', 'Accessibility'), createSimpleCard(school, 'childcare', 'child', 'Childcare'), createProjectsCard(school) ].join('');
         } else {
-            mainTitle.textContent = categories[selectedCategoryId];
+            contentSubtitle.textContent = categories[selectedCategoryId];
             Object.values(schoolData).forEach(school => {
                 let cardHTML = '';
                 switch(selectedCategoryId) {
                     case 'basic': cardHTML = createBasicInfoCard(school); break;
-                    case 'enrolment': cardHTML = createEnrolmentCard(school, 'category'); break;
-                    case 'building': cardHTML = createSimpleCard(school, 'category', 'building', 'cogs', 'Building Systems'); break;
-                    case 'playground': cardHTML = createSimpleCard(school, 'category', 'playground', 'basketball-ball', 'Playground'); break;
-                    case 'transportation': cardHTML = createSimpleCard(school, 'category', 'transportation', 'bus', 'Transportation'); break;
-                    case 'accessibility': cardHTML = createSimpleCard(school, 'category', 'accessibility', 'universal-access', 'Accessibility'); break;
-                    case 'childcare': cardHTML = createSimpleCard(school, 'category', 'childcare', 'child', 'Childcare'); break;
-                    case 'projects': cardHTML = createProjectsCard(school, 'category'); break;
+                    case 'enrolment': cardHTML = createEnrolmentCard(school); break;
+                    case 'building': cardHTML = createSimpleCard(school, 'building', 'cogs', 'Building Systems'); break;
+                    case 'playground': cardHTML = createSimpleCard(school, 'playground', 'basketball-ball', 'Playground'); break;
+                    case 'transportation': cardHTML = createSimpleCard(school, 'transportation', 'bus', 'Transportation'); break;
+                    case 'accessibility': cardHTML = createSimpleCard(school, 'accessibility', 'universal-access', 'Accessibility'); break;
+                    case 'childcare': cardHTML = createSimpleCard(school, 'childcare', 'child', 'Childcare'); break;
+                    case 'projects': cardHTML = createProjectsCard(school); break;
                 }
                 cardGrid.innerHTML += cardHTML;
             });
