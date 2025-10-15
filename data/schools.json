@@ -28,7 +28,7 @@
             "provincial": { "requested": ["Universal washroom to meet current accessibility standards", "Remaining Burnham boiler replacement", "Roof replacement (Partial)"], "inProgress": [], "completed": [] },
             "local": { "requested": ["Main office renovation", "Boys change room renewal", "Air conditioning installation", "DDC system", "Office renovation completion"], "inProgress": ["Fence installation"], "completed": ["Community kitchen electrical upgrades", "Kitchen island addition", "Cupboards", "Gym girls change room", "Flooring and hallway wall refinishing", "Classrooms renovation", "Library flooring renovation", "Music room renovation", "Room 10 renovation", "Room modification", "Bottle filling station addition"] }
         },
-        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:14:40" }
+        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:31:10" }
     },
     "beliveau": {
         "id": "beliveau", "schoolName": "Collège Béliveau", "schoolType": "", "headerImage": "public/beliveau.jpg", "address": "296 Speers Rd.", "phone": "(204) 255-3205", "program": "Grades 7-12, French Immersion",
@@ -45,7 +45,7 @@
             "provincial": { "buildingMove": "French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd.", "requested": ["New High School Project at 296 Speers Rd.", "Addition with washrooms, fitness room, band/music rooms."], "inProgress": [], "completed": ["Foods and nutrition lab renovation", "Universal washroom"] },
             "local": { "requested": ["Gender-neutral washroom design", "Air intake Unit", "Gym office space", "Staff washroom renovation", "Windows replacement", "Blackboards removal", "Flooring and ceiling"], "inProgress": [], "completed": ["Concrete stairs repair", "Door & frame replacement", "Refresh gym floor", "Office area redesign", "Corridor shutter door lock relocation", "Parking lot and staircase repair", "Lockers", "Lighting in science wing, library, and Grade 7/8 classrooms", "Washrooms renovation"] }
         },
-        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:14:40" }
+        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:31:10" }
     },
     "cjs": {
         "id": "cjs", "schoolName": "Collège Jeanne-Sauvé", "schoolType": "", "headerImage": "public/cjs.jpg", "address": "1128 Dakota St.", "phone": "(204) 257-0124", "program": "Grades 9-12, French Immersion",
@@ -62,7 +62,7 @@
             "provincial": { "requested": ["Roof replacement (Partial)", "Additional Air Make Up unit to gym"], "inProgress": [], "completed": ["Replacement of Roof Top Unit", "Addition with 16 classrooms, music room, and universal washroom", "Rooftop solar panels", "Fitness Room", "Science Classrooms (5)"] },
             "local": { "requested": ["Hallways and door trims repainting", "Gym bleachers", "School field redevelopment", "Classrooms floor refinishing", "Library flooring replacement", "Girls' washroom"], "inProgress": [], "completed": ["Exterior level landing for cafeteria doors", "Domestic piping renovation in replace of mezzanine access", "Lighting upgrade in all classrooms, hallways, and gymnasium", "Elevator or lift for mezzanine access"] }
         },
-        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:14:40" }
+        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:31:10" }
     },
     "dakota": {
         "id": "dakota",
@@ -85,6 +85,6 @@
             "provincial": { "requested": ["New High School: Precinct K", "Universal washrooms to meet current accessibility standards", "Elevator upgrades to accommodate all accessibility needs"], "inProgress": [], "completed": ["Penthouse Air Handling Unit Upgraded"] },
             "local": { "requested": [], "inProgress": [], "completed": ["DDC system upgrade", "Automotive shop upgrade", "Locking hardware replacement", "Electrical outlets", "Door replacements", "Indigenous student spaces", "Individualized programming students spaces", "Guitar room soundproofing", "Flooring replacement", "Asphalt repair"] }
         },
-        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:14:40" }
+        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:31:10" }
     }
 }
