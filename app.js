@@ -59,20 +59,31 @@ document.addEventListener('DOMContentLoaded', function() {
         let infoHTML = '';
         if (currentViewMode === 'category') {
             infoHTML = `<div class="card-header-info">
-                            <img src="${school.headerImage}" alt="${school.schoolName}" class="card-header-thumbnail">
-                            <span class="category-card-school-name">${school.schoolName}</span>
+                            <div>
+                                <h2 class="card-title">${title}</h2>
+                                <span class="category-card-school-name">${school.schoolName}</span>
+                            </div>
                         </div>`;
+            return `<div class="card-header">
+                        <img src="${school.headerImage}" alt="${school.schoolName}" class="card-header-thumbnail">
+                        ${infoHTML}
+                        ${isWarning ? `<i class="fas fa-exclamation-triangle warning-icon"></i>` : ''}
+                    </div>`;
+        } else {
+            // Original header for "By School" view
+            return `<div class="card-header">
+                        <i class="card-header-icon fas fa-${icon}"></i>
+                        <h2 class="card-title">${title}</h2>
+                        ${isWarning ? `<i class="fas fa-exclamation-triangle warning-icon"></i>` : ''}
+                    </div>`;
         }
-        const warningIconHTML = isWarning ? `<i class="fas fa-exclamation-triangle warning-icon"></i>` : '';
-        return `<div class="card-header">
-                    <i class="fas fa-${icon}"></i>
-                    <h2 class="card-title">${title}</h2>
-                    ${infoHTML}
-                    ${warningIconHTML}
-                </div>`;
     }
 
     function createBasicInfoCard(school) {
+        // In category view, this card is not needed, so we return an empty string.
+        if (currentViewMode === 'category') {
+            return '';
+        }
         return `<div class="data-card wide-card">
                     <img src="${school.headerImage}" alt="${school.schoolName}" class="school-hero-image">
                     <div class="card-body">
