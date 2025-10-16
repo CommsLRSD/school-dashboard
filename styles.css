@@ -3,9 +3,11 @@
     --bg-color: #f5f7fa; 
     --card-bg: #ffffff; 
     --sidebar-bg: #ffffff;
-    --primary-blue: #4f46e5; 
-    --primary-blue-light: #6366f1;
-    --primary-blue-dark: #4338ca;
+    --primary-red: #D28780; 
+    --primary-green: #6C9D91;
+    --primary-blue: #D28780; /* Fallback for existing rules */
+    --primary-blue-light: #6C9D91; /* Fallback for existing rules */
+    --primary-blue-dark: #b23427; /* Darker version for accents */
     --accent-red: #ef4444; 
     --accent-green: #10b981;
     --text-color: #1f2937;
@@ -32,7 +34,7 @@
 
 body { 
     font-family: var(--font-body); 
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
     background-attachment: fixed;
     color: var(--text-color); 
     -webkit-font-smoothing: antialiased; 
@@ -101,7 +103,7 @@ body {
     font-weight: 700;
     color: var(--text-color);
     letter-spacing: -0.025em;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -158,7 +160,7 @@ body {
     padding: 2rem 1.5rem; 
     border-bottom: 1px solid var(--border-color); 
     flex-shrink: 0;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
 }
 
 .logo-icon { 
@@ -242,7 +244,7 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(210, 135, 128, 0.1), transparent);
     transition: left var(--transition-slow);
 }
 
@@ -251,16 +253,16 @@ body {
 }
 
 .nav-view-link:hover { 
-    color: var(--primary-blue); 
-    border-color: var(--primary-blue); 
-    background-color: rgba(79, 70, 229, 0.05);
+    color: var(--primary-red); 
+    border-color: var(--primary-red); 
+    background-color: rgba(210, 135, 128, 0.05);
     transform: translateY(-2px);
     box-shadow: var(--shadow-sm);
 }
 
 .nav-view-link.active { 
     color: white; 
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
     border-color: transparent;
     box-shadow: var(--shadow-md);
     transform: translateY(0);
@@ -310,14 +312,14 @@ body {
     transform: translateY(-50%);
     width: 4px;
     height: 0;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
     border-radius: 0 2px 2px 0;
     transition: height var(--transition-base);
 }
 
 .nav-list-item:hover {
-    background-color: rgba(79, 70, 229, 0.05);
-    color: var(--primary-blue);
+    background-color: rgba(210, 135, 128, 0.05);
+    color: var(--primary-red);
     transform: translateX(4px);
     padding-left: 1.25rem;
 }
@@ -327,8 +329,8 @@ body {
 }
 
 .nav-list-item.active { 
-    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
-    color: var(--primary-blue); 
+    background: linear-gradient(135deg, rgba(210, 135, 128, 0.1) 0%, rgba(108, 157, 145, 0.1) 100%);
+    color: var(--primary-red); 
     font-weight: 600;
     padding-left: 1.25rem;
 }
@@ -368,7 +370,7 @@ body {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+    background: linear-gradient(90deg, var(--primary-red) 0%, var(--primary-green) 100%);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform var(--transition-slow);
@@ -392,7 +394,7 @@ body {
 .data-card:hover { 
     transform: translateY(-8px) scale(1.02);
     box-shadow: var(--shadow-xl);
-    border-color: rgba(79, 70, 229, 0.3);
+    border-color: rgba(210, 135, 128, 0.3);
 }
 
 .data-card.over-capacity { 
@@ -428,7 +430,7 @@ body {
 }
 
 .card-header-icon { 
-    color: var(--primary-blue); 
+    color: var(--primary-red); 
     margin-right: 0.875rem; 
     font-size: 1.25rem; 
     width: 24px; 
@@ -509,7 +511,7 @@ body {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(79, 70, 229, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(210, 135, 128, 0.05) 0%, transparent 70%);
     animation: rotate 20s linear infinite;
 }
 
@@ -522,7 +524,7 @@ body {
     font-family: var(--font-title); 
     font-size: 3.5rem; 
     font-weight: 800;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -571,7 +573,7 @@ body {
 .progress-bar-container { 
     width: 100%; 
     height: 16px; 
-    background: linear-gradient(to right, rgba(79, 70, 229, 0.1), rgba(79, 70, 229, 0.05));
+    background: linear-gradient(to right, rgba(210, 135, 128, 0.1), rgba(210, 135, 128, 0.05));
     border-radius: 100px; 
     overflow: hidden; 
     margin-top: 1rem;
@@ -597,11 +599,11 @@ body {
 
 .progress-bar-fill { 
     height: 100%; 
-    background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+    background: linear-gradient(90deg, var(--primary-red) 0%, var(--primary-green) 100%);
     border-radius: 100px;
     transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    box-shadow: 0 0 10px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 0 10px rgba(210, 135, 128, 0.3);
 }
 
 .progress-bar-fill::after {
@@ -672,7 +674,7 @@ body {
 
 .detail-item:hover {
     padding-left: 0.5rem;
-    background: linear-gradient(to right, rgba(79, 70, 229, 0.03), transparent);
+    background: linear-gradient(to right, rgba(210, 135, 128, 0.03), transparent);
     border-radius: 6px;
 }
 
@@ -719,7 +721,7 @@ body {
 /* --- Responsive & Mobile --- */
 .sidebar-toggle-btn { 
     display: none; 
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
     border: none; 
     font-size: 1.5rem; 
     cursor: pointer; 
@@ -759,7 +761,7 @@ body {
     left: 0; 
     width: 100%; 
     height: 100%; 
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.4) 0%, rgba(118, 75, 162, 0.4) 100%);
+    background: linear-gradient(135deg, rgba(210, 135, 128, 0.4) 0%, rgba(108, 157, 145, 0.4) 100%);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     z-index: 199; 
