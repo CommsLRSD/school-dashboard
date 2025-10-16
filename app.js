@@ -182,16 +182,23 @@ document.addEventListener('DOMContentLoaded', function() {
             contentSubtitle.textContent = categories[selectedCategoryId];
             const cardType = selectedCategoryId;
             const cardHTML = Object.values(schoolData).map(school => {
-                // For category view, create a simplified card with just the school name in header
                 const isOverCapacity = school.enrolment.current / school.enrolment.capacity >= 1;
-                const warningIcon = isOverCapacity && (cardType==='utilization' || cardType==='enrolment' || cardType==='capacity') ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : '';
+                const warningIcon = isOverCapacity && ['utilization', 'enrolment', 'capacity'].includes(cardType) ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : '';
                 
-                // Create a simple header with school name only (no images)
                 const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}</h2>${warningIcon}</div>`;
                 const fullCard = createCard(school, cardType);
-                // Replace the standard header with our category-view header (school name only)
-                return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
+
+                // Check if the card has a header before trying to replace it
+                if (fullCard.includes('<div class="card-header">')) {
+                    return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
+                }
+                
+                // If there's no header, just return the card as is, but wrapped in a container that has our desired header.
+                // This handles the 'school_header' card type which has no header div.
+                // A bit of a workaround, but it ensures consistent structure.
+                return `<div class="data-card">${header}<div class="card-body">${fullCard}</div></div>`;
             }).join('');
+
             cardGrid.innerHTML = cardHTML;
             
             // Add staggered animation delays
