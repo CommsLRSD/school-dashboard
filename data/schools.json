@@ -2,89 +2,3907 @@
     "archwood": {
         "id": "archwood",
         "schoolName": "Archwood School",
-        "schoolType": "",
+        "schoolType": "School",
         "headerImage": "public/archwood.jpg",
         "address": "800 Archibald St.",
         "phone": "(204) 233-7983",
-        "program": "Grades K-8, English Program",
+        "program": "K-8, English Program",
         "enrolment": {
             "capacity": 210,
             "current": 182,
-            "projection": { "2025-26": "184", "2026-27": "177", "2027-28": "182", "2028-29": "181" },
-            "history": { "labels": ["2020-21", "2021-22", "2022-23", "2023-24"], "values": [179, 199, 229, 195] }
+            "projection": {
+                "2025-26": "181",
+                "2026-27": "182",
+                "2027-28": "177",
+                "2028-29": "184"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    179,
+                    199,
+                    229,
+                    195
+                ]
+            }
         },
-        "details": { "Built": "1952", "Age": "72 years", "Size": "28,513 ft²", "Modular": "0" },
+        "details": {
+            "Built": 1952,
+            "Age": "72 years",
+            "Size": "28513 ft²",
+            "Modular": 0
+        },
         "additions": [
-            { "year": "1954", "size": "5,104 ft²" }, { "year": "1967", "size": "2,829 ft²" },
-            { "year": "1971", "size": "5,898 ft²" }, { "year": "1975", "size": "352 ft²" }
+            {
+                "year": "1954",
+                "size": "5,104 ft2"
+            },
+            {
+                "year": "1967",
+                "size": "2,829 ft2"
+            },
+            {
+                "year": "1971",
+                "size": "5,898 ft2"
+            },
+            {
+                "year": "1975",
+                "size": "352 ft2"
+            }
         ],
-        "building": { "Air Conditioning": "Main office, gym", "Heating": "Natural gas", "LED Lighting": "Gym" },
-        "catchment": { "migration": "-0.7%", "description": "Net annual movement in and out of catchment (5-yr. avg.)" },
-        "transportation": { "Parking spots": "###", "Bus Loop": "NO" },
-        "accessibility": { "Girls' washrooms": "3", "Boys' washrooms": "3", "Gender neutral washrooms": "1", "Universal Washroom": "YES", "Elevator": "n/a", "Accessible parking stalls": "1", "Accessible entrance": "YES", "Automatic entrance door operators": "YES" },
-        "playground": ["Basketball Court", "Basketball Action Play", "Steel Play structure", "Wooden Play structure", "Climbing dome", "Shade structure", "Soccer nets", "Baseball Diamond"],
-        "childcare": { "Infant (0-23 months)": "0", "Pre-school (2-6 years)": "0", "School-age (7+ years)": "24" },
-        "projects": {
-            "provincial": { "requested": ["Universal washroom to meet current accessibility standards", "Remaining Burnham boiler replacement", "Roof replacement (Partial)"], "inProgress": [], "completed": [] },
-            "local": { "requested": ["Main office renovation", "Boys change room renewal", "Air conditioning installation", "DDC system", "Office renovation completion"], "inProgress": ["Fence installation"], "completed": ["Community kitchen electrical upgrades", "Kitchen island addition", "Cupboards", "Gym girls change room", "Flooring and hallway wall refinishing", "Classrooms renovation", "Library flooring renovation", "Music room renovation", "Room 10 renovation", "Room modification", "Bottle filling station addition"] }
+        "building": {
+            "Air Conditioning": "Main office, gym",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gym"
         },
-        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:48:55" }
+        "catchment": {
+            "migration": "-0.7%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "Not specified",
+            "Bus Loop": "NO"
+        },
+        "accessibility": {
+            "Girls' washrooms": 3,
+            "Boys' washrooms": 3,
+            "Gender neutral washrooms": 1,
+            "Universal Washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball Court",
+            "Basketball Action Play",
+            "Steel Play structure",
+            "Wooden Play structure",
+            "Climbing dome",
+            "Shade structure",
+            "Soccer nets",
+            "Baseball Diamond"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 24
+        },
+        "projects": {
+            "provincial": {
+                "requested": [
+                    "Universal washroom to meet current accessibility standards",
+                    "Remaining Burnham boiler replacement",
+                    "Roof replacement (Partial)"
+                ],
+                "inProgress": [],
+                "completed": []
+            },
+            "local": {
+                "requested": [
+                    "Main office renovation",
+                    "Boys change room renewal",
+                    "Air conditioning installation",
+                    "DDC system",
+                    "Office renovation completion"
+                ],
+                "inProgress": [
+                    "Fence installation"
+                ],
+                "completed": [
+                    "Community kitchen electrical upgrades",
+                    "Kitchen island addition",
+                    "Cupboards",
+                    "Gym girls change room",
+                    "Flooring and hallway wall refinishing",
+                    "Classrooms renovation",
+                    "Library flooring renovation",
+                    "Music room renovation",
+                    "Room 10 renovation",
+                    "Room modification",
+                    "Bottle filling station addition"
+                ]
+            }
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
     },
     "beliveau": {
-        "id": "beliveau", "schoolName": "Collège Béliveau", "schoolType": "", "headerImage": "public/beliveau.jpg", "address": "296 Speers Rd.", "phone": "(204) 255-3205", "program": "Grades 7-12, French Immersion",
-        "enrolment": { "capacity": 650, "current": 678, "projection": { "2025-26": "761-763", "2026-27": "767-703", "2027-28": "832-820", "2028-29": "824-871" }, "history": { "labels": ["2020-21", "2021-22", "2022-23", "2023-24"], "values": [639, 649, 651, 649] } },
-        "details": { "Built": "1956", "Age": "68 years", "Size": "86,387 ft²", "Modular": "0" },
-        "additions": [{ "year": "1956", "size": "21,125 ft²" }, { "year": "1964", "size": "9,615 ft²" }, { "year": "1967", "size": "28,335 ft²" }, { "year": "1994", "size": "2,701 ft²" }],
-        "building": { "Air Conditioning": "Full building", "Heating": "Natural gas", "LED Lighting": "Gym, classrooms (3), main office, commons" },
-        "catchment": { "migration": "+3.3%", "description": "Net annual movement in and out of catchment (5-yr. avg.)" },
-        "transportation": { "Parking spots": "64", "Bus Loop": "Inaccessible" },
-        "accessibility": { "Girls' washrooms": "6", "Boys' washrooms": "6", "Gender neutral washrooms": "2", "Universal washroom": "YES", "Elevator": "YES", "Accessible parking stalls": "0", "Accessible entrance": "YES", "Automatic entrance door operators": "YES" },
-        "playground": ["Basketball Court", "Rubberized Track"],
-        "childcare": { "Infant (0-23 months)": "N/A", "Pre-school (2-6 years)": "N/A", "School-age (7+ years)": "N/A" },
-        "projects": {
-            "provincial": { "buildingMove": "French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd.", "requested": ["New High School Project at 296 Speers Rd.", "Addition with washrooms, fitness room, band/music rooms."], "inProgress": [], "completed": ["Foods and nutrition lab renovation", "Universal washroom"] },
-            "local": { "requested": ["Gender-neutral washroom design", "Air intake Unit", "Gym office space", "Staff washroom renovation", "Windows replacement", "Blackboards removal", "Flooring and ceiling"], "inProgress": [], "completed": ["Concrete stairs repair", "Door & frame replacement", "Refresh gym floor", "Office area redesign", "Corridor shutter door lock relocation", "Parking lot and staircase repair", "Lockers", "Lighting in science wing, library, and Grade 7/8 classrooms", "Washrooms renovation"] }
+        "id": "beliveau",
+        "schoolName": "Collège Béliveau",
+        "schoolType": "Collège",
+        "headerImage": "public/beliveau.jpg",
+        "address": "296 Speers Rd.",
+        "phone": "(204) 255-3205",
+        "program": "7-12, French Immersion",
+        "enrolment": {
+            "capacity": 650,
+            "current": 678,
+            "projection": {
+                "2025-26": "824-871",
+                "2026-27": "812-820",
+                "2027-28": "761-763",
+                "2028-29": "703"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    639,
+                    649,
+                    651,
+                    649
+                ]
+            }
         },
-        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:48:55" }
+        "details": {
+            "Built": 1956,
+            "Age": "68 years",
+            "Size": "86387 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1961",
+                "size": "21,125 ft2"
+            },
+            {
+                "year": "1964",
+                "size": "9,635 ft2"
+            },
+            {
+                "year": "1967",
+                "size": "28,335 ft2"
+            },
+            {
+                "year": "1994",
+                "size": "2,701 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gym, classrooms (3), main office, commons"
+        },
+        "catchment": {
+            "migration": "+3.3%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 64,
+            "Bus Loop": "Inaccessible"
+        },
+        "accessibility": {
+            "Girls' washrooms": 6,
+            "Boys' washrooms": 6,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 0,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball Court",
+            "Rubberized Track"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": "N/A",
+            "Pre-school (2-6 years)": "N/A",
+            "School-age (7+ years)": "N/A"
+        },
+        "projects": {
+            "provincial": {
+                "buildingMove": "French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd.",
+                "requested": [
+                    "New High School Project at 296 Speers Rd.",
+                    "Addition with washrooms, fitness room, band/music rooms."
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Foods and nutrition lab renovation",
+                    "Universal washroom"
+                ]
+            },
+            "local": {
+                "requested": [
+                    "Gender-neutral washroom design",
+                    "Air intake Unit",
+                    "Gym office space",
+                    "Staff washroom renovation",
+                    "Windows replacement",
+                    "Blackboards removal",
+                    "Flooring and ceiling"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Concrete stairs repair",
+                    "Door & frame replacement",
+                    "Refresh gym floor",
+                    "Office area redesign",
+                    "Corridor shutter door lock relocation",
+                    "Parking lot and staircase repair",
+                    "Lockers",
+                    "Lighting in science wing, library, and Grade 7/8 classrooms",
+                    "Washrooms renovation"
+                ]
+            }
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
     },
     "cjs": {
-        "id": "cjs", "schoolName": "Collège Jeanne-Sauvé", "schoolType": "", "headerImage": "public/cjs.jpg", "address": "1128 Dakota St.", "phone": "(204) 257-0124", "program": "Grades 9-12, French Immersion",
-        "enrolment": { "capacity": 900, "current": 847, "projection": { "2025-26": "829-849", "2026-27": "878-918", "2027-28": "857-917", "2028-29": "811-891" }, "history": { "labels": ["2020-21", "2021-22", "2022-23", "2023-24"], "values": [635, 684, 687, 750] } },
-        "details": { "Built": "1989", "Age": "35 years", "Size": "91,566 ft²", "Modular": "0" },
-        "additions": [{ "year": "1999", "size": "Replaced by 2023 addition" }, { "year": "2017", "size": "3,929 ft² /cafeteria, foyer" }, { "year": "2023", "size": "26,500 ft² /16 classrooms, music room" }],
-        "building": { "Air Conditioning": "Full building", "Heating": "Natural Gas", "LED Lighting": "Main office, fitness room, gym office, classrooms (28)" },
-        "catchment": { "migration": "-0.2%", "description": "Net annual movement in and out of catchment (5-yr. avg.)" },
-        "transportation": { "Parking spots": "129", "Bus Loop": "YES" },
-        "accessibility": { "Girls' washrooms": "3", "Boys' washrooms": "3", "Gender neutral washrooms": "6", "Universal washroom": "YES", "Elevator": "YES", "Accessible parking stalls": "2", "Accessible entrance": "YES", "Automatic entrance door operators": "YES" },
-        "playground": ["Garden Area", "Circle of Courage", "Outdoor classroom"],
-        "childcare": { "Infant (0-23 months)": "N/A", "Pre-school (2-6 years)": "N/A", "School-age (7+ years)": "N/A" },
-        "projects": {
-            "provincial": { "requested": ["Roof replacement (Partial)", "Additional Air Make Up unit to gym"], "inProgress": [], "completed": ["Replacement of Roof Top Unit", "Addition with 16 classrooms, music room, and universal washroom", "Rooftop solar panels", "Fitness Room", "Science Classrooms (5)"] },
-            "local": { "requested": ["Hallways and door trims repainting", "Gym bleachers", "School field redevelopment", "Classrooms floor refinishing", "Library flooring replacement", "Girls' washroom"], "inProgress": [], "completed": ["Exterior level landing for cafeteria doors", "Domestic piping renovation in replace of mezzanine access", "Lighting upgrade in all classrooms, hallways, and gymnasium", "Elevator or lift for mezzanine access"] }
+        "id": "cjs",
+        "schoolName": "Collège Jeanne-Sauvé",
+        "schoolType": "Collège",
+        "headerImage": "public/cjs.jpg",
+        "address": "1128 Dakota St.",
+        "phone": "(204) 257-0124",
+        "program": "9-12, French Immersion",
+        "enrolment": {
+            "capacity": 900,
+            "current": 847,
+            "projection": {
+                "2025-26": "811-891",
+                "2026-27": "857-917",
+                "2027-28": "878-918",
+                "2028-29": "829-849"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    635,
+                    684,
+                    687,
+                    750
+                ]
+            }
         },
-        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:48:55" }
+        "details": {
+            "Built": 1989,
+            "Age": "35 years",
+            "Size": "91566 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1999",
+                "size": "replaced by 2023 addition"
+            },
+            {
+                "year": "2017",
+                "size": "3,929 ft2 /cafeteria, foyer"
+            },
+            {
+                "year": "2023",
+                "size": "26,500 ft2 / 16 classrooms, music room"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "description",
+            "Heating": "Natural Gas",
+            "LED Lighting": "Main entry, office, fitness room, gym offices, classrooms (28)"
+        },
+        "catchment": {
+            "migration": "-0.2%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 129,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 3,
+            "Boys' washrooms": 3,
+            "Gender neutral washrooms": 6,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 2,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Garden Area",
+            "Circle of Courage",
+            "Outdoor classroom"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": "N/A",
+            "Pre-school (2-6 years)": "N/A",
+            "School-age (7+ years)": "N/A"
+        },
+        "projects": {
+            "provincial": {
+                "requested": [
+                    "Roof replacement (Partial)",
+                    "Additional Air Make Up unit to gym"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Replacement of Roof Top Unit",
+                    "Addition with 16 classrooms, music room, and universal washroom",
+                    "Rooftop solar panels",
+                    "Fitness Room",
+                    "Science Classrooms (5)"
+                ]
+            },
+            "local": {
+                "requested": [
+                    "Hallways and door trims repainting",
+                    "Gym bleachers",
+                    "School field redevelopment",
+                    "Classrooms floor refinishing",
+                    "Library flooring replacement",
+                    "Girls' washroom"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Exterior level landing for cafeteria doors",
+                    "Domestic piping renovation in replace of mezzanine access",
+                    "Lighting upgrade in all classrooms, hallways, and gymnasium",
+                    "Elevator or lift for mezzanine access"
+                ]
+            }
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
     },
     "dakota": {
         "id": "dakota",
         "schoolName": "Dakota Collegiate",
-        "schoolType": "",
+        "schoolType": "School",
         "headerImage": "public/dakota.jpg",
         "address": "661 Dakota St.",
         "phone": "(204) 256-4366",
-        "program": "Grades 9-12, English Program",
-        "enrolment": { "capacity": 1075, "current": 1494, "projection": { "2025-26": "1,479-1,518", "2026-27": "1,509-1,563", "2027-28": "1,490-1,606", "2028-29": "1,495-1,635" }, "history": { "labels": ["2020-21", "2021-22", "2022-23", "2023-24"], "values": [1219, 1201, 1342, 1400] } },
-        "details": { "Built": "1962", "Age": "62 years", "Size": "127,040 ft²", "Modular": "2" },
-        "additions": [{ "year": "1970", "size": "31,179 ft²" }, { "year": "2016", "size": "2,200 ft² / fitness centre" }],
-        "building": { "Air Conditioning": "East addition, main office, attendance office, library, theatre", "Heating": "Natural gas", "LED Lighting": "Theatre" },
-        "catchment": { "migration": "+0.1%", "description": "Net annual movement in and out of catchment (5-yr. avg.)" },
-        "transportation": { "Parking spots": "177", "Bus Loop": "Required" },
-        "accessibility": { "Girls' washrooms": "4", "Boys' washrooms": "4", "Gender neutral washrooms": "2", "Universal washroom": "YES", "Elevator": "N/A", "Accessible parking stalls": "1", "Accessible entrance": "YES", "Automatic entrance door operators": "YES" },
-        "playground": ["Football Field", "Bleachers & Press Box", "Tennis Courts", "Basketball Court", "Cricket Cage", "Patio", "Film Tower", "Indigenous garden and classroom"],
-        "childcare": { "Infant (0-23 months)": "N/A", "Pre-school (2-6 years)": "N/A", "School-age (7+ years)": "N/A" },
-        "projects": {
-            "provincial": { "requested": ["New High School: Precinct K", "Universal washrooms to meet current accessibility standards", "Elevator upgrades to accommodate all accessibility needs"], "inProgress": [], "completed": ["Penthouse Air Handling Unit Upgraded"] },
-            "local": { "requested": [], "inProgress": [], "completed": ["DDC system upgrade", "Automotive shop upgrade", "Locking hardware replacement", "Electrical outlets", "Door replacements", "Indigenous student spaces", "Individualized programming students spaces", "Guitar room soundproofing", "Flooring replacement", "Asphalt repair"] }
+        "program": "9-12, English Program",
+        "enrolment": {
+            "capacity": 1075,
+            "current": 1494,
+            "projection": {
+                "2025-26": "1,495-1,635",
+                "2026-27": "1,490-1,606",
+                "2027-28": "1,509-1,563",
+                "2028-29": "1,479-1,518"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    1219,
+                    1201,
+                    1342,
+                    1400
+                ]
+            }
         },
-        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:48:55" }
+        "details": {
+            "Built": 1962,
+            "Age": "62 years",
+            "Size": "127040 ft²",
+            "Modular": 2
+        },
+        "additions": [
+            {
+                "year": "1970",
+                "size": "31,179 ft2"
+            },
+            {
+                "year": "2016",
+                "size": "2,200 ft2 /fitness centre"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Everywhere except gym, autoshop",
+            "Heating": "Natural gas",
+            "LED Lighting": "Theatre"
+        },
+        "catchment": {
+            "migration": "+0.1%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 177,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 4,
+            "Boys' washrooms": 4,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Football Field",
+            "Bleachers & Press Box",
+            "Tennis Courts",
+            "Basketball Court",
+            "Cricket Cage",
+            "Patio",
+            "Film Tower",
+            "Indigenous garden and classroom"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": "N/A",
+            "Pre-school (2-6 years)": "N/A",
+            "School-age (7+ years)": "N/A"
+        },
+        "projects": {
+            "provincial": {
+                "requested": [
+                    "New High School: Precinct K",
+                    "Universal washrooms to meet current accessibility standards",
+                    "Elevator upgrades to accommodate all accessibility needs"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Penthouse Air Handling Unit Upgraded"
+                ]
+            },
+            "local": {
+                "requested": [],
+                "inProgress": [],
+                "completed": [
+                    "DDC system upgrade",
+                    "Automotive shop upgrade",
+                    "Locking hardware replacement",
+                    "Electrical outlets",
+                    "Door replacements",
+                    "Indigenous student spaces",
+                    "Individualized programming students spaces",
+                    "Guitar room soundproofing",
+                    "Flooring replacement",
+                    "Asphalt repair"
+                ]
+            }
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "darwin": {
+        "id": "darwin",
+        "schoolName": "Darwin School",
+        "schoolType": "School",
+        "headerImage": "public/darwin.jpg",
+        "address": "175 Darwin St.",
+        "phone": "(204) 257-2904",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 290,
+            "current": 279,
+            "projection": {
+                "2025-26": "288",
+                "2026-27": "293",
+                "2027-28": "291",
+                "2028-29": "296"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    245,
+                    230,
+                    303,
+                    292
+                ]
+            }
+        },
+        "details": {
+            "Built": 1973,
+            "Age": "51 years",
+            "Size": "54149 ft²",
+            "Modular": 0
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Everywhere except gym, woodshop, graphic arts",
+            "Heating": "Natural gas",
+            "LED Lighting": "None"
+        },
+        "catchment": {
+            "migration": "-0.1%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 32,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 4,
+            "Boys' washrooms": 4,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 2,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "Required"
+        },
+        "playground": [
+            "2 Basketball Courts",
+            "Volleyball Court",
+            "2 Four-Square Courts",
+            "2 Baseball Diamonds",
+            "Soccer Field",
+            "Free Play Area",
+            "Play structure",
+            "Outdoor learning area"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 10,
+            "School-age (7+ years)": 45
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "drdwpenner": {
+        "id": "drdwpenner",
+        "schoolName": "Dr. D.W. Penner School",
+        "schoolType": "School",
+        "headerImage": "public/drdwpenner.jpg",
+        "address": "121 Hazelwood Cres.",
+        "phone": "(204) 256-1135",
+        "program": "K-7 (K-8 in 2025), English Program",
+        "enrolment": {
+            "capacity": 230,
+            "current": 227,
+            "projection": {
+                "2025-26": "206",
+                "2026-27": "210",
+                "2027-28": "205",
+                "2028-29": "215"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    159,
+                    168,
+                    198,
+                    213
+                ]
+            }
+        },
+        "details": {
+            "Built": 1975,
+            "Age": "49 years",
+            "Size": "39542 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1976",
+                "size": "12,261 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Everywhere except gym",
+            "Heating": "Electric",
+            "LED Lighting": "Gym, Hygiene room"
+        },
+        "catchment": {
+            "migration": "+0.2%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 30,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 2,
+            "Boys' washrooms": 2,
+            "Gender neutral washrooms": 1,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "Required"
+        },
+        "playground": [
+            "Soccer field",
+            "Baseball diamond",
+            "Basketball court",
+            "City Property: Play structures",
+            "Zip line",
+            "General play areas"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 15,
+            "School-age (7+ years)": 45
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "ecolegeorgemcdowell": {
+        "id": "ecolegeorgemcdowell",
+        "schoolName": "École George-McDowell",
+        "schoolType": "École",
+        "headerImage": "public/ecolegeorgemcdowell.jpg",
+        "address": "366 Paddington Rd.",
+        "phone": "(204) 253-1492",
+        "program": "6-8, French Immersion",
+        "enrolment": {
+            "capacity": 350,
+            "current": 345,
+            "projection": {
+                "2025-26": "355",
+                "2026-27": "364",
+                "2027-28": "333",
+                "2028-29": "363"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    417,
+                    399,
+                    374,
+                    391
+                ]
+            }
+        },
+        "details": {
+            "Built": 1983,
+            "Age": "41 years",
+            "Size": "46289 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1985",
+                "size": "3,922 ft2"
+            },
+            {
+                "year": "1986",
+                "size": "8,826 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Everywhere except gym",
+            "Heating": "Natural gas",
+            "LED Lighting": "Multipurpose Room"
+        },
+        "catchment": {
+            "migration": "+1.1%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 30,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 2,
+            "Boys' washrooms": 2,
+            "Gender neutral washrooms": 1,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball court",
+            "Four-square court",
+            "Volleyball court",
+            "Cement pad w/ hopscotch/wall ball",
+            "City Property: 2 Tether ball poles",
+            "2 Baseball diamonds",
+            "Play structure"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 0
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "ecoleguyot": {
+        "id": "ecoleguyot",
+        "schoolName": "École Guyot",
+        "schoolType": "École",
+        "headerImage": "public/ecoleguyot.jpg",
+        "address": "400 Willowlake Cres.",
+        "phone": "(204) 257-2540",
+        "program": "K-8, French Immersion",
+        "enrolment": {
+            "capacity": 390,
+            "current": 430,
+            "projection": {
+                "2025-26": "471",
+                "2026-27": "471",
+                "2027-28": "472",
+                "2028-29": "457"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    402,
+                    410,
+                    425,
+                    434
+                ]
+            }
+        },
+        "details": {
+            "Built": 1974,
+            "Age": "50 years",
+            "Size": "43253 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1986",
+                "size": "4,195 ft2"
+            },
+            {
+                "year": "2017",
+                "size": "2,271 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Everywhere except gym",
+            "Heating": "Natural gas, electric",
+            "LED Lighting": "Classrooms (2), Guitar"
+        },
+        "catchment": {
+            "migration": "+2.0%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 39,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 3,
+            "Boys' washrooms": 3,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "Required",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "2 Play structures",
+            "Soccer nets",
+            "Basketball court",
+            "Rock climbing platform",
+            "Swing sets"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 18,
+            "School-age (7+ years)": 57
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "ecolehenribergeron": {
+        "id": "ecolehenribergeron",
+        "schoolName": "École Henri-Bergeron",
+        "schoolType": "École",
+        "headerImage": "public/ecolehenribergeron.jpg",
+        "address": "363 Enfield Cres.",
+        "phone": "(204) 233-7079",
+        "program": "French Immersion 5-8; Middle Immersion 4-6, French Immersion & Middle Immersion",
+        "enrolment": {
+            "capacity": 300,
+            "current": 221,
+            "projection": {
+                "2025-26": "284-310",
+                "2026-27": "271-284",
+                "2027-28": "259-264",
+                "2028-29": "246"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    242,
+                    259,
+                    212,
+                    230
+                ]
+            }
+        },
+        "details": {
+            "Built": 1962,
+            "Age": "62 years",
+            "Size": "40350 ft²",
+            "Modular": 0
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas",
+            "LED Lighting": "Boys and girls washrooms"
+        },
+        "catchment": {
+            "migration": "-1.5%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "Not specified",
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 2,
+            "Boys' washrooms": 2,
+            "Gender neutral washrooms": 1,
+            "Universal washroom": "Required",
+            "Elevator": "Required",
+            "Accessible parking stalls": 0,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "Required"
+        },
+        "playground": [
+            "Basketball court",
+            "Tether ball pole",
+            "Play structure"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 21
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "ecolehowden": {
+        "id": "ecolehowden",
+        "schoolName": "École Howden",
+        "schoolType": "École",
+        "headerImage": "public/ecolehowden.jpg",
+        "address": "150 Howden Rd.",
+        "phone": "(204) 257-0656",
+        "program": "K-8 (K-6 in 2025), French Immersion",
+        "enrolment": {
+            "capacity": 355,
+            "current": 421,
+            "projection": {
+                "2025-26": "372",
+                "2026-27": "390",
+                "2027-28": "397",
+                "2028-29": "395"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    327,
+                    322,
+                    368,
+                    398
+                ]
+            }
+        },
+        "details": {
+            "Built": 1964,
+            "Age": "60 years",
+            "Size": "34087 ft²",
+            "Modular": 2
+        },
+        "additions": [
+            {
+                "year": "1967",
+                "size": "19,753 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Main office, portables",
+            "Heating": "Natural gas, electric",
+            "LED Lighting": "Gym, Classroom"
+        },
+        "catchment": {
+            "migration": "-0.1%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 33,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 1,
+            "Boys' washrooms": 1,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 0,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball court",
+            "Basketball action play",
+            "Rain garden",
+            "Play structure",
+            "Climb & spin structure",
+            "Tether Poles",
+            "Swing sets",
+            "Climbing & hanging structures",
+            "City Property: Soccer fields",
+            "Play structures"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 12,
+            "School-age (7+ years)": 23
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "ecolejulieriel": {
+        "id": "ecolejulieriel",
+        "schoolName": "École Julie-Riel",
+        "schoolType": "École",
+        "headerImage": "public/ecolejulieriel.jpg",
+        "address": "316 Ashworth St.",
+        "phone": "(204) 253-2363",
+        "program": "French Immersion K-5; Middle Immersion 4-6, French Immersion & Middle Immersion",
+        "enrolment": {
+            "capacity": 375,
+            "current": 364,
+            "projection": {
+                "2025-26": "325",
+                "2026-27": "332",
+                "2027-28": "350",
+                "2028-29": "355"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    316,
+                    341,
+                    353,
+                    357
+                ]
+            }
+        },
+        "details": {
+            "Built": 1995,
+            "Age": "29 years",
+            "Size": "45249 ft²",
+            "Modular": 0
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gym, hallway"
+        },
+        "catchment": {
+            "migration": "+1.3%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 33,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 2,
+            "Boys' washrooms": 2,
+            "Gender neutral washrooms": 0,
+            "Universal washroom": "Required",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Swing set",
+            "Play structure",
+            "Climbing orb",
+            "Basketball nets",
+            "City Property: Soccer field"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 60
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "ecolemarieannegaboury": {
+        "id": "ecolemarieannegaboury",
+        "schoolName": "École Marie-Anne-Gaboury",
+        "schoolType": "École",
+        "headerImage": "public/ecolemarieannegaboury.jpg",
+        "address": "95 Pulberry St.",
+        "phone": "(204) 253-9704",
+        "program": "K-8, French Immersion",
+        "enrolment": {
+            "capacity": 420,
+            "current": 426,
+            "projection": {
+                "2025-26": "421",
+                "2026-27": "420",
+                "2027-28": "421",
+                "2028-29": "422"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    408,
+                    393,
+                    401,
+                    416
+                ]
+            }
+        },
+        "details": {
+            "Built": 1957,
+            "Age": "67 years",
+            "Size": "53300 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1969",
+                "size": "36,100 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas",
+            "LED Lighting": "None"
+        },
+        "catchment": {
+            "migration": "+0.4%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 40,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 5,
+            "Boys' washrooms": 4,
+            "Gender neutral washrooms": 1,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "Required"
+        },
+        "playground": [
+            "2 Baseball diamonds",
+            "Running track",
+            "High jump pole",
+            "Soccer nets",
+            "4 Tether poles",
+            "TRC Garden"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 23,
+            "School-age (7+ years)": 41
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "ecoleprovencher": {
+        "id": "ecoleprovencher",
+        "schoolName": "École Provencher",
+        "schoolType": "École",
+        "headerImage": "public/ecoleprovencher.jpg",
+        "address": "320 ave de la Cathedrale",
+        "phone": "(204) 233-0222",
+        "program": "K-4, French Immersion",
+        "enrolment": {
+            "capacity": 290,
+            "current": 290,
+            "projection": {
+                "2025-26": "345-398",
+                "2026-27": "332-356",
+                "2027-28": "323-239",
+                "2028-29": "318"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    259,
+                    256,
+                    285,
+                    293
+                ]
+            }
+        },
+        "details": {
+            "Built": 1924,
+            "Age": "100 years",
+            "Size": "71776 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1929",
+                "size": "21,460 ft2 (Rebuilt after 1923 fire)"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "None",
+            "Heating": "Natural gas",
+            "LED Lighting": "Childcare areas, meeting room 1, custodial room, washrooms (5), classrooms (9), second floor hallway, family centre room"
+        },
+        "catchment": {
+            "migration": "-1.5%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 32,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 2,
+            "Boys' washrooms": 2,
+            "Gender neutral washrooms": 3,
+            "Universal washroom": "YES",
+            "Elevator": "Required",
+            "Accessible parking stalls": 0,
+            "Accessible entrance": "Required",
+            "Automatic entrance door operators": "Required"
+        },
+        "playground": [
+            "Shade area",
+            "2 Play structures",
+            "Swing set",
+            "Zipline swing",
+            "Basketball action play",
+            "Basketball court"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 29,
+            "School-age (7+ years)": 88
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "sagecreek": {
+        "id": "sagecreek",
+        "schoolName": "Sage Creek School/École Sage Creek",
+        "schoolType": "School",
+        "headerImage": "public/sagecreek.jpg",
+        "address": "315 Sage Creek Blvd.",
+        "phone": "(204) 253-8199",
+        "program": "K-4 English, K-6 French Immersion (K-8 English in 2025), English Program & French Immersion",
+        "enrolment": {
+            "capacity": 535,
+            "current": 772,
+            "projection": {
+                "2025-26": "722-821 (Eng. K-8 only)",
+                "2026-27": "702-775 (Eng. K-8 only)",
+                "2027-28": "668-705 (Eng. K-8 only)",
+                "2028-29": "636-654 (Eng. K-8 only)"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    769,
+                    694,
+                    747,
+                    787
+                ]
+            }
+        },
+        "details": {
+            "Built": 2017,
+            "Age": "7 years",
+            "Size": "76940 ft²",
+            "Modular": 0
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Geothermal, electric",
+            "LED Lighting": "Hallways, band, office, library, classrooms (6)"
+        },
+        "catchment": {
+            "migration": "+6.9%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 48,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 1,
+            "Boys' washrooms": 1,
+            "Gender neutral washrooms": 20,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "2 Play structures",
+            "City Property: Play structure, Basketball court, Tennis court"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 20,
+            "Pre-school (2-6 years)": 64,
+            "School-age (7+ years)": 132
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "ecolestgermain": {
+        "id": "ecolestgermain",
+        "schoolName": "École St. Germain",
+        "schoolType": "École",
+        "headerImage": "public/ecolestgermain.jpg",
+        "address": "77 John Forsyth Rd.",
+        "phone": "(204) 254-0120",
+        "program": "K-5, French Immersion",
+        "enrolment": {
+            "capacity": 405,
+            "current": 399,
+            "projection": {
+                "2025-26": "356",
+                "2026-27": "365",
+                "2027-28": "391",
+                "2028-29": "399"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    483,
+                    469,
+                    471,
+                    427
+                ]
+            }
+        },
+        "details": {
+            "Built": 1987,
+            "Age": "37 years",
+            "Size": "43258 ft²",
+            "Modular": 2
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas, electric, geothermal",
+            "LED Lighting": "Gym, mini-gym"
+        },
+        "catchment": {
+            "migration": "+1.0%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "Not specified",
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 2,
+            "Boys' washrooms": 2,
+            "Gender neutral washrooms": 0,
+            "Universal washroom": "1",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 0,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "NO"
+        },
+        "playground": [
+            "Basketball court",
+            "Basketball action play",
+            "Four-square court",
+            "Play structures",
+            "Balance steppers",
+            "Picnic area",
+            "City Property: Baseball diamonds, Soccer field, Swing sets, Sharing circle"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 32,
+            "School-age (7+ years)": 33
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "ecolevanbelleghem": {
+        "id": "ecolevanbelleghem",
+        "schoolName": "École Van Belleghem",
+        "schoolType": "École",
+        "headerImage": "public/ecolevanbelleghem.jpg",
+        "address": "10 Vermillion Rd.",
+        "phone": "(204) 255-1134",
+        "program": "K-8, French Immersion",
+        "enrolment": {
+            "capacity": 365,
+            "current": 450,
+            "projection": {
+                "2025-26": "314-389",
+                "2026-27": "294-347",
+                "2027-28": "289-316",
+                "2028-29": "283-291"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    397,
+                    416,
+                    432,
+                    447
+                ]
+            }
+        },
+        "details": {
+            "Built": 1967,
+            "Age": "57 years",
+            "Size": "37212 ft²",
+            "Modular": 2
+        },
+        "additions": [
+            {
+                "year": "1968",
+                "size": "15,486 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Office, multipurpose room, band room, staff room",
+            "Heating": "Natural gas, electric",
+            "LED Lighting": "Kindergarten, library, music, MPR, classrooms (18)"
+        },
+        "catchment": {
+            "migration": "+8.0%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 20,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 2,
+            "Boys' washrooms": 2,
+            "Gender neutral washrooms": 1,
+            "Universal washroom": "Required",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball action play system",
+            "Basketball Court",
+            "Nature playground",
+            "Tree climbing system",
+            "Zipline",
+            "Honeycomb structure",
+            "Play structures",
+            "Swings",
+            "Bike cage",
+            "City Property: Baseball field, Soccer nets"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 19,
+            "School-age (7+ years)": 28
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "ecolevarennes": {
+        "id": "ecolevarennes",
+        "schoolName": "École Varennes",
+        "schoolType": "École",
+        "headerImage": "public/ecolevarennes.jpg",
+        "address": "22 Varennes Ave.",
+        "phone": "(204) 253-1375",
+        "program": "K-8, French Immersion",
+        "enrolment": {
+            "capacity": 400,
+            "current": 420,
+            "projection": {
+                "2025-26": "390",
+                "2026-27": "400",
+                "2027-28": "411",
+                "2028-29": "425"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    384,
+                    370,
+                    358,
+                    382
+                ]
+            }
+        },
+        "details": {
+            "Built": 1951,
+            "Age": "73 years",
+            "Size": "38400 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1953",
+                "size": "8,103 ft2"
+            },
+            {
+                "year": "1959",
+                "size": "18,954 ft2"
+            },
+            {
+                "year": "1976",
+                "size": "1,525 ft2 (Flood relief building, intended to last 20 years)"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Room 2 (music), room 20",
+            "Heating": "Natural gas",
+            "LED Lighting": "Classrooms (3)"
+        },
+        "catchment": {
+            "migration": "-2.3%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 38,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 2,
+            "Boys' washrooms": 2,
+            "Gender neutral washrooms": 1,
+            "Universal washroom": "Required",
+            "Elevator": "Required",
+            "Accessible parking stalls": 2,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "Required"
+        },
+        "playground": [
+            "Sandbox",
+            "Tire Swings",
+            "Soccer nets",
+            "Baseball diamond",
+            "Slide",
+            "Play structure",
+            "Basketball",
+            "Basketball action play",
+            "Sharing circle"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 37
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "frontenac": {
+        "id": "frontenac",
+        "schoolName": "Frontenac School",
+        "schoolType": "School",
+        "headerImage": "public/frontenac.jpg",
+        "address": "866 Autumnwood Dr.",
+        "phone": "(204) 257-0609",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 450,
+            "current": 418,
+            "projection": {
+                "2025-26": "373",
+                "2026-27": "387",
+                "2027-28": "385",
+                "2028-29": "397"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    433,
+                    454,
+                    426,
+                    406
+                ]
+            }
+        },
+        "details": {
+            "Built": 1956,
+            "Age": "68 years",
+            "Size": "56965 ft²",
+            "Modular": 2
+        },
+        "additions": [
+            {
+                "year": "1959",
+                "size": "16,000 ft2"
+            },
+            {
+                "year": "1964",
+                "size": "5,000 ft2"
+            },
+            {
+                "year": "1970",
+                "size": "13,865 ft2"
+            },
+            {
+                "year": "1986",
+                "size": "1,050 ft2"
+            },
+            {
+                "year": "1987",
+                "size": "1,050 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas",
+            "LED Lighting": "Staff room 34, room 28"
+        },
+        "catchment": {
+            "migration": "-1.2%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 55,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 4,
+            "Boys' washrooms": 4,
+            "Gender neutral washrooms": 4,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Play structures",
+            "Soccer area",
+            "Basketball court",
+            "Gaga Ball pit",
+            "Tetherball"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 30,
+            "School-age (7+ years)": 30
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "generalvanier": {
+        "id": "generalvanier",
+        "schoolName": "General Vanier School",
+        "schoolType": "School",
+        "headerImage": "public/generalvanier.jpg",
+        "address": "18 Lomond Blvd.",
+        "phone": "(204) 255-1400",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 235,
+            "current": 234,
+            "projection": {
+                "2025-26": "286",
+                "2026-27": "283",
+                "2027-28": "277",
+                "2028-29": "264"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    230,
+                    247,
+                    251,
+                    261
+                ]
+            }
+        },
+        "details": {
+            "Built": 1961,
+            "Age": "63 years",
+            "Size": "50644 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1963",
+                "size": "26,000 ft2"
+            },
+            {
+                "year": "1969",
+                "size": "8,644 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas",
+            "LED Lighting": "Room 6"
+        },
+        "catchment": {
+            "migration": "+2.2%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 39,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 4,
+            "Boys' washrooms": 4,
+            "Gender neutral washrooms": 4,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 0,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Gaga Ball pit",
+            "Swing sets",
+            "Play structures",
+            "Basketball court",
+            "Climbing bars",
+            "Glider and Merry-go-round",
+            "City Property: Swing set, Wading pool, Soccer fields"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 30,
+            "School-age (7+ years)": 35
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "glenlawn": {
+        "id": "glenlawn",
+        "schoolName": "Glenlawn Collegiate",
+        "schoolType": "Collegiate",
+        "headerImage": "public/glenlawn.jpg",
+        "address": "770 St. Mary's Rd.",
+        "phone": "(204) 233-3986",
+        "program": "9-12, English Program",
+        "enrolment": {
+            "capacity": 1000,
+            "current": 1104,
+            "projection": {
+                "2025-26": "1,068-1,105",
+                "2026-27": "1,071-1,077",
+                "2027-28": "1,097-1,102",
+                "2028-29": "1,071-1,095"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    991,
+                    886,
+                    911,
+                    1059
+                ]
+            }
+        },
+        "details": {
+            "Built": 1949,
+            "Age": "75 years",
+            "Size": "140850 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1956",
+                "size": ""
+            },
+            {
+                "year": "1965",
+                "size": ""
+            },
+            {
+                "year": "1972",
+                "size": ""
+            },
+            {
+                "year": "1975",
+                "size": ""
+            },
+            {
+                "year": "1997",
+                "size": "Rebuild"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Everywhere except senior woodshop, autoshop",
+            "Heating": "Natural gas",
+            "LED Lighting": "None"
+        },
+        "catchment": {
+            "migration": "-0.3%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 110,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 5,
+            "Boys' washrooms": 5,
+            "Gender neutral washrooms": 9,
+            "Universal washroom": "1",
+            "Elevator": "Partial",
+            "Accessible parking stalls": 5,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "City Property: Long jump track with sandpit, Volleyball court, Soccer fields, Basketball court, Shade structure"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 0
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "glenwood": {
+        "id": "glenwood",
+        "schoolName": "Glenwood School",
+        "schoolType": "School",
+        "headerImage": "public/glenwood.jpg",
+        "address": "51 Blenheim Ave.",
+        "phone": "(204) 233-3619",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 280,
+            "current": 267,
+            "projection": {
+                "2025-26": "285",
+                "2026-27": "290",
+                "2027-28": "289",
+                "2028-29": "287"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    172,
+                    198,
+                    216,
+                    235
+                ]
+            }
+        },
+        "details": {
+            "Built": 1910,
+            "Age": "114 years",
+            "Size": "63094 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1954",
+                "size": "5,936 ft2"
+            },
+            {
+                "year": "1955",
+                "size": "9,215 ft2"
+            },
+            {
+                "year": "1974",
+                "size": "12,077 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Main office, staff room",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gym, office, storage, classrooms (4)"
+        },
+        "catchment": {
+            "migration": "-1.1%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 32,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 2,
+            "Boys' washrooms": 2,
+            "Gender neutral washrooms": 5,
+            "Universal washroom": "Required",
+            "Elevator": "Required",
+            "Accessible parking stalls": 0,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "Required"
+        },
+        "playground": [
+            "Play structures",
+            "Basketball action play",
+            "Basketball court",
+            "City Property: Baseball diamonds"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 15,
+            "School-age (7+ years)": 50
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "hspaul": {
+        "id": "hspaul",
+        "schoolName": "H.S. Paul School",
+        "schoolType": "School",
+        "headerImage": "public/hspaul.jpg",
+        "address": "160 Southglen Blvd.",
+        "phone": "(204) 254-7477",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 375,
+            "current": 383,
+            "projection": {
+                "2025-26": "350",
+                "2026-27": "351",
+                "2027-28": "375",
+                "2028-29": "381"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    397,
+                    394,
+                    413,
+                    398
+                ]
+            }
+        },
+        "details": {
+            "Built": 1989,
+            "Age": "35 years",
+            "Size": "46558 ft²",
+            "Modular": 2
+        },
+        "additions": [
+            {
+                "year": "1991",
+                "size": "1,502 ft2 (2 modular classrooms uninhabitable)"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Back hallway, main building (needs repairs)",
+            "Heating": "Natural gas, electric, geothermal",
+            "LED Lighting": "Room 6"
+        },
+        "catchment": {
+            "migration": "-0.2%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 42,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 2,
+            "Boys' washrooms": 2,
+            "Gender neutral washrooms": 1,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Play structures",
+            "Swing sets",
+            "Basketball court",
+            "Basketball action play system",
+            "Baseball diamond",
+            "Soccer nets"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 8,
+            "Pre-school (2-6 years)": 40,
+            "School-age (7+ years)": 72
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "hastings": {
+        "id": "hastings",
+        "schoolName": "Hastings School",
+        "schoolType": "School",
+        "headerImage": "public/hastings.jpg",
+        "address": "50 Hastings Blvd.",
+        "phone": "(204) 253-1371",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 260,
+            "current": 238,
+            "projection": {
+                "2025-26": "260",
+                "2026-27": "255",
+                "2027-28": "254",
+                "2028-29": "243"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    204,
+                    198,
+                    216,
+                    235
+                ]
+            }
+        },
+        "details": {
+            "Built": 1960,
+            "Age": "64 years",
+            "Size": "36100 ft²",
+            "Modular": 0
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Everywhere except gym",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gym, hallways, main entry, offices, storage, movement room, staff washrooms, custodial room, elevator"
+        },
+        "catchment": {
+            "migration": "-0.5%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "Not specified",
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 1,
+            "Boys' washrooms": 1,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball court",
+            "Play structure",
+            "Soccer field",
+            "Gravel track",
+            "Baseball diamond",
+            "Indigenous garden",
+            "Tether ball"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 18,
+            "School-age (7+ years)": 32
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "highbury": {
+        "id": "highbury",
+        "schoolName": "Highbury School",
+        "schoolType": "School",
+        "headerImage": "public/highbury.jpg",
+        "address": "99 Highbury Rd.",
+        "phone": "(204) 254-5078",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 400,
+            "current": 450,
+            "projection": {
+                "2025-26": "423",
+                "2026-27": "425",
+                "2027-28": "437",
+                "2028-29": "440"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    403,
+                    409,
+                    407,
+                    438
+                ]
+            }
+        },
+        "details": {
+            "Built": 1991,
+            "Age": "33 years",
+            "Size": "65496 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1992",
+                "size": "13,185 ft2"
+            },
+            {
+                "year": "1997",
+                "size": "4,844 ft2"
+            },
+            {
+                "year": "2001",
+                "size": "4,456 ft2"
+            },
+            {
+                "year": "2005",
+                "size": "1,000 ft2"
+            },
+            {
+                "year": "2014",
+                "size": "4,843 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gym, multipurpose room stage, office, hygiene room"
+        },
+        "catchment": {
+            "migration": "+2.1%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 41,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 4,
+            "Boys' washrooms": 4,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "City Property: Play structures, Soccer field, Basketball court, Baseball diamond"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 16,
+            "Pre-school (2-6 years)": 56,
+            "School-age (7+ years)": 62
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "islandlakes": {
+        "id": "islandlakes",
+        "schoolName": "Island Lakes Community School",
+        "schoolType": "School",
+        "headerImage": "public/islandlakes.jpg",
+        "address": "445 Island Shore Blvd.",
+        "phone": "(204) 254-6247",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 540,
+            "current": 752,
+            "projection": {
+                "2025-26": "650-706",
+                "2026-27": "671-704",
+                "2027-28": "700-757",
+                "2028-29": "709-767"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    391,
+                    497,
+                    585,
+                    687
+                ]
+            }
+        },
+        "details": {
+            "Built": 2001,
+            "Age": "23 years",
+            "Size": "59927 ft²",
+            "Modular": 2
+        },
+        "additions": [
+            {
+                "year": "2009",
+                "size": "5,785 ft2 (2 modular classrooms added Oct. 2024)"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas, electric",
+            "LED Lighting": "Classrooms (3)"
+        },
+        "catchment": {
+            "migration": "+9.5%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 36,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 3,
+            "Boys' washrooms": 3,
+            "Gender neutral washrooms": 7,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 2,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Play structures",
+            "Swing set",
+            "Soccer nets",
+            "Basketball action play",
+            "City Property: Basketball court, Baseball diamond, Tennis court"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 4,
+            "Pre-school (2-6 years)": 62,
+            "School-age (7+ years)": 65
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "jhbruns": {
+        "id": "jhbruns",
+        "schoolName": "J.H. Bruns Collegiate",
+        "schoolType": "Collegiate",
+        "headerImage": "public/jhbruns.jpg",
+        "address": "250 Lakewood Blvd.",
+        "phone": "(204) 257-2928",
+        "program": "9-12, English Program",
+        "enrolment": {
+            "capacity": 700,
+            "current": 856,
+            "projection": {
+                "2025-26": "1,115-1,154",
+                "2026-27": "1,064-1,093",
+                "2027-28": "992-1,003",
+                "2028-29": "902"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    763,
+                    762,
+                    779,
+                    780
+                ]
+            }
+        },
+        "details": {
+            "Built": 1972,
+            "Age": "52 years",
+            "Size": "89638 ft²",
+            "Modular": 1
+        },
+        "additions": [
+            {
+                "year": "1976",
+                "size": "5,785 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Everywhere except gym, autoshop",
+            "Heating": "Natural gas, electric",
+            "LED Lighting": "Hallway"
+        },
+        "catchment": {
+            "migration": "+5.8%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 51,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 3,
+            "Boys' washrooms": 3,
+            "Gender neutral washrooms": 1,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 0,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "City Property: Play structure, Wading pool, Baseball diamonds, Southdale C."
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 0
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "lavallee": {
+        "id": "lavallee",
+        "schoolName": "Lavallee School",
+        "schoolType": "School",
+        "headerImage": "public/lavallee.jpg",
+        "address": "505 St. Anne's Rd.",
+        "phone": "(204) 257-1388",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 210,
+            "current": 161,
+            "projection": {
+                "2025-26": "192",
+                "2026-27": "186",
+                "2027-28": "183",
+                "2028-29": "183"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    142,
+                    149,
+                    169,
+                    168
+                ]
+            }
+        },
+        "details": {
+            "Built": 1973,
+            "Age": "51 years",
+            "Size": "74214 ft²",
+            "Modular": 0
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Everywhere except gym",
+            "Heating": "Natural gas",
+            "LED Lighting": "None"
+        },
+        "catchment": {
+            "migration": "+0.1%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 101,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 4,
+            "Boys' washrooms": 4,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Daycare play structure",
+            "Basketball court",
+            "Play structure",
+            "Tether ball area",
+            "City Property: Soccer field"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 18,
+            "School-age (7+ years)": 22
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "louisrielartstech": {
+        "id": "louisrielartstech",
+        "schoolName": "Louis Riel Arts & Technology Centre",
+        "schoolType": "Centre",
+        "headerImage": "public/louisrielartstech.jpg",
+        "address": "5 deBourmont Ave.",
+        "phone": "(204) 237-8951",
+        "program": "Grade 11, 12, post-secondary, Technical Vocational",
+        "enrolment": {
+            "capacity": 331,
+            "current": 141,
+            "projection": {
+                "2025-26": "N/A",
+                "2026-27": "N/A",
+                "2027-28": "N/A",
+                "2028-29": "N/A"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    135,
+                    118,
+                    147,
+                    148
+                ]
+            }
+        },
+        "details": {
+            "Built": 1970,
+            "Age": "54 years",
+            "Size": "76050 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1978",
+                "size": "19,517 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Everywhere except gym, autoshop",
+            "Heating": "Natural gas",
+            "LED Lighting": "Pastry lab, classrooms (2)"
+        },
+        "catchment": {
+            "migration": "N/A",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 66,
+            "Bus Loop": "N/A"
+        },
+        "accessibility": {
+            "Girls' washrooms": 2,
+            "Boys' washrooms": 2,
+            "Gender neutral washrooms": 1,
+            "Universal washroom": "Required",
+            "Elevator": "Required",
+            "Accessible parking stalls": 2,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Cement patio",
+            "Tennis courts"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 0
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "marion": {
+        "id": "marion",
+        "schoolName": "Marion School",
+        "schoolType": "School",
+        "headerImage": "public/marion.jpg",
+        "address": "619 Des Meurons St.",
+        "phone": "(204) 233-2893",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 250,
+            "current": 259,
+            "projection": {
+                "2025-26": "357-428",
+                "2026-27": "322-354",
+                "2027-28": "296-304",
+                "2028-29": "263"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    113,
+                    139,
+                    144,
+                    218
+                ]
+            }
+        },
+        "details": {
+            "Built": 1950,
+            "Age": "74 years",
+            "Size": "40861 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1953",
+                "size": "12,558 ft2"
+            },
+            {
+                "year": "1963",
+                "size": "6,494 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Office, staff room, all classrooms",
+            "Heating": "Natural gas",
+            "LED Lighting": "None"
+        },
+        "catchment": {
+            "migration": "-1.5%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 37,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 2,
+            "Boys' washrooms": 2,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 4,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Swing set",
+            "Baseball diamond",
+            "Play courts",
+            "Basketball court",
+            "Basketball nets",
+            "Play structures"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 4,
+            "Pre-school (2-6 years)": 16,
+            "School-age (7+ years)": 0
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "minnetonka": {
+        "id": "minnetonka",
+        "schoolName": "Minnetonka School",
+        "schoolType": "School",
+        "headerImage": "public/minnetonka.jpg",
+        "address": "200 Minnetonka St.",
+        "phone": "(204) 257-8114",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 205,
+            "current": 171,
+            "projection": {
+                "2025-26": "195",
+                "2026-27": "196",
+                "2027-28": "196",
+                "2028-29": "193"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    154,
+                    177,
+                    138,
+                    171
+                ]
+            }
+        },
+        "details": {
+            "Built": 1959,
+            "Age": "65 years",
+            "Size": "41010 ft²",
+            "Modular": 0
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Everywhere except original building (west side)",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gym, hallways, boys' & girls' washrooms, classrooms (7)"
+        },
+        "catchment": {
+            "migration": "+1.7%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 56,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 3,
+            "Boys' washrooms": 3,
+            "Gender neutral washrooms": 1,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 0,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "Required"
+        },
+        "playground": [
+            "Basketball court",
+            "Play structure",
+            "Swing sets",
+            "Soccer nets",
+            "Basketball action play"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 12,
+            "Pre-school (2-6 years)": 76,
+            "School-age (7+ years)": 19
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "nelsonmcintyre": {
+        "id": "nelsonmcintyre",
+        "schoolName": "Nelson McIntyre Collegiate",
+        "schoolType": "Collegiate",
+        "headerImage": "public/nelsonmcintyre.jpg",
+        "address": "188 St. Mary's Rd.",
+        "phone": "(204) 237-0219",
+        "program": "9-12, English Program",
+        "enrolment": {
+            "capacity": 650,
+            "current": 393,
+            "projection": {
+                "2025-26": "424-519",
+                "2026-27": "420-280",
+                "2027-28": "404-436",
+                "2028-29": "386-399"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    305,
+                    316,
+                    313,
+                    358
+                ]
+            }
+        },
+        "details": {
+            "Built": 1955,
+            "Age": "69 years",
+            "Size": "59927 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1960",
+                "size": "4,026 ft2"
+            },
+            {
+                "year": "1968",
+                "size": "21,484 ft2"
+            },
+            {
+                "year": "1973",
+                "size": "2,050 ft2"
+            },
+            {
+                "year": "1975",
+                "size": "Rebuild"
+            },
+            {
+                "year": "1986",
+                "size": "Rebuild"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Everywhere except band room, woodshop, power mechanics",
+            "Heating": "Natural gas",
+            "LED Lighting": "Boiler room, office, storage, classrooms (3)"
+        },
+        "catchment": {
+            "migration": "-1.6%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 62,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 3,
+            "Boys' washrooms": 3,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball court",
+            "Track & football"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 0
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "niakwaplace": {
+        "id": "niakwaplace",
+        "schoolName": "Niakwa Place School",
+        "schoolType": "School",
+        "headerImage": "public/niakwaplace.jpg",
+        "address": "200 Pebblebeach Rd.",
+        "phone": "(204) 257-0640",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 260,
+            "current": 248,
+            "projection": {
+                "2025-26": "297",
+                "2026-27": "303",
+                "2027-28": "292",
+                "2028-29": "283"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    262,
+                    232,
+                    250,
+                    268
+                ]
+            }
+        },
+        "details": {
+            "Built": 1974,
+            "Age": "50 years",
+            "Size": "32230 ft²",
+            "Modular": 1
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Everywhere except gym, multipurpose room",
+            "Heating": "Natural gas",
+            "LED Lighting": "Entire school"
+        },
+        "catchment": {
+            "migration": "+2.7%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 40,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 4,
+            "Boys' washrooms": 4,
+            "Gender neutral washrooms": 0,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball courts",
+            "Play structures",
+            "Soccer field"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 20,
+            "School-age (7+ years)": 15
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "nordale": {
+        "id": "nordale",
+        "schoolName": "Nordale School",
+        "schoolType": "School",
+        "headerImage": "public/nordale.jpg",
+        "address": "99 Birchdale Ave.",
+        "phone": "(204) 237-0202",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 230,
+            "current": 180,
+            "projection": {
+                "2025-26": "173",
+                "2026-27": "176",
+                "2027-28": "180",
+                "2028-29": "177"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    135,
+                    132,
+                    172,
+                    170
+                ]
+            }
+        },
+        "details": {
+            "Built": 1948,
+            "Age": "76 years",
+            "Size": "36954 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1952",
+                "size": "4,800 ft2"
+            },
+            {
+                "year": "1962",
+                "size": "2,100 ft2"
+            },
+            {
+                "year": "1968",
+                "size": "4,758 ft2"
+            },
+            {
+                "year": "1971",
+                "size": "2,346 ft2"
+            },
+            {
+                "year": "2011",
+                "size": "1,475 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Main office, library",
+            "Heating": "Natural gas",
+            "LED Lighting": "Staff washroom, fan room"
+        },
+        "catchment": {
+            "migration": "-2.4%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 32,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 3,
+            "Boys' washrooms": 3,
+            "Gender neutral washrooms": 0,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 0,
+            "Accessible entrance": "Required",
+            "Automatic entrance door operators": "Required"
+        },
+        "playground": [
+            "Basketball courts",
+            "Tetherball court",
+            "Four-square court",
+            "Climbing wall",
+            "Play structure",
+            "Nature playground",
+            "Soccer field",
+            "City Property: Soccer field"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 18,
+            "School-age (7+ years)": 30
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "samuelburland": {
+        "id": "samuelburland",
+        "schoolName": "Samuel Burland School",
+        "schoolType": "School",
+        "headerImage": "public/samuelburland.jpg",
+        "address": "192 Burland Ave.",
+        "phone": "(204) 254-0124",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 450,
+            "current": 421,
+            "projection": {
+                "2025-26": "374",
+                "2026-27": "387",
+                "2027-28": "399",
+                "2028-29": "420"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    433,
+                    454,
+                    444,
+                    448
+                ]
+            }
+        },
+        "details": {
+            "Built": 1987,
+            "Age": "37 years",
+            "Size": "44208 ft²",
+            "Modular": 0
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas, electric, geothermal",
+            "LED Lighting": "None"
+        },
+        "catchment": {
+            "migration": "+0.6%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 38,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 3,
+            "Boys' washrooms": 3,
+            "Gender neutral washrooms": 0,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 2,
+            "Accessible entrance": "Required",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball court",
+            "Play structure",
+            "City Property: Baseball diamond",
+            "Play structures"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 42,
+            "School-age (7+ years)": 63
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "shamrock": {
+        "id": "shamrock",
+        "schoolName": "Shamrock School",
+        "schoolType": "School",
+        "headerImage": "public/shamrock.jpg",
+        "address": "831 Beaverhill Blvd.",
+        "phone": "(204) 257-0637",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 640,
+            "current": 633,
+            "projection": {
+                "2025-26": "299",
+                "2026-27": "294",
+                "2027-28": "298",
+                "2028-29": "306"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    499,
+                    563,
+                    588,
+                    610
+                ]
+            }
+        },
+        "details": {
+            "Built": 1974,
+            "Age": "50 years",
+            "Size": "78185 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1978",
+                "size": "39,444 ft2 (Enrolment changes due to new school construction)"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Everywhere except gym, stage",
+            "Heating": "Natural gas",
+            "LED Lighting": "Multipurpose room, music"
+        },
+        "catchment": {
+            "migration": "+4.6%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 51,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 8,
+            "Boys' washrooms": 8,
+            "Gender neutral washrooms": 5,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 2,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "5 Play structures",
+            "2 Swing sets",
+            "2 Basketball courts",
+            "Shade structure",
+            "City Property: Soccer field"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 30,
+            "School-age (7+ years)": 100
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "stgeorge": {
+        "id": "stgeorge",
+        "schoolName": "St. George School",
+        "schoolType": "School",
+        "headerImage": "public/stgeorge.jpg",
+        "address": "151 St. George Rd.",
+        "phone": "(204) 253-2646",
+        "program": "K-6 (Grades 7 & 8 moved to Windsor School in 2024-25), English Program",
+        "enrolment": {
+            "capacity": 410,
+            "current": 344,
+            "projection": {
+                "2025-26": "361",
+                "2026-27": "385",
+                "2027-28": "393",
+                "2028-29": "401"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    327,
+                    327,
+                    377,
+                    439
+                ]
+            }
+        },
+        "details": {
+            "Built": 1954,
+            "Age": "70 years",
+            "Size": "47767 ft²",
+            "Modular": 0
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "None",
+            "Heating": "Natural gas",
+            "LED Lighting": "Classrooms (3)"
+        },
+        "catchment": {
+            "migration": "-2.7%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 22,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 3,
+            "Boys' washrooms": 3,
+            "Gender neutral washrooms": 4,
+            "Universal washroom": "Required",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 0,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "Required"
+        },
+        "playground": [
+            "Play structures",
+            "Basketball net",
+            "Basketball court",
+            "City Property: Play structure",
+            "Soccer field",
+            "St. George Park"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 30
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "victorhlwyatt": {
+        "id": "victorhlwyatt",
+        "schoolName": "Victor H.L. Wyatt School",
+        "schoolType": "School",
+        "headerImage": "public/victorhlwyatt.jpg",
+        "address": "485 Meadowood Dr.",
+        "phone": "(204) 255-7880",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 325,
+            "current": 317,
+            "projection": {
+                "2025-26": "370",
+                "2026-27": "372",
+                "2027-28": "350",
+                "2028-29": "336"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    224,
+                    260,
+                    284,
+                    310
+                ]
+            }
+        },
+        "details": {
+            "Built": 1979,
+            "Age": "45 years",
+            "Size": "63900 ft²",
+            "Modular": 0
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Everywhere except gym, autoshop, woods and graphic arts",
+            "Heating": "Natural gas",
+            "LED Lighting": "None"
+        },
+        "catchment": {
+            "migration": "+2.0%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 52,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 5,
+            "Boys' washrooms": 5,
+            "Gender neutral washrooms": 4,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 2,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Soccer field",
+            "Basketball hardtop",
+            "Baseball diamond"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 5,
+            "School-age (7+ years)": 57
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "victormager": {
+        "id": "victormager",
+        "schoolName": "Victor Mager School",
+        "schoolType": "School",
+        "headerImage": "public/victormager.jpg",
+        "address": "81 Beliveau Rd.",
+        "phone": "(204) 253-9873",
+        "program": "K-8, English Program",
+        "enrolment": {
+            "capacity": 420,
+            "current": 402,
+            "projection": {
+                "2025-26": "351",
+                "2026-27": "359",
+                "2027-28": "378",
+                "2028-29": "392"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    330,
+                    337,
+                    375,
+                    404
+                ]
+            }
+        },
+        "details": {
+            "Built": 1959,
+            "Age": "65 years",
+            "Size": "43879 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1970",
+                "size": "19,475 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Everywhere except gym, Boys & Girls Club, original building classrooms (south)",
+            "Heating": "Natural gas",
+            "LED Lighting": "None"
+        },
+        "catchment": {
+            "migration": "-6.7%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 50,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 3,
+            "Boys' washrooms": 3,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "Required",
+            "Automatic entrance door operators": "Required"
+        },
+        "playground": [
+            "Soccer fields",
+            "Swing sets",
+            "Play structures",
+            "Basketball court",
+            "Running track"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 8,
+            "School-age (7+ years)": 29
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "windsorpark": {
+        "id": "windsorpark",
+        "schoolName": "Windsor Park Collegiate",
+        "schoolType": "Collegiate",
+        "headerImage": "public/windsorpark.jpg",
+        "address": "1015 Cottonwood Rd.",
+        "phone": "(204) 256-7316",
+        "program": "9-12, English Program",
+        "enrolment": {
+            "capacity": 700,
+            "current": 709,
+            "projection": {
+                "2025-26": "507-567",
+                "2026-27": "506-561",
+                "2027-28": "611-672",
+                "2028-29": "659-711"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    605,
+                    670,
+                    702,
+                    726
+                ]
+            }
+        },
+        "details": {
+            "Built": 1959,
+            "Age": "65 years",
+            "Size": "105000 ft²",
+            "Modular": 0
+        },
+        "additions": [
+            {
+                "year": "1965",
+                "size": "10,162 ft2"
+            },
+            {
+                "year": "1969",
+                "size": "20,922 ft2"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Everywhere except gym 1",
+            "Heating": "Natural gas",
+            "LED Lighting": "Entire school"
+        },
+        "catchment": {
+            "migration": "+2.5%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 100,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 6,
+            "Boys' washrooms": 6,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball court",
+            "Tennis courts",
+            "City Property: Baseball diamond",
+            "Soccer field"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 0
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "windsor": {
+        "id": "windsor",
+        "schoolName": "Windsor School",
+        "schoolType": "School",
+        "headerImage": "public/windsor.jpg",
+        "address": "80 Cunnington Ave.",
+        "phone": "(204) 237-4057",
+        "program": "K-8 (Includes Grades 7 & 8 students relocated from St. George School), English Program",
+        "enrolment": {
+            "capacity": 260,
+            "current": 235,
+            "projection": {
+                "2025-26": "274",
+                "2026-27": "260",
+                "2027-28": "255",
+                "2028-29": "247"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    154,
+                    134,
+                    138,
+                    140
+                ]
+            }
+        },
+        "details": {
+            "Built": 1922,
+            "Age": "102 years",
+            "Size": "36576 ft²",
+            "Modular": 1
+        },
+        "additions": [
+            {
+                "year": "1957",
+                "size": ""
+            },
+            {
+                "year": "1961",
+                "size": ""
+            },
+            {
+                "year": "1964",
+                "size": ""
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Everywhere except gym, tautum room",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gym, office, conference room, hallway, hallway, art room"
+        },
+        "catchment": {
+            "migration": "+0.2%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 19,
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": 5,
+            "Boys' washrooms": 5,
+            "Gender neutral washrooms": 2,
+            "Universal washroom": "Required",
+            "Elevator": "n/a",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball courts",
+            "Play structures",
+            "Tetherball post",
+            "Basketball action play",
+            "City Property: Soccer field"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 15
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "ecolesagecreekbonavista": {
+        "id": "ecolesagecreekbonavista",
+        "schoolName": "École Sage Creek Bonavista",
+        "schoolType": "École",
+        "headerImage": "public/ecolesagecreekbonavista.jpg",
+        "address": "355 Des Hivernants Blvd.",
+        "phone": "Board Office",
+        "program": "K-8, French Immersion Program",
+        "enrolment": {
+            "capacity": 900,
+            "current": 0,
+            "projection": {
+                "2025-26": "90-97",
+                "2026-27": "859-861",
+                "2027-28": "855-880",
+                "2028-29": "836-876"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        "details": {
+            "Built": 2025,
+            "Age": "0 years",
+            "Size": "103548 ft²",
+            "Modular": 0
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas",
+            "LED Lighting": "Hallways, band, office, library, Rooms 101-103, 142, 203, 204"
+        },
+        "catchment": {
+            "migration": "+0.0%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "Not specified",
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 1,
+            "Boys' washrooms": 1,
+            "Gender neutral washrooms": 24,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 9,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "2 Play areas",
+            "Basketball court",
+            "City Property: Pump Track",
+            "Soccer field"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 0,
+            "Pre-school (2-6 years)": 0,
+            "School-age (7+ years)": 0
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
+    },
+    "sagecreekupdated": {
+        "id": "sagecreekupdated",
+        "schoolName": "Sage Creek School (Updated)",
+        "schoolType": "School",
+        "headerImage": "public/sagecreekupdated.jpg",
+        "address": "315 Sage Creek Blvd.",
+        "phone": "(204) 253-8199",
+        "program": "K-8 (transitioning to English K-8 only in 2025/26), English Program",
+        "enrolment": {
+            "capacity": 600,
+            "current": 654,
+            "projection": {
+                "2025-26": "722-821 (Eng. K-8 only)",
+                "2026-27": "702-775 (Eng. K-8 only)",
+                "2027-28": "668-705 (Eng. K-8 only)",
+                "2028-29": "636-654 (Eng. K-8 only)"
+            },
+            "history": {
+                "labels": [
+                    "2020_21",
+                    "2021_22",
+                    "2022_23",
+                    "2023_24"
+                ],
+                "values": [
+                    769,
+                    694,
+                    747,
+                    787
+                ]
+            }
+        },
+        "details": {
+            "Built": 2017,
+            "Age": "7 years",
+            "Size": "76940 ft²",
+            "Modular": 0
+        },
+        "additions": [],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Geothermal, electric",
+            "LED Lighting": "Hallways, band, office, library, classrooms (6)"
+        },
+        "catchment": {
+            "migration": "+6.9%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": 48,
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": 1,
+            "Boys' washrooms": 1,
+            "Gender neutral washrooms": 20,
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": 1,
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "2 Play structures",
+            "City Property: Play structure, Basketball court, Tennis court"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": 20,
+            "Pre-school (2-6 years)": 64,
+            "School-age (7+ years)": 132
+        },
+        "projects": {
+            "provincial": {},
+            "local": {}
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 15:51:56"
+        }
     }
 }
