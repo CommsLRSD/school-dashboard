@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentViewMode = 'school';
     let selectedSchoolId = '';
     let selectedCategoryId = '';
+    let categoryFilter = 'all';
+    let fosFilter = 'all';
 
     const categories = {
         "details": "Contact & Building Info",
@@ -95,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.capacity}</div><div class="stat-label">Classroom Capacity</div></div></div>`;
             
-            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.current}</div><div class="stat-label">Current Enrolment</div></div></div>`;
+            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.current}</div><div class="stat-label">Current Enrolment (Sept. 30)</div></div></div>`;
             
             case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div>`;
 
@@ -107,16 +109,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 const icons = { building_systems: 'cogs', accessibility: 'universal-access', playground: 'basketball-ball', transportation: 'bus', childcare: 'child', projects_provincial: 'hard-hat', projects_local: 'hard-hat' };
                 const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincial Projects', projects_local: 'Local Projects' };
                 
+                const playgroundIcons = {
+                    'Basketball Court': 'basketball-ball',
+                    'Basketball Action Play': 'basketball-ball',
+                    'Steel Play structure': 'tower-cell',
+                    'Wooden Play structure': 'tree',
+                    'Climbing dome': 'mountain',
+                    'Shade structure': 'umbrella',
+                    'Soccer nets': 'futbol',
+                    'Baseball Diamond': 'baseball-ball'
+                };
+                
                 let data, listItems;
                 if (cardType === 'projects_provincial' || cardType === 'projects_local') {
                     const projectType = cardType.split('_')[1];
                     data = school.projects[projectType];
-                    // **FIX:** Check if data and status arrays exist before trying to map them
                     listItems = ['requested', 'inProgress', 'completed'].flatMap(status => 
                         (data && data[status] && data[status].length > 0) 
-                        ? [`<li class="detail-item"><span class="detail-label">${status.charAt(0).toUpperCase() + status.slice(1)}</span></li>`, ...data[status].map(item => `<li class="detail-item" style="padding-left: 1rem;">${item}</li>`)] 
+                        ? [`<li class="detail-item"><span class="detail-label">${status.charAt(0).toUpperCase() + status.slice(1)}</span></li>`, ...data[status].map(item => `<li class="detail-item" style="padding-left: 1rem;"><i class="fas fa-check-circle" style="color: var(--primary-green); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`)] 
                         : []
                     ).join('');
+                } else if (cardType === 'playground') {
+                    data = school[cardType];
+                    listItems = Array.isArray(data) ? data.map(item => {
+                        const icon = playgroundIcons[item] || 'circle';
+                        return `<li class="detail-item"><i class="fas fa-${icon}" style="color: var(--primary-red); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`;
+                    }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : val}</span></li>`).join('');
                 } else {
                     data = school[cardType === 'building_systems' ? 'building' : cardType];
                     listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : val}</span></li>`).join('');
@@ -148,14 +166,71 @@ document.addEventListener('DOMContentLoaded', function() {
         if (chartInstances[chartId]) chartInstances[chartId].destroy();
 
         if (type === 'history') {
+            const maxValue = Math.max(...school.enrolment.history.values);
+            const yAxisMax = Math.ceil(maxValue * 1.15);
             chartInstances[chartId] = new Chart(ctx, {
-                type: 'line', data: { labels: school.enrolment.history.labels, datasets: [{ data: school.enrolment.history.values, borderColor: 'var(--primary-blue)', backgroundColor: 'rgba(79, 70, 229, 0.1)', fill: true, tension: 0.3 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: typeof ChartDataLabels !== 'undefined' ? { anchor: 'end', align: 'top', font: { weight: 'bold' } } : { display: false } } }
+                type: 'line', 
+                data: { 
+                    labels: school.enrolment.history.labels, 
+                    datasets: [{ 
+                        data: school.enrolment.history.values, 
+                        borderColor: '#BE5247', 
+                        backgroundColor: 'rgba(190, 82, 71, 0.1)', 
+                        fill: true, 
+                        tension: 0.3 
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false }, 
+                        datalabels: typeof ChartDataLabels !== 'undefined' ? { 
+                            anchor: 'end', 
+                            align: 'top', 
+                            font: { weight: 'bold' },
+                            color: '#BE5247'
+                        } : { display: false } 
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: yAxisMax
+                        }
+                    }
+                }
             });
         } else if (type === 'projection') {
             chartInstances[chartId] = new Chart(ctx, {
-                type: 'bar', data: { labels: Object.keys(school.enrolment.projection), datasets: [{ data: Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0])), backgroundColor: 'var(--primary-blue)' }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: typeof ChartDataLabels !== 'undefined' ? { anchor: 'end', align: 'end', formatter: (v, ctx) => Object.values(school.enrolment.projection)[ctx.dataIndex], font: { weight: 'bold' } } : { display: false } } }
+                type: 'bar', 
+                data: { 
+                    labels: Object.keys(school.enrolment.projection), 
+                    datasets: [{ 
+                        data: Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0])), 
+                        backgroundColor: '#BE5247',
+                        barThickness: 30
+                    }] 
+                },
+                options: { 
+                    indexAxis: 'y',
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false }, 
+                        datalabels: typeof ChartDataLabels !== 'undefined' ? { 
+                            anchor: 'end', 
+                            align: 'end', 
+                            formatter: (v, ctx) => Object.values(school.enrolment.projection)[ctx.dataIndex], 
+                            font: { weight: 'bold' },
+                            color: '#BE5247'
+                        } : { display: false } 
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    }
+                }
             });
         }
     }
@@ -186,7 +261,18 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             contentSubtitle.textContent = categories[selectedCategoryId];
             const cardType = selectedCategoryId;
-            const cardHTML = Object.values(schoolData).map(school => {
+            
+            // Filter schools based on current filter
+            let filteredSchools = Object.values(schoolData);
+            if (categoryFilter === 'elementary') {
+                filteredSchools = filteredSchools.filter(s => s.schoolLevel === 'Elementary School');
+            } else if (categoryFilter === 'highschool') {
+                filteredSchools = filteredSchools.filter(s => s.schoolLevel === 'High School');
+            } else if (categoryFilter === 'fos' && fosFilter !== 'all') {
+                filteredSchools = filteredSchools.filter(s => s.familyOfSchools === fosFilter);
+            }
+            
+            const cardHTML = filteredSchools.map(school => {
                 // For category view, create a simplified card with just the school name in header
                 const isOverCapacity = school.enrolment.current / school.enrolment.capacity >= 1;
                 const warningIcon = isOverCapacity && (cardType==='utilization' || cardType==='enrolment' || cardType==='capacity') ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : '';
@@ -205,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             if (cardType === 'history' || cardType === 'projection') {
-                Object.values(schoolData).forEach(school => renderChart(school, cardType));
+                filteredSchools.forEach(school => renderChart(school, cardType));
             }
         }
         
@@ -215,12 +301,92 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Event Listeners ---
     function setupEventListeners() {
-        navViewSelector.addEventListener('click', (e) => { e.preventDefault(); const target = e.target.closest('.nav-view-link'); if (target && target.dataset.view !== currentViewMode) { currentViewMode = target.dataset.view; updateView(); } });
+        navViewSelector.addEventListener('click', (e) => { 
+            e.preventDefault(); 
+            const target = e.target.closest('.nav-view-link'); 
+            if (target && target.dataset.view !== currentViewMode) { 
+                currentViewMode = target.dataset.view;
+                // Reset filters when switching views
+                categoryFilter = 'all';
+                fosFilter = 'all';
+                updateView(); 
+            } 
+        });
         schoolListContainer.addEventListener('click', (e) => { e.preventDefault(); const target = e.target.closest('.nav-list-item'); if (target) { selectedSchoolId = target.dataset.id; updateView(); } });
-        categoryListContainer.addEventListener('click', (e) => { e.preventDefault(); const target = e.target.closest('.nav-list-item'); if (target) { selectedCategoryId = target.dataset.id; updateView(); } });
+        categoryListContainer.addEventListener('click', (e) => { 
+            e.preventDefault(); 
+            const target = e.target.closest('.nav-list-item'); 
+            if (target) { 
+                selectedCategoryId = target.dataset.id; 
+                updateView(); 
+            } 
+        });
+        
+        // Category filter buttons
+        const categoryFilters = document.getElementById('category-filters');
+        if (categoryFilters) {
+            categoryFilters.addEventListener('click', (e) => {
+                const btn = e.target.closest('.filter-btn');
+                if (!btn) return;
+                
+                const filter = btn.dataset.filter;
+                categoryFilter = filter;
+                
+                // Update active state
+                categoryFilters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show/hide FOS submenu
+                const fosSubmenu = document.getElementById('fos-submenu');
+                const categoryLinks = categoryListContainer.querySelectorAll('.nav-list-item');
+                if (filter === 'fos') {
+                    fosSubmenu.style.display = 'flex';
+                    categoryLinks.forEach(link => link.style.display = 'none');
+                } else {
+                    fosSubmenu.style.display = 'none';
+                    categoryLinks.forEach(link => link.style.display = 'flex');
+                    fosFilter = 'all';
+                }
+                
+                updateView();
+            });
+        }
+        
+        // FOS filter buttons
+        const fosSubmenu = document.getElementById('fos-submenu');
+        if (fosSubmenu) {
+            fosSubmenu.addEventListener('click', (e) => {
+                const btn = e.target.closest('.fos-filter-btn');
+                if (btn) {
+                    fosFilter = btn.dataset.fos;
+                    fosSubmenu.querySelectorAll('.fos-filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    updateView();
+                }
+                
+                // Back button
+                const backBtn = e.target.closest('.fos-back-btn');
+                if (backBtn) {
+                    categoryFilter = 'all';
+                    fosFilter = 'all';
+                    fosSubmenu.style.display = 'none';
+                    const categoryLinks = categoryListContainer.querySelectorAll('.nav-list-item');
+                    categoryLinks.forEach(link => link.style.display = 'flex');
+                    const categoryFilters = document.getElementById('category-filters');
+                    categoryFilters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    categoryFilters.querySelector('[data-filter="all"]').classList.add('active');
+                    updateView();
+                }
+            });
+        }
+        
         function toggleSidebar() { const isOpen = sidebar.classList.toggle('open'); sidebarOverlay.classList.toggle('visible', isOpen); }
         sidebarToggleBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(); });
         sidebarOverlay.addEventListener('click', toggleSidebar);
+        const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+        if (sidebarCloseBtn) {
+            sidebarCloseBtn.addEventListener('click', toggleSidebar);
+        }
     }
 
     initializeApp();

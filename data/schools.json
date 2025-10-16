@@ -34,7 +34,7 @@
         "details": {
             "Built": 1952,
             "Age": "72 years",
-            "Size": "28513 ft²",
+            "Size": "28513 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -132,12 +132,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "NELSON MCINTYRE FOS",
+        "schoolLevel": "Elementary School"
     },
     "beliveau": {
         "id": "beliveau",
-        "schoolName": "Collège Béliveau",
-        "schoolType": "Collège",
+        "schoolName": "Coll\u00e8ge B\u00e9liveau",
+        "schoolType": "Coll\u00e8ge",
         "headerImage": "public/beliveau.jpg",
         "address": "296 Speers Rd.",
         "phone": "(204) 255-3205",
@@ -169,7 +171,7 @@
         "details": {
             "Built": 1956,
             "Age": "68 years",
-            "Size": "86387 ft²",
+            "Size": "86387 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -262,12 +264,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "B\u00c9LIVEAU FOS",
+        "schoolLevel": "High School"
     },
     "cjs": {
         "id": "cjs",
-        "schoolName": "Collège Jeanne-Sauvé",
-        "schoolType": "Collège",
+        "schoolName": "Coll\u00e8ge Jeanne-Sauv\u00e9",
+        "schoolType": "Coll\u00e8ge",
         "headerImage": "public/cjs.jpg",
         "address": "1128 Dakota St.",
         "phone": "(204) 257-0124",
@@ -299,7 +303,7 @@
         "details": {
             "Built": 1989,
             "Age": "35 years",
-            "Size": "91566 ft²",
+            "Size": "91566 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -385,7 +389,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "JEANNE-SAUV\u00c9 FOS",
+        "schoolLevel": "High School"
     },
     "dakota": {
         "id": "dakota",
@@ -422,7 +428,7 @@
         "details": {
             "Built": 1962,
             "Age": "62 years",
-            "Size": "127040 ft²",
+            "Size": "127040 ft\u00b2",
             "Modular": 2
         },
         "additions": [
@@ -505,7 +511,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "DAKOTA FOS",
+        "schoolLevel": "High School"
     },
     "darwin": {
         "id": "darwin",
@@ -542,7 +550,7 @@
         "details": {
             "Built": 1973,
             "Age": "51 years",
-            "Size": "54149 ft²",
+            "Size": "54149 ft\u00b2",
             "Modular": 0
         },
         "additions": [],
@@ -599,7 +607,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "DAKOTA FOS",
+        "schoolLevel": "Elementary School"
     },
     "drdwpenner": {
         "id": "drdwpenner",
@@ -636,7 +646,7 @@
         "details": {
             "Built": 1975,
             "Age": "49 years",
-            "Size": "39542 ft²",
+            "Size": "39542 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -696,12 +706,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "GLENLAWN FOS",
+        "schoolLevel": "Elementary School"
     },
     "ecolegeorgemcdowell": {
         "id": "ecolegeorgemcdowell",
-        "schoolName": "École George-McDowell",
-        "schoolType": "École",
+        "schoolName": "\u00c9cole George-McDowell",
+        "schoolType": "\u00c9cole",
         "headerImage": "public/ecolegeorgemcdowell.jpg",
         "address": "366 Paddington Rd.",
         "phone": "(204) 253-1492",
@@ -733,7 +745,7 @@
         "details": {
             "Built": 1983,
             "Age": "41 years",
-            "Size": "46289 ft²",
+            "Size": "46289 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -798,12 +810,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "JEANNE-SAUV\u00c9 FOS",
+        "schoolLevel": "Elementary School"
     },
     "ecoleguyot": {
         "id": "ecoleguyot",
-        "schoolName": "École Guyot",
-        "schoolType": "École",
+        "schoolName": "\u00c9cole Guyot",
+        "schoolType": "\u00c9cole",
         "headerImage": "public/ecoleguyot.jpg",
         "address": "400 Willowlake Cres.",
         "phone": "(204) 257-2540",
@@ -835,7 +849,7 @@
         "details": {
             "Built": 1974,
             "Age": "50 years",
-            "Size": "43253 ft²",
+            "Size": "43253 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -898,12 +912,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "B\u00c9LIVEAU FOS",
+        "schoolLevel": "Elementary School"
     },
     "ecolehenribergeron": {
         "id": "ecolehenribergeron",
-        "schoolName": "École Henri-Bergeron",
-        "schoolType": "École",
+        "schoolName": "\u00c9cole Henri-Bergeron",
+        "schoolType": "\u00c9cole",
         "headerImage": "public/ecolehenribergeron.jpg",
         "address": "363 Enfield Cres.",
         "phone": "(204) 233-7079",
@@ -935,7 +951,7 @@
         "details": {
             "Built": 1962,
             "Age": "62 years",
-            "Size": "40350 ft²",
+            "Size": "40350 ft\u00b2",
             "Modular": 0
         },
         "additions": [],
@@ -987,12 +1003,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "B\u00c9LIVEAU FOS",
+        "schoolLevel": "Elementary School"
     },
     "ecolehowden": {
         "id": "ecolehowden",
-        "schoolName": "École Howden",
-        "schoolType": "École",
+        "schoolName": "\u00c9cole Howden",
+        "schoolType": "\u00c9cole",
         "headerImage": "public/ecolehowden.jpg",
         "address": "150 Howden Rd.",
         "phone": "(204) 257-0656",
@@ -1024,7 +1042,7 @@
         "details": {
             "Built": 1964,
             "Age": "60 years",
-            "Size": "34087 ft²",
+            "Size": "34087 ft\u00b2",
             "Modular": 2
         },
         "additions": [
@@ -1088,12 +1106,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "B\u00c9LIVEAU FOS",
+        "schoolLevel": "Elementary School"
     },
     "ecolejulieriel": {
         "id": "ecolejulieriel",
-        "schoolName": "École Julie-Riel",
-        "schoolType": "École",
+        "schoolName": "\u00c9cole Julie-Riel",
+        "schoolType": "\u00c9cole",
         "headerImage": "public/ecolejulieriel.jpg",
         "address": "316 Ashworth St.",
         "phone": "(204) 253-2363",
@@ -1125,7 +1145,7 @@
         "details": {
             "Built": 1995,
             "Age": "29 years",
-            "Size": "45249 ft²",
+            "Size": "45249 ft\u00b2",
             "Modular": 0
         },
         "additions": [],
@@ -1179,12 +1199,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "JEANNE-SAUV\u00c9 FOS",
+        "schoolLevel": "Elementary School"
     },
     "ecolemarieannegaboury": {
         "id": "ecolemarieannegaboury",
-        "schoolName": "École Marie-Anne-Gaboury",
-        "schoolType": "École",
+        "schoolName": "\u00c9cole Marie-Anne-Gaboury",
+        "schoolType": "\u00c9cole",
         "headerImage": "public/ecolemarieannegaboury.jpg",
         "address": "95 Pulberry St.",
         "phone": "(204) 253-9704",
@@ -1216,7 +1238,7 @@
         "details": {
             "Built": 1957,
             "Age": "67 years",
-            "Size": "53300 ft²",
+            "Size": "53300 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -1276,12 +1298,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "JEANNE-SAUV\u00c9 FOS",
+        "schoolLevel": "Elementary School"
     },
     "ecoleprovencher": {
         "id": "ecoleprovencher",
-        "schoolName": "École Provencher",
-        "schoolType": "École",
+        "schoolName": "\u00c9cole Provencher",
+        "schoolType": "\u00c9cole",
         "headerImage": "public/ecoleprovencher.jpg",
         "address": "320 ave de la Cathedrale",
         "phone": "(204) 233-0222",
@@ -1313,7 +1337,7 @@
         "details": {
             "Built": 1924,
             "Age": "100 years",
-            "Size": "71776 ft²",
+            "Size": "71776 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -1373,11 +1397,13 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "B\u00c9LIVEAU FOS",
+        "schoolLevel": "Elementary School"
     },
     "sagecreek": {
         "id": "sagecreek",
-        "schoolName": "Sage Creek School/École Sage Creek",
+        "schoolName": "Sage Creek School/\u00c9cole Sage Creek",
         "schoolType": "School",
         "headerImage": "public/sagecreek.jpg",
         "address": "315 Sage Creek Blvd.",
@@ -1410,7 +1436,7 @@
         "details": {
             "Built": 2017,
             "Age": "7 years",
-            "Size": "76940 ft²",
+            "Size": "76940 ft\u00b2",
             "Modular": 0
         },
         "additions": [],
@@ -1461,12 +1487,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "schoolLevel": "Elementary School",
+        "familyOfSchools": "Other"
     },
     "ecolestgermain": {
         "id": "ecolestgermain",
-        "schoolName": "École St. Germain",
-        "schoolType": "École",
+        "schoolName": "\u00c9cole St. Germain",
+        "schoolType": "\u00c9cole",
         "headerImage": "public/ecolestgermain.jpg",
         "address": "77 John Forsyth Rd.",
         "phone": "(204) 254-0120",
@@ -1498,7 +1526,7 @@
         "details": {
             "Built": 1987,
             "Age": "37 years",
-            "Size": "43258 ft²",
+            "Size": "43258 ft\u00b2",
             "Modular": 2
         },
         "additions": [],
@@ -1554,12 +1582,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "JEANNE-SAUV\u00c9 FOS",
+        "schoolLevel": "Elementary School"
     },
     "ecolevanbelleghem": {
         "id": "ecolevanbelleghem",
-        "schoolName": "École Van Belleghem",
-        "schoolType": "École",
+        "schoolName": "\u00c9cole Van Belleghem",
+        "schoolType": "\u00c9cole",
         "headerImage": "public/ecolevanbelleghem.jpg",
         "address": "10 Vermillion Rd.",
         "phone": "(204) 255-1134",
@@ -1591,7 +1621,7 @@
         "details": {
             "Built": 1967,
             "Age": "57 years",
-            "Size": "37212 ft²",
+            "Size": "37212 ft\u00b2",
             "Modular": 2
         },
         "additions": [
@@ -1655,12 +1685,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "B\u00c9LIVEAU FOS",
+        "schoolLevel": "Elementary School"
     },
     "ecolevarennes": {
         "id": "ecolevarennes",
-        "schoolName": "École Varennes",
-        "schoolType": "École",
+        "schoolName": "\u00c9cole Varennes",
+        "schoolType": "\u00c9cole",
         "headerImage": "public/ecolevarennes.jpg",
         "address": "22 Varennes Ave.",
         "phone": "(204) 253-1375",
@@ -1692,7 +1724,7 @@
         "details": {
             "Built": 1951,
             "Age": "73 years",
-            "Size": "38400 ft²",
+            "Size": "38400 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -1763,7 +1795,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "JEANNE-SAUV\u00c9 FOS",
+        "schoolLevel": "Elementary School"
     },
     "frontenac": {
         "id": "frontenac",
@@ -1800,7 +1834,7 @@
         "details": {
             "Built": 1956,
             "Age": "68 years",
-            "Size": "56965 ft²",
+            "Size": "56965 ft\u00b2",
             "Modular": 2
         },
         "additions": [
@@ -1875,7 +1909,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "WINDSOR PARK FOS",
+        "schoolLevel": "Elementary School"
     },
     "generalvanier": {
         "id": "generalvanier",
@@ -1912,7 +1948,7 @@
         "details": {
             "Built": 1961,
             "Age": "63 years",
-            "Size": "50644 ft²",
+            "Size": "50644 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -1977,7 +2013,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "WINDSOR PARK FOS",
+        "schoolLevel": "Elementary School"
     },
     "glenlawn": {
         "id": "glenlawn",
@@ -2014,7 +2052,7 @@
         "details": {
             "Built": 1949,
             "Age": "75 years",
-            "Size": "140850 ft²",
+            "Size": "140850 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -2085,7 +2123,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "GLENLAWN FOS",
+        "schoolLevel": "High School"
     },
     "glenwood": {
         "id": "glenwood",
@@ -2122,7 +2162,7 @@
         "details": {
             "Built": 1910,
             "Age": "114 years",
-            "Size": "63094 ft²",
+            "Size": "63094 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -2188,7 +2228,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "GLENLAWN FOS",
+        "schoolLevel": "Elementary School"
     },
     "hspaul": {
         "id": "hspaul",
@@ -2225,7 +2267,7 @@
         "details": {
             "Built": 1989,
             "Age": "35 years",
-            "Size": "46558 ft²",
+            "Size": "46558 ft\u00b2",
             "Modular": 2
         },
         "additions": [
@@ -2285,7 +2327,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "DAKOTA FOS",
+        "schoolLevel": "Elementary School"
     },
     "hastings": {
         "id": "hastings",
@@ -2322,7 +2366,7 @@
         "details": {
             "Built": 1960,
             "Age": "64 years",
-            "Size": "36100 ft²",
+            "Size": "36100 ft\u00b2",
             "Modular": 0
         },
         "additions": [],
@@ -2378,7 +2422,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "DAKOTA FOS",
+        "schoolLevel": "Elementary School"
     },
     "highbury": {
         "id": "highbury",
@@ -2415,7 +2461,7 @@
         "details": {
             "Built": 1991,
             "Age": "33 years",
-            "Size": "65496 ft²",
+            "Size": "65496 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -2486,7 +2532,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "DAKOTA FOS",
+        "schoolLevel": "Elementary School"
     },
     "islandlakes": {
         "id": "islandlakes",
@@ -2523,7 +2571,7 @@
         "details": {
             "Built": 2001,
             "Age": "23 years",
-            "Size": "59927 ft²",
+            "Size": "59927 ft\u00b2",
             "Modular": 2
         },
         "additions": [
@@ -2582,7 +2630,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "J.H. BRUNS FOS",
+        "schoolLevel": "Elementary School"
     },
     "jhbruns": {
         "id": "jhbruns",
@@ -2619,7 +2669,7 @@
         "details": {
             "Built": 1972,
             "Age": "52 years",
-            "Size": "89638 ft²",
+            "Size": "89638 ft\u00b2",
             "Modular": 1
         },
         "additions": [
@@ -2674,7 +2724,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "J.H. BRUNS FOS",
+        "schoolLevel": "High School"
     },
     "lavallee": {
         "id": "lavallee",
@@ -2711,7 +2763,7 @@
         "details": {
             "Built": 1973,
             "Age": "51 years",
-            "Size": "74214 ft²",
+            "Size": "74214 ft\u00b2",
             "Modular": 0
         },
         "additions": [],
@@ -2765,7 +2817,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "DAKOTA FOS",
+        "schoolLevel": "Elementary School"
     },
     "louisrielartstech": {
         "id": "louisrielartstech",
@@ -2802,7 +2856,7 @@
         "details": {
             "Built": 1970,
             "Age": "54 years",
-            "Size": "76050 ft²",
+            "Size": "76050 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -2858,7 +2912,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "schoolLevel": "High School",
+        "familyOfSchools": "Other"
     },
     "marion": {
         "id": "marion",
@@ -2895,7 +2951,7 @@
         "details": {
             "Built": 1950,
             "Age": "74 years",
-            "Size": "40861 ft²",
+            "Size": "40861 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -2959,7 +3015,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "NELSON MCINTYRE FOS",
+        "schoolLevel": "Elementary School"
     },
     "minnetonka": {
         "id": "minnetonka",
@@ -2996,7 +3054,7 @@
         "details": {
             "Built": 1959,
             "Age": "65 years",
-            "Size": "41010 ft²",
+            "Size": "41010 ft\u00b2",
             "Modular": 0
         },
         "additions": [],
@@ -3050,7 +3108,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "GLENLAWN FOS",
+        "schoolLevel": "Elementary School"
     },
     "nelsonmcintyre": {
         "id": "nelsonmcintyre",
@@ -3087,7 +3147,7 @@
         "details": {
             "Built": 1955,
             "Age": "69 years",
-            "Size": "59927 ft²",
+            "Size": "59927 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -3159,7 +3219,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "NELSON MCINTYRE FOS",
+        "schoolLevel": "High School"
     },
     "niakwaplace": {
         "id": "niakwaplace",
@@ -3196,7 +3258,7 @@
         "details": {
             "Built": 1974,
             "Age": "50 years",
-            "Size": "32230 ft²",
+            "Size": "32230 ft\u00b2",
             "Modular": 1
         },
         "additions": [],
@@ -3248,7 +3310,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "J.H. BRUNS FOS",
+        "schoolLevel": "Elementary School"
     },
     "nordale": {
         "id": "nordale",
@@ -3285,7 +3349,7 @@
         "details": {
             "Built": 1948,
             "Age": "76 years",
-            "Size": "36954 ft²",
+            "Size": "36954 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -3363,7 +3427,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "NELSON MCINTYRE FOS",
+        "schoolLevel": "Elementary School"
     },
     "samuelburland": {
         "id": "samuelburland",
@@ -3400,7 +3466,7 @@
         "details": {
             "Built": 1987,
             "Age": "37 years",
-            "Size": "44208 ft²",
+            "Size": "44208 ft\u00b2",
             "Modular": 0
         },
         "additions": [],
@@ -3453,7 +3519,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "GLENLAWN FOS",
+        "schoolLevel": "Elementary School"
     },
     "shamrock": {
         "id": "shamrock",
@@ -3490,7 +3558,7 @@
         "details": {
             "Built": 1974,
             "Age": "50 years",
-            "Size": "78185 ft²",
+            "Size": "78185 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -3549,7 +3617,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "J.H. BRUNS FOS",
+        "schoolLevel": "Elementary School"
     },
     "stgeorge": {
         "id": "stgeorge",
@@ -3586,7 +3656,7 @@
         "details": {
             "Built": 1954,
             "Age": "70 years",
-            "Size": "47767 ft²",
+            "Size": "47767 ft\u00b2",
             "Modular": 0
         },
         "additions": [],
@@ -3641,7 +3711,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "GLENLAWN FOS",
+        "schoolLevel": "Elementary School"
     },
     "victorhlwyatt": {
         "id": "victorhlwyatt",
@@ -3678,7 +3750,7 @@
         "details": {
             "Built": 1979,
             "Age": "45 years",
-            "Size": "63900 ft²",
+            "Size": "63900 ft\u00b2",
             "Modular": 0
         },
         "additions": [],
@@ -3730,7 +3802,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "DAKOTA FOS",
+        "schoolLevel": "Elementary School"
     },
     "victormager": {
         "id": "victormager",
@@ -3767,7 +3841,7 @@
         "details": {
             "Built": 1959,
             "Age": "65 years",
-            "Size": "43879 ft²",
+            "Size": "43879 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -3826,7 +3900,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "DAKOTA FOS",
+        "schoolLevel": "Elementary School"
     },
     "windsorpark": {
         "id": "windsorpark",
@@ -3863,7 +3939,7 @@
         "details": {
             "Built": 1959,
             "Age": "65 years",
-            "Size": "105000 ft²",
+            "Size": "105000 ft\u00b2",
             "Modular": 0
         },
         "additions": [
@@ -3925,7 +4001,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "WINDSOR PARK FOS",
+        "schoolLevel": "High School"
     },
     "windsor": {
         "id": "windsor",
@@ -3962,7 +4040,7 @@
         "details": {
             "Built": 1922,
             "Age": "102 years",
-            "Size": "36576 ft²",
+            "Size": "36576 ft\u00b2",
             "Modular": 1
         },
         "additions": [
@@ -4029,12 +4107,14 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "GLENLAWN FOS",
+        "schoolLevel": "Elementary School"
     },
     "ecolesagecreekbonavista": {
         "id": "ecolesagecreekbonavista",
-        "schoolName": "École Sage Creek Bonavista",
-        "schoolType": "École",
+        "schoolName": "\u00c9cole Sage Creek Bonavista",
+        "schoolType": "\u00c9cole",
         "headerImage": "public/ecolesagecreekbonavista.jpg",
         "address": "355 Des Hivernants Blvd.",
         "phone": "Board Office",
@@ -4066,7 +4146,7 @@
         "details": {
             "Built": 2025,
             "Age": "0 years",
-            "Size": "103548 ft²",
+            "Size": "103548 ft\u00b2",
             "Modular": 0
         },
         "additions": [],
@@ -4119,7 +4199,9 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "B\u00c9LIVEAU FOS",
+        "schoolLevel": "Elementary School"
     },
     "sagecreekupdated": {
         "id": "sagecreekupdated",
@@ -4156,7 +4238,7 @@
         "details": {
             "Built": 2017,
             "Age": "7 years",
-            "Size": "76940 ft²",
+            "Size": "76940 ft\u00b2",
             "Modular": 0
         },
         "additions": [],
@@ -4207,6 +4289,8 @@
         "meta": {
             "user": "CommsLRSD",
             "updated": "2025-10-16 17:22:16"
-        }
+        },
+        "familyOfSchools": "J.H. BRUNS FOS",
+        "schoolLevel": "Elementary School"
     }
 }
