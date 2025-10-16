@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentViewMode = 'school';
     let selectedSchoolId = '';
     let selectedCategoryId = '';
+    let categoryFilter = 'all';
+    let fosFilter = 'all';
 
     const categories = {
         "details": "Contact & Building Info",
@@ -259,7 +261,18 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             contentSubtitle.textContent = categories[selectedCategoryId];
             const cardType = selectedCategoryId;
-            const cardHTML = Object.values(schoolData).map(school => {
+            
+            // Filter schools based on current filter
+            let filteredSchools = Object.values(schoolData);
+            if (categoryFilter === 'elementary') {
+                filteredSchools = filteredSchools.filter(s => s.schoolLevel === 'Elementary School');
+            } else if (categoryFilter === 'highschool') {
+                filteredSchools = filteredSchools.filter(s => s.schoolLevel === 'High School');
+            } else if (categoryFilter === 'fos' && fosFilter !== 'all') {
+                filteredSchools = filteredSchools.filter(s => s.familyOfSchools === fosFilter);
+            }
+            
+            const cardHTML = filteredSchools.map(school => {
                 // For category view, create a simplified card with just the school name in header
                 const isOverCapacity = school.enrolment.current / school.enrolment.capacity >= 1;
                 const warningIcon = isOverCapacity && (cardType==='utilization' || cardType==='enrolment' || cardType==='capacity') ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : '';
@@ -278,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             if (cardType === 'history' || cardType === 'projection') {
-                Object.values(schoolData).forEach(school => renderChart(school, cardType));
+                filteredSchools.forEach(school => renderChart(school, cardType));
             }
         }
         
@@ -288,9 +301,85 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Event Listeners ---
     function setupEventListeners() {
-        navViewSelector.addEventListener('click', (e) => { e.preventDefault(); const target = e.target.closest('.nav-view-link'); if (target && target.dataset.view !== currentViewMode) { currentViewMode = target.dataset.view; updateView(); } });
+        navViewSelector.addEventListener('click', (e) => { 
+            e.preventDefault(); 
+            const target = e.target.closest('.nav-view-link'); 
+            if (target && target.dataset.view !== currentViewMode) { 
+                currentViewMode = target.dataset.view;
+                // Reset filters when switching views
+                categoryFilter = 'all';
+                fosFilter = 'all';
+                updateView(); 
+            } 
+        });
         schoolListContainer.addEventListener('click', (e) => { e.preventDefault(); const target = e.target.closest('.nav-list-item'); if (target) { selectedSchoolId = target.dataset.id; updateView(); } });
-        categoryListContainer.addEventListener('click', (e) => { e.preventDefault(); const target = e.target.closest('.nav-list-item'); if (target) { selectedCategoryId = target.dataset.id; updateView(); } });
+        categoryListContainer.addEventListener('click', (e) => { 
+            e.preventDefault(); 
+            const target = e.target.closest('.nav-list-item'); 
+            if (target) { 
+                selectedCategoryId = target.dataset.id; 
+                updateView(); 
+            } 
+        });
+        
+        // Category filter buttons
+        const categoryFilters = document.getElementById('category-filters');
+        if (categoryFilters) {
+            categoryFilters.addEventListener('click', (e) => {
+                const btn = e.target.closest('.filter-btn');
+                if (!btn) return;
+                
+                const filter = btn.dataset.filter;
+                categoryFilter = filter;
+                
+                // Update active state
+                categoryFilters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show/hide FOS submenu
+                const fosSubmenu = document.getElementById('fos-submenu');
+                const categoryLinks = categoryListContainer.querySelectorAll('.nav-list-item');
+                if (filter === 'fos') {
+                    fosSubmenu.style.display = 'flex';
+                    categoryLinks.forEach(link => link.style.display = 'none');
+                } else {
+                    fosSubmenu.style.display = 'none';
+                    categoryLinks.forEach(link => link.style.display = 'flex');
+                    fosFilter = 'all';
+                }
+                
+                updateView();
+            });
+        }
+        
+        // FOS filter buttons
+        const fosSubmenu = document.getElementById('fos-submenu');
+        if (fosSubmenu) {
+            fosSubmenu.addEventListener('click', (e) => {
+                const btn = e.target.closest('.fos-filter-btn');
+                if (btn) {
+                    fosFilter = btn.dataset.fos;
+                    fosSubmenu.querySelectorAll('.fos-filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    updateView();
+                }
+                
+                // Back button
+                const backBtn = e.target.closest('.fos-back-btn');
+                if (backBtn) {
+                    categoryFilter = 'all';
+                    fosFilter = 'all';
+                    fosSubmenu.style.display = 'none';
+                    const categoryLinks = categoryListContainer.querySelectorAll('.nav-list-item');
+                    categoryLinks.forEach(link => link.style.display = 'flex');
+                    const categoryFilters = document.getElementById('category-filters');
+                    categoryFilters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    categoryFilters.querySelector('[data-filter="all"]').classList.add('active');
+                    updateView();
+                }
+            });
+        }
+        
         function toggleSidebar() { const isOpen = sidebar.classList.toggle('open'); sidebarOverlay.classList.toggle('visible', isOpen); }
         sidebarToggleBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(); });
         sidebarOverlay.addEventListener('click', toggleSidebar);
