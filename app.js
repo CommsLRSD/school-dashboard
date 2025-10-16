@@ -35,7 +35,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Main Initialization ---
     async function initializeApp() {
         try {
-            Chart.register(ChartDataLabels);
+            // Check if Chart is available, register plugin if it is
+            if (typeof Chart !== 'undefined' && typeof ChartDataLabels !== 'undefined') {
+                Chart.register(ChartDataLabels);
+            }
+            
             const response = await fetch('data/schools.json'); 
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             schoolData = await response.json();
@@ -120,6 +124,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Chart Rendering ---
     const renderChart = (school, type) => {
+        // Skip chart rendering if Chart.js is not available
+        if (typeof Chart === 'undefined') {
+            const chartCard = document.querySelector(`.chart-card[data-chart="${type}"][data-school-id="${school.id}"]`);
+            if (chartCard) {
+                const chartContainer = chartCard.querySelector('.chart-container');
+                chartContainer.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 2rem;">Charts require Chart.js library</p>';
+            }
+            return;
+        }
+        
         const chartCard = document.querySelector(`.chart-card[data-chart="${type}"][data-school-id="${school.id}"]`);
         if (!chartCard) return;
         const canvas = chartCard.querySelector('canvas');
@@ -130,13 +144,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (type === 'history') {
             chartInstances[chartId] = new Chart(ctx, {
-                type: 'line', data: { labels: school.enrolment.history.labels, datasets: [{ data: school.enrolment.history.values, borderColor: 'var(--primary-blue)', backgroundColor: 'rgba(58, 93, 143, 0.1)', fill: true, tension: 0.3 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'top', font: { weight: 'bold' } } } }
+                type: 'line', data: { labels: school.enrolment.history.labels, datasets: [{ data: school.enrolment.history.values, borderColor: 'var(--primary-blue)', backgroundColor: 'rgba(79, 70, 229, 0.1)', fill: true, tension: 0.3 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: typeof ChartDataLabels !== 'undefined' ? { anchor: 'end', align: 'top', font: { weight: 'bold' } } : { display: false } } }
             });
         } else if (type === 'projection') {
             chartInstances[chartId] = new Chart(ctx, {
                 type: 'bar', data: { labels: Object.keys(school.enrolment.projection), datasets: [{ data: Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0])), backgroundColor: 'var(--primary-blue)' }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'end', formatter: (v, ctx) => Object.values(school.enrolment.projection)[ctx.dataIndex], font: { weight: 'bold' } } } }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: typeof ChartDataLabels !== 'undefined' ? { anchor: 'end', align: 'end', formatter: (v, ctx) => Object.values(school.enrolment.projection)[ctx.dataIndex], font: { weight: 'bold' } } : { display: false } } }
             });
         }
     }
@@ -156,20 +170,35 @@ document.addEventListener('DOMContentLoaded', function() {
             contentSubtitle.textContent = school.schoolName;
             const cardTypes = ['school_header', 'details', 'additions', 'capacity', 'enrolment', 'utilization', 'history', 'projection', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
             cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
+            
+            // Add staggered animation delays
+            document.querySelectorAll('.data-card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.05}s`;
+            });
+            
             renderChart(school, 'history');
             renderChart(school, 'projection');
         } else {
             contentSubtitle.textContent = categories[selectedCategoryId];
             const cardType = selectedCategoryId;
             const cardHTML = Object.values(schoolData).map(school => {
-                // For category view, we need a different header for the single card type
+                // For category view, create a simplified card with just the school name in header
                 const isOverCapacity = school.enrolment.current / school.enrolment.capacity >= 1;
-                const header = `<div class="card-header"><img src="${school.headerImage}" alt="${school.schoolName}" class="card-header-thumbnail"><div><h2 class="card-title">${school.schoolName}</h2></div>${isOverCapacity && (cardType==='utilization' || cardType==='enrolment') ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : ''}</div>`;
+                const warningIcon = isOverCapacity && (cardType==='utilization' || cardType==='enrolment' || cardType==='capacity') ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : '';
+                
+                // Create a simple header with school name only (no images)
+                const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}</h2>${warningIcon}</div>`;
                 const fullCard = createCard(school, cardType);
-                // Replace the standard header with our special category-view header
+                // Replace the standard header with our category-view header (school name only)
                 return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
             }).join('');
             cardGrid.innerHTML = cardHTML;
+            
+            // Add staggered animation delays
+            document.querySelectorAll('.data-card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.05}s`;
+            });
+            
             if (cardType === 'history' || cardType === 'projection') {
                 Object.values(schoolData).forEach(school => renderChart(school, cardType));
             }
