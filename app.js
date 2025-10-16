@@ -111,7 +111,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (cardType === 'projects_provincial' || cardType === 'projects_local') {
                     const projectType = cardType.split('_')[1];
                     data = school.projects[projectType];
-                    listItems = ['requested', 'inProgress', 'completed'].flatMap(status => data[status].length > 0 ? [`<li class="detail-item"><span class="detail-label">${status.charAt(0).toUpperCase() + status.slice(1)}</span></li>`, ...data[status].map(item => `<li class="detail-item" style="padding-left: 1rem;">${item}</li>`)] : []).join('');
+                    // **FIX:** Check if data and status arrays exist before trying to map them
+                    listItems = ['requested', 'inProgress', 'completed'].flatMap(status => 
+                        (data && data[status] && data[status].length > 0) 
+                        ? [`<li class="detail-item"><span class="detail-label">${status.charAt(0).toUpperCase() + status.slice(1)}</span></li>`, ...data[status].map(item => `<li class="detail-item" style="padding-left: 1rem;">${item}</li>`)] 
+                        : []
+                    ).join('');
                 } else {
                     data = school[cardType === 'building_systems' ? 'building' : cardType];
                     listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : val}</span></li>`).join('');
@@ -182,23 +187,16 @@ document.addEventListener('DOMContentLoaded', function() {
             contentSubtitle.textContent = categories[selectedCategoryId];
             const cardType = selectedCategoryId;
             const cardHTML = Object.values(schoolData).map(school => {
+                // For category view, create a simplified card with just the school name in header
                 const isOverCapacity = school.enrolment.current / school.enrolment.capacity >= 1;
-                const warningIcon = isOverCapacity && ['utilization', 'enrolment', 'capacity'].includes(cardType) ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : '';
+                const warningIcon = isOverCapacity && (cardType==='utilization' || cardType==='enrolment' || cardType==='capacity') ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : '';
                 
+                // Create a simple header with school name only (no images)
                 const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}</h2>${warningIcon}</div>`;
                 const fullCard = createCard(school, cardType);
-
-                // Check if the card has a header before trying to replace it
-                if (fullCard.includes('<div class="card-header">')) {
-                    return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
-                }
-                
-                // If there's no header, just return the card as is, but wrapped in a container that has our desired header.
-                // This handles the 'school_header' card type which has no header div.
-                // A bit of a workaround, but it ensures consistent structure.
-                return `<div class="data-card">${header}<div class="card-body">${fullCard}</div></div>`;
+                // Replace the standard header with our category-view header (school name only)
+                return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
             }).join('');
-
             cardGrid.innerHTML = cardHTML;
             
             // Add staggered animation delays
