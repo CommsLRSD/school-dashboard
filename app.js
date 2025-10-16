@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.capacity}</div><div class="stat-label">Classroom Capacity</div></div></div>`;
             
-            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.current}</div><div class="stat-label">Current Enrolment</div></div></div>`;
+            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.current}</div><div class="stat-label">Current Enrolment (Sept. 30)</div></div></div>`;
             
             case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div>`;
 
@@ -107,16 +107,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 const icons = { building_systems: 'cogs', accessibility: 'universal-access', playground: 'basketball-ball', transportation: 'bus', childcare: 'child', projects_provincial: 'hard-hat', projects_local: 'hard-hat' };
                 const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincial Projects', projects_local: 'Local Projects' };
                 
+                const playgroundIcons = {
+                    'Basketball Court': 'basketball-ball',
+                    'Basketball Action Play': 'basketball-ball',
+                    'Steel Play structure': 'tower-cell',
+                    'Wooden Play structure': 'tree',
+                    'Climbing dome': 'mountain',
+                    'Shade structure': 'umbrella',
+                    'Soccer nets': 'futbol',
+                    'Baseball Diamond': 'baseball-ball'
+                };
+                
                 let data, listItems;
                 if (cardType === 'projects_provincial' || cardType === 'projects_local') {
                     const projectType = cardType.split('_')[1];
                     data = school.projects[projectType];
-                    // **FIX:** Check if data and status arrays exist before trying to map them
                     listItems = ['requested', 'inProgress', 'completed'].flatMap(status => 
                         (data && data[status] && data[status].length > 0) 
-                        ? [`<li class="detail-item"><span class="detail-label">${status.charAt(0).toUpperCase() + status.slice(1)}</span></li>`, ...data[status].map(item => `<li class="detail-item" style="padding-left: 1rem;">${item}</li>`)] 
+                        ? [`<li class="detail-item"><span class="detail-label">${status.charAt(0).toUpperCase() + status.slice(1)}</span></li>`, ...data[status].map(item => `<li class="detail-item" style="padding-left: 1rem;"><i class="fas fa-check-circle" style="color: var(--primary-green); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`)] 
                         : []
                     ).join('');
+                } else if (cardType === 'playground') {
+                    data = school[cardType];
+                    listItems = Array.isArray(data) ? data.map(item => {
+                        const icon = playgroundIcons[item] || 'circle';
+                        return `<li class="detail-item"><i class="fas fa-${icon}" style="color: var(--primary-red); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`;
+                    }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : val}</span></li>`).join('');
                 } else {
                     data = school[cardType === 'building_systems' ? 'building' : cardType];
                     listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : val}</span></li>`).join('');
@@ -148,14 +164,71 @@ document.addEventListener('DOMContentLoaded', function() {
         if (chartInstances[chartId]) chartInstances[chartId].destroy();
 
         if (type === 'history') {
+            const maxValue = Math.max(...school.enrolment.history.values);
+            const yAxisMax = Math.ceil(maxValue * 1.15);
             chartInstances[chartId] = new Chart(ctx, {
-                type: 'line', data: { labels: school.enrolment.history.labels, datasets: [{ data: school.enrolment.history.values, borderColor: 'var(--primary-blue)', backgroundColor: 'rgba(79, 70, 229, 0.1)', fill: true, tension: 0.3 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: typeof ChartDataLabels !== 'undefined' ? { anchor: 'end', align: 'top', font: { weight: 'bold' } } : { display: false } } }
+                type: 'line', 
+                data: { 
+                    labels: school.enrolment.history.labels, 
+                    datasets: [{ 
+                        data: school.enrolment.history.values, 
+                        borderColor: '#BE5247', 
+                        backgroundColor: 'rgba(190, 82, 71, 0.1)', 
+                        fill: true, 
+                        tension: 0.3 
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false }, 
+                        datalabels: typeof ChartDataLabels !== 'undefined' ? { 
+                            anchor: 'end', 
+                            align: 'top', 
+                            font: { weight: 'bold' },
+                            color: '#BE5247'
+                        } : { display: false } 
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: yAxisMax
+                        }
+                    }
+                }
             });
         } else if (type === 'projection') {
             chartInstances[chartId] = new Chart(ctx, {
-                type: 'bar', data: { labels: Object.keys(school.enrolment.projection), datasets: [{ data: Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0])), backgroundColor: 'var(--primary-blue)' }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: typeof ChartDataLabels !== 'undefined' ? { anchor: 'end', align: 'end', formatter: (v, ctx) => Object.values(school.enrolment.projection)[ctx.dataIndex], font: { weight: 'bold' } } : { display: false } } }
+                type: 'bar', 
+                data: { 
+                    labels: Object.keys(school.enrolment.projection), 
+                    datasets: [{ 
+                        data: Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0])), 
+                        backgroundColor: '#BE5247',
+                        barThickness: 30
+                    }] 
+                },
+                options: { 
+                    indexAxis: 'y',
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false }, 
+                        datalabels: typeof ChartDataLabels !== 'undefined' ? { 
+                            anchor: 'end', 
+                            align: 'end', 
+                            formatter: (v, ctx) => Object.values(school.enrolment.projection)[ctx.dataIndex], 
+                            font: { weight: 'bold' },
+                            color: '#BE5247'
+                        } : { display: false } 
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    }
+                }
             });
         }
     }
@@ -221,6 +294,10 @@ document.addEventListener('DOMContentLoaded', function() {
         function toggleSidebar() { const isOpen = sidebar.classList.toggle('open'); sidebarOverlay.classList.toggle('visible', isOpen); }
         sidebarToggleBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(); });
         sidebarOverlay.addEventListener('click', toggleSidebar);
+        const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+        if (sidebarCloseBtn) {
+            sidebarCloseBtn.addEventListener('click', toggleSidebar);
+        }
     }
 
     initializeApp();
