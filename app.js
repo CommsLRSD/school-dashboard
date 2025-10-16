@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Main Initialization ---
     async function initializeApp() {
         try {
+            // Check if Chart is available, register plugin if it is
             if (typeof Chart !== 'undefined' && typeof ChartDataLabels !== 'undefined') {
                 Chart.register(ChartDataLabels);
             }
@@ -57,11 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- UI Population ---
     function populateSidebarControls() {
-        schoolListContainer.innerHTML = Object.keys(schoolData).map((schoolId, index) => {
-            // *** FIX: Add the 'active' class to the first school in the list ***
-            const isActive = index === 0 ? 'active' : '';
-            return `<a href="#" class="nav-list-item ${isActive}" data-type="school" data-id="${schoolId}">${schoolData[schoolId].schoolName}</a>`;
-        }).join('');
+        schoolListContainer.innerHTML = Object.keys(schoolData).map(schoolId => 
+            `<a href="#" class="nav-list-item" data-type="school" data-id="${schoolId}">${schoolData[schoolId].schoolName}</a>`
+        ).join('');
 
         categoryListContainer.innerHTML = Object.entries(categories).map(([key, name]) => 
             `<a href="#" class="nav-list-item" data-type="category" data-id="${key}">${name}</a>`
@@ -70,12 +69,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Card Creation Functions ---
     const getTileSizeClass = (cardType) => {
+        // Cards that should be double-width
         if (['school_header', 'history', 'projection'].includes(cardType)) {
             return 'tile-double-width';
         }
+        // Cards that should be double-height for more content
         if (['details', 'accessibility', 'projects_provincial', 'projects_local'].includes(cardType)) {
             return 'tile-double-height';
         }
+        // Default: standard square tile
         return '';
     };
 
@@ -95,13 +97,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.current}</div><div class="stat-label">Current Enrolment</div></div></div>`;
             
-            case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div>`;
+            case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div>`;
 
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historical Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
             case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-bar"></i><h2 class="card-title">Projected Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
-            default: {
+            default: { // For all other simple list cards
                 const icons = { building_systems: 'cogs', accessibility: 'universal-access', playground: 'basketball-ball', transportation: 'bus', childcare: 'child', projects_provincial: 'hard-hat', projects_local: 'hard-hat' };
                 const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincial Projects', projects_local: 'Local Projects' };
                 
@@ -122,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Chart Rendering ---
     const renderChart = (school, type) => {
+        // Skip chart rendering if Chart.js is not available
         if (typeof Chart === 'undefined') {
             const chartCard = document.querySelector(`.chart-card[data-chart="${type}"][data-school-id="${school.id}"]`);
             if (chartCard) {
@@ -141,12 +144,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (type === 'history') {
             chartInstances[chartId] = new Chart(ctx, {
-                type: 'line', data: { labels: school.enrolment.history.labels, datasets: [{ data: school.enrolment.history.values, borderColor: 'var(--primary-red)', backgroundColor: 'rgba(190, 82, 71, 0.1)', fill: true, tension: 0.3 }] },
+                type: 'line', data: { labels: school.enrolment.history.labels, datasets: [{ data: school.enrolment.history.values, borderColor: 'var(--primary-blue)', backgroundColor: 'rgba(79, 70, 229, 0.1)', fill: true, tension: 0.3 }] },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: typeof ChartDataLabels !== 'undefined' ? { anchor: 'end', align: 'top', font: { weight: 'bold' } } : { display: false } } }
             });
         } else if (type === 'projection') {
             chartInstances[chartId] = new Chart(ctx, {
-                type: 'bar', data: { labels: Object.keys(school.enrolment.projection), datasets: [{ data: Object.values(school.enrolment.projection).map(v => parseInt(v.toString().split('-')[0])), backgroundColor: 'var(--primary-green)' }] },
+                type: 'bar', data: { labels: Object.keys(school.enrolment.projection), datasets: [{ data: Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0])), backgroundColor: 'var(--primary-blue)' }] },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: typeof ChartDataLabels !== 'undefined' ? { anchor: 'end', align: 'end', formatter: (v, ctx) => Object.values(school.enrolment.projection)[ctx.dataIndex], font: { weight: 'bold' } } : { display: false } } }
             });
         }
@@ -164,15 +167,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (currentViewMode === 'school') {
             const school = schoolData[selectedSchoolId];
-            if (!school) {
-                console.error(`School with ID "${selectedSchoolId}" not found.`);
-                cardGrid.innerHTML = `<p>School not found.</p>`;
-                return;
-            }
             contentSubtitle.textContent = school.schoolName;
             const cardTypes = ['school_header', 'details', 'additions', 'capacity', 'enrolment', 'utilization', 'history', 'projection', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
             cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
             
+            // Add staggered animation delays
             document.querySelectorAll('.data-card').forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.05}s`;
             });
@@ -183,15 +182,19 @@ document.addEventListener('DOMContentLoaded', function() {
             contentSubtitle.textContent = categories[selectedCategoryId];
             const cardType = selectedCategoryId;
             const cardHTML = Object.values(schoolData).map(school => {
+                // For category view, create a simplified card with just the school name in header
                 const isOverCapacity = school.enrolment.current / school.enrolment.capacity >= 1;
                 const warningIcon = isOverCapacity && (cardType==='utilization' || cardType==='enrolment' || cardType==='capacity') ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : '';
                 
+                // Create a simple header with school name only (no images)
                 const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}</h2>${warningIcon}</div>`;
                 const fullCard = createCard(school, cardType);
+                // Replace the standard header with our category-view header (school name only)
                 return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
             }).join('');
             cardGrid.innerHTML = cardHTML;
             
+            // Add staggered animation delays
             document.querySelectorAll('.data-card').forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.05}s`;
             });
