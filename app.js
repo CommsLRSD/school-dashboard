@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let schoolData = {};
     let chartInstances = {};
     let currentViewMode = 'school';
-    let selectedSchoolId = 'all'; // Default to 'all'
+    let selectedSchoolId = '';
     let selectedCategoryId = '';
 
     const categories = {
@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 Chart.register(ChartDataLabels);
             }
             
-            // Corrected the path to root
-            const response = await fetch('schools.json'); 
+            const response = await fetch('data/schools.json'); 
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             schoolData = await response.json();
             
+            selectedSchoolId = Object.keys(schoolData)[0];
             selectedCategoryId = Object.keys(categories)[0];
 
             populateSidebarControls();
@@ -57,11 +57,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- UI Population ---
     function populateSidebarControls() {
-        const schoolItems = Object.keys(schoolData).map(schoolId => 
-            `<a href="#" class="nav-list-item" data-type="school" data-id="${schoolId}">${schoolData[schoolId].schoolName}</a>`
-        ).join('');
-        // Add "All Schools" option at the top
-        schoolListContainer.innerHTML = `<a href="#" class="nav-list-item active" data-type="school" data-id="all">All Schools</a>` + schoolItems;
+        schoolListContainer.innerHTML = Object.keys(schoolData).map((schoolId, index) => {
+            // *** FIX: Add the 'active' class to the first school in the list ***
+            const isActive = index === 0 ? 'active' : '';
+            return `<a href="#" class="nav-list-item ${isActive}" data-type="school" data-id="${schoolId}">${schoolData[schoolId].schoolName}</a>`;
+        }).join('');
 
         categoryListContainer.innerHTML = Object.entries(categories).map(([key, name]) => 
             `<a href="#" class="nav-list-item" data-type="category" data-id="${key}">${name}</a>`
@@ -70,8 +70,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Card Creation Functions ---
     const getTileSizeClass = (cardType) => {
-        if (['school_header', 'history', 'projection'].includes(cardType)) return 'tile-double-width';
-        if (['details', 'accessibility', 'projects_provincial', 'projects_local'].includes(cardType)) return 'tile-double-height';
+        if (['school_header', 'history', 'projection'].includes(cardType)) {
+            return 'tile-double-width';
+        }
+        if (['details', 'accessibility', 'projects_provincial', 'projects_local'].includes(cardType)) {
+            return 'tile-double-height';
+        }
         return '';
     };
 
@@ -82,16 +86,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
         switch(cardType) {
             case 'school_header': return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${school.headerImage}" alt="${school.schoolName}"><h2 class="school-name-title">${school.schoolName}</h2></div></div>`;
+            
             case 'details': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-info-circle"></i><h2 class="card-title">Details</h2></div><div class="card-body"><ul class="detail-list">${Object.entries({"Address": school.address, "Phone": school.phone, "Program": school.program, ...school.details}).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val}</span></li>`).join('')}</ul></div></div>`;
+            
             case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-plus-square"></i><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
+
             case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.capacity}</div><div class="stat-label">Classroom Capacity</div></div></div>`;
+            
             case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.current}</div><div class="stat-label">Current Enrolment</div></div></div>`;
+            
             case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div>`;
+
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historical Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
+
             case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-bar"></i><h2 class="card-title">Projected Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
+
             default: {
                 const icons = { building_systems: 'cogs', accessibility: 'universal-access', playground: 'basketball-ball', transportation: 'bus', childcare: 'child', projects_provincial: 'hard-hat', projects_local: 'hard-hat' };
                 const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincial Projects', projects_local: 'Local Projects' };
+                
                 let data, listItems;
                 if (cardType === 'projects_provincial' || cardType === 'projects_local') {
                     const projectType = cardType.split('_')[1];
@@ -101,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     data = school[cardType === 'building_systems' ? 'building' : cardType];
                     listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : val}</span></li>`).join('');
                 }
+
                 return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-${icons[cardType]}"></i><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems || '<li class="detail-item">No data available.</li>'}</ul></div></div>`;
             }
         }
@@ -108,85 +122,87 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Chart Rendering ---
     const renderChart = (school, type) => {
-        if (typeof Chart === 'undefined') return;
+        if (typeof Chart === 'undefined') {
+            const chartCard = document.querySelector(`.chart-card[data-chart="${type}"][data-school-id="${school.id}"]`);
+            if (chartCard) {
+                const chartContainer = chartCard.querySelector('.chart-container');
+                chartContainer.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 2rem;">Charts require Chart.js library</p>';
+            }
+            return;
+        }
+        
         const chartCard = document.querySelector(`.chart-card[data-chart="${type}"][data-school-id="${school.id}"]`);
         if (!chartCard) return;
         const canvas = chartCard.querySelector('canvas');
         const ctx = canvas.getContext('2d');
         const chartId = `${type}-${school.id}`;
+
         if (chartInstances[chartId]) chartInstances[chartId].destroy();
 
         if (type === 'history') {
-            chartInstances[chartId] = new Chart(ctx, { type: 'line', data: { labels: school.enrolment.history.labels, datasets: [{ data: school.enrolment.history.values, borderColor: 'var(--primary-red)', backgroundColor: 'rgba(190, 82, 71, 0.1)', fill: true, tension: 0.3 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'top', font: { weight: 'bold' } } } } });
+            chartInstances[chartId] = new Chart(ctx, {
+                type: 'line', data: { labels: school.enrolment.history.labels, datasets: [{ data: school.enrolment.history.values, borderColor: 'var(--primary-red)', backgroundColor: 'rgba(190, 82, 71, 0.1)', fill: true, tension: 0.3 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: typeof ChartDataLabels !== 'undefined' ? { anchor: 'end', align: 'top', font: { weight: 'bold' } } : { display: false } } }
+            });
         } else if (type === 'projection') {
-            chartInstances[chartId] = new Chart(ctx, { type: 'bar', data: { labels: Object.keys(school.enrolment.projection), datasets: [{ data: Object.values(school.enrolment.projection).map(v => parseInt(v.toString().split('-')[0])), backgroundColor: 'var(--primary-green)' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'end', formatter: (v, ctx) => Object.values(school.enrolment.projection)[ctx.dataIndex], font: { weight: 'bold' } } } } });
+            chartInstances[chartId] = new Chart(ctx, {
+                type: 'bar', data: { labels: Object.keys(school.enrolment.projection), datasets: [{ data: Object.values(school.enrolment.projection).map(v => parseInt(v.toString().split('-')[0])), backgroundColor: 'var(--primary-green)' }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: typeof ChartDataLabels !== 'undefined' ? { anchor: 'end', align: 'end', formatter: (v, ctx) => Object.values(school.enrolment.projection)[ctx.dataIndex], font: { weight: 'bold' } } : { display: false } } }
+            });
         }
     }
 
-    // --- Main View Logic (MODIFIED) ---
+    // --- Main View Logic ---
     function updateView() {
         Object.values(chartInstances).forEach(chart => chart.destroy());
         chartInstances = {};
-        cardGrid.innerHTML = '';
+        cardGrid.innerHTML = ''; 
 
         document.querySelectorAll('.nav-view-link').forEach(link => link.classList.toggle('active', link.dataset.view === currentViewMode));
         document.querySelectorAll('.nav-list-container').forEach(c => c.classList.toggle('active', c.id.startsWith(currentViewMode)));
         document.querySelectorAll('.nav-list-item').forEach(item => item.classList.toggle('active', item.dataset.id === (item.dataset.type === 'school' ? selectedSchoolId : selectedCategoryId)));
 
         if (currentViewMode === 'school') {
-            // If a specific school is selected, show its detailed dashboard
-            if (selectedSchoolId && selectedSchoolId !== 'all') {
-                const school = schoolData[selectedSchoolId];
-                contentSubtitle.textContent = school.schoolName;
-                const cardTypes = ['school_header', 'details', 'additions', 'capacity', 'enrolment', 'utilization', 'history', 'projection', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
-                cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
-                renderChart(school, 'history');
-                renderChart(school, 'projection');
-            } else {
-                // If "All Schools" is selected, show an overview of all schools
-                contentSubtitle.textContent = "All Schools Overview";
-                const cardHTML = Object.values(schoolData).map(school => {
-                    const isOverCapacity = school.enrolment.current / school.enrolment.capacity >= 1;
-                    const capacityClass = isOverCapacity ? 'over-capacity' : '';
-                    // Create a simple card showing Name, Enrolment, and Utilization for each school
-                    return `
-                        <div class="data-card ${capacityClass}">
-                            <div class="card-header"><h2 class="card-title">${school.schoolName}</h2></div>
-                            <div class="card-body" style="flex-direction: row; justify-content: space-around; align-items: center;">
-                                <div style="text-align: center;">
-                                    <div class="stat-value" style="font-size: 2rem;">${school.enrolment.current}</div>
-                                    <div class="stat-label">Enrolment</div>
-                                </div>
-                                <div style="text-align: center;">
-                                    <div class="stat-value" style="font-size: 2rem;">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div>
-                                    <div class="stat-label">Utilization</div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-                cardGrid.innerHTML = cardHTML;
+            const school = schoolData[selectedSchoolId];
+            if (!school) {
+                console.error(`School with ID "${selectedSchoolId}" not found.`);
+                cardGrid.innerHTML = `<p>School not found.</p>`;
+                return;
             }
-        } else { // Category View
+            contentSubtitle.textContent = school.schoolName;
+            const cardTypes = ['school_header', 'details', 'additions', 'capacity', 'enrolment', 'utilization', 'history', 'projection', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
+            cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
+            
+            document.querySelectorAll('.data-card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.05}s`;
+            });
+            
+            renderChart(school, 'history');
+            renderChart(school, 'projection');
+        } else {
             contentSubtitle.textContent = categories[selectedCategoryId];
             const cardType = selectedCategoryId;
             const cardHTML = Object.values(schoolData).map(school => {
                 const isOverCapacity = school.enrolment.current / school.enrolment.capacity >= 1;
                 const warningIcon = isOverCapacity && (cardType==='utilization' || cardType==='enrolment' || cardType==='capacity') ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : '';
+                
                 const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}</h2>${warningIcon}</div>`;
                 const fullCard = createCard(school, cardType);
                 return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
             }).join('');
             cardGrid.innerHTML = cardHTML;
             
+            document.querySelectorAll('.data-card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.05}s`;
+            });
+            
             if (cardType === 'history' || cardType === 'projection') {
                 Object.values(schoolData).forEach(school => renderChart(school, cardType));
             }
         }
         
-        document.querySelectorAll('.data-card').forEach((card, index) => { card.style.animationDelay = `${index * 0.05}s`; });
         const firstSchool = schoolData[Object.keys(schoolData)[0]];
-        if (firstSchool?.meta?.updated) footerTimestamp.textContent = `Data updated ${firstSchool.meta.updated}`;
+        if (firstSchool?.meta) footerTimestamp.textContent = `Data updated ${firstSchool.meta.updated}`;
     }
 
     // --- Event Listeners ---
