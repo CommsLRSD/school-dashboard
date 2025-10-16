@@ -40,6 +40,7 @@ school-dashboard/
 ├── app.js                # Main application logic (fetching data, rendering cards, event handling).
 ├── index.html            # The main HTML file for the application.
 ├── styles.css            # All visual styling and responsive design rules.
+├── validate-schools.js   # Validation script to ensure all school IDs are unique.
 │
 ├── .gitignore            # Tells Git which files to ignore (e.g., system files).
 └── README.md             # This documentation file.
@@ -76,3 +77,30 @@ This project structure is optimized for easy deployment to GitHub Pages.
 6.  Click **Save**.
 
 After a minute or two, your site will be live at the URL provided on that page.
+
+---
+
+## Data Management
+
+### School IDs
+
+Each school in `data/schools.json` must have a unique ID. The ID serves two purposes:
+1. As the top-level key in the JSON object (e.g., `"archwood"`, `"beliveau"`)
+2. As the value of the `"id"` field within each school object
+
+**Important:** Duplicate IDs will cause schools to be overwritten when the data is loaded, as JavaScript objects can only have unique keys. Only the last occurrence of a duplicate ID will be displayed in the application.
+
+### Validating School Data
+
+To ensure all school IDs are unique, you can run the validation script:
+
+```bash
+node validate-schools.js
+```
+
+This script will:
+- Check that all schools have unique IDs
+- Verify that the top-level key matches the `id` field for each school
+- Report any errors or warnings
+
+**Best Practice:** Run this validation script before committing changes to `data/schools.json` to ensure data integrity.
