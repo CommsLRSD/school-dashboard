@@ -31,3 +31,7 @@ out/
 
 # Ignore test files
 test-*.html
+
+# Ignore RTF source files and merge scripts (temporary data files)
+*.rtf
+merge_schools.py

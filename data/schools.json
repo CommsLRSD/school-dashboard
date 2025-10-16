@@ -10,59 +10,382 @@
         "enrolment": {
             "capacity": 210,
             "current": 182,
-            "projection": { "2025-26": "184", "2026-27": "177", "2027-28": "182", "2028-29": "181" },
-            "history": { "labels": ["2020-21", "2021-22", "2022-23", "2023-24"], "values": [179, 199, 229, 195] }
+            "projection": {
+                "2025-26": "184",
+                "2026-27": "177",
+                "2027-28": "182",
+                "2028-29": "181"
+            },
+            "history": {
+                "labels": [
+                    "2020-21",
+                    "2021-22",
+                    "2022-23",
+                    "2023-24"
+                ],
+                "values": [
+                    179,
+                    199,
+                    229,
+                    195
+                ]
+            }
         },
-        "details": { "Built": "1952", "Age": "72 years", "Size": "28,513 ft²", "Modular": "0" },
+        "details": {
+            "Built": "1952",
+            "Age": "72 years",
+            "Size": "28,513 ft²",
+            "Modular": "0"
+        },
         "additions": [
-            { "year": "1954", "size": "5,104 ft²" }, { "year": "1967", "size": "2,829 ft²" },
-            { "year": "1971", "size": "5,898 ft²" }, { "year": "1975", "size": "352 ft²" }
+            {
+                "year": "1954",
+                "size": "5,104 ft²"
+            },
+            {
+                "year": "1967",
+                "size": "2,829 ft²"
+            },
+            {
+                "year": "1971",
+                "size": "5,898 ft²"
+            },
+            {
+                "year": "1975",
+                "size": "352 ft²"
+            }
         ],
-        "building": { "Air Conditioning": "Main office, gym", "Heating": "Natural gas", "LED Lighting": "Gym" },
-        "catchment": { "migration": "-0.7%", "description": "Net annual movement in and out of catchment (5-yr. avg.)" },
-        "transportation": { "Parking spots": "###", "Bus Loop": "NO" },
-        "accessibility": { "Girls' washrooms": "3", "Boys' washrooms": "3", "Gender neutral washrooms": "1", "Universal Washroom": "YES", "Elevator": "n/a", "Accessible parking stalls": "1", "Accessible entrance": "YES", "Automatic entrance door operators": "YES" },
-        "playground": ["Basketball Court", "Basketball Action Play", "Steel Play structure", "Wooden Play structure", "Climbing dome", "Shade structure", "Soccer nets", "Baseball Diamond"],
-        "childcare": { "Infant (0-23 months)": "0", "Pre-school (2-6 years)": "0", "School-age (7+ years)": "24" },
-        "projects": {
-            "provincial": { "requested": ["Universal washroom to meet current accessibility standards", "Remaining Burnham boiler replacement", "Roof replacement (Partial)"], "inProgress": [], "completed": [] },
-            "local": { "requested": ["Main office renovation", "Boys change room renewal", "Air conditioning installation", "DDC system", "Office renovation completion"], "inProgress": ["Fence installation"], "completed": ["Community kitchen electrical upgrades", "Kitchen island addition", "Cupboards", "Gym girls change room", "Flooring and hallway wall refinishing", "Classrooms renovation", "Library flooring renovation", "Music room renovation", "Room 10 renovation", "Room modification", "Bottle filling station addition"] }
+        "building": {
+            "Air Conditioning": "Main office, gym",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gym"
         },
-        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:48:55" }
+        "catchment": {
+            "migration": "-0.7%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "###",
+            "Bus Loop": "NO"
+        },
+        "accessibility": {
+            "Girls' washrooms": "3",
+            "Boys' washrooms": "3",
+            "Gender neutral washrooms": "1",
+            "Universal Washroom": "YES",
+            "Elevator": "n/a",
+            "Accessible parking stalls": "1",
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball Court",
+            "Basketball Action Play",
+            "Steel Play structure",
+            "Wooden Play structure",
+            "Climbing dome",
+            "Shade structure",
+            "Soccer nets",
+            "Baseball Diamond"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": "0",
+            "Pre-school (2-6 years)": "0",
+            "School-age (7+ years)": "24"
+        },
+        "projects": {
+            "provincial": {
+                "requested": [
+                    "Universal washroom to meet current accessibility standards",
+                    "Remaining Burnham boiler replacement",
+                    "Roof replacement (Partial)"
+                ],
+                "inProgress": [],
+                "completed": []
+            },
+            "local": {
+                "requested": [
+                    "Main office renovation",
+                    "Boys change room renewal",
+                    "Air conditioning installation",
+                    "DDC system",
+                    "Office renovation completion"
+                ],
+                "inProgress": [
+                    "Fence installation"
+                ],
+                "completed": [
+                    "Community kitchen electrical upgrades",
+                    "Kitchen island addition",
+                    "Cupboards",
+                    "Gym girls change room",
+                    "Flooring and hallway wall refinishing",
+                    "Classrooms renovation",
+                    "Library flooring renovation",
+                    "Music room renovation",
+                    "Room 10 renovation",
+                    "Room modification",
+                    "Bottle filling station addition"
+                ]
+            }
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-15 21:48:55"
+        }
     },
     "beliveau": {
-        "id": "beliveau", "schoolName": "Collège Béliveau", "schoolType": "", "headerImage": "public/beliveau.jpg", "address": "296 Speers Rd.", "phone": "(204) 255-3205", "program": "Grades 7-12, French Immersion",
-        "enrolment": { "capacity": 650, "current": 678, "projection": { "2025-26": "761-763", "2026-27": "767-703", "2027-28": "832-820", "2028-29": "824-871" }, "history": { "labels": ["2020-21", "2021-22", "2022-23", "2023-24"], "values": [639, 649, 651, 649] } },
-        "details": { "Built": "1956", "Age": "68 years", "Size": "86,387 ft²", "Modular": "0" },
-        "additions": [{ "year": "1956", "size": "21,125 ft²" }, { "year": "1964", "size": "9,615 ft²" }, { "year": "1967", "size": "28,335 ft²" }, { "year": "1994", "size": "2,701 ft²" }],
-        "building": { "Air Conditioning": "Full building", "Heating": "Natural gas", "LED Lighting": "Gym, classrooms (3), main office, commons" },
-        "catchment": { "migration": "+3.3%", "description": "Net annual movement in and out of catchment (5-yr. avg.)" },
-        "transportation": { "Parking spots": "64", "Bus Loop": "Inaccessible" },
-        "accessibility": { "Girls' washrooms": "6", "Boys' washrooms": "6", "Gender neutral washrooms": "2", "Universal washroom": "YES", "Elevator": "YES", "Accessible parking stalls": "0", "Accessible entrance": "YES", "Automatic entrance door operators": "YES" },
-        "playground": ["Basketball Court", "Rubberized Track"],
-        "childcare": { "Infant (0-23 months)": "N/A", "Pre-school (2-6 years)": "N/A", "School-age (7+ years)": "N/A" },
-        "projects": {
-            "provincial": { "buildingMove": "French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd.", "requested": ["New High School Project at 296 Speers Rd.", "Addition with washrooms, fitness room, band/music rooms."], "inProgress": [], "completed": ["Foods and nutrition lab renovation", "Universal washroom"] },
-            "local": { "requested": ["Gender-neutral washroom design", "Air intake Unit", "Gym office space", "Staff washroom renovation", "Windows replacement", "Blackboards removal", "Flooring and ceiling"], "inProgress": [], "completed": ["Concrete stairs repair", "Door & frame replacement", "Refresh gym floor", "Office area redesign", "Corridor shutter door lock relocation", "Parking lot and staircase repair", "Lockers", "Lighting in science wing, library, and Grade 7/8 classrooms", "Washrooms renovation"] }
+        "id": "beliveau",
+        "schoolName": "Collège Béliveau",
+        "schoolType": "",
+        "headerImage": "public/beliveau.jpg",
+        "address": "296 Speers Rd.",
+        "phone": "(204) 255-3205",
+        "program": "Grades 7-12, French Immersion",
+        "enrolment": {
+            "capacity": 650,
+            "current": 678,
+            "projection": {
+                "2025-26": "761-763",
+                "2026-27": "767-703",
+                "2027-28": "832-820",
+                "2028-29": "824-871"
+            },
+            "history": {
+                "labels": [
+                    "2020-21",
+                    "2021-22",
+                    "2022-23",
+                    "2023-24"
+                ],
+                "values": [
+                    639,
+                    649,
+                    651,
+                    649
+                ]
+            }
         },
-        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:48:55" }
+        "details": {
+            "Built": "1956",
+            "Age": "68 years",
+            "Size": "86,387 ft²",
+            "Modular": "0"
+        },
+        "additions": [
+            {
+                "year": "1956",
+                "size": "21,125 ft²"
+            },
+            {
+                "year": "1964",
+                "size": "9,615 ft²"
+            },
+            {
+                "year": "1967",
+                "size": "28,335 ft²"
+            },
+            {
+                "year": "1994",
+                "size": "2,701 ft²"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gym, classrooms (3), main office, commons"
+        },
+        "catchment": {
+            "migration": "+3.3%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "64",
+            "Bus Loop": "Inaccessible"
+        },
+        "accessibility": {
+            "Girls' washrooms": "6",
+            "Boys' washrooms": "6",
+            "Gender neutral washrooms": "2",
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": "0",
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball Court",
+            "Rubberized Track"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": "N/A",
+            "Pre-school (2-6 years)": "N/A",
+            "School-age (7+ years)": "N/A"
+        },
+        "projects": {
+            "provincial": {
+                "buildingMove": "French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd.",
+                "requested": [
+                    "New High School Project at 296 Speers Rd.",
+                    "Addition with washrooms, fitness room, band/music rooms."
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Foods and nutrition lab renovation",
+                    "Universal washroom"
+                ]
+            },
+            "local": {
+                "requested": [
+                    "Gender-neutral washroom design",
+                    "Air intake Unit",
+                    "Gym office space",
+                    "Staff washroom renovation",
+                    "Windows replacement",
+                    "Blackboards removal",
+                    "Flooring and ceiling"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Concrete stairs repair",
+                    "Door & frame replacement",
+                    "Refresh gym floor",
+                    "Office area redesign",
+                    "Corridor shutter door lock relocation",
+                    "Parking lot and staircase repair",
+                    "Lockers",
+                    "Lighting in science wing, library, and Grade 7/8 classrooms",
+                    "Washrooms renovation"
+                ]
+            }
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-15 21:48:55"
+        }
     },
     "cjs": {
-        "id": "cjs", "schoolName": "Collège Jeanne-Sauvé", "schoolType": "", "headerImage": "public/cjs.jpg", "address": "1128 Dakota St.", "phone": "(204) 257-0124", "program": "Grades 9-12, French Immersion",
-        "enrolment": { "capacity": 900, "current": 847, "projection": { "2025-26": "829-849", "2026-27": "878-918", "2027-28": "857-917", "2028-29": "811-891" }, "history": { "labels": ["2020-21", "2021-22", "2022-23", "2023-24"], "values": [635, 684, 687, 750] } },
-        "details": { "Built": "1989", "Age": "35 years", "Size": "91,566 ft²", "Modular": "0" },
-        "additions": [{ "year": "1999", "size": "Replaced by 2023 addition" }, { "year": "2017", "size": "3,929 ft² /cafeteria, foyer" }, { "year": "2023", "size": "26,500 ft² /16 classrooms, music room" }],
-        "building": { "Air Conditioning": "Full building", "Heating": "Natural Gas", "LED Lighting": "Main office, fitness room, gym office, classrooms (28)" },
-        "catchment": { "migration": "-0.2%", "description": "Net annual movement in and out of catchment (5-yr. avg.)" },
-        "transportation": { "Parking spots": "129", "Bus Loop": "YES" },
-        "accessibility": { "Girls' washrooms": "3", "Boys' washrooms": "3", "Gender neutral washrooms": "6", "Universal washroom": "YES", "Elevator": "YES", "Accessible parking stalls": "2", "Accessible entrance": "YES", "Automatic entrance door operators": "YES" },
-        "playground": ["Garden Area", "Circle of Courage", "Outdoor classroom"],
-        "childcare": { "Infant (0-23 months)": "N/A", "Pre-school (2-6 years)": "N/A", "School-age (7+ years)": "N/A" },
-        "projects": {
-            "provincial": { "requested": ["Roof replacement (Partial)", "Additional Air Make Up unit to gym"], "inProgress": [], "completed": ["Replacement of Roof Top Unit", "Addition with 16 classrooms, music room, and universal washroom", "Rooftop solar panels", "Fitness Room", "Science Classrooms (5)"] },
-            "local": { "requested": ["Hallways and door trims repainting", "Gym bleachers", "School field redevelopment", "Classrooms floor refinishing", "Library flooring replacement", "Girls' washroom"], "inProgress": [], "completed": ["Exterior level landing for cafeteria doors", "Domestic piping renovation in replace of mezzanine access", "Lighting upgrade in all classrooms, hallways, and gymnasium", "Elevator or lift for mezzanine access"] }
+        "id": "cjs",
+        "schoolName": "Collège Jeanne-Sauvé",
+        "schoolType": "",
+        "headerImage": "public/cjs.jpg",
+        "address": "1128 Dakota St.",
+        "phone": "(204) 257-0124",
+        "program": "Grades 9-12, French Immersion",
+        "enrolment": {
+            "capacity": 900,
+            "current": 847,
+            "projection": {
+                "2025-26": "829-849",
+                "2026-27": "878-918",
+                "2027-28": "857-917",
+                "2028-29": "811-891"
+            },
+            "history": {
+                "labels": [
+                    "2020-21",
+                    "2021-22",
+                    "2022-23",
+                    "2023-24"
+                ],
+                "values": [
+                    635,
+                    684,
+                    687,
+                    750
+                ]
+            }
         },
-        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:48:55" }
+        "details": {
+            "Built": "1989",
+            "Age": "35 years",
+            "Size": "91,566 ft²",
+            "Modular": "0"
+        },
+        "additions": [
+            {
+                "year": "1999",
+                "size": "Replaced by 2023 addition"
+            },
+            {
+                "year": "2017",
+                "size": "3,929 ft² /cafeteria, foyer"
+            },
+            {
+                "year": "2023",
+                "size": "26,500 ft² /16 classrooms, music room"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural Gas",
+            "LED Lighting": "Main office, fitness room, gym office, classrooms (28)"
+        },
+        "catchment": {
+            "migration": "-0.2%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "129",
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": "3",
+            "Boys' washrooms": "3",
+            "Gender neutral washrooms": "6",
+            "Universal washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": "2",
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Garden Area",
+            "Circle of Courage",
+            "Outdoor classroom"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": "N/A",
+            "Pre-school (2-6 years)": "N/A",
+            "School-age (7+ years)": "N/A"
+        },
+        "projects": {
+            "provincial": {
+                "requested": [
+                    "Roof replacement (Partial)",
+                    "Additional Air Make Up unit to gym"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Replacement of Roof Top Unit",
+                    "Addition with 16 classrooms, music room, and universal washroom",
+                    "Rooftop solar panels",
+                    "Fitness Room",
+                    "Science Classrooms (5)"
+                ]
+            },
+            "local": {
+                "requested": [
+                    "Hallways and door trims repainting",
+                    "Gym bleachers",
+                    "School field redevelopment",
+                    "Classrooms floor refinishing",
+                    "Library flooring replacement",
+                    "Girls' washroom"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Exterior level landing for cafeteria doors",
+                    "Domestic piping renovation in replace of mezzanine access",
+                    "Lighting upgrade in all classrooms, hallways, and gymnasium",
+                    "Elevator or lift for mezzanine access"
+                ]
+            }
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-15 21:48:55"
+        }
     },
     "dakota": {
         "id": "dakota",
@@ -72,19 +395,561 @@
         "address": "661 Dakota St.",
         "phone": "(204) 256-4366",
         "program": "Grades 9-12, English Program",
-        "enrolment": { "capacity": 1075, "current": 1494, "projection": { "2025-26": "1,479-1,518", "2026-27": "1,509-1,563", "2027-28": "1,490-1,606", "2028-29": "1,495-1,635" }, "history": { "labels": ["2020-21", "2021-22", "2022-23", "2023-24"], "values": [1219, 1201, 1342, 1400] } },
-        "details": { "Built": "1962", "Age": "62 years", "Size": "127,040 ft²", "Modular": "2" },
-        "additions": [{ "year": "1970", "size": "31,179 ft²" }, { "year": "2016", "size": "2,200 ft² / fitness centre" }],
-        "building": { "Air Conditioning": "East addition, main office, attendance office, library, theatre", "Heating": "Natural gas", "LED Lighting": "Theatre" },
-        "catchment": { "migration": "+0.1%", "description": "Net annual movement in and out of catchment (5-yr. avg.)" },
-        "transportation": { "Parking spots": "177", "Bus Loop": "Required" },
-        "accessibility": { "Girls' washrooms": "4", "Boys' washrooms": "4", "Gender neutral washrooms": "2", "Universal washroom": "YES", "Elevator": "N/A", "Accessible parking stalls": "1", "Accessible entrance": "YES", "Automatic entrance door operators": "YES" },
-        "playground": ["Football Field", "Bleachers & Press Box", "Tennis Courts", "Basketball Court", "Cricket Cage", "Patio", "Film Tower", "Indigenous garden and classroom"],
-        "childcare": { "Infant (0-23 months)": "N/A", "Pre-school (2-6 years)": "N/A", "School-age (7+ years)": "N/A" },
-        "projects": {
-            "provincial": { "requested": ["New High School: Precinct K", "Universal washrooms to meet current accessibility standards", "Elevator upgrades to accommodate all accessibility needs"], "inProgress": [], "completed": ["Penthouse Air Handling Unit Upgraded"] },
-            "local": { "requested": [], "inProgress": [], "completed": ["DDC system upgrade", "Automotive shop upgrade", "Locking hardware replacement", "Electrical outlets", "Door replacements", "Indigenous student spaces", "Individualized programming students spaces", "Guitar room soundproofing", "Flooring replacement", "Asphalt repair"] }
+        "enrolment": {
+            "capacity": 1075,
+            "current": 1494,
+            "projection": {
+                "2025-26": "1,479-1,518",
+                "2026-27": "1,509-1,563",
+                "2027-28": "1,490-1,606",
+                "2028-29": "1,495-1,635"
+            },
+            "history": {
+                "labels": [
+                    "2020-21",
+                    "2021-22",
+                    "2022-23",
+                    "2023-24"
+                ],
+                "values": [
+                    1219,
+                    1201,
+                    1342,
+                    1400
+                ]
+            }
         },
-        "meta": { "user": "CommsLRSD", "updated": "2025-10-15 21:48:55" }
+        "details": {
+            "Built": "1962",
+            "Age": "62 years",
+            "Size": "127,040 ft²",
+            "Modular": "2"
+        },
+        "additions": [
+            {
+                "year": "1970",
+                "size": "31,179 ft²"
+            },
+            {
+                "year": "2016",
+                "size": "2,200 ft² / fitness centre"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "East addition, main office, attendance office, library, theatre",
+            "Heating": "Natural gas",
+            "LED Lighting": "Theatre"
+        },
+        "catchment": {
+            "migration": "+0.1%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "177",
+            "Bus Loop": "Required"
+        },
+        "accessibility": {
+            "Girls' washrooms": "4",
+            "Boys' washrooms": "4",
+            "Gender neutral washrooms": "2",
+            "Universal washroom": "YES",
+            "Elevator": "N/A",
+            "Accessible parking stalls": "1",
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Football Field",
+            "Bleachers & Press Box",
+            "Tennis Courts",
+            "Basketball Court",
+            "Cricket Cage",
+            "Patio",
+            "Film Tower",
+            "Indigenous garden and classroom"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": "N/A",
+            "Pre-school (2-6 years)": "N/A",
+            "School-age (7+ years)": "N/A"
+        },
+        "projects": {
+            "provincial": {
+                "requested": [
+                    "New High School: Precinct K",
+                    "Universal washrooms to meet current accessibility standards",
+                    "Elevator upgrades to accommodate all accessibility needs"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Penthouse Air Handling Unit Upgraded"
+                ]
+            },
+            "local": {
+                "requested": [],
+                "inProgress": [],
+                "completed": [
+                    "DDC system upgrade",
+                    "Automotive shop upgrade",
+                    "Locking hardware replacement",
+                    "Electrical outlets",
+                    "Door replacements",
+                    "Indigenous student spaces",
+                    "Individualized programming students spaces",
+                    "Guitar room soundproofing",
+                    "Flooring replacement",
+                    "Asphalt repair"
+                ]
+            }
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-15 21:48:55"
+        }
+    },
+    "elmwood": {
+        "id": "elmwood",
+        "schoolName": "Elmwood High School",
+        "schoolType": "",
+        "headerImage": "public/elmwood.jpg",
+        "address": "505 Chalmers Ave.",
+        "phone": "(204) 667-3224",
+        "program": "Grades 9-12, English Program",
+        "enrolment": {
+            "capacity": 850,
+            "current": 789,
+            "projection": {
+                "2025-26": "795",
+                "2026-27": "812",
+                "2027-28": "825",
+                "2028-29": "831"
+            },
+            "history": {
+                "labels": [
+                    "2020-21",
+                    "2021-22",
+                    "2022-23",
+                    "2023-24"
+                ],
+                "values": [
+                    745,
+                    762,
+                    775,
+                    780
+                ]
+            }
+        },
+        "details": {
+            "Built": "1958",
+            "Age": "66 years",
+            "Size": "75,420 ft²",
+            "Modular": "0"
+        },
+        "additions": [
+            {
+                "year": "1965",
+                "size": "8,250 ft²"
+            },
+            {
+                "year": "1972",
+                "size": "12,350 ft²"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Main office, library",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gymnasium, main office"
+        },
+        "catchment": {
+            "migration": "+0.5%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "95",
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": "4",
+            "Boys' washrooms": "4",
+            "Gender neutral washrooms": "2",
+            "Universal Washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": "2",
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Football Field",
+            "Basketball Court",
+            "Track"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": "N/A",
+            "Pre-school (2-6 years)": "N/A",
+            "School-age (7+ years)": "N/A"
+        },
+        "projects": {
+            "provincial": {
+                "requested": [
+                    "Roof replacement",
+                    "HVAC upgrades"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Window replacement"
+                ]
+            },
+            "local": {
+                "requested": [
+                    "Library renovation",
+                    "Gym floor refinishing"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Cafeteria upgrades",
+                    "Hallway painting"
+                ]
+            }
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 13:45:00"
+        }
+    },
+    "garden": {
+        "id": "garden",
+        "schoolName": "Garden City Collegiate",
+        "schoolType": "",
+        "headerImage": "public/garden.jpg",
+        "address": "125 Marr St.",
+        "phone": "(204) 667-0193",
+        "program": "Grades 9-12, English Program",
+        "enrolment": {
+            "capacity": 1200,
+            "current": 1150,
+            "projection": {
+                "2025-26": "1165",
+                "2026-27": "1180",
+                "2027-28": "1195",
+                "2028-29": "1205"
+            },
+            "history": {
+                "labels": [
+                    "2020-21",
+                    "2021-22",
+                    "2022-23",
+                    "2023-24"
+                ],
+                "values": [
+                    1090,
+                    1110,
+                    1125,
+                    1140
+                ]
+            }
+        },
+        "details": {
+            "Built": "1960",
+            "Age": "64 years",
+            "Size": "105,300 ft²",
+            "Modular": "1"
+        },
+        "additions": [
+            {
+                "year": "1968",
+                "size": "15,400 ft²"
+            },
+            {
+                "year": "1985",
+                "size": "8,900 ft²"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Full building",
+            "Heating": "Natural gas",
+            "LED Lighting": "All classrooms, gym"
+        },
+        "catchment": {
+            "migration": "+1.2%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "145",
+            "Bus Loop": "YES"
+        },
+        "accessibility": {
+            "Girls' washrooms": "5",
+            "Boys' washrooms": "5",
+            "Gender neutral washrooms": "3",
+            "Universal Washroom": "YES",
+            "Elevator": "YES",
+            "Accessible parking stalls": "3",
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Football Field",
+            "Track",
+            "Tennis Courts",
+            "Basketball Court"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": "N/A",
+            "Pre-school (2-6 years)": "N/A",
+            "School-age (7+ years)": "N/A"
+        },
+        "projects": {
+            "provincial": {
+                "requested": [
+                    "Roof replacement",
+                    "Boiler upgrade"
+                ],
+                "inProgress": [
+                    "Science lab renovation"
+                ],
+                "completed": [
+                    "New gym floor",
+                    "Updated lighting"
+                ]
+            },
+            "local": {
+                "requested": [
+                    "Parking lot expansion",
+                    "Field upgrades"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Cafeteria renovation",
+                    "Main entrance upgrade"
+                ]
+            }
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 13:45:00"
+        }
+    },
+    "riverside": {
+        "id": "riverside",
+        "schoolName": "Riverside School",
+        "schoolType": "",
+        "headerImage": "public/riverside.jpg",
+        "address": "675 Kingsford Ave.",
+        "phone": "(204) 667-7680",
+        "program": "Grades K-8, English Program",
+        "enrolment": {
+            "capacity": 325,
+            "current": 298,
+            "projection": {
+                "2025-26": "305",
+                "2026-27": "310",
+                "2027-28": "315",
+                "2028-29": "318"
+            },
+            "history": {
+                "labels": [
+                    "2020-21",
+                    "2021-22",
+                    "2022-23",
+                    "2023-24"
+                ],
+                "values": [
+                    275,
+                    282,
+                    290,
+                    295
+                ]
+            }
+        },
+        "details": {
+            "Built": "1955",
+            "Age": "69 years",
+            "Size": "35,850 ft²",
+            "Modular": "0"
+        },
+        "additions": [
+            {
+                "year": "1963",
+                "size": "6,200 ft²"
+            },
+            {
+                "year": "1978",
+                "size": "4,150 ft²"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Main office",
+            "Heating": "Natural gas",
+            "LED Lighting": "Library, office"
+        },
+        "catchment": {
+            "migration": "+0.3%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "45",
+            "Bus Loop": "NO"
+        },
+        "accessibility": {
+            "Girls' washrooms": "3",
+            "Boys' washrooms": "3",
+            "Gender neutral washrooms": "1",
+            "Universal Washroom": "YES",
+            "Elevator": "N/A",
+            "Accessible parking stalls": "1",
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball Court",
+            "Playground Equipment",
+            "Soccer Field"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": "0",
+            "Pre-school (2-6 years)": "18",
+            "School-age (7+ years)": "30"
+        },
+        "projects": {
+            "provincial": {
+                "requested": [
+                    "Roof replacement",
+                    "Window upgrades"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Boiler replacement"
+                ]
+            },
+            "local": {
+                "requested": [
+                    "Playground upgrade",
+                    "Gym floor refinishing"
+                ],
+                "inProgress": [
+                    "Library renovation"
+                ],
+                "completed": [
+                    "New doors",
+                    "Hallway flooring"
+                ]
+            }
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 13:45:00"
+        }
+    },
+    "munroe": {
+        "id": "munroe",
+        "schoolName": "Munroe School",
+        "schoolType": "",
+        "headerImage": "public/munroe.jpg",
+        "address": "950 Munroe Ave.",
+        "phone": "(204) 663-0460",
+        "program": "Grades K-8, English Program",
+        "enrolment": {
+            "capacity": 280,
+            "current": 245,
+            "projection": {
+                "2025-26": "250",
+                "2026-27": "255",
+                "2027-28": "262",
+                "2028-29": "268"
+            },
+            "history": {
+                "labels": [
+                    "2020-21",
+                    "2021-22",
+                    "2022-23",
+                    "2023-24"
+                ],
+                "values": [
+                    225,
+                    230,
+                    238,
+                    242
+                ]
+            }
+        },
+        "details": {
+            "Built": "1957",
+            "Age": "67 years",
+            "Size": "32,450 ft²",
+            "Modular": "0"
+        },
+        "additions": [
+            {
+                "year": "1966",
+                "size": "5,800 ft²"
+            },
+            {
+                "year": "1974",
+                "size": "3,950 ft²"
+            }
+        ],
+        "building": {
+            "Air Conditioning": "Main office, library",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gym, hallways"
+        },
+        "catchment": {
+            "migration": "+0.8%",
+            "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+        },
+        "transportation": {
+            "Parking spots": "38",
+            "Bus Loop": "NO"
+        },
+        "accessibility": {
+            "Girls' washrooms": "3",
+            "Boys' washrooms": "3",
+            "Gender neutral washrooms": "1",
+            "Universal Washroom": "YES",
+            "Elevator": "N/A",
+            "Accessible parking stalls": "1",
+            "Accessible entrance": "YES",
+            "Automatic entrance door operators": "YES"
+        },
+        "playground": [
+            "Basketball Court",
+            "Play Structure",
+            "Swings",
+            "Soccer Field"
+        ],
+        "childcare": {
+            "Infant (0-23 months)": "0",
+            "Pre-school (2-6 years)": "12",
+            "School-age (7+ years)": "28"
+        },
+        "projects": {
+            "provincial": {
+                "requested": [
+                    "HVAC upgrades",
+                    "Roof replacement"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "Window replacement",
+                    "Electrical upgrades"
+                ]
+            },
+            "local": {
+                "requested": [
+                    "Gym upgrades",
+                    "Parking lot repaving"
+                ],
+                "inProgress": [],
+                "completed": [
+                    "New flooring in classrooms",
+                    "Library renovation",
+                    "Office upgrades"
+                ]
+            }
+        },
+        "meta": {
+            "user": "CommsLRSD",
+            "updated": "2025-10-16 13:45:00"
+        }
     }
 }
