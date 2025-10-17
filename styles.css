@@ -90,8 +90,6 @@ body {
 .header-logo-main {
     height: 75px;
     transition: transform var(--transition-base);
-    align-item: right;
-    margin-right: 1rem;
 }
 
 .header-logo-main:hover {
