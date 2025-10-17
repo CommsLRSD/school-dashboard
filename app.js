@@ -45,6 +45,11 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.entries(categories).forEach(([key, name], index) => {
             categoryList.innerHTML += `<label><input type="radio" name="category-filter" value="${key}" ${index === 0 ? 'checked' : ''}><span>${name}</span></label>`;
         });
+        
+        // Initialize school search after schools are populated
+        if (typeof initializeSchoolSearch === 'function') {
+            initializeSchoolSearch();
+        }
     }
 
     // --- Card Creation Functions ---
