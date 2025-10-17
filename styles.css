@@ -2,7 +2,7 @@
 :root {
     --bg-color: #f8f9fa; 
     --card-bg: #ffffff; 
-    --sidebar-bg: #ffffff;
+    --sidebar-bg: #2BA680;
     --primary-red: #BE5247; 
     --primary-green: #2BA680;
     --accent-red: #ef4444; 
@@ -83,8 +83,8 @@ body {
 }
 
 .header-titles { 
-    margin-left: 1rem; 
-    flex-grow: 1;
+    margin-left: auto; 
+    margin-right: 1rem;
 }
 
 .header-logo-main {
