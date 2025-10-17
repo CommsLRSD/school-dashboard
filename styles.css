@@ -250,154 +250,91 @@ body {
 
 .nav-list-container { 
     display: none; 
-    padding: 0 1.5rem;
 }
 
 .nav-list-container.active { 
     display: block; 
 }
 
-.filter-button-container {
+.nav-list-container:not(.active) {
+    padding: 0 1.5rem;
+}
+
+/* --- New Filter Styles --- */
+.filter-controls {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 1rem 0;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    margin-bottom: 1rem;
-    background: var(--card-bg);
-    box-shadow: var(--shadow-sm);
+    gap: 1rem;
+    padding: 0 1.5rem 1.5rem;
 }
 
-.filter-button {
-    width: calc(100% - 2rem);
-    margin: 0 1rem;
-    padding: 0.75rem 1.25rem;
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    color: var(--text-light);
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all var(--transition-base);
-    text-align: center;
-}
-
-.filter-button:hover {
-    background: #fff;
-    border-color: var(--primary-red);
-    color: var(--primary-red);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
-}
-
-.filter-button.active {
-    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
-    border-color: transparent;
-    color: #fff;
-    box-shadow: var(--shadow-md);
-}
-
-.fos-submenu {
-    padding: 1rem 0;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    margin-bottom: 1rem;
-    background: var(--card-bg);
-    box-shadow: var(--shadow-sm);
-}
-
-.fos-back-button {
-    width: auto;
-    padding: 0.5rem 1rem;
-    background: transparent;
-    border: none;
-    color: var(--text-light);
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all var(--transition-base);
-    margin-bottom: 0.75rem;
-    margin-left: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.fos-back-button:hover {
-    color: var(--primary-red);
-}
-
-.fos-button-container {
+.filter-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 0 1rem;
 }
 
-.fos-button {
+.filter-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.custom-select-wrapper {
+    position: relative;
     width: 100%;
-    padding: 0.75rem 1.25rem;
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    color: var(--text-light);
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all var(--transition-base);
-    text-align: center;
 }
 
-.fos-button:hover {
-    background: #fff;
-    border-color: var(--primary-green);
-    color: var(--primary-green);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
-}
-
-.fos-button.active {
-    background: var(--primary-green);
-    border-color: transparent;
-    color: #fff;
-    box-shadow: var(--shadow-md);
-}
-
-.category-filters {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+.custom-select-wrapper::after {
+    content: '\f078'; /* Font Awesome chevron-down */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.8rem;
+    color: var(--text-lighter);
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: color var(--transition-base);
 }
 
 .filter-select {
     width: 100%;
-    padding: 0.75rem;
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
+    padding: 0.65rem 1rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--bg-color);
     border-radius: 8px;
     color: var(--text-color);
     font-weight: 500;
     font-size: 0.9rem;
     cursor: pointer;
     transition: all var(--transition-base);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
-.filter-select:hover,
+.filter-select:hover {
+    background-color: #fff;
+    border-color: var(--border-color);
+}
+
 .filter-select:focus {
-    background: #fff;
+    background-color: #fff;
     border-color: var(--primary-red);
     outline: none;
+    box-shadow: 0 0 0 2px rgba(190, 82, 71, 0.2);
 }
 
-.fos-submenu {
-    padding: 0 0 1rem 0;
+.custom-select-wrapper:has(.filter-select:focus)::after {
+    color: var(--primary-red);
 }
 
-.fos-submenu .filter-select {
-    margin-top: 0.5rem;
+.category-separator {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0rem 1.5rem 1.5rem;
 }
 
 .nav-list-item { 
@@ -405,24 +342,27 @@ body {
     align-items: center;
     text-decoration: none; 
     color: var(--text-light); 
-    padding: 0.75rem 1rem; 
+    padding: 0.75rem 1.5rem; /* Adjusted padding to align with filters */
     margin: 0.2rem 0;
-    border-radius: 8px; 
+    border-radius: 0; /* Remove individual radius */
     font-weight: 500;
     font-size: 0.9rem;
     transition: all var(--transition-base);
     position: relative;
+    border-left: 3px solid transparent;
 }
 
 .nav-list-item:hover {
     background-color: var(--bg-color);
     color: var(--primary-red);
+    border-left-color: var(--primary-red);
 }
 
 .nav-list-item.active { 
-    background-color: transparent;
+    background-color: var(--bg-color);
     color: var(--primary-red); 
     font-weight: 600;
+    border-left-color: var(--primary-red);
 }
 
 /* --- ATOMIC CARD GRID --- */
