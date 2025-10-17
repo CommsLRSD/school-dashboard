@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div>`;
 
-            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-grid"><div class="stat-item"><div class="stat-item-label">Capacity</div><div class="stat-item-value">${school.enrolment.capacity}</div></div><div class="stat-item"><div class="stat-item-label">Enrolment</div><div class="stat-item-value">${school.enrolment.current}</div></div><div class="stat-item ${capacityClass}"><div class="stat-item-label">Utilization</div><div class="stat-item-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div></div></div>`;
+            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${school.enrolment.current}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${school.enrolment.capacity}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div></div></div>`;
 
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historical Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
@@ -387,13 +387,17 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Single category view
             const cardType = selectedCategoryId;
+            
+            // For capacity, enrolment, or utilization, use combined stats card
+            const useStatsCard = ['capacity', 'enrolment', 'utilization'].includes(cardType);
+            
             const cardHTML = filteredSchools.map(school => {
                 const utilization = school.enrolment.current / school.enrolment.capacity;
                 const utilizationPercent = Math.round(utilization * 100);
                 let warningIcon = '';
                 
-                // Only show warning icons for utilization-related cards
-                if (cardType === 'utilization') {
+                // Show warning icons for stats-related cards
+                if (useStatsCard) {
                     if (utilizationPercent >= 100) {
                         warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
                     } else if (utilizationPercent >= 95 && utilizationPercent < 100) {
@@ -403,7 +407,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Create a simple header with school name only (no images)
                 const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}${warningIcon}</h2></div>`;
-                const fullCard = createCard(school, cardType);
+                
+                // Use stats card for capacity/enrolment/utilization
+                const fullCard = useStatsCard ? createCard(school, 'stats') : createCard(school, cardType);
                 return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
             }).join('');
             cardGrid.innerHTML = cardHTML;
