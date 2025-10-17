@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Annual School Building Review Dashboard</title>
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="public/favicon.svg">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,33 +46,20 @@
                 </div>
 
                 <div id="category-list-container" class="nav-list-container">
-                    <!-- New Filter Dropdowns -->
+                    <!-- Combined Filter Dropdown -->
                     <div class="filter-controls">
                         <div class="filter-group">
-                            <label for="level-filter" class="filter-label">Filter by Level</label>
+                            <label for="combined-filter" class="filter-label">Filter by</label>
                             <div class="custom-select-wrapper">
-                                <select id="level-filter" class="filter-select">
-                                    <option value="all">All School Levels</option>
+                                <select id="combined-filter" class="filter-select">
+                                    <option value="all">All Schools</option>
+                                    <option disabled>— School Level —</option>
                                     <option value="elementary">Elementary Schools</option>
                                     <option value="highschool">High Schools</option>
+                                    <option disabled>— Family of Schools —</option>
+                                    <!-- FOS options will be populated by JS -->
                                 </select>
                             </div>
-                        </div>
-                        <div class="filter-group">
-                            <label for="fos-filter" class="filter-label">Filter by Family of Schools</label>
-                            <div class="custom-select-wrapper">
-                                <select id="fos-filter" class="filter-select">
-                                    <option value="all">All</option>
-                                    <!-- Options will be populated by JS -->
-                                </select>
-                            </div>
-                        </div>
-                        <div class="filter-group">
-                            <label class="combine-categories-label">
-                                <input type="checkbox" id="combine-categories-checkbox" class="combine-categories-checkbox">
-                                <span>Combine Categories</span>
-                            </label>
-                            <div id="combine-categories-hint" class="combine-categories-hint">Select up to 3 categories to view together</div>
                         </div>
                     </div>
                     
