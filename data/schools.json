@@ -1401,96 +1401,6 @@
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School"
   },
-  "sagecreek": {
-    "id": "sagecreek",
-    "schoolName": "Sage Creek School/École Sage Creek",
-    "schoolType": "School",
-    "headerImage": "public/sagecreek.jpg",
-    "address": "315 Sage Creek Blvd.",
-    "phone": "(204) 253-8199",
-    "program": "K-4 English, K-6 French Immersion (K-8 English in 2025), English Program & French Immersion",
-    "enrolment": {
-      "capacity": 535,
-      "current": 772,
-      "projection": {
-        "2025-26": "722-821 (Eng. K-8 only)",
-        "2026-27": "702-775 (Eng. K-8 only)",
-        "2027-28": "668-705 (Eng. K-8 only)",
-        "2028-29": "636-654 (Eng. K-8 only)"
-      },
-      "history": {
-        "labels": [
-          "2020_21",
-          "2021_22",
-          "2022_23",
-          "2023_24"
-        ],
-        "values": [
-          769,
-          694,
-          747,
-          787
-        ]
-      }
-    },
-    "details": {
-      "Built": 2017,
-      "Age": "7 years",
-      "Size": "76940 ft²",
-      "Modular": 0
-    },
-    "additions": [],
-    "building": {
-      "Air Conditioning": "Full building",
-      "Heating": "Geothermal, electric",
-      "LED Lighting": "Hallways, band, office, library, classrooms (6)"
-    },
-    "catchment": {
-      "migration": "+6.9%",
-      "description": "Net annual movement in and out of catchment (5-yr. avg.)"
-    },
-    "transportation": {
-      "Parking spots": 48,
-      "Bus Loop": "YES"
-    },
-    "accessibility": {
-      "Girls' washrooms": 1,
-      "Boys' washrooms": 1,
-      "Gender neutral washrooms": 20,
-      "Universal washroom": "YES",
-      "Elevator": "YES",
-      "Accessible parking stalls": 1,
-      "Accessible entrance": "YES",
-      "Automatic entrance door operators": "YES"
-    },
-    "playground": [
-      "2 Play structures",
-      "City Property: Play structure, Basketball court, Tennis court"
-    ],
-    "childcare": {
-      "Infant (0-23 months)": 20,
-      "Pre-school (2-6 years)": 64,
-      "School-age (7+ years)": 132
-    },
-    "projects": {
-      "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
-      },
-      "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
-      }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
-    },
-    "schoolLevel": "Elementary School",
-    "familyOfSchools": "Other"
-  },
   "ecolestgermain": {
     "id": "ecolestgermain",
     "schoolName": "École St. Germain",
@@ -4203,11 +4113,11 @@
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School"
   },
-  "sagecreekupdated": {
-    "id": "sagecreekupdated",
-    "schoolName": "Sage Creek School (Updated)",
+  "sagecreek": {
+    "id": "sagecreek",
+    "schoolName": "Sage Creek School",
     "schoolType": "School",
-    "headerImage": "public/sagecreekupdated.jpg",
+    "headerImage": "public/sagecreek.jpg",
     "address": "315 Sage Creek Blvd.",
     "phone": "(204) 253-8199",
     "program": "K-8 (transitioning to English K-8 only in 2025/26), English Program",

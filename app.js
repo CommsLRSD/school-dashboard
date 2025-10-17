@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div>`;
 
-            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-grid"><div class="stat-item"><div class="stat-item-label">Capacity</div><div class="stat-item-value">${school.enrolment.capacity}</div></div><div class="stat-item"><div class="stat-item-label">Enrolment</div><div class="stat-item-value">${school.enrolment.current}</div></div><div class="stat-item ${capacityClass}"><div class="stat-item-label">Utilization</div><div class="stat-item-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div></div></div></div></div>`;
+            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-grid"><div class="stat-item"><div class="stat-item-label">Capacity</div><div class="stat-item-value">${school.enrolment.capacity}</div></div><div class="stat-item"><div class="stat-item-label">Enrolment</div><div class="stat-item-value">${school.enrolment.current}</div></div><div class="stat-item ${capacityClass}"><div class="stat-item-label">Utilization</div><div class="stat-item-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div></div></div>`;
 
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historical Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
@@ -259,9 +259,30 @@ document.addEventListener('DOMContentLoaded', function() {
             const cardTypes = ['school_header', 'details', 'additions', 'capacity', 'enrolment', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
             cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
             
-            // Add staggered animation delays
+            // Add staggered animation delays and navigation icons
             document.querySelectorAll('.data-card').forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.05}s`;
+                
+                // Add navigation icon to cards in school view (except school_header)
+                const cardType = cardTypes[index];
+                if (cardType !== 'school_header') {
+                    const header = card.querySelector('.card-header');
+                    if (header) {
+                        const navIcon = document.createElement('i');
+                        navIcon.className = 'fas fa-external-link-alt card-nav-icon';
+                        navIcon.title = 'View all schools for this category';
+                        navIcon.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const confirmed = confirm('Are you sure you want to go to the all schools category view for this category?');
+                            if (confirmed) {
+                                currentViewMode = 'category';
+                                selectedCategoryId = cardType;
+                                updateView();
+                            }
+                        });
+                        header.appendChild(navIcon);
+                    }
+                }
             });
             
             renderChart(school, 'history');
@@ -282,8 +303,20 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const cardHTML = filteredSchools.map(school => {
                 // For category view, create a simplified card with just the school name in header
-                const isOverCapacity = school.enrolment.current / school.enrolment.capacity >= 1;
-                const warningIcon = isOverCapacity && (cardType==='utilization' || cardType==='enrolment' || cardType==='capacity' || cardType==='stats') ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : '';
+                const utilization = school.enrolment.current / school.enrolment.capacity;
+                const utilizationPercent = Math.round(utilization * 100);
+                let warningIcon = '';
+                
+                // Only show warning icons for utilization-related cards
+                if (cardType === 'utilization' || cardType === 'stats') {
+                    if (utilizationPercent >= 100) {
+                        // Red warning icon for 100% or more
+                        warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
+                    } else if (utilizationPercent >= 95 && utilizationPercent <= 99) {
+                        // Yellow warning icon for 95-99%
+                        warningIcon = '<i class="fas fa-exclamation-circle warning-icon warning-icon-yellow"></i>';
+                    }
+                }
                 
                 // Create a simple header with school name only (no images)
                 const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}</h2>${warningIcon}</div>`;
@@ -293,9 +326,28 @@ document.addEventListener('DOMContentLoaded', function() {
             }).join('');
             cardGrid.innerHTML = cardHTML;
             
-            // Add staggered animation delays
+            // Add staggered animation delays and navigation icons
             document.querySelectorAll('.data-card').forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.05}s`;
+                
+                // Add navigation icon to cards in category view
+                const schoolId = filteredSchools[index].id;
+                const header = card.querySelector('.card-header');
+                if (header) {
+                    const navIcon = document.createElement('i');
+                    navIcon.className = 'fas fa-external-link-alt card-nav-icon';
+                    navIcon.title = 'View all categories for this school';
+                    navIcon.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const confirmed = confirm('Are you sure you want to view all categories for this school?');
+                        if (confirmed) {
+                            currentViewMode = 'school';
+                            selectedSchoolId = schoolId;
+                            updateView();
+                        }
+                    });
+                    header.appendChild(navIcon);
+                }
             });
             
             if (cardType === 'history' || cardType === 'projection') {
