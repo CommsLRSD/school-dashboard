@@ -124,14 +124,14 @@ body {
 
 .content-body { 
     padding: 2rem; 
-    max-width: 1600px; 
+    max-width: 1400px; 
     width: 100%; 
     margin: 0 auto;
 }
 
 #content-subtitle { 
     font-family: var(--font-title); 
-    font-size: 2.25rem; 
+    font-size: 2rem; 
     font-weight: 700;
     margin-bottom: 1.5rem; 
     color: var(--text-color);
@@ -422,9 +422,9 @@ body {
 /* --- ATOMIC CARD GRID --- */
 .card-grid { 
     display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
     grid-auto-rows: 280px; 
-    gap: 1.5rem;
+    gap: 1.25rem;
 }
 
 .data-card { 
@@ -472,6 +472,7 @@ body {
     padding: 1rem 1.25rem; 
     border-bottom: 1px solid var(--border-color); 
     flex-shrink: 0;
+    background: #fafafa;
 }
 
 .card-header-icon { 
@@ -484,14 +485,15 @@ body {
 
 .card-title { 
     font-family: var(--font-title); 
-    font-size: 1rem; 
-    font-weight: 600;
+    font-size: 0.95rem; 
+    font-weight: 700;
     color: var(--text-color);
     flex-grow: 1;
     display: flex;
     align-items: center;
     word-wrap: break-word;
     overflow-wrap: break-word;
+    text-transform: none;
 }
 
 .warning-icon {
@@ -569,7 +571,7 @@ body {
 
 .stat-value { 
     font-family: var(--font-title); 
-    font-size: 3rem; 
+    font-size: 2.75rem; 
     font-weight: 700;
     color: var(--primary-red);
     line-height: 1;
@@ -583,7 +585,7 @@ body {
 
 .stat-label { 
     font-weight: 500;
-    font-size: 0.9rem; 
+    font-size: 0.85rem; 
     margin-top: 0.5rem; 
     color: var(--text-light);
 }
@@ -663,9 +665,9 @@ body {
 }
 
 .stat-item-label {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     color: var(--text-light);
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 0.5rem;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -674,7 +676,7 @@ body {
 
 .stat-item-value {
     font-family: var(--font-title);
-    font-size: 2rem;
+    font-size: 1.85rem;
     font-weight: 700;
     color: var(--primary-red);
     line-height: 1;
@@ -724,9 +726,9 @@ body {
     display: flex; 
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 0; 
-    border-bottom: 1px solid var(--border-color); 
-    font-size: 0.875rem;
+    padding: 0.875rem 0; 
+    border-bottom: 1px solid #f0f0f0; 
+    font-size: 0.85rem;
 }
 
 .detail-item:last-child { 
@@ -734,13 +736,15 @@ body {
 }
 
 .detail-label { 
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-color);
+    font-size: 0.85rem;
 }
 
 .detail-value { 
     color: var(--text-light);
-    font-weight: 500;
+    font-weight: 400;
+    font-size: 0.85rem;
 }
 
 .yes-badge, .no-badge { 
