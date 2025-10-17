@@ -16,10 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentViewMode = 'school';
     let selectedSchoolId = '';
     let selectedCategoryId = '';
-    let selectedCategoryIds = []; // Array for multi-category selection
-    let combineCategoriesMode = false;
-    let categoryFilter = null; // null means show all schools
-    let fosFilter = 'all';
+    let filterValue = 'all'; // Combined filter value
 
     const categories = {
         "details": "Contact & Building Info",
@@ -52,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             selectedSchoolId = Object.keys(schoolData)[0];
             selectedCategoryId = Object.keys(categories)[0];
-            selectedCategoryIds = [selectedCategoryId];
 
             populateSidebarControls();
             setupEventListeners();
@@ -93,12 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Title case for other words
                 return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
             }).join(' ');
-            return `<option value="${fos}">${displayName}</option>`;
+            return `<option value="fos:${fos}">${displayName}</option>`;
         }).join('');
         
-        const fosFilter = document.getElementById('fos-filter');
-        if (fosFilter) {
-            fosFilter.innerHTML = '<option value="all">All</option>' + fosOptions;
+        const combinedFilter = document.getElementById('combined-filter');
+        if (combinedFilter) {
+            // Find the last option (which should be the "— Family of Schools —" separator)
+            const currentOptions = combinedFilter.innerHTML;
+            // Insert FOS options after the separator
+            combinedFilter.innerHTML = currentOptions + fosOptions;
         }
 
         // Add category links after the existing filter buttons
@@ -289,31 +288,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.nav-view-link').forEach(link => link.classList.toggle('active', link.dataset.view === currentViewMode));
         document.querySelectorAll('.nav-list-container').forEach(c => c.classList.toggle('active', c.id.startsWith(currentViewMode)));
         
-        // Update category items active/selected state
-        if (currentViewMode === 'category') {
-            document.querySelectorAll('.nav-list-item').forEach(item => {
-                if (item.dataset.type === 'category') {
-                    if (combineCategoriesMode) {
-                        // In combine mode, show selected items
-                        if (selectedCategoryIds.includes(item.dataset.id)) {
-                            item.classList.add('selected-for-combine');
-                        } else {
-                            item.classList.remove('selected-for-combine');
-                        }
-                        item.classList.remove('active');
-                    } else {
-                        // In normal mode, show active item
-                        item.classList.toggle('active', item.dataset.id === selectedCategoryId);
-                        item.classList.remove('selected-for-combine');
-                    }
-                }
-            });
-        } else {
-            document.querySelectorAll('.nav-list-item').forEach(item => {
-                item.classList.toggle('active', item.dataset.id === (item.dataset.type === 'school' ? selectedSchoolId : selectedCategoryId));
-                item.classList.remove('selected-for-combine');
-            });
-        }
+        // Update category items active state
+        document.querySelectorAll('.nav-list-item').forEach(item => {
+            item.classList.toggle('active', item.dataset.id === (item.dataset.type === 'school' ? selectedSchoolId : selectedCategoryId));
+        });
 
         if (currentViewMode === 'school') {
             const school = schoolData[selectedSchoolId];
@@ -350,80 +328,49 @@ document.addEventListener('DOMContentLoaded', function() {
             renderChart(school, 'projection');
         } else {
             // Category view
-            if (combineCategoriesMode && selectedCategoryIds.length > 0) {
-                // Combined categories view
-                contentSubtitle.textContent = selectedCategoryIds.map(id => categories[id]).join(' + ');
-            } else {
-                contentSubtitle.textContent = categories[selectedCategoryId];
-            }
+            contentSubtitle.textContent = categories[selectedCategoryId];
             
             // Filter schools based on current filter
             let filteredSchools = Object.values(schoolData);
-            if (categoryFilter === 'elementary') {
+            if (filterValue === 'elementary') {
                 filteredSchools = filteredSchools.filter(s => s.schoolLevel === 'Elementary School');
-            } else if (categoryFilter === 'highschool') {
+            } else if (filterValue === 'highschool') {
                 filteredSchools = filteredSchools.filter(s => s.schoolLevel === 'High School');
-            } else if (categoryFilter === 'fos' && fosFilter !== 'all') {
-                filteredSchools = filteredSchools.filter(s => s.familyOfSchools === fosFilter);
+            } else if (filterValue.startsWith('fos:')) {
+                const fosValue = filterValue.substring(4); // Remove 'fos:' prefix
+                filteredSchools = filteredSchools.filter(s => s.familyOfSchools === fosValue);
             }
-            // If categoryFilter is null, show all schools (no filtering)
+            // If filterValue is 'all', show all schools (no filtering)
             
-            if (combineCategoriesMode && selectedCategoryIds.length > 0) {
-                // Render multiple categories side by side for each school
-                const cardHTML = filteredSchools.map(school => {
-                    return selectedCategoryIds.map(cardType => {
-                        const utilization = school.enrolment.current / school.enrolment.capacity;
-                        const utilizationPercent = Math.round(utilization * 100);
-                        let warningIcon = '';
-                        
-                        // Only show warning icons for utilization-related cards
-                        if (cardType === 'utilization') {
-                            if (utilizationPercent >= 100) {
-                                warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
-                            } else if (utilizationPercent >= 95 && utilizationPercent < 100) {
-                                warningIcon = '<i class="fas fa-exclamation-circle warning-icon warning-icon-yellow"></i>';
-                            }
-                        }
-                        
-                        // Create header with school name and category
-                        const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName} - ${categories[cardType]}${warningIcon}</h2></div>`;
-                        const fullCard = createCard(school, cardType);
-                        return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
-                    }).join('');
-                }).join('');
-                cardGrid.innerHTML = cardHTML;
-            } else {
-                // Single category view
-                const cardType = selectedCategoryId;
-                const cardHTML = filteredSchools.map(school => {
-                    const utilization = school.enrolment.current / school.enrolment.capacity;
-                    const utilizationPercent = Math.round(utilization * 100);
-                    let warningIcon = '';
-                    
-                    // Only show warning icons for utilization-related cards
-                    if (cardType === 'utilization') {
-                        if (utilizationPercent >= 100) {
-                            warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
-                        } else if (utilizationPercent >= 95 && utilizationPercent < 100) {
-                            warningIcon = '<i class="fas fa-exclamation-circle warning-icon warning-icon-yellow"></i>';
-                        }
+            // Single category view
+            const cardType = selectedCategoryId;
+            const cardHTML = filteredSchools.map(school => {
+                const utilization = school.enrolment.current / school.enrolment.capacity;
+                const utilizationPercent = Math.round(utilization * 100);
+                let warningIcon = '';
+                
+                // Only show warning icons for utilization-related cards
+                if (cardType === 'utilization') {
+                    if (utilizationPercent >= 100) {
+                        warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
+                    } else if (utilizationPercent >= 95 && utilizationPercent < 100) {
+                        warningIcon = '<i class="fas fa-exclamation-circle warning-icon warning-icon-yellow"></i>';
                     }
-                    
-                    // Create a simple header with school name only (no images)
-                    const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}${warningIcon}</h2></div>`;
-                    const fullCard = createCard(school, cardType);
-                    return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
-                }).join('');
-                cardGrid.innerHTML = cardHTML;
-            }
+                }
+                
+                // Create a simple header with school name only (no images)
+                const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}${warningIcon}</h2></div>`;
+                const fullCard = createCard(school, cardType);
+                return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
+            }).join('');
+            cardGrid.innerHTML = cardHTML;
             
             // Add staggered animation delays and navigation icons
             document.querySelectorAll('.data-card').forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.05}s`;
                 
                 // Add navigation icon to cards in category view
-                const schoolIndex = Math.floor(index / (combineCategoriesMode ? selectedCategoryIds.length : 1));
-                const schoolId = filteredSchools[schoolIndex]?.id;
+                const schoolId = filteredSchools[index]?.id;
                 if (schoolId) {
                     const header = card.querySelector('.card-header');
                     if (header) {
@@ -444,17 +391,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             // Render charts for history and projection categories
-            if (combineCategoriesMode) {
-                selectedCategoryIds.forEach(cardType => {
-                    if (cardType === 'history' || cardType === 'projection') {
-                        filteredSchools.forEach(school => renderChart(school, cardType));
-                    }
-                });
-            } else {
-                const cardType = selectedCategoryId;
-                if (cardType === 'history' || cardType === 'projection') {
-                    filteredSchools.forEach(school => renderChart(school, cardType));
-                }
+            if (cardType === 'history' || cardType === 'projection') {
+                filteredSchools.forEach(school => renderChart(school, cardType));
             }
         }
         
@@ -522,27 +460,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const target = e.target.closest('.nav-view-link'); 
             if (target && target.dataset.view !== currentViewMode) { 
                 currentViewMode = target.dataset.view;
-                // Reset filters when switching views
-                categoryFilter = null;
-                fosFilter = 'all';
+                // Reset filter when switching views
+                filterValue = 'all';
                 
-                // Reset combine mode when switching views
-                combineCategoriesMode = false;
-                const combineCategoriesCheckbox = document.getElementById('combine-categories-checkbox');
-                const combineCategoriesHint = document.getElementById('combine-categories-hint');
-                if (combineCategoriesCheckbox) {
-                    combineCategoriesCheckbox.checked = false;
-                }
-                if (combineCategoriesHint) {
-                    combineCategoriesHint.classList.remove('visible');
-                }
-                selectedCategoryIds = [selectedCategoryId];
-                
-                // Reset dropdowns
-                const levelSelect = document.getElementById('level-filter');
-                const fosSelect = document.getElementById('fos-filter');
-                if (levelSelect) levelSelect.value = 'all';
-                if (fosSelect) fosSelect.value = 'all';
+                // Reset dropdown
+                const combinedFilter = document.getElementById('combined-filter');
+                if (combinedFilter) combinedFilter.value = 'all';
                 
                 updateView(); 
             } 
@@ -553,112 +476,22 @@ document.addEventListener('DOMContentLoaded', function() {
             const target = e.target.closest('.nav-list-item'); 
             if (target) {
                 const categoryId = target.dataset.id;
-                
-                if (combineCategoriesMode) {
-                    // In combine mode, toggle selection
-                    const index = selectedCategoryIds.indexOf(categoryId);
-                    if (index > -1) {
-                        // Deselect
-                        selectedCategoryIds.splice(index, 1);
-                    } else {
-                        // Select (max 3)
-                        if (selectedCategoryIds.length < 3) {
-                            selectedCategoryIds.push(categoryId);
-                        }
-                    }
-                    
-                    // Update UI to show selected categories
-                    document.querySelectorAll('#category-list-container .nav-list-item').forEach(item => {
-                        if (selectedCategoryIds.includes(item.dataset.id)) {
-                            item.classList.add('selected-for-combine');
-                        } else {
-                            item.classList.remove('selected-for-combine');
-                        }
-                    });
-                    
-                    // Only update view if at least one category is selected
-                    if (selectedCategoryIds.length > 0) {
-                        updateView();
-                    }
-                } else {
-                    // Normal mode - single selection
-                    selectedCategoryId = categoryId;
-                    selectedCategoryIds = [categoryId];
-                    // Reset filters when clicking a category link
-                    categoryFilter = null;
-                    fosFilter = 'all';
-                    // Reset dropdowns
-                    const levelSelect = document.getElementById('level-filter');
-                    const fosSelect = document.getElementById('fos-filter');
-                    if (levelSelect) levelSelect.value = 'all';
-                    if (fosSelect) fosSelect.value = 'all';
-                    updateView();
-                }
+                selectedCategoryId = categoryId;
+                // Reset filter when clicking a category link
+                filterValue = 'all';
+                // Reset dropdown
+                const combinedFilter = document.getElementById('combined-filter');
+                if (combinedFilter) combinedFilter.value = 'all';
+                updateView();
             } 
         });
         
-        // Level filter dropdown
-        const levelSelect = document.getElementById('level-filter');
-        if (levelSelect) {
-            levelSelect.addEventListener('change', (e) => {
-                const value = e.target.value;
-                if (value === 'all') {
-                    categoryFilter = null;
-                } else {
-                    categoryFilter = value;
-                }
+        // Combined filter dropdown
+        const combinedFilter = document.getElementById('combined-filter');
+        if (combinedFilter) {
+            combinedFilter.addEventListener('change', (e) => {
+                filterValue = e.target.value;
                 updateView();
-            });
-        }
-        
-        // Family of Schools filter dropdown
-        const fosSelect = document.getElementById('fos-filter');
-        if (fosSelect) {
-            fosSelect.addEventListener('change', (e) => {
-                const value = e.target.value;
-                if (value === 'all') {
-                    categoryFilter = null;
-                    fosFilter = 'all';
-                } else {
-                    categoryFilter = 'fos';
-                    fosFilter = value;
-                }
-                updateView();
-            });
-        }
-        
-        // Combine categories checkbox
-        const combineCategoriesCheckbox = document.getElementById('combine-categories-checkbox');
-        const combineCategoriesHint = document.getElementById('combine-categories-hint');
-        if (combineCategoriesCheckbox) {
-            combineCategoriesCheckbox.addEventListener('change', (e) => {
-                combineCategoriesMode = e.target.checked;
-                
-                if (combineCategoriesMode) {
-                    // Enable combine mode
-                    combineCategoriesHint.classList.add('visible');
-                    // Start with current category selected
-                    selectedCategoryIds = [selectedCategoryId];
-                    // Update UI
-                    document.querySelectorAll('#category-list-container .nav-list-item').forEach(item => {
-                        if (item.dataset.id === selectedCategoryId) {
-                            item.classList.add('selected-for-combine');
-                        }
-                    });
-                } else {
-                    // Disable combine mode
-                    combineCategoriesHint.classList.remove('visible');
-                    // Keep only first selected category
-                    if (selectedCategoryIds.length > 0) {
-                        selectedCategoryId = selectedCategoryIds[0];
-                        selectedCategoryIds = [selectedCategoryId];
-                    }
-                    // Remove selection highlights
-                    document.querySelectorAll('#category-list-container .nav-list-item').forEach(item => {
-                        item.classList.remove('selected-for-combine');
-                    });
-                    updateView();
-                }
             });
         }
         
