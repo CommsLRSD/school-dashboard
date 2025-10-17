@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         navIcon.title = 'View all schools for this category';
                         navIcon.addEventListener('click', (e) => {
                             e.stopPropagation();
-                            showCustomPopup('Go to category?', e.clientX, e.clientY, () => {
+                            showCustomPopup('Go to category view?', e.clientX, e.clientY, () => {
                                 currentViewMode = 'category';
                                 selectedCategoryId = cardType;
                                 updateView();
@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     navIcon.title = 'View all categories for this school';
                     navIcon.addEventListener('click', (e) => {
                         e.stopPropagation();
-                        showCustomPopup('Go to school?', e.clientX, e.clientY, () => {
+                        showCustomPopup('Go to school view?', e.clientX, e.clientY, () => {
                             currentViewMode = 'school';
                             selectedSchoolId = schoolId;
                             updateView();
