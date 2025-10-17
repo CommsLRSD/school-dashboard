@@ -64,9 +64,11 @@ document.addEventListener('DOMContentLoaded', function() {
             `<a href="#" class="nav-list-item" data-type="school" data-id="${schoolId}">${schoolData[schoolId].schoolName}</a>`
         ).join('');
 
-        categoryListContainer.innerHTML = Object.entries(categories).map(([key, name]) => 
+        // Add category links after the existing filter buttons
+        const categoryLinks = Object.entries(categories).map(([key, name]) => 
             `<a href="#" class="nav-list-item" data-type="category" data-id="${key}">${name}</a>`
         ).join('');
+        categoryListContainer.innerHTML += categoryLinks;
     }
 
     // --- Card Creation Functions ---
