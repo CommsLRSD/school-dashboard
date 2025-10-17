@@ -96,12 +96,16 @@
     "projects": {
       "provincial": {
         "requested": [
-          "Universal washroom to meet current accessibility standards",
+          "Universal washroom to meet current accessibility standards*",
           "Remaining Burnham boiler replacement",
           "Roof replacement (Partial)"
         ],
-        "inProgress": [],
-        "completed": []
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "None"
+        ]
       },
       "local": {
         "requested": [
@@ -109,7 +113,12 @@
           "Boys change room renewal",
           "Air conditioning installation",
           "DDC system",
-          "Office renovation completion"
+          "Office renovation completion",
+          "Flooring and hallway wall refinishing",
+          "Classrooms renovation",
+          "Library flooring",
+          "Music room renovation",
+          "Room 10 renovation"
         ],
         "inProgress": [
           "Fence installation"
@@ -118,13 +127,7 @@
           "Community kitchen electrical upgrades",
           "Kitchen island addition",
           "Cupboards",
-          "Gym girls change room",
-          "Flooring and hallway wall refinishing",
-          "Classrooms renovation",
-          "Library flooring renovation",
-          "Music room renovation",
-          "Room 10 renovation",
-          "Room modification",
+          "Gym girls change room modification",
           "Bottle filling station addition"
         ]
       }
@@ -228,36 +231,45 @@
       "provincial": {
         "buildingMove": "French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd.",
         "requested": [
-          "New High School Project at 296 Speers Rd.",
-          "Addition with washrooms, fitness room, band/music rooms."
+          "New High School: Precinct K neighbourhood",
+          "Addition with washrooms, fitness room, band/music rooms, administration office, entrance modifications, community room, site development",
+          "Roof replacement (Partial)"
         ],
-        "inProgress": [],
+        "inProgress": [
+          "None"
+        ],
         "completed": [
-          "Foods and nutrition lab renovation",
-          "Universal washroom"
-        ]
+          "Lighting retrofits",
+          "Universal washroom",
+          "Foods and nutrition lab renovation"
+        ],
+        "note": "Building Move: French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd."
       },
       "local": {
         "requested": [
-          "Gender-neutral washroom design",
-          "Air intake Unit",
-          "Gym office space",
+          "Gender-neutral washroom",
+          "DDC system",
+          "Air Make Up unit",
+          "Gym office spaces",
           "Staff washroom renovation",
           "Windows replacement",
           "Blackboards removal",
-          "Flooring and ceiling"
-        ],
-        "inProgress": [],
-        "completed": [
-          "Concrete stairs repair",
-          "Door & frame replacement",
-          "Refresh gym floor",
+          "Flooring and ceiling",
           "Office area redesign",
-          "Corridor shutter door lock relocation",
+          "Canteen shutter door lock relocation",
           "Parking lot and staircase repair",
           "Lockers",
           "Lighting in science wing, library, and Grade 7/8 classrooms",
           "Washrooms renovation"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Removal of raised teachers desks",
+          "Refinish gym floor",
+          "Concrete stairs repair",
+          "Door & frame replacement"
         ]
       }
     },
@@ -359,7 +371,9 @@
           "Roof replacement (Partial)",
           "Additional Air Make Up unit to gym"
         ],
-        "inProgress": [],
+        "inProgress": [
+          "None"
+        ],
         "completed": [
           "Replacement of Roof Top Unit",
           "Addition with 16 classrooms, music room, and universal washroom",
@@ -371,18 +385,20 @@
       "local": {
         "requested": [
           "Hallways and door trims repainting",
-          "Gym bleachers",
+          "Gym Bleachers",
           "School field redevelopment",
-          "Classrooms floor refinishing",
+          "Gymnasium floor refinishing",
           "Library flooring replacement",
-          "Girls' washroom"
-        ],
-        "inProgress": [],
-        "completed": [
-          "Exterior level landing for cafeteria doors",
-          "Domestic piping renovation in replace of mezzanine access",
+          "Girls' washroom renovation",
+          "Domestic piping replacement in crawlspace",
           "Lighting upgrade in all classrooms, hallways, and gymnasium",
           "Elevator or lift for mezzanine access"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Exterior level landing for cafeteria doors"
         ]
       }
     },
@@ -483,26 +499,39 @@
       "provincial": {
         "requested": [
           "New High School: Precinct K",
-          "Universal washrooms to meet current accessibility standards",
-          "Elevator upgrades to accommodate all accessibility needs"
+          "Universal washrooms to meet current accessibility standards*",
+          "Elevator upgrades to accommodate all accessibility needs**"
         ],
-        "inProgress": [],
+        "inProgress": [
+          "None"
+        ],
         "completed": [
           "Penthouse Air Handling Unit Upgraded"
         ]
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": [
-          "DDC system upgrade",
+        "requested": [
+          "Washroom reconfigurations to gender-neutral",
+          "Atrium",
+          "Modular classroom",
+          "Accessible gymnasium door",
+          "Kitchen",
+          "Art room ceiling",
+          "Shower stalls removal from change rooms",
+          "Lighting upgrade in entire school",
+          "DDC system",
           "Automotive shop upgrade",
           "Locking hardware replacement",
           "Electrical outlets",
           "Door replacements",
           "Indigenous student spaces",
           "Individualized programming students spaces",
-          "Guitar room soundproofing",
+          "Guitar room soundproofing"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
           "Flooring replacement",
           "Asphalt repair"
         ]
@@ -594,14 +623,31 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "Roof replacement (Partial)"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "None"
+        ]
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Dark room removal",
+          "Flooring replacement",
+          "Windows replacement",
+          "Foods and nutrition lab renovation",
+          "Universal washrooms to meet current accessibility standards*"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Flooring removal & tile installation"
+        ]
       }
     },
     "meta": {
@@ -693,14 +739,35 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "Roof repairs (partial)"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Universal washroom added"
+        ]
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Bottle filling station",
+          "Lighting upgrade",
+          "Main office renovation",
+          "Staff room renovation",
+          "Boot racks removal",
+          "Lockers",
+          "Flooring replacement",
+          "Washrooms partitions replacement",
+          "LRTA office reconfiguration into classroom"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Paving of parking lot"
+        ]
       }
     },
     "meta": {
@@ -797,14 +864,35 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Roof replacement (Partial)"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "None"
+        ]
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Library flooring replacement",
+          "Asphalt existing gravel parking lot",
+          "Flooring replacement",
+          "Washroom countertops replacement",
+          "Library flooring replacement",
+          "Ceiling tiles replacement",
+          "Soundproofing in guitar room",
+          "Universal washrooms to meet current accessibility standards*"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Classroom window replacements (Rms. 11-20)",
+          "Flooring removal & tile installation (Rm. 15)",
+          "Classrooms (2) and hallway flooring"
+        ]
       }
     },
     "meta": {
@@ -899,14 +987,34 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Roof replacement (Partial)"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "None"
+        ]
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Staff room renovation",
+          "Gender-neutral washroom",
+          "Library flooring",
+          "Boys' washroom renovation",
+          "HVAC system"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Flooring replacement",
+          "Acoustic material removal",
+          "Door & frame replacement",
+          "Intercom system relocation",
+          "Electrical outlet installation"
+        ]
       }
     },
     "meta": {
@@ -990,14 +1098,38 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "New Elementary School: Waters Urban Village neighbourhood",
+          "Roof replacement (Full)"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "None"
+        ]
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "HVAC system",
+          "Main office renovations",
+          "Staff room renovation",
+          "Student washrooms renovations",
+          "Phys-ed office shower",
+          "Lighting and ceiling tiles upgrade",
+          "Tectum installation in gymnasium",
+          "Flooring",
+          "Entrance concrete landing replacement"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Privacy curtains (shower & changerooms)",
+          "Window replacements",
+          "Flooring removal",
+          "Lockers"
+        ]
       }
     },
     "meta": {
@@ -1093,14 +1225,42 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Modular Classrooms (2), no longer required",
+          "Permanent Classroom additions (4), no longer required",
+          "Roof replacement (Partial)"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Lighting Retrofits"
+        ]
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Student washrooms renovation",
+          "Flooring replacement",
+          "Window replacement",
+          "Doors and frames replacement",
+          "Bulkhead construction",
+          "Bottle filling station",
+          "HVAC system",
+          "Lighting upgrades"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Floor tile replacement",
+          "Intercom system replacement",
+          "Storage cabinet installation",
+          "Whiteboard relocation",
+          "Shelving installation",
+          "Bottle filling station addition",
+          "Old water fountains removal",
+          "Student services office"
+        ]
       }
     },
     "meta": {
@@ -1186,14 +1346,35 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Roof replacement (Partial)"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "None"
+        ]
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Windows replacement",
+          "Staff room renovation",
+          "Cabinet door installations",
+          "Flooring replacement",
+          "Air Make Up unit",
+          "Boiler replacement",
+          "Washrooms renovation",
+          "Outdoor storage",
+          "Washer and dryer",
+          "Staff room renovation"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Flooring replaced with tile"
+        ]
       }
     },
     "meta": {
@@ -1285,14 +1466,47 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Entrance",
+          "Learning commons",
+          "Resource support suite",
+          "Guidance office",
+          "Conference room",
+          "Canteen",
+          "Second air handling unit",
+          "Relocation of school office and support space"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Replacement of Chiller"
+        ]
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Ceiling tiles replacement",
+          "Asphalt play area resurfacing",
+          "Lane cutout for student drop-off and pick-up",
+          "Hand washing sink",
+          "HVAC system",
+          "Main entrance and school office renovation",
+          "Flooring replacement"
+        ],
+        "inProgress": [
+          "None"
+        ],
+        "completed": [
+          "Convert washroom to gender neutral",
+          "Accessible entrance general renovations",
+          "Cement step repair",
+          "Demising wall",
+          "Bulletin boards",
+          "Shelving",
+          "Sink",
+          "White board",
+          "Coat hooks"
+        ]
       }
     },
     "meta": {
@@ -1384,14 +1598,39 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New Elementary School: Waters Urban Village neighbourhood",
+          "Building envelope",
+          "Windows",
+          "Ventilation",
+          "Elevator",
+          "Second air handling unit",
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
         "completed": []
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Windows replacement for entire school",
+          "Lighting upgrades",
+          "HVAC system",
+          "Student washrooms renovation",
+          "Acoustic material replacement",
+          "Door and frames replacement",
+          "Gym bleacher replacement",
+          "Storage room door",
+          "Washroom walls refinishing",
+          "Doorway widening",
+          "Magnetic locks on second floor stairwell doors",
+          "Bike cage"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Window safety bars",
+          "Extend stairway walls for safety",
+          "New gender neutral washroom"
+        ]
       }
     },
     "meta": {
@@ -1479,14 +1718,29 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New Elementary School: Precinct K neighbourhood",
+          "Failed boiler replacement",
+          "Make-up air replacement (2)"
+        ],
         "inProgress": [],
         "completed": []
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Roof top unit replacement",
+          "Staff room renovation",
+          "Partitions replacement in change room",
+          "Concrete play area repair"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Rear sidewalk repairs",
+          "Sound proofing",
+          "Ceiling tile replacement (6 classrooms)",
+          "Cubbies for students",
+          "White board relocation"
+        ]
       }
     },
     "meta": {
@@ -1582,14 +1836,40 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
+          "New Elementary School: Precinct K neighbourhood",
+          "Universal washrooms",
+          "Relocation of Modular Classrooms to Island Lakes Community School (summer 2025)",
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Lighting Retrofits"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Skylights covers removal",
+          "Lighting upgrade",
+          "Gender-neutral washrooms",
+          "Operable windows",
+          "Asphalt play area replacement",
+          "Soundproofing in multi-purpose room",
+          "Playground drainage",
+          "Main office renovation",
+          "Skylights replacement",
+          "HVAC system"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Door and frame replacement",
+          "Flooring replacement (library)",
+          "General renovations",
+          "Flooring replacement (front & rear entrances)",
+          "New classroom in library",
+          "Library reconfiguration to include kindergarten classroom with washroom"
+        ]
       }
     },
     "meta": {
@@ -1692,14 +1972,42 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "Building Replacement [≈55,000 ft2]",
+          "Additional Air Make Up unit to gym",
+          "Roof replacement (Full)"
+        ],
         "inProgress": [],
         "completed": []
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Elevator",
+          "Accessible washroom on each floor",
+          "HVAC system",
+          "Ceiling tiles replacement",
+          "Make-up air unit",
+          "Flooring",
+          "Automatic door operators",
+          "Ramp at library door",
+          "Ceiling and lighting upgrade",
+          "Washrooms renovation",
+          "Exhaust fan replacement",
+          "Parking lot paving",
+          "Flooring replacement",
+          "Windows replacement",
+          "Gym ceiling acoustic material removal",
+          "Gym change room reconfiguration to sensory room",
+          "Gym mezzanine expansion"
+        ],
+        "inProgress": [
+          "Asphalt repair"
+        ],
+        "completed": [
+          "Flooring replacement",
+          "Electrical plug installation (parking lot)",
+          "Intercom system"
+        ]
       }
     },
     "meta": {
@@ -1806,14 +2114,34 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Universal washroom"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "School repainting",
+          "HVAC system",
+          "Windows replacement",
+          "Washroom and laundry room renovation",
+          "Ceiling tiles replacement",
+          "Change room renovation",
+          "Concrete accessible loading pad",
+          "Wall fracture",
+          "Canopy outside modular classrooms"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Window replacement",
+          "Step repairs",
+          "Ramp repair",
+          "Floor tile replacement",
+          "Playground asphalt resurfacing"
+        ]
       }
     },
     "meta": {
@@ -1910,14 +2238,33 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "Roof repairs"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Universal washroom"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "School grounds redevelopment",
+          "Partitions and washroom door replacement",
+          "Lockers",
+          "Flooring replacement",
+          "Library shelves",
+          "Demising wall removal",
+          "Library move to main floor",
+          "Gender-neutral washrooms",
+          "HVAC system",
+          "Doors replacement"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Fix wheelchair accessible ramps",
+          "Vestibule renovations",
+          "Blacktop repair"
+        ]
       }
     },
     "meta": {
@@ -2020,14 +2367,36 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "Graphics lab (ventilation, ceiling, lights, dark room, storage)",
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Rooftop unit replacement"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Elevator installation",
+          "HVAC system",
+          "Metal shops renovation",
+          "Lighting and painting upgrade in automotive shop",
+          "Lighting, millwork, and painting upgrade in electronics",
+          "Graphic arts renovation",
+          "Lighting and stair treads",
+          "Lockers replacement",
+          "Gender-neutral washroom",
+          "Flooring replacement"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Enclose junior high lab electrical panel",
+          "Door replacement",
+          "Foods and nutrition lab",
+          "Fire alarm upgrade"
+        ]
       }
     },
     "meta": {
@@ -2125,14 +2494,37 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
+        "requested": [
+          "New High School: Precinct K neighbourhood"
+        ],
+        "inProgress": [
+          "Elevator",
+          "Universal washroom",
+          "Roof replacement (Partial)"
+        ],
         "completed": []
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Washroom renovations",
+          "Windows replacement",
+          "Exterior painting",
+          "Flooring replacement",
+          "Interlock with dust collector in maker studio",
+          "School renumbering",
+          "HVAC system",
+          "Main office renovation",
+          "Elevator",
+          "Bell tower roof repair",
+          "Front entrance ramp"
+        ],
+        "inProgress": [
+          "Wall refinishing and repainting"
+        ],
+        "completed": [
+          "Chimney repair",
+          "Pave parking lot with asphalt"
+        ]
       }
     },
     "meta": {
@@ -2224,14 +2616,32 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "Boiler replacement",
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Rooftop unit and Make-up Air replacement"
+        ]
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Air conditioning installation",
+          "Cabinets and countertops in canteen"
+        ],
+        "inProgress": [
+          "Exterior wall repair"
+        ],
+        "completed": [
+          "Portable A/C unit",
+          "Coat hooks",
+          "Lockable storage cabinet",
+          "Boot racks",
+          "Intercom call button relocation",
+          "Compressor replacement"
+        ]
       }
     },
     "meta": {
@@ -2319,14 +2729,32 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "Boiler replacement"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Elevator",
+          "Universal washroom"
+        ]
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Student washrooms renovation",
+          "Gym air conditioning",
+          "Main floor school office relocation",
+          "Windows replacement"
+        ],
+        "inProgress": [
+          "Exterior windows",
+          "Wall repair",
+          "Loose wiring securing"
+        ],
+        "completed": [
+          "Portable A/C unit",
+          "Steps repair"
+        ]
       }
     },
     "meta": {
@@ -2429,14 +2857,36 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "New Elementary School: Precinct K neighbourhood",
+          "Universal washroom",
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Make Up Air replacement (2)",
+          "Compressor replacement"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Staff room renovation",
+          "Meeting room window",
+          "Flooring replacement",
+          "Skylight blind in multi-purpose room",
+          "Outdoor storage",
+          "School office flooring replacement",
+          "Lockers",
+          "Food and nutrition lab renovation",
+          "Metal roof and overhang repainting"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Dust collector layout reconfiguration and added electrical to accommodate the relocated equipment",
+          "Painting of all classrooms",
+          "Interlock for dust collector installation"
+        ]
       }
     },
     "meta": {
@@ -2527,14 +2977,38 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
+          "New Elementary School: Precinct J neighbourhood",
+          "New Elementary School: Precinct K neighbourhood",
+          "New High School: Precinct K neighbourhood",
+          "Relocation of Modular Classrooms to ILCS from École Van Belleghem (summer 2025)",
+          "Additional Air Make Up unit for gym",
+          "Roof replacement (Partial)"
+        ],
+        "inProgress": [
+          "Relocation of Modular Classrooms (2) from St. Germain"
+        ],
+        "completed": [
+          "Installation of Modular Classrooms (2)"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Library desk trims",
+          "Air Make Up unit",
+          "Universal washroom upgrade",
+          "Canteen renovation",
+          "Main entrance benches",
+          "Washroom countertop replacements",
+          "Entrance flooring replacement",
+          "Staff room renovation"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Shelving installation",
+          "Two classrooms added to library"
+        ]
       }
     },
     "meta": {
@@ -2621,14 +3095,45 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
+          "New Elementary School: Precinct J neighbourhood",
+          "New Elementary School: Precinct K neighbourhood",
+          "New High School: Precinct K neighbourhood",
+          "Addition [≈26,000 ft2] with classrooms (9), Library, Fitness room, Cafeteria, Entrance (2)",
+          "Optimize staff parking",
+          "Outdoor recreation spaces",
+          "Hardcourt sports plaza",
+          "Roof replacement (Partial)"
+        ],
+        "inProgress": [
+          "Science classroom"
+        ],
+        "completed": [
+          "Universal washroom",
+          "Roof replacement (Partial)",
+          "Foundation upgrade",
+          "Roof reinforcement upgrade"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "HVAC system",
+          "Demising wall installation",
+          "Kitchen renovation",
+          "Windows replacement",
+          "Gym air conditioning"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Locker replacement",
+          "Cupboard removal",
+          "Painting",
+          "Flooring installation",
+          "Gym reconfiguration",
+          "Foods and nutrition room refresh",
+          "Exterior foundation wall repair"
+        ]
       }
     },
     "meta": {
@@ -2714,14 +3219,34 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Make Up Air & compressor replacements (2)"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Main office renovation",
+          "Kitchenette",
+          "HVAC system",
+          "Flooring in maker studio",
+          "Washrooms renovation",
+          "Library flooring replacement",
+          "Ceiling tiles replacement",
+          "Learning lab renovation",
+          "Parking lot paving"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Addition of parking lot",
+          "Music room complete renovation",
+          "Kitchen build",
+          "Conversion to classroom"
+        ]
       }
     },
     "meta": {
@@ -2809,13 +3334,34 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "Culinary arts space renovations",
+          "Esthetic facility renovations"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Roof replacement (Partial)"
+        ]
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
+        "requested": [
+          "Esthetics salon and computer lab reconfiguration",
+          "Culinary arts renovation",
+          "Universal washroom",
+          "Main office renovation",
+          "Tennis court resurfacing",
+          "Lockers",
+          "Gender-neutral washroom in Gym",
+          "Workout room",
+          "Elevator installation",
+          "HVAC system",
+          "Auto shop and plumbing shop exhaust system replacement",
+          "Ceiling acoustical spray removal/replacement in Gym",
+          "Carpeting"
+        ],
+        "inProgress": [
+          "Add fob access (culinary arts changeroom)"
+        ],
         "completed": []
       }
     },
@@ -2912,14 +3458,38 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "New Elementary School: Waters Urban Village neighbourhood"
+        ],
+        "inProgress": [
+          "Major addition",
+          "Major renovations"
+        ],
+        "completed": [
+          "Building envelope",
+          "Elevator",
+          "Universal toilet room"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Doors and frames replacement",
+          "School rekeying",
+          "HVAC system",
+          "Interior painting",
+          "Staff room renovation",
+          "Classrooms renovation",
+          "Student washrooms renovation",
+          "Parking lot paving",
+          "Fence installation",
+          "School bus loop",
+          "Electrical rewiring",
+          "Washrooms renovation"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Air conditioning (entire school)"
+        ]
       }
     },
     "meta": {
@@ -3005,14 +3575,33 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "Boiler replacement",
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
         "completed": []
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Staff room and washrooms renovation",
+          "Sink and cabinets replacement in art lab",
+          "Millwork replacement",
+          "Flooring replacement",
+          "Air conditioning",
+          "Gender-neutral washroom",
+          "Window replacement",
+          "Parking lot paving",
+          "Window installation",
+          "Soundproofing"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Cabinets addition",
+          "Lockers addition",
+          "Resurfacing main entrance"
+        ]
       }
     },
     "meta": {
@@ -3116,14 +3705,40 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Universal washroom",
+          "Rooftop unit replacement (5)",
+          "Science classroom"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Flooring replacement",
+          "Soundproofing",
+          "Gender-neutral washrooms",
+          "Lighting upgrade",
+          "HVAC system",
+          "Windows replacement",
+          "Staff room renovation",
+          "Flagpole replacement",
+          "Demising wall",
+          "School sign replacement",
+          "Bottle filling stations",
+          "Floor cutting for volleyball standards",
+          "Weight room expansion"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Automatic door opener installation",
+          "Basketball court expansion",
+          "Floor refinishing",
+          "Interlock for dust collector installation",
+          "Rooftop units replacement"
+        ]
       }
     },
     "meta": {
@@ -3207,14 +3822,39 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
+          "New Elementary School: Precinct J neighbourhood",
+          "New Elementary School: Precinct K neighbourhood",
+          "New High School: Precinct K neighbourhood",
+          "Roof replacement (Partial)",
+          "Universal washroom"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Lighting retrofits"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Student drop-off and pick-up zone",
+          "Flooring replacement",
+          "Partition replacement",
+          "Washrooms renovation",
+          "Change room renovation",
+          "HVAC system",
+          "School office renovation",
+          "Exterior drainage installation",
+          "Fob reader at rear entrance",
+          "Fracture repair in front wall",
+          "Electrical outlets in modular classrooms",
+          "Stage area renovation in Gym",
+          "Supply air and exhaust"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Asphalt repair"
+        ]
       }
     },
     "meta": {
@@ -3324,14 +3964,26 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "Additional Make-up Air unit for library",
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
         "completed": []
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Air conditioning",
+          "Air Make Up unit",
+          "Main office renovation",
+          "Staff room renovation",
+          "Art lab renovation",
+          "Staff room refresh"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Door & frame replacement"
+        ]
       }
     },
     "meta": {
@@ -3416,14 +4068,39 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New Elementary School: Precinct K neighbourhood",
+          "New High School: Precinct K neighbourhood",
+          "Universal washroom",
+          "Air MUA replacement (2)"
+        ],
         "inProgress": [],
         "completed": []
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Universal washroom",
+          "Plumbing removal",
+          "Air Make Up unit",
+          "Windows replacement",
+          "Acoustic material removal",
+          "Staff room renovation",
+          "Ceiling tiles replacement",
+          "Partitions replacements",
+          "Boot racks installation",
+          "Privacy door in shower area",
+          "School rekeying",
+          "Exterior wall repair",
+          "Parking lot expansion",
+          "Flooring replacement"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Ceiling track installation",
+          "Flooring replacement",
+          "Sidewalk repair",
+          "Hallway cabinets"
+        ]
       }
     },
     "meta": {
@@ -3514,14 +4191,44 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
+          "New Elementary School: Precinct J neighbourhood",
+          "New Elementary School: Precinct K neighbourhood",
+          "New High School: Precinct K neighbourhood",
+          "Air MUA replacement (2)",
+          "Universal washroom"
+        ],
+        "inProgress": [
+          "Building envelope replacement"
+        ],
+        "completed": [
+          "Roof replacement (Partial)"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Gender-neutral washrooms",
+          "HVAC system",
+          "Parking reconfiguration and parent drop-off zone",
+          "School office renovation",
+          "Accordion wall removal and permanent wall construction",
+          "Millwork and ceiling replacement",
+          "Gym office spaces renovation",
+          "Lockers replacement",
+          "Hallways painting",
+          "Berm removal on playground"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Removal of counters, sinks, cupboards (old science lab)",
+          "New foods and nutrition lab construction",
+          "Universal washroom update",
+          "Ceiling track installation, Door & frame replacement",
+          "Plumbing improvements",
+          "Room 13 converted to kindergarten classroom",
+          "Lockers (75)"
+        ]
       }
     },
     "meta": {
@@ -3608,14 +4315,36 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "Elevator",
+          "Universal washroom"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Roof replacement (Partial)"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Play structure",
+          "Staff parking lot expansion",
+          "Windows replacement",
+          "Kindergarten Room renovation",
+          "Flooring replacement",
+          "Air conditioning",
+          "Student drop-off and pick-up zone",
+          "Universal washroom",
+          "Elevator",
+          "School office renovation",
+          "Staff room renovation"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Floor refinishing",
+          "General renovations",
+          "Cabinet installation"
+        ]
       }
     },
     "meta": {
@@ -3699,14 +4428,33 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
         "completed": []
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Flooring replacement",
+          "Staff room renovation",
+          "School office renovation",
+          "Basketball court renewal",
+          "Gym bleachers replacement",
+          "Air conditioning",
+          "Parking lot paving",
+          "Wood shop renovation",
+          "Metals shop renovation",
+          "Graphic arts renovation",
+          "Countertop replacement in student services office"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Flooring tile installation",
+          "Repaint floors",
+          "Door & frame replacement"
+        ]
       }
     },
     "meta": {
@@ -3797,14 +4545,36 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "Universal washroom",
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
         "completed": []
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Air conditioning in south wing and Gym",
+          "Gym bleachers",
+          "Electronic board and school sign replacement",
+          "Lockers",
+          "Parking lot paving",
+          "School bus loop",
+          "Ceiling and lights",
+          "Universal washroom",
+          "Millwork replacement in family centre",
+          "Classrooms renovation",
+          "Front entrance ramp"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Cabinet removal",
+          "Lockers for staff",
+          "General repairs (front entrance)",
+          "Room reconfiguration for washer & dryer",
+          "Toilet & sink installation"
+        ]
       }
     },
     "meta": {
@@ -3898,14 +4668,33 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "Washrooms (for 1015 Cottonwood Rd.)",
+          "Fitness room (for 1015 Cottonwood Rd.)",
+          "Band/guitar rooms (for 1015 Cottonwood Rd.)",
+          "Classrooms (4) (for 1015 Cottonwood Rd.)",
+          "Entrance (for 1015 Cottonwood Rd.)",
+          "Office (for 1015 Cottonwood Rd.)",
+          "Cafeteria (for 1015 Cottonwood Rd.)",
+          "Roof replacement (Partial) (for 1015 Cottonwood Rd.)",
+          "Additional Air Make Up unit to gym (for 1015 Cottonwood Rd.)"
+        ],
         "inProgress": [],
         "completed": []
       },
       "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
+        "requested": [
+          "Gym floor refinishing",
+          "Foods and nutrition labs renovation",
+          "School rekeying",
+          "Windows replacement"
+        ],
+        "inProgress": [
+          "Science classroom"
+        ],
+        "completed": [
+          "Lighting Retrofit"
+        ]
       }
     },
     "meta": {
@@ -4004,14 +4793,36 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "New building envelope",
+          "New windows",
+          "Structural reinforcement",
+          "Roof replacement (Partial)"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Boiler replacement",
+          "Direct Digital Control for HVAC system installation"
+        ]
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Sidelights in classrooms",
+          "Front entrance ramp",
+          "Universal washroom",
+          "Classroom reconfiguration into movement room",
+          "Sink",
+          "Washrooms renovation",
+          "Staff washroom renovation",
+          "Window in main office"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Parking lot paving",
+          "General renovations",
+          "Door replacement"
+        ]
       }
     },
     "meta": {
@@ -4186,14 +4997,34 @@
     },
     "projects": {
       "provincial": {
-        "requested": [],
+        "requested": [
+          "Number one priority: Addition and renovations to J.H. Bruns Collegiate to allow for transition from grade 8 to grade 9",
+          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
+          "New Elementary School: Precinct J neighbourhood",
+          "New Elementary School: Precinct K neighbourhood",
+          "New High School: Precinct K neighbourhood"
+        ],
         "inProgress": [],
         "completed": []
       },
       "local": {
-        "requested": [],
+        "requested": [
+          "Parking lot expansion",
+          "Sump pump spout diversion",
+          "Floor drain repair",
+          "Concrete bollards removal",
+          "School grounds redevelopment",
+          "Commons area reconfiguration",
+          "Demising wall demolition"
+        ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Lower washroom fixture height",
+          "Remove temporary partitions in commons area and makerspace areas",
+          "Reinstall equipment in makerspace and teacher space in kitchen",
+          "Demising wall",
+          "Additional access door"
+        ]
       }
     },
     "meta": {
