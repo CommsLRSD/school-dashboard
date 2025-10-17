@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const categories = {
         "details": "Contact & Building Info",
-        "enrolment": "Enrolment Stats",
+        "stats": "Capacity, Enrolment & Utilization",
         "history": "Historical Enrolment",
         "projection": "Projected Enrolment",
         "additions": "Building Additions",
@@ -100,6 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.current}</div><div class="stat-label">Current Enrolment (Sept. 30)</div></div></div>`;
             
             case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div>`;
+
+            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-grid"><div class="stat-item"><div class="stat-item-label">Capacity</div><div class="stat-item-value">${school.enrolment.capacity}</div></div><div class="stat-item"><div class="stat-item-label">Enrolment</div><div class="stat-item-value">${school.enrolment.current}</div></div><div class="stat-item ${capacityClass}"><div class="stat-item-label">Utilization</div><div class="stat-item-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div></div></div></div></div>`;
 
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historical Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
@@ -201,33 +203,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         } else if (type === 'projection') {
+            const projectionValues = Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0]));
+            const maxValue = Math.max(...projectionValues);
+            const yAxisMax = Math.ceil(maxValue * 1.15);
             chartInstances[chartId] = new Chart(ctx, {
-                type: 'bar', 
+                type: 'line', 
                 data: { 
                     labels: Object.keys(school.enrolment.projection), 
                     datasets: [{ 
-                        data: Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0])), 
-                        backgroundColor: '#BE5247',
-                        barThickness: 30
+                        data: projectionValues, 
+                        borderColor: '#2BA680', 
+                        backgroundColor: 'rgba(43, 166, 128, 0.1)', 
+                        fill: true, 
+                        tension: 0.3 
                     }] 
                 },
                 options: { 
-                    indexAxis: 'y',
                     responsive: true, 
                     maintainAspectRatio: false, 
                     plugins: { 
                         legend: { display: false }, 
                         datalabels: typeof ChartDataLabels !== 'undefined' ? { 
                             anchor: 'end', 
-                            align: 'end', 
-                            formatter: (v, ctx) => Object.values(school.enrolment.projection)[ctx.dataIndex], 
+                            align: 'top', 
                             font: { weight: 'bold' },
-                            color: '#BE5247'
+                            color: '#2BA680'
                         } : { display: false } 
                     },
                     scales: {
-                        x: {
-                            beginAtZero: true
+                        y: {
+                            beginAtZero: true,
+                            max: yAxisMax
                         }
                     }
                 }
@@ -248,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentViewMode === 'school') {
             const school = schoolData[selectedSchoolId];
             contentSubtitle.textContent = school.schoolName;
-            const cardTypes = ['school_header', 'details', 'additions', 'capacity', 'enrolment', 'utilization', 'history', 'projection', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
+            const cardTypes = ['school_header', 'details', 'additions', 'capacity', 'enrolment', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
             cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
             
             // Add staggered animation delays
@@ -275,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const cardHTML = filteredSchools.map(school => {
                 // For category view, create a simplified card with just the school name in header
                 const isOverCapacity = school.enrolment.current / school.enrolment.capacity >= 1;
-                const warningIcon = isOverCapacity && (cardType==='utilization' || cardType==='enrolment' || cardType==='capacity') ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : '';
+                const warningIcon = isOverCapacity && (cardType==='utilization' || cardType==='enrolment' || cardType==='capacity' || cardType==='stats') ? '<i class="fas fa-exclamation-triangle warning-icon"></i>' : '';
                 
                 // Create a simple header with school name only (no images)
                 const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}</h2>${warningIcon}</div>`;
