@@ -90,7 +90,7 @@ body {
 .header-logo-main {
     height: 75px;
     transition: transform var(--transition-base);
-    justify: right;
+    align-item: right;
     margin-right: 1rem;
 }
 
