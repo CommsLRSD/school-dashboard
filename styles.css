@@ -1,6 +1,6 @@
 /* --- Root Variables & Global Styles --- */
 :root {
-    --bg-color: #f8f9fa; 
+    --bg-color: #ffffff; 
     --card-bg: #ffffff; 
     --sidebar-bg: #ffffff;
     --primary-red: #BE5247; 
@@ -11,7 +11,7 @@
     --text-color: #212529;
     --text-light: #6B7280; 
     --text-lighter: #adb5bd;
-    --border-color: #dee2e6; 
+    --border-color: #e0e0e0; 
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -72,9 +72,7 @@ body {
     display: flex; 
     align-items: center; 
     padding: 1.25rem 2rem; 
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: #ffffff;
     border-bottom: 1px solid var(--border-color); 
     position: sticky; 
     top: 0; 
@@ -89,15 +87,11 @@ body {
 
 .header-titles h1 { 
     font-family: var(--font-title); 
-    font-size: 2rem; 
+    font-size: 1.5rem; 
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    font-variant: small-caps;
-    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--primary-red);
 }
 
 .header-toolbar { 
@@ -229,23 +223,23 @@ body {
     font-size: 0.85rem;
     color: var(--text-light); 
     text-decoration: none; 
-    border-radius: 10px; 
+    border-radius: 6px; 
     transition: all var(--transition-base);
-    background-color: var(--bg-color); 
+    background-color: transparent; 
     border: 1px solid var(--border-color);
 }
 
 .nav-view-link:hover { 
     color: var(--primary-red); 
     border-color: var(--primary-red); 
-    background-color: #fff;
+    background-color: transparent;
 }
 
 .nav-view-link.active { 
     color: var(--primary-red); 
     border-color: var(--primary-red);
-    background-color: #fff;
-    box-shadow: var(--shadow-sm);
+    background-color: transparent;
+    box-shadow: none;
 }
 
 .nav-list-container { 
@@ -263,19 +257,19 @@ body {
     gap: 0.5rem;
     padding: 1rem 0;
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 8px;
     margin-bottom: 1rem;
     background: var(--card-bg);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
 }
 
 .filter-button {
     width: calc(100% - 2rem);
     margin: 0 1rem;
     padding: 0.75rem 1.25rem;
-    background: var(--bg-color);
+    background: transparent;
     border: 1px solid var(--border-color);
-    border-radius: 20px;
+    border-radius: 6px;
     color: var(--text-light);
     font-weight: 600;
     font-size: 0.9rem;
@@ -285,27 +279,27 @@ body {
 }
 
 .filter-button:hover {
-    background: #fff;
+    background: transparent;
     border-color: var(--primary-red);
     color: var(--primary-red);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
 }
 
 .filter-button.active {
-    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
+    background: var(--primary-red);
     border-color: transparent;
     color: #fff;
-    box-shadow: var(--shadow-md);
+    box-shadow: none;
 }
 
 .fos-submenu {
     padding: 1rem 0;
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 8px;
     margin-bottom: 1rem;
     background: var(--card-bg);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
 }
 
 .fos-back-button {
@@ -339,9 +333,9 @@ body {
 .fos-button {
     width: 100%;
     padding: 0.75rem 1.25rem;
-    background: var(--bg-color);
+    background: transparent;
     border: 1px solid var(--border-color);
-    border-radius: 20px;
+    border-radius: 6px;
     color: var(--text-light);
     font-weight: 600;
     font-size: 0.9rem;
@@ -351,18 +345,18 @@ body {
 }
 
 .fos-button:hover {
-    background: #fff;
+    background: transparent;
     border-color: var(--primary-green);
     color: var(--primary-green);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
 }
 
 .fos-button.active {
     background: var(--primary-green);
     border-color: transparent;
     color: #fff;
-    box-shadow: var(--shadow-md);
+    box-shadow: none;
 }
 
 .category-filters {
@@ -415,7 +409,7 @@ body {
 }
 
 .nav-list-item:hover {
-    background-color: var(--bg-color);
+    background-color: transparent;
     color: var(--primary-red);
 }
 
@@ -436,8 +430,8 @@ body {
 .data-card { 
     background: var(--card-bg);
     border: 1px solid var(--border-color); 
-    border-radius: 12px; 
-    box-shadow: var(--shadow-sm);
+    border-radius: 8px; 
+    box-shadow: none;
     transition: all var(--transition-slow);
     opacity: 0; 
     animation: fadeInScale 0.5s ease forwards; 
@@ -458,8 +452,8 @@ body {
 }
 
 .data-card:hover { 
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     border-color: var(--primary-red);
 }
 
@@ -558,12 +552,12 @@ body {
     bottom: 0; 
     left: 0; 
     right: 0; 
-    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
     color: white; 
-    padding: 2rem 1.25rem 1.25rem; 
-    font-size: 1.5rem;
+    padding: 3rem 1.5rem 1.5rem; 
+    font-size: 2rem;
     font-weight: 700;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Stat Card */
@@ -605,23 +599,23 @@ body {
 }
 
 .utilization-card.over-capacity .card-body {
-    background-color: rgba(178, 52, 39, 0.1);
-    border-radius: 0 0 12px 12px;
+    background-color: transparent;
+    border-radius: 0 0 8px 8px;
 }
 
 .progress-bar-container { 
     width: 100%; 
     height: 12px; 
-    background-color: var(--bg-color);
+    background-color: #f0f0f0;
     border-radius: 100px; 
     overflow: hidden; 
     margin-top: 1rem;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 }
 
 .progress-bar-fill { 
     height: 100%; 
-    background: linear-gradient(90deg, var(--primary-red) 0%, var(--primary-green) 100%);
+    background: var(--primary-red);
     border-radius: 100px;
     transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -654,18 +648,18 @@ body {
     justify-content: center;
     text-align: center;
     padding: 1rem;
-    background: var(--bg-color);
+    background: transparent;
     border-radius: 8px;
     transition: all var(--transition-base);
 }
 
 .stat-item:hover {
-    background: #fff;
-    box-shadow: var(--shadow-sm);
+    background: transparent;
+    box-shadow: none;
 }
 
 .stat-item.over-capacity {
-    background-color: rgba(178, 52, 39, 0.1);
+    background-color: transparent;
 }
 
 .stat-item-label {
@@ -816,7 +810,7 @@ body {
 @media (max-width: 992px) {
     .sidebar { 
         transform: translateX(-100%); 
-        box-shadow: var(--shadow-xl);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
     
     .sidebar.open { 
@@ -899,8 +893,8 @@ body {
     position: fixed;
     background: var(--card-bg);
     border: 2px solid var(--border-color);
-    border-radius: 12px;
-    box-shadow: var(--shadow-xl);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     padding: 1.5rem;
     z-index: 1000;
     display: none;
