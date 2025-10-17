@@ -10,13 +10,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const navViewSelector = document.querySelector('.nav-view-selector');
     const schoolListContainer = document.getElementById('school-list-container');
     const categoryListContainer = document.getElementById('category-list-container');
+    const levelFilterSelect = document.getElementById('level-filter');
+    const fosFilterSelect = document.getElementById('fos-filter');
 
     let schoolData = {};
     let chartInstances = {};
     let currentViewMode = 'school';
     let selectedSchoolId = '';
     let selectedCategoryId = '';
-    let categoryFilter = null; // null means show all schools
+    let levelFilter = 'all';
     let fosFilter = 'all';
 
     const categories = {
@@ -30,19 +32,18 @@ document.addEventListener('DOMContentLoaded', function() {
         "playground": "Playground Features",
         "transportation": "Transportation",
         "childcare": "Childcare",
-        "projects_provincial": "Provincial Projects",
-        "projects_local": "Local Projects"
+        "projects_provincial": "Provincially Funded Capital Projects",
+        "projects_local": "Locally Funded Capital Projects"
     };
 
     // --- Main Initialization ---
     async function initializeApp() {
         try {
-            // Check if Chart is available, register plugin if it is
             if (typeof Chart !== 'undefined' && typeof ChartDataLabels !== 'undefined') {
                 Chart.register(ChartDataLabels);
             }
             
-            const response = await fetch('data/schools.json'); 
+            const response = await fetch('schools.json'); 
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             schoolData = await response.json();
             
@@ -60,28 +61,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- UI Population ---
     function populateSidebarControls() {
-        schoolListContainer.innerHTML = Object.keys(schoolData).map(schoolId => 
-            `<a href="#" class="nav-list-item" data-type="school" data-id="${schoolId}">${schoolData[schoolId].schoolName}</a>`
-        ).join('');
+        schoolListContainer.innerHTML = Object.values(schoolData)
+            .sort((a, b) => a.schoolName.localeCompare(b.schoolName))
+            .map(school => 
+                `<a href="#" class="nav-list-item" data-type="school" data-id="${school.id}">${school.schoolName}</a>`
+            ).join('');
 
-        // Add category links after the existing filter buttons
         const categoryLinks = Object.entries(categories).map(([key, name]) => 
             `<a href="#" class="nav-list-item" data-type="category" data-id="${key}">${name}</a>`
         ).join('');
-        categoryListContainer.innerHTML += categoryLinks;
+        const categoryFilterControls = categoryListContainer.querySelector('.filter-controls');
+        categoryListContainer.insertBefore(document.createRange().createContextualFragment(categoryLinks), categoryFilterControls.nextSibling.nextSibling);
+
+        const familiesOfSchools = [...new Set(Object.values(schoolData).map(s => s.familyOfSchools))].sort();
+        fosFilterSelect.innerHTML += familiesOfSchools.map(fos => `<option value="${fos}">${fos}</option>`).join('');
     }
 
     // --- Card Creation Functions ---
     const getTileSizeClass = (cardType) => {
-        // Cards that should be double-width
-        if (['school_header', 'history', 'projection'].includes(cardType)) {
-            return 'tile-double-width';
-        }
-        // Cards that should be double-height for more content
-        if (['details', 'accessibility', 'projects_provincial', 'projects_local'].includes(cardType)) {
-            return 'tile-double-height';
-        }
-        // Default: standard square tile
+        if (['school_header', 'history', 'projection'].includes(cardType)) return 'tile-double-width';
+        if (['details', 'accessibility', 'projects_provincial', 'projects_local'].includes(cardType)) return 'tile-double-height';
         return '';
     };
 
@@ -92,153 +91,85 @@ document.addEventListener('DOMContentLoaded', function() {
 
         switch(cardType) {
             case 'school_header': return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${school.headerImage}" alt="${school.schoolName}"><h2 class="school-name-title">${school.schoolName}</h2></div></div>`;
-            
             case 'details': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-info-circle"></i><h2 class="card-title">Details</h2></div><div class="card-body"><ul class="detail-list">${Object.entries({"Address": school.address, "Phone": school.phone, "Program": school.program, ...school.details}).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val}</span></li>`).join('')}</ul></div></div>`;
-            
-            case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-plus-square"></i><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
-
+            case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-plus-square"></i><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions && school.additions.length > 0 ? school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') : '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
             case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.capacity}</div><div class="stat-label">Classroom Capacity</div></div></div>`;
-            
             case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.current}</div><div class="stat-label">Current Enrolment (Sept. 30)</div></div></div>`;
-            
             case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div>`;
-
             case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-grid"><div class="stat-item"><div class="stat-item-label">Capacity</div><div class="stat-item-value">${school.enrolment.capacity}</div></div><div class="stat-item"><div class="stat-item-label">Enrolment</div><div class="stat-item-value">${school.enrolment.current}</div></div><div class="stat-item ${capacityClass}"><div class="stat-item-label">Utilization</div><div class="stat-item-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div></div></div>`;
-
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historical Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
-
             case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-bar"></i><h2 class="card-title">Projected Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
-
-            default: { // For all other simple list cards
+            default: {
                 const icons = { building_systems: 'cogs', accessibility: 'universal-access', playground: 'basketball-ball', transportation: 'bus', childcare: 'child', projects_provincial: 'hard-hat', projects_local: 'hard-hat' };
-                const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincial Projects', projects_local: 'Local Projects' };
-                
-                const playgroundIcons = {
-                    'Basketball Court': 'basketball-ball',
-                    'Basketball Action Play': 'basketball-ball',
-                    'Steel Play structure': 'tower-cell',
-                    'Wooden Play structure': 'tree',
-                    'Climbing dome': 'mountain',
-                    'Shade structure': 'umbrella',
-                    'Soccer nets': 'futbol',
-                    'Baseball Diamond': 'baseball-ball'
-                };
+                const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincially Funded Capital Projects', projects_local: 'Locally Funded Capital Projects' };
                 
                 let data, listItems;
                 if (cardType === 'projects_provincial' || cardType === 'projects_local') {
                     const projectType = cardType.split('_')[1];
-                    data = school.projects[projectType];
-                    listItems = ['requested', 'inProgress', 'completed'].flatMap(status => 
-                        (data && data[status] && data[status].length > 0) 
-                        ? [`<li class="detail-item"><span class="detail-label">${status.charAt(0).toUpperCase() + status.slice(1)}</span></li>`, ...data[status].map(item => `<li class="detail-item" style="padding-left: 1rem;"><i class="fas fa-check-circle" style="color: var(--primary-green); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`)] 
-                        : []
-                    ).join('');
+                    data = school.projects?.[projectType];
+                    const statuses = ['requested', 'inProgress', 'completed'];
+                    listItems = statuses.flatMap(status => {
+                        const items = data?.[status] || [];
+                        if (items.length === 0) return [];
+                        const statusTitle = status.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                        return [`<li class="detail-item"><span class="detail-label">${statusTitle}</span></li>`, ...items.map(item => `<li class="detail-item" style="padding-left: 1.5rem; justify-content: flex-start; gap: 0.5rem;"><i class="fas fa-check-circle" style="color: var(--primary-green);"></i><span>${item}</span></li>`)]
+                    }).join('');
+                    if (!listItems) listItems = '<li class="detail-item">No projects to display.</li>';
                 } else if (cardType === 'playground') {
                     data = school[cardType];
-                    listItems = Array.isArray(data) ? data.map(item => {
-                        const icon = playgroundIcons[item] || 'circle';
-                        return `<li class="detail-item"><i class="fas fa-${icon}" style="color: var(--primary-red); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`;
-                    }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : val}</span></li>`).join('');
+                    listItems = Array.isArray(data) && data.length > 0 ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : '<li class="detail-item">No data available.</li>';
                 } else {
                     data = school[cardType === 'building_systems' ? 'building' : cardType];
-                    listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : val}</span></li>`).join('');
+                    listItems = data ? Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : val}</span></li>`).join('') : '<li class="detail-item">No data available.</li>';
                 }
 
-                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-${icons[cardType]}"></i><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems || '<li class="detail-item">No data available.</li>'}</ul></div></div>`;
+                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-${icons[cardType]}"></i><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems}</ul></div></div>`;
             }
         }
     }
 
     // --- Chart Rendering ---
     const renderChart = (school, type) => {
-        // Skip chart rendering if Chart.js is not available
         if (typeof Chart === 'undefined') {
             const chartCard = document.querySelector(`.chart-card[data-chart="${type}"][data-school-id="${school.id}"]`);
-            if (chartCard) {
-                const chartContainer = chartCard.querySelector('.chart-container');
-                chartContainer.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 2rem;">Charts require Chart.js library</p>';
-            }
+            if (chartCard) chartCard.querySelector('.chart-container').innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 2rem;">Charts require Chart.js library</p>';
             return;
         }
         
         const chartCard = document.querySelector(`.chart-card[data-chart="${type}"][data-school-id="${school.id}"]`);
         if (!chartCard) return;
-        const canvas = chartCard.querySelector('canvas');
-        const ctx = canvas.getContext('2d');
+        const ctx = chartCard.querySelector('canvas').getContext('2d');
         const chartId = `${type}-${school.id}`;
 
         if (chartInstances[chartId]) chartInstances[chartId].destroy();
 
+        const baseOptions = {
+            responsive: true, 
+            maintainAspectRatio: false, 
+            plugins: { 
+                legend: { display: false }, 
+                datalabels: typeof ChartDataLabels !== 'undefined' ? { anchor: 'end', align: 'top', font: { weight: 'bold' } } : { display: false } 
+            },
+            scales: { y: { beginAtZero: true } }
+        };
+
         if (type === 'history') {
-            const maxValue = Math.max(...school.enrolment.history.values);
-            const yAxisMax = Math.ceil(maxValue * 1.15);
+            const values = school.enrolment.history.values;
+            baseOptions.scales.y.max = Math.ceil(Math.max(...values) * 1.15);
+            baseOptions.plugins.datalabels.color = '#BE5247';
             chartInstances[chartId] = new Chart(ctx, {
                 type: 'line', 
-                data: { 
-                    labels: school.enrolment.history.labels, 
-                    datasets: [{ 
-                        data: school.enrolment.history.values, 
-                        borderColor: '#BE5247', 
-                        backgroundColor: 'rgba(190, 82, 71, 0.1)', 
-                        fill: true, 
-                        tension: 0.3 
-                    }] 
-                },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { 
-                        legend: { display: false }, 
-                        datalabels: typeof ChartDataLabels !== 'undefined' ? { 
-                            anchor: 'end', 
-                            align: 'top', 
-                            font: { weight: 'bold' },
-                            color: '#BE5247'
-                        } : { display: false } 
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: yAxisMax
-                        }
-                    }
-                }
+                data: { labels: school.enrolment.history.labels, datasets: [{ data: values, borderColor: '#BE5247', backgroundColor: 'rgba(190, 82, 71, 0.1)', fill: true, tension: 0.3 }] },
+                options: baseOptions
             });
         } else if (type === 'projection') {
-            const projectionValues = Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0]));
-            const maxValue = Math.max(...projectionValues);
-            const yAxisMax = Math.ceil(maxValue * 1.15);
+            const values = Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0]));
+            baseOptions.scales.y.max = Math.ceil(Math.max(...values) * 1.15);
+            baseOptions.plugins.datalabels.color = '#2BA680';
             chartInstances[chartId] = new Chart(ctx, {
                 type: 'line', 
-                data: { 
-                    labels: Object.keys(school.enrolment.projection), 
-                    datasets: [{ 
-                        data: projectionValues, 
-                        borderColor: '#2BA680', 
-                        backgroundColor: 'rgba(43, 166, 128, 0.1)', 
-                        fill: true, 
-                        tension: 0.3 
-                    }] 
-                },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { 
-                        legend: { display: false }, 
-                        datalabels: typeof ChartDataLabels !== 'undefined' ? { 
-                            anchor: 'end', 
-                            align: 'top', 
-                            font: { weight: 'bold' },
-                            color: '#2BA680'
-                        } : { display: false } 
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: yAxisMax
-                        }
-                    }
-                }
+                data: { labels: Object.keys(school.enrolment.projection), datasets: [{ data: values, borderColor: '#2BA680', backgroundColor: 'rgba(43, 166, 128, 0.1)', fill: true, tension: 0.3 }] },
+                options: baseOptions
             });
         }
     }
@@ -251,19 +182,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelectorAll('.nav-view-link').forEach(link => link.classList.toggle('active', link.dataset.view === currentViewMode));
         document.querySelectorAll('.nav-list-container').forEach(c => c.classList.toggle('active', c.id.startsWith(currentViewMode)));
-        document.querySelectorAll('.nav-list-item').forEach(item => item.classList.toggle('active', item.dataset.id === (item.dataset.type === 'school' ? selectedSchoolId : selectedCategoryId)));
+        document.querySelectorAll('.nav-list-item').forEach(item => {
+            const id = item.dataset.type === 'school' ? selectedSchoolId : selectedCategoryId;
+            item.classList.toggle('active', item.dataset.id === id);
+        });
 
         if (currentViewMode === 'school') {
             const school = schoolData[selectedSchoolId];
             contentSubtitle.textContent = school.schoolName;
-            const cardTypes = ['school_header', 'details', 'additions', 'capacity', 'enrolment', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
+            const cardTypes = ['school_header', 'details', 'additions', 'stats', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
             cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
             
-            // Add staggered animation delays and navigation icons
             document.querySelectorAll('.data-card').forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.05}s`;
-                
-                // Add navigation icon to cards in school view (except school_header)
                 const cardType = cardTypes[index];
                 if (cardType !== 'school_header') {
                     const header = card.querySelector('.card-header');
@@ -288,51 +219,34 @@ document.addEventListener('DOMContentLoaded', function() {
             renderChart(school, 'projection');
         } else {
             contentSubtitle.textContent = categories[selectedCategoryId];
-            const cardType = selectedCategoryId;
             
-            // Filter schools based on current filter
             let filteredSchools = Object.values(schoolData);
-            if (categoryFilter === 'elementary') {
-                filteredSchools = filteredSchools.filter(s => s.schoolLevel === 'Elementary School');
-            } else if (categoryFilter === 'highschool') {
-                filteredSchools = filteredSchools.filter(s => s.schoolLevel === 'High School');
-            } else if (categoryFilter === 'fos' && fosFilter !== 'all') {
+            if (levelFilter !== 'all') {
+                const level = levelFilter === 'elementary' ? 'Elementary School' : 'High School';
+                filteredSchools = filteredSchools.filter(s => s.schoolLevel === level);
+            }
+            if (fosFilter !== 'all') {
                 filteredSchools = filteredSchools.filter(s => s.familyOfSchools === fosFilter);
             }
-            // If categoryFilter is null, show all schools (no filtering)
             
-            const cardHTML = filteredSchools.map(school => {
-                // For category view, create a simplified card with just the school name in header
-                const utilization = school.enrolment.current / school.enrolment.capacity;
-                const utilizationPercent = Math.round(utilization * 100);
-                let warningIcon = '';
-                
-                // Only show warning icons for utilization-related cards
-                if (cardType === 'utilization' || cardType === 'stats') {
-                    if (utilizationPercent >= 100) {
-                        // Red warning icon for 100% or more
-                        warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
-                    } else if (utilizationPercent >= 95 && utilizationPercent < 100) {
-                        // Yellow warning icon for 95-99%
-                        warningIcon = '<i class="fas fa-exclamation-circle warning-icon warning-icon-yellow"></i>';
+            const cardHTML = filteredSchools
+                .sort((a, b) => a.schoolName.localeCompare(b.schoolName))
+                .map(school => {
+                    const utilizationPercent = Math.round((school.enrolment.current / school.enrolment.capacity) * 100);
+                    let warningIcon = '';
+                    if (['utilization', 'stats'].includes(selectedCategoryId)) {
+                        if (utilizationPercent >= 100) warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
+                        else if (utilizationPercent >= 95) warningIcon = '<i class="fas fa-exclamation-circle warning-icon warning-icon-yellow"></i>';
                     }
-                }
-                
-                // Create a simple header with school name only (no images)
-                // Warning icon is placed right after the title for better association
-                const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}${warningIcon}</h2></div>`;
-                const fullCard = createCard(school, cardType);
-                // Replace the standard header with our category-view header (school name only)
-                return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
-            }).join('');
+                    const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}${warningIcon}</h2></div>`;
+                    const fullCard = createCard(school, selectedCategoryId);
+                    return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
+                }).join('');
             cardGrid.innerHTML = cardHTML;
             
-            // Add staggered animation delays and navigation icons
             document.querySelectorAll('.data-card').forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.05}s`;
-                
-                // Add navigation icon to cards in category view
-                const schoolId = filteredSchools[index].id;
+                const schoolId = filteredSchools.sort((a, b) => a.schoolName.localeCompare(b.schoolName))[index].id;
                 const header = card.querySelector('.card-header');
                 if (header) {
                     const navIcon = document.createElement('i');
@@ -350,8 +264,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
-            if (cardType === 'history' || cardType === 'projection') {
-                filteredSchools.forEach(school => renderChart(school, cardType));
+            if (['history', 'projection'].includes(selectedCategoryId)) {
+                filteredSchools.forEach(school => renderChart(school, selectedCategoryId));
             }
         }
         
@@ -363,26 +277,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function showCustomPopup(message, x, y, onConfirm) {
         const popup = document.querySelector('.custom-popup');
         const overlay = document.querySelector('.popup-overlay');
-        const popupMessage = document.querySelector('.popup-message');
-        const confirmBtn = document.querySelector('.popup-button-confirm');
-        const cancelBtn = document.querySelector('.popup-button-cancel');
+        document.querySelector('.popup-message').textContent = message;
         
-        popupMessage.textContent = message;
-        
-        // Position popup near click location
-        const popupWidth = 250;
-        const popupHeight = 120;
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-        
-        let left = x - (popupWidth / 2);
-        let top = y - popupHeight - 10; // Position above click by default
-        
-        // Adjust if popup would go off screen
-        if (left < 10) left = 10;
-        if (left + popupWidth > viewportWidth - 10) left = viewportWidth - popupWidth - 10;
-        if (top < 10) top = y + 10; // Position below if not enough space above
-        if (top + popupHeight > viewportHeight - 10) top = viewportHeight - popupHeight - 10;
+        const popupWidth = 250, popupHeight = 120;
+        let left = Math.max(10, Math.min(x - (popupWidth / 2), window.innerWidth - popupWidth - 10));
+        let top = (y - popupHeight - 10 < 10) ? y + 20 : y - popupHeight - 20;
         
         popup.style.left = `${left}px`;
         popup.style.top = `${top}px`;
@@ -390,26 +289,21 @@ document.addEventListener('DOMContentLoaded', function() {
         popup.classList.add('show');
         overlay.classList.add('show');
         
-        const handleConfirm = () => {
-            popup.classList.remove('show');
-            overlay.classList.remove('show');
-            onConfirm();
-            confirmBtn.removeEventListener('click', handleConfirm);
-            cancelBtn.removeEventListener('click', handleCancel);
-            overlay.removeEventListener('click', handleCancel);
-        };
-        
-        const handleCancel = () => {
+        const confirmBtn = document.querySelector('.popup-button-confirm');
+        const cancelBtn = document.querySelector('.popup-button-cancel');
+
+        const cleanup = () => {
             popup.classList.remove('show');
             overlay.classList.remove('show');
             confirmBtn.removeEventListener('click', handleConfirm);
-            cancelBtn.removeEventListener('click', handleCancel);
-            overlay.removeEventListener('click', handleCancel);
+            cancelBtn.removeEventListener('click', cleanup);
+            overlay.removeEventListener('click', cleanup);
         };
+        const handleConfirm = () => { cleanup(); onConfirm(); };
         
         confirmBtn.addEventListener('click', handleConfirm);
-        cancelBtn.addEventListener('click', handleCancel);
-        overlay.addEventListener('click', handleCancel);
+        cancelBtn.addEventListener('click', cleanup);
+        overlay.addEventListener('click', cleanup);
     }
 
     // --- Event Listeners ---
@@ -419,100 +313,51 @@ document.addEventListener('DOMContentLoaded', function() {
             const target = e.target.closest('.nav-view-link'); 
             if (target && target.dataset.view !== currentViewMode) { 
                 currentViewMode = target.dataset.view;
-                // Reset filters when switching views
-                categoryFilter = null;
+                levelFilter = 'all';
                 fosFilter = 'all';
+                levelFilterSelect.value = 'all';
+                fosFilterSelect.value = 'all';
                 updateView(); 
             } 
         });
-        schoolListContainer.addEventListener('click', (e) => { e.preventDefault(); const target = e.target.closest('.nav-list-item'); if (target) { selectedSchoolId = target.dataset.id; updateView(); } });
+
+        schoolListContainer.addEventListener('click', (e) => { 
+            e.preventDefault(); 
+            const target = e.target.closest('.nav-list-item'); 
+            if (target) { selectedSchoolId = target.dataset.id; updateView(); } 
+        });
+
         categoryListContainer.addEventListener('click', (e) => { 
             e.preventDefault(); 
             const target = e.target.closest('.nav-list-item'); 
             if (target) { 
                 selectedCategoryId = target.dataset.id;
-                // Reset filters when clicking a category link
-                categoryFilter = null;
+                levelFilter = 'all';
                 fosFilter = 'all';
-                // Reset active state on filter buttons
-                document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
-                document.querySelectorAll('.fos-button').forEach(btn => btn.classList.remove('active'));
-                // Ensure main filter buttons are visible and FOS submenu is hidden
-                const fosSubmenu = document.getElementById('fos-submenu');
-                const filterButtonContainer = document.querySelector('.filter-button-container');
-                if (fosSubmenu && filterButtonContainer) {
-                    fosSubmenu.style.display = 'none';
-                    filterButtonContainer.style.display = 'flex';
-                }
+                levelFilterSelect.value = 'all';
+                fosFilterSelect.value = 'all';
                 updateView(); 
             } 
         });
         
-        // Category filter buttons
-        const filterButtons = document.querySelectorAll('.filter-button');
-        filterButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const filter = button.dataset.filter;
-                categoryFilter = filter;
-                
-                // Update active state
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
-                // Show/hide FOS submenu and filter buttons
-                const fosSubmenu = document.getElementById('fos-submenu');
-                const filterButtonContainer = document.querySelector('.filter-button-container');
-                if (filter === 'fos') {
-                    filterButtonContainer.style.display = 'none';
-                    fosSubmenu.style.display = 'block';
-                } else {
-                    fosSubmenu.style.display = 'none';
-                    fosFilter = 'all';
-                    updateView();
-                }
-            });
+        levelFilterSelect.addEventListener('change', () => {
+            levelFilter = levelFilterSelect.value;
+            fosFilter = 'all';
+            fosFilterSelect.value = 'all';
+            updateView();
+        });
+
+        fosFilterSelect.addEventListener('change', () => {
+            fosFilter = fosFilterSelect.value;
+            levelFilter = 'all';
+            levelFilterSelect.value = 'all';
+            updateView();
         });
         
-        // FOS back button
-        const fosBackButton = document.querySelector('.fos-back-button');
-        if (fosBackButton) {
-            fosBackButton.addEventListener('click', () => {
-                const fosSubmenu = document.getElementById('fos-submenu');
-                const filterButtonContainer = document.querySelector('.filter-button-container');
-                fosSubmenu.style.display = 'none';
-                filterButtonContainer.style.display = 'flex';
-                fosFilter = 'all';
-                categoryFilter = null; // Reset to show all schools
-                
-                // Reset active state - no button should be active
-                const filterButtons = document.querySelectorAll('.filter-button');
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                
-                updateView();
-            });
-        }
-        
-        // FOS buttons
-        const fosButtons = document.querySelectorAll('.fos-button');
-        fosButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                fosFilter = button.dataset.fos;
-                
-                // Update active state
-                fosButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
-                updateView();
-            });
-        });
-        
-        function toggleSidebar() { const isOpen = sidebar.classList.toggle('open'); sidebarOverlay.classList.toggle('visible', isOpen); }
+        const toggleSidebar = () => { sidebar.classList.toggle('open'); sidebarOverlay.classList.toggle('visible', sidebar.classList.contains('open')); };
         sidebarToggleBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(); });
         sidebarOverlay.addEventListener('click', toggleSidebar);
-        const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
-        if (sidebarCloseBtn) {
-            sidebarCloseBtn.addEventListener('click', toggleSidebar);
-        }
+        document.getElementById('sidebar-close-btn')?.addEventListener('click', toggleSidebar);
     }
 
     initializeApp();
