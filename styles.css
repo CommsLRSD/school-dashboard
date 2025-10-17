@@ -379,7 +379,7 @@ body {
 .filter-select {
     width: 100%;
     padding: 0.75rem;
-    background: var(--bg-color);
+    background: #ffffff;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     color: var(--text-color);
@@ -421,12 +421,14 @@ body {
 .nav-list-item:hover {
     background-color: var(--bg-color);
     color: var(--primary-red);
+    border-radius: 8px;
 }
 
 .nav-list-item.active { 
-    background-color: transparent;
+    background-color: var(--bg-color);
     color: var(--primary-red); 
     font-weight: 600;
+    border-radius: 8px;
 }
 
 /* --- ATOMIC CARD GRID --- */
