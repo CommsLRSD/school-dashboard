@@ -330,29 +330,19 @@ document.addEventListener('DOMContentLoaded', function() {
             } 
         });
         
-        // Category filter buttons
-        const categoryFilters = document.getElementById('category-filters');
-        if (categoryFilters) {
-            categoryFilters.addEventListener('click', (e) => {
-                const btn = e.target.closest('.filter-btn');
-                if (!btn) return;
-                
-                const filter = btn.dataset.filter;
+        // Category filter dropdown
+        const categoryFilterSelect = document.getElementById('category-filter-select');
+        if (categoryFilterSelect) {
+            categoryFilterSelect.addEventListener('change', (e) => {
+                const filter = e.target.value;
                 categoryFilter = filter;
-                
-                // Update active state
-                categoryFilters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
                 
                 // Show/hide FOS submenu
                 const fosSubmenu = document.getElementById('fos-submenu');
-                const categoryLinks = categoryListContainer.querySelectorAll('.nav-list-item');
                 if (filter === 'fos') {
-                    fosSubmenu.style.display = 'flex';
-                    categoryLinks.forEach(link => link.style.display = 'none');
+                    fosSubmenu.style.display = 'block';
                 } else {
                     fosSubmenu.style.display = 'none';
-                    categoryLinks.forEach(link => link.style.display = 'flex');
                     fosFilter = 'all';
                 }
                 
@@ -360,31 +350,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // FOS filter buttons
-        const fosSubmenu = document.getElementById('fos-submenu');
-        if (fosSubmenu) {
-            fosSubmenu.addEventListener('click', (e) => {
-                const btn = e.target.closest('.fos-filter-btn');
-                if (btn) {
-                    fosFilter = btn.dataset.fos;
-                    fosSubmenu.querySelectorAll('.fos-filter-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    updateView();
-                }
-                
-                // Back button
-                const backBtn = e.target.closest('.fos-back-btn');
-                if (backBtn) {
-                    categoryFilter = 'all';
-                    fosFilter = 'all';
-                    fosSubmenu.style.display = 'none';
-                    const categoryLinks = categoryListContainer.querySelectorAll('.nav-list-item');
-                    categoryLinks.forEach(link => link.style.display = 'flex');
-                    const categoryFilters = document.getElementById('category-filters');
-                    categoryFilters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    categoryFilters.querySelector('[data-filter="all"]').classList.add('active');
-                    updateView();
-                }
+        // FOS filter dropdown
+        const fosSelect = document.getElementById('fos-select');
+        if (fosSelect) {
+            fosSelect.addEventListener('change', (e) => {
+                fosFilter = e.target.value;
+                updateView();
             });
         }
         
