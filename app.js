@@ -422,6 +422,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Reset filters when switching views
                 categoryFilter = null;
                 fosFilter = 'all';
+                
+                // Reset FOS dropdown when switching to Categories view
+                if (currentViewMode === 'category') {
+                    const fosDropdown = document.getElementById('fos-dropdown');
+                    const fosButton = document.querySelector('.filter-button-fos');
+                    if (fosDropdown) fosDropdown.style.display = 'none';
+                    if (fosButton) fosButton.classList.remove('active');
+                }
+                
                 updateView(); 
             } 
         });
@@ -437,12 +446,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Reset active state on filter buttons
                 document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
                 document.querySelectorAll('.fos-button').forEach(btn => btn.classList.remove('active'));
-                // Ensure main filter buttons are visible and FOS submenu is hidden
-                const fosSubmenu = document.getElementById('fos-submenu');
-                const filterButtonContainer = document.querySelector('.filter-button-container');
-                if (fosSubmenu && filterButtonContainer) {
-                    fosSubmenu.style.display = 'none';
-                    filterButtonContainer.style.display = 'flex';
+                // Hide FOS dropdown
+                const fosDropdown = document.getElementById('fos-dropdown');
+                if (fosDropdown) {
+                    fosDropdown.style.display = 'none';
                 }
                 updateView(); 
             } 
@@ -453,50 +460,45 @@ document.addEventListener('DOMContentLoaded', function() {
         filterButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 const filter = button.dataset.filter;
-                categoryFilter = filter;
+                const fosDropdown = document.getElementById('fos-dropdown');
                 
-                // Update active state
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
-                // Show/hide FOS submenu and filter buttons
-                const fosSubmenu = document.getElementById('fos-submenu');
-                const filterButtonContainer = document.querySelector('.filter-button-container');
                 if (filter === 'fos') {
-                    filterButtonContainer.style.display = 'none';
-                    fosSubmenu.style.display = 'block';
+                    // Toggle FOS dropdown
+                    const isOpen = fosDropdown.style.display === 'block';
+                    fosDropdown.style.display = isOpen ? 'none' : 'block';
+                    button.classList.toggle('active', !isOpen);
+                    
+                    // If closing, reset FOS filter
+                    if (isOpen) {
+                        categoryFilter = null;
+                        fosFilter = 'all';
+                        document.querySelectorAll('.fos-button').forEach(btn => btn.classList.remove('active'));
+                        updateView();
+                    }
                 } else {
-                    fosSubmenu.style.display = 'none';
+                    // Non-FOS filters
+                    categoryFilter = filter;
                     fosFilter = 'all';
+                    
+                    // Update active state
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    // Hide FOS dropdown
+                    fosDropdown.style.display = 'none';
+                    document.querySelectorAll('.fos-button').forEach(btn => btn.classList.remove('active'));
+                    
                     updateView();
                 }
             });
         });
-        
-        // FOS back button
-        const fosBackButton = document.querySelector('.fos-back-button');
-        if (fosBackButton) {
-            fosBackButton.addEventListener('click', () => {
-                const fosSubmenu = document.getElementById('fos-submenu');
-                const filterButtonContainer = document.querySelector('.filter-button-container');
-                fosSubmenu.style.display = 'none';
-                filterButtonContainer.style.display = 'flex';
-                fosFilter = 'all';
-                categoryFilter = null; // Reset to show all schools
-                
-                // Reset active state - no button should be active
-                const filterButtons = document.querySelectorAll('.filter-button');
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                
-                updateView();
-            });
-        }
         
         // FOS buttons
         const fosButtons = document.querySelectorAll('.fos-button');
         fosButtons.forEach(button => {
             button.addEventListener('click', () => {
                 fosFilter = button.dataset.fos;
+                categoryFilter = 'fos';
                 
                 // Update active state
                 fosButtons.forEach(btn => btn.classList.remove('active'));
