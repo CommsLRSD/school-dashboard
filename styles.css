@@ -180,14 +180,6 @@ body {
     height: 40px;
 }
 
-.sidebar-logo-vertical {
-    display: none;
-}
-
-.sidebar-logo-horizontal {
-    display: block;
-}
-
 .sidebar-close-btn {
     display: none;
     background: transparent;
@@ -226,9 +218,13 @@ body {
     gap: 0.75rem;
     position: sticky;
     top: 0;
-    background: var(--sidebar-bg);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 10;
-    padding-top: 1.5rem;
+    padding-top: 0;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .nav-view-link { 
@@ -310,25 +306,22 @@ body {
 }
 
 .fos-back-button {
-    width: 100%;
-    padding: 0.6rem 1rem;
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
+    width: auto;
+    padding: 0;
+    background: transparent;
+    border: none;
     color: var(--text-light);
     font-weight: 600;
     font-size: 0.85rem;
     cursor: pointer;
     transition: all var(--transition-base);
-    margin-bottom: 0.375rem;
+    margin-bottom: 0.75rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .fos-back-button:hover {
-    background: #fff;
-    border-color: var(--primary-red);
     color: var(--primary-red);
 }
 
@@ -336,6 +329,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.375rem;
+    padding-left: 1.5rem;
 }
 
 .fos-button {
@@ -769,7 +763,7 @@ body {
 .sidebar-toggle-btn { 
     display: none; 
     background: transparent;
-    border: 1px solid var(--border-color); 
+    border: none; 
     font-size: 1.25rem; 
     cursor: pointer; 
     color: var(--text-light);
@@ -781,7 +775,6 @@ body {
 
 .sidebar-toggle-btn:hover {
     color: var(--primary-red);
-    border-color: var(--primary-red);
 }
 
 .sidebar-overlay { 
@@ -835,14 +828,6 @@ body {
     }
     
     .sidebar-close-btn {
-        display: block;
-    }
-    
-    .sidebar-logo-horizontal {
-        display: none;
-    }
-    
-    .sidebar-logo-vertical {
         display: block;
     }
     
