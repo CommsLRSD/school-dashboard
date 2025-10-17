@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 filteredSchools = filteredSchools.filter(s => s.schoolLevel === 'Elementary School');
             } else if (categoryFilter === 'highschool') {
                 filteredSchools = filteredSchools.filter(s => s.schoolLevel === 'High School');
-            } else if (categoryFilter === 'fos') {
+            } else if (categoryFilter === 'fos' && fosFilter !== 'all') {
                 filteredSchools = filteredSchools.filter(s => s.familyOfSchools === fosFilter);
             }
             
@@ -346,17 +346,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Show/hide FOS submenu
                 const fosSubmenu = document.getElementById('fos-submenu');
+                const categoryLinks = categoryListContainer.querySelectorAll('.nav-list-item');
                 if (filter === 'fos') {
                     fosSubmenu.style.display = 'flex';
-                    // Set first FOS as active and filter
-                    const firstFosBtn = fosSubmenu.querySelector('.fos-filter-btn');
-                    if (firstFosBtn) {
-                        fosFilter = firstFosBtn.dataset.fos;
-                        fosSubmenu.querySelectorAll('.fos-filter-btn').forEach(b => b.classList.remove('active'));
-                        firstFosBtn.classList.add('active');
-                    }
+                    categoryLinks.forEach(link => link.style.display = 'none');
                 } else {
                     fosSubmenu.style.display = 'none';
+                    categoryLinks.forEach(link => link.style.display = 'flex');
                     fosFilter = 'all';
                 }
                 
@@ -382,6 +378,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     categoryFilter = 'all';
                     fosFilter = 'all';
                     fosSubmenu.style.display = 'none';
+                    const categoryLinks = categoryListContainer.querySelectorAll('.nav-list-item');
+                    categoryLinks.forEach(link => link.style.display = 'flex');
                     const categoryFilters = document.getElementById('category-filters');
                     categoryFilters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     categoryFilters.querySelector('[data-filter="all"]').classList.add('active');

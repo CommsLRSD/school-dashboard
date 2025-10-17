@@ -113,6 +113,14 @@ body {
     transform: scale(1.05);
 }
 
+.header-logo-desktop {
+    display: none;
+}
+
+.header-logo-mobile {
+    display: block;
+}
+
 .hamburger-icon {
     width: 24px;
     height: 24px;
@@ -170,10 +178,12 @@ body {
     height: 40px;
 }
 
-@media (max-width: 992px) {
-    .sidebar-logo {
-        display: block;
-    }
+.sidebar-logo-vertical {
+    display: none;
+}
+
+.sidebar-logo-horizontal {
+    display: block;
 }
 
 .sidebar-close-btn {
@@ -418,7 +428,7 @@ body {
 }
 
 .card-header-icon { 
-    color: var(--primary-red); 
+    color: var(--primary-green); 
     margin-right: 0.75rem; 
     font-size: 1.1rem; 
     width: 20px; 
@@ -426,14 +436,6 @@ body {
 }
 
 .list-card .card-header-icon {
-    color: var(--primary-red);
-}
-
-.stat-card .card-header-icon {
-    color: var(--primary-red);
-}
-
-.chart-card .card-header-icon {
     color: var(--primary-red);
 }
 
@@ -704,6 +706,13 @@ body {
 }
 
 @media (min-width: 993px) {
+    .header-logo-desktop {
+        display: block;
+    }
+    
+    .header-logo-mobile {
+        display: none;
+    }
 }
 
 @media (max-width: 992px) {
@@ -727,6 +736,22 @@ body {
     }
     
     .sidebar-close-btn {
+        display: block;
+    }
+    
+    .sidebar-logo-horizontal {
+        display: none;
+    }
+    
+    .sidebar-logo-vertical {
+        display: none;
+    }
+    
+    .header-logo-desktop {
+        display: none;
+    }
+    
+    .header-logo-mobile {
         display: block;
     }
 }
