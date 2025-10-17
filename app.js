@@ -430,7 +430,20 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault(); 
             const target = e.target.closest('.nav-list-item'); 
             if (target) { 
-                selectedCategoryId = target.dataset.id; 
+                selectedCategoryId = target.dataset.id;
+                // Reset filters when clicking a category link
+                categoryFilter = null;
+                fosFilter = 'all';
+                // Reset active state on filter buttons
+                document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.fos-button').forEach(btn => btn.classList.remove('active'));
+                // Ensure main filter buttons are visible and FOS submenu is hidden
+                const fosSubmenu = document.getElementById('fos-submenu');
+                const filterButtonContainer = document.querySelector('.filter-button-container');
+                if (fosSubmenu && filterButtonContainer) {
+                    fosSubmenu.style.display = 'none';
+                    filterButtonContainer.style.display = 'flex';
+                }
                 updateView(); 
             } 
         });
