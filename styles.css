@@ -516,13 +516,15 @@ body {
 .card-nav-icon {
     margin-left: auto;
     font-size: 1rem;
-    color: var(--text-light);
+    color: var(--text-lighter);
+    opacity: 0.6;
     cursor: pointer;
     transition: all var(--transition-base);
 }
 
 .card-nav-icon:hover {
     color: var(--primary-red);
+    opacity: 1;
     transform: scale(1.1);
 }
 
@@ -635,9 +637,14 @@ body {
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
     gap: 1rem;
     height: 100%;
+}
+
+.stats-grid .stat-item:nth-child(3) {
+    grid-column: 1 / -1;
 }
 
 .stat-item {
@@ -691,6 +698,11 @@ body {
 
 .stat-item .progress-bar-fill.over-capacity {
     background: var(--over-capacity-red);
+}
+
+/* Reduce font size for utilization value in stats grid */
+.stats-grid .stat-item:nth-child(3) .stat-item-value {
+    font-size: 1.75rem;
 }
 
 /* Chart Card */
@@ -770,12 +782,6 @@ body {
 .sidebar-toggle-btn:hover {
     color: var(--primary-red);
     border-color: var(--primary-red);
-}
-
-.warning-icon {
-    margin-left: auto;
-    color: var(--accent-red);
-    font-size: 1.1rem;
 }
 
 .sidebar-overlay { 
@@ -941,7 +947,7 @@ body {
 }
 
 .popup-button {
-    padding: 0.75rem 1.25rem;
+    padding: 0.75rem;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -950,12 +956,15 @@ body {
     transition: all var(--transition-base);
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
+    min-width: 50px;
+    min-height: 50px;
 }
 
 .popup-button i {
-    opacity: 0.5;
-    font-size: 1.1rem;
+    opacity: 1;
+    font-size: 1.5rem;
 }
 
 .popup-button-confirm {
