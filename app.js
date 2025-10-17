@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentViewMode = 'school';
     let selectedSchoolId = '';
     let selectedCategoryId = '';
-    let categoryFilter = 'all';
+    let categoryFilter = null; // null means show all schools
     let fosFilter = 'all';
 
     const categories = {
@@ -299,6 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (categoryFilter === 'fos' && fosFilter !== 'all') {
                 filteredSchools = filteredSchools.filter(s => s.familyOfSchools === fosFilter);
             }
+            // If categoryFilter is null, show all schools (no filtering)
             
             const cardHTML = filteredSchools.map(school => {
                 // For category view, create a simplified card with just the school name in header
@@ -419,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (target && target.dataset.view !== currentViewMode) { 
                 currentViewMode = target.dataset.view;
                 // Reset filters when switching views
-                categoryFilter = 'all';
+                categoryFilter = null;
                 fosFilter = 'all';
                 updateView(); 
             } 
@@ -468,12 +469,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 fosSubmenu.style.display = 'none';
                 filterButtonContainer.style.display = 'flex';
                 fosFilter = 'all';
-                categoryFilter = 'all';
+                categoryFilter = null; // Reset to show all schools
                 
-                // Reset active state
+                // Reset active state - no button should be active
                 const filterButtons = document.querySelectorAll('.filter-button');
                 filterButtons.forEach(btn => btn.classList.remove('active'));
-                filterButtons[0].classList.add('active'); // Set "All Schools" as active
                 
                 updateView();
             });
