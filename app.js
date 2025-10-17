@@ -273,12 +273,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         navIcon.title = 'View all schools for this category';
                         navIcon.addEventListener('click', (e) => {
                             e.stopPropagation();
-                            const confirmed = confirm('Are you sure you want to go to the all schools category view for this category?');
-                            if (confirmed) {
+                            showCustomPopup('Go to category?', e.clientX, e.clientY, () => {
                                 currentViewMode = 'category';
                                 selectedCategoryId = cardType;
                                 updateView();
-                            }
+                            });
                         });
                         header.appendChild(navIcon);
                     }
@@ -312,14 +311,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (utilizationPercent >= 100) {
                         // Red warning icon for 100% or more
                         warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
-                    } else if (utilizationPercent >= 95 && utilizationPercent <= 99) {
+                    } else if (utilizationPercent >= 95 && utilizationPercent < 100) {
                         // Yellow warning icon for 95-99%
                         warningIcon = '<i class="fas fa-exclamation-circle warning-icon warning-icon-yellow"></i>';
                     }
                 }
                 
                 // Create a simple header with school name only (no images)
-                const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}</h2>${warningIcon}</div>`;
+                // Warning icon is placed right after the title for better association
+                const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}${warningIcon}</h2></div>`;
                 const fullCard = createCard(school, cardType);
                 // Replace the standard header with our category-view header (school name only)
                 return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
@@ -339,12 +339,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     navIcon.title = 'View all categories for this school';
                     navIcon.addEventListener('click', (e) => {
                         e.stopPropagation();
-                        const confirmed = confirm('Are you sure you want to view all categories for this school?');
-                        if (confirmed) {
+                        showCustomPopup('Go to school?', e.clientX, e.clientY, () => {
                             currentViewMode = 'school';
                             selectedSchoolId = schoolId;
                             updateView();
-                        }
+                        });
                     });
                     header.appendChild(navIcon);
                 }
@@ -357,6 +356,59 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const firstSchool = schoolData[Object.keys(schoolData)[0]];
         if (firstSchool?.meta) footerTimestamp.textContent = `Data updated ${firstSchool.meta.updated}`;
+    }
+
+    // --- Custom Popup Functions ---
+    function showCustomPopup(message, x, y, onConfirm) {
+        const popup = document.querySelector('.custom-popup');
+        const overlay = document.querySelector('.popup-overlay');
+        const popupMessage = document.querySelector('.popup-message');
+        const confirmBtn = document.querySelector('.popup-button-confirm');
+        const cancelBtn = document.querySelector('.popup-button-cancel');
+        
+        popupMessage.textContent = message;
+        
+        // Position popup near click location
+        const popupWidth = 250;
+        const popupHeight = 120;
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        
+        let left = x - (popupWidth / 2);
+        let top = y - popupHeight - 10; // Position above click by default
+        
+        // Adjust if popup would go off screen
+        if (left < 10) left = 10;
+        if (left + popupWidth > viewportWidth - 10) left = viewportWidth - popupWidth - 10;
+        if (top < 10) top = y + 10; // Position below if not enough space above
+        if (top + popupHeight > viewportHeight - 10) top = viewportHeight - popupHeight - 10;
+        
+        popup.style.left = `${left}px`;
+        popup.style.top = `${top}px`;
+        
+        popup.classList.add('show');
+        overlay.classList.add('show');
+        
+        const handleConfirm = () => {
+            popup.classList.remove('show');
+            overlay.classList.remove('show');
+            onConfirm();
+            confirmBtn.removeEventListener('click', handleConfirm);
+            cancelBtn.removeEventListener('click', handleCancel);
+            overlay.removeEventListener('click', handleCancel);
+        };
+        
+        const handleCancel = () => {
+            popup.classList.remove('show');
+            overlay.classList.remove('show');
+            confirmBtn.removeEventListener('click', handleConfirm);
+            cancelBtn.removeEventListener('click', handleCancel);
+            overlay.removeEventListener('click', handleCancel);
+        };
+        
+        confirmBtn.addEventListener('click', handleConfirm);
+        cancelBtn.addEventListener('click', handleCancel);
+        overlay.addEventListener('click', handleCancel);
     }
 
     // --- Event Listeners ---
@@ -382,34 +434,64 @@ document.addEventListener('DOMContentLoaded', function() {
             } 
         });
         
-        // Category filter dropdown
-        const categoryFilterSelect = document.getElementById('category-filter-select');
-        if (categoryFilterSelect) {
-            categoryFilterSelect.addEventListener('change', (e) => {
-                const filter = e.target.value;
+        // Category filter buttons
+        const filterButtons = document.querySelectorAll('.filter-button');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const filter = button.dataset.filter;
                 categoryFilter = filter;
                 
-                // Show/hide FOS submenu
+                // Update active state
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Show/hide FOS submenu and filter buttons
                 const fosSubmenu = document.getElementById('fos-submenu');
+                const filterButtonContainer = document.querySelector('.filter-button-container');
                 if (filter === 'fos') {
+                    filterButtonContainer.style.display = 'none';
                     fosSubmenu.style.display = 'block';
                 } else {
                     fosSubmenu.style.display = 'none';
                     fosFilter = 'all';
+                    updateView();
                 }
+            });
+        });
+        
+        // FOS back button
+        const fosBackButton = document.querySelector('.fos-back-button');
+        if (fosBackButton) {
+            fosBackButton.addEventListener('click', () => {
+                const fosSubmenu = document.getElementById('fos-submenu');
+                const filterButtonContainer = document.querySelector('.filter-button-container');
+                fosSubmenu.style.display = 'none';
+                filterButtonContainer.style.display = 'flex';
+                fosFilter = 'all';
+                categoryFilter = 'all';
+                
+                // Reset active state
+                const filterButtons = document.querySelectorAll('.filter-button');
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                filterButtons[0].classList.add('active'); // Set "All Schools" as active
                 
                 updateView();
             });
         }
         
-        // FOS filter dropdown
-        const fosSelect = document.getElementById('fos-select');
-        if (fosSelect) {
-            fosSelect.addEventListener('change', (e) => {
-                fosFilter = e.target.value;
+        // FOS buttons
+        const fosButtons = document.querySelectorAll('.fos-button');
+        fosButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                fosFilter = button.dataset.fos;
+                
+                // Update active state
+                fosButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
                 updateView();
             });
-        }
+        });
         
         function toggleSidebar() { const isOpen = sidebar.classList.toggle('open'); sidebarOverlay.classList.toggle('visible', isOpen); }
         sidebarToggleBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(); });

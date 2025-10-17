@@ -89,9 +89,11 @@ body {
 
 .header-titles h1 { 
     font-family: var(--font-title); 
-    font-size: 1.75rem; 
+    font-size: 2rem; 
     font-weight: 700;
-    letter-spacing: -0.025em;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-variant: small-caps;
     background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -265,21 +267,16 @@ body {
     display: block; 
 }
 
-.filter-dropdown-container {
+.filter-button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     padding: 0 0 1rem 0;
 }
 
-.filter-label {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-color);
-    margin-bottom: 0.5rem;
-}
-
-.filter-select {
+.filter-button {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.75rem 1rem;
     background: var(--bg-color);
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -288,21 +285,80 @@ body {
     font-size: 0.9rem;
     cursor: pointer;
     transition: all var(--transition-base);
+    text-align: left;
 }
 
-.filter-select:hover,
-.filter-select:focus {
+.filter-button:hover {
     background: #fff;
     border-color: var(--primary-red);
-    outline: none;
+    color: var(--primary-red);
+}
+
+.filter-button.active {
+    background: #fff;
+    border-color: var(--primary-red);
+    color: var(--primary-red);
+    font-weight: 600;
 }
 
 .fos-submenu {
     padding: 0 0 1rem 0;
 }
 
-.fos-submenu .filter-select {
-    margin-top: 0.5rem;
+.fos-back-button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fos-back-button:hover {
+    background: #fff;
+    border-color: var(--primary-red);
+    color: var(--primary-red);
+}
+
+.fos-button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.fos-button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-align: left;
+}
+
+.fos-button:hover {
+    background: #fff;
+    border-color: var(--primary-green);
+    color: var(--primary-green);
+}
+
+.fos-button.active {
+    background: #fff;
+    border-color: var(--primary-green);
+    color: var(--primary-green);
+    font-weight: 600;
 }
 
 .category-filters {
@@ -434,11 +490,15 @@ body {
     font-weight: 600;
     color: var(--text-color);
     flex-grow: 1;
+    display: flex;
+    align-items: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .warning-icon {
-    margin-left: auto;
-    font-size: 1.25rem;
+    margin-left: 0.5rem;
+    font-size: 1.1rem;
 }
 
 .warning-icon-red {
@@ -602,6 +662,9 @@ body {
     color: var(--text-light);
     font-weight: 500;
     margin-bottom: 0.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 .stat-item-value {
@@ -828,4 +891,100 @@ body {
     .stat-value { 
         font-size: 2.5rem; 
     }
+}
+
+/* --- Custom Popup Dialog --- */
+.custom-popup {
+    position: fixed;
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow-xl);
+    padding: 1.5rem;
+    z-index: 1000;
+    display: none;
+    min-width: 250px;
+}
+
+.custom-popup.show {
+    display: block;
+    animation: popupFadeIn 0.2s ease-out;
+}
+
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.popup-message {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.popup-buttons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.popup-button {
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.popup-button i {
+    opacity: 0.5;
+    font-size: 1.1rem;
+}
+
+.popup-button-confirm {
+    background: var(--accent-green);
+    color: white;
+}
+
+.popup-button-confirm:hover {
+    background: var(--primary-green);
+    transform: translateY(-2px);
+}
+
+.popup-button-cancel {
+    background: var(--accent-red);
+    color: white;
+}
+
+.popup-button-cancel:hover {
+    background: var(--over-capacity-red);
+    transform: translateY(-2px);
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    display: none;
+}
+
+.popup-overlay.show {
+    display: block;
 }
