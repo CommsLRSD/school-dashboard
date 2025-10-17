@@ -83,14 +83,15 @@ body {
 }
 
 .header-titles { 
-    margin-right: 1rem; 
+    margin-left: 1rem; 
     flex-grow: 1;
-    justify: right;
 }
 
 .header-logo-main {
-    height: 50px;
+    height: 75px;
     transition: transform var(--transition-base);
+    justify: right;
+    margin-right: 1rem;
 }
 
 .header-logo-main:hover {
