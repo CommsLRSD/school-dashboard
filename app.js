@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
         "playground": "Playground Features",
         "transportation": "Transportation",
         "childcare": "Childcare",
-        "projects_provincial": "Provincial Projects",
-        "projects_local": "Local Projects"
+        "projects_provincial": "Provincially Funded Capital Projects",
+        "projects_local": "Locally Funded Capital Projects"
     };
 
     // --- Main Initialization ---
@@ -63,6 +63,21 @@ document.addEventListener('DOMContentLoaded', function() {
         schoolListContainer.innerHTML = Object.keys(schoolData).map(schoolId => 
             `<a href="#" class="nav-list-item" data-type="school" data-id="${schoolId}">${schoolData[schoolId].schoolName}</a>`
         ).join('');
+
+        // Populate Family of Schools dropdown
+        const fosSet = new Set();
+        Object.values(schoolData).forEach(school => {
+            if (school.familyOfSchools) {
+                fosSet.add(school.familyOfSchools);
+            }
+        });
+        const fosOptions = Array.from(fosSet).sort().map(fos => 
+            `<option value="${fos}">${fos}</option>`
+        ).join('');
+        const fosFilter = document.getElementById('fos-filter');
+        if (fosFilter) {
+            fosFilter.innerHTML = '<option value="all">All Families of Schools</option>' + fosOptions;
+        }
 
         // Add category links after the existing filter buttons
         const categoryLinks = Object.entries(categories).map(([key, name]) => 
@@ -111,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             default: { // For all other simple list cards
                 const icons = { building_systems: 'cogs', accessibility: 'universal-access', playground: 'basketball-ball', transportation: 'bus', childcare: 'child', projects_provincial: 'hard-hat', projects_local: 'hard-hat' };
-                const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincial Projects', projects_local: 'Local Projects' };
+                const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincially Funded Capital Projects', projects_local: 'Locally Funded Capital Projects' };
                 
                 const playgroundIcons = {
                     'Basketball Court': 'basketball-ball',
@@ -423,13 +438,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 categoryFilter = null;
                 fosFilter = 'all';
                 
-                // Reset FOS dropdown when switching to Categories view
-                if (currentViewMode === 'category') {
-                    const fosDropdown = document.getElementById('fos-dropdown');
-                    const fosButton = document.querySelector('.filter-button-fos');
-                    if (fosDropdown) fosDropdown.style.display = 'none';
-                    if (fosButton) fosButton.classList.remove('active');
-                }
+                // Reset dropdowns
+                const levelSelect = document.getElementById('level-filter');
+                const fosSelect = document.getElementById('fos-filter');
+                if (levelSelect) levelSelect.value = 'all';
+                if (fosSelect) fosSelect.value = 'all';
                 
                 updateView(); 
             } 
@@ -443,70 +456,44 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Reset filters when clicking a category link
                 categoryFilter = null;
                 fosFilter = 'all';
-                // Reset active state on filter buttons
-                document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
-                document.querySelectorAll('.fos-button').forEach(btn => btn.classList.remove('active'));
-                // Hide FOS dropdown
-                const fosDropdown = document.getElementById('fos-dropdown');
-                if (fosDropdown) {
-                    fosDropdown.style.display = 'none';
-                }
+                // Reset dropdowns
+                const levelSelect = document.getElementById('level-filter');
+                const fosSelect = document.getElementById('fos-filter');
+                if (levelSelect) levelSelect.value = 'all';
+                if (fosSelect) fosSelect.value = 'all';
                 updateView(); 
             } 
         });
         
-        // Category filter buttons
-        const filterButtons = document.querySelectorAll('.filter-button');
-        filterButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const filter = button.dataset.filter;
-                const fosDropdown = document.getElementById('fos-dropdown');
-                
-                if (filter === 'fos') {
-                    // Toggle FOS dropdown
-                    const isOpen = fosDropdown.style.display === 'block';
-                    fosDropdown.style.display = isOpen ? 'none' : 'block';
-                    button.classList.toggle('active', !isOpen);
-                    
-                    // If closing, reset FOS filter
-                    if (isOpen) {
-                        categoryFilter = null;
-                        fosFilter = 'all';
-                        document.querySelectorAll('.fos-button').forEach(btn => btn.classList.remove('active'));
-                        updateView();
-                    }
+        // Level filter dropdown
+        const levelSelect = document.getElementById('level-filter');
+        if (levelSelect) {
+            levelSelect.addEventListener('change', (e) => {
+                const value = e.target.value;
+                if (value === 'all') {
+                    categoryFilter = null;
                 } else {
-                    // Non-FOS filters
-                    categoryFilter = filter;
-                    fosFilter = 'all';
-                    
-                    // Update active state
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    
-                    // Hide FOS dropdown
-                    fosDropdown.style.display = 'none';
-                    document.querySelectorAll('.fos-button').forEach(btn => btn.classList.remove('active'));
-                    
-                    updateView();
+                    categoryFilter = value;
                 }
-            });
-        });
-        
-        // FOS buttons
-        const fosButtons = document.querySelectorAll('.fos-button');
-        fosButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                fosFilter = button.dataset.fos;
-                categoryFilter = 'fos';
-                
-                // Update active state
-                fosButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
                 updateView();
             });
-        });
+        }
+        
+        // Family of Schools filter dropdown
+        const fosSelect = document.getElementById('fos-filter');
+        if (fosSelect) {
+            fosSelect.addEventListener('change', (e) => {
+                const value = e.target.value;
+                if (value === 'all') {
+                    categoryFilter = null;
+                    fosFilter = 'all';
+                } else {
+                    categoryFilter = 'fos';
+                    fosFilter = value;
+                }
+                updateView();
+            });
+        }
         
         function toggleSidebar() { const isOpen = sidebar.classList.toggle('open'); sidebarOverlay.classList.toggle('visible', isOpen); }
         sidebarToggleBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(); });
