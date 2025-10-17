@@ -352,6 +352,83 @@ body {
     margin: 0rem 1.5rem 1.5rem;
 }
 
+/* --- Search Controls (for Schools) --- */
+.search-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 0 1.5rem 1.5rem;
+}
+
+.search-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.search-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    color: var(--text-color);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all var(--transition-base);
+}
+
+.search-input::placeholder {
+    color: var(--text-lighter);
+}
+
+.search-input:hover {
+    background-color: #fff;
+    box-shadow: var(--shadow-sm);
+}
+
+.search-input:focus {
+    background-color: #fff;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(43, 166, 128, 0.2);
+}
+
+.search-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    font-size: 0.875rem;
+    pointer-events: none;
+    transition: color var(--transition-base);
+}
+
+.search-input:focus ~ .search-icon {
+    color: var(--primary-green);
+}
+
+.search-separator {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0rem 1.5rem 1.5rem;
+}
+
 .nav-list-item { 
     display: flex;
     align-items: center;

@@ -60,10 +60,48 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- UI Population ---
+    function populateSchoolList(searchTerm = '') {
+        // Normalize search term for accent-insensitive and case-insensitive search
+        const normalizedSearch = normalizeString(searchTerm);
+        
+        // Find the container for school links (after search controls)
+        const schoolLinksHTML = Object.keys(schoolData)
+            .filter(schoolId => {
+                if (!searchTerm) return true;
+                const schoolName = schoolData[schoolId].schoolName;
+                return normalizeString(schoolName).includes(normalizedSearch);
+            })
+            .map(schoolId => 
+                `<a href="#" class="nav-list-item" data-type="school" data-id="${schoolId}">${schoolData[schoolId].schoolName}</a>`
+            ).join('');
+        
+        // Find existing search controls or create placeholder
+        const searchControls = schoolListContainer.querySelector('.search-controls');
+        const searchSeparator = schoolListContainer.querySelector('.search-separator');
+        
+        if (searchControls && searchSeparator) {
+            // Keep search controls, replace only school links
+            const linksContainer = document.createElement('div');
+            linksContainer.innerHTML = schoolLinksHTML;
+            
+            // Remove old school links
+            const oldLinks = schoolListContainer.querySelectorAll('.nav-list-item');
+            oldLinks.forEach(link => link.remove());
+            
+            // Append new links after separator
+            schoolListContainer.appendChild(linksContainer);
+            Array.from(linksContainer.children).forEach(child => {
+                schoolListContainer.appendChild(child);
+            });
+            linksContainer.remove();
+        } else {
+            // Initial population - keep existing HTML structure from index.html
+            schoolListContainer.innerHTML += schoolLinksHTML;
+        }
+    }
+    
     function populateSidebarControls() {
-        schoolListContainer.innerHTML = Object.keys(schoolData).map(schoolId => 
-            `<a href="#" class="nav-list-item" data-type="school" data-id="${schoolId}">${schoolData[schoolId].schoolName}</a>`
-        ).join('');
+        populateSchoolList();
 
         // Populate Family of Schools dropdown
         const fosSet = new Set();
@@ -105,6 +143,11 @@ document.addEventListener('DOMContentLoaded', function() {
             `<a href="#" class="nav-list-item" data-type="category" data-id="${key}">${name}</a>`
         ).join('');
         categoryListContainer.innerHTML += categoryLinks;
+    }
+    
+    // Helper function to normalize strings (case-insensitive, accent-insensitive)
+    function normalizeString(str) {
+        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
     }
 
     // --- Card Creation Functions ---
@@ -492,6 +535,23 @@ document.addEventListener('DOMContentLoaded', function() {
             combinedFilter.addEventListener('change', (e) => {
                 filterValue = e.target.value;
                 updateView();
+            });
+        }
+        
+        // School search input
+        const schoolSearch = document.getElementById('school-search');
+        if (schoolSearch) {
+            schoolSearch.addEventListener('input', (e) => {
+                populateSchoolList(e.target.value);
+                // Re-highlight the active school if it's still visible
+                const activeSchoolLink = schoolListContainer.querySelector('.nav-list-item.active');
+                if (activeSchoolLink) {
+                    activeSchoolLink.classList.add('active');
+                }
+                // Update active state for the currently selected school
+                document.querySelectorAll('#school-list-container .nav-list-item').forEach(item => {
+                    item.classList.toggle('active', item.dataset.id === selectedSchoolId);
+                });
             });
         }
         
