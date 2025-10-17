@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 Chart.register(ChartDataLabels);
             }
             
-            const response = await fetch('schools.json'); 
+            const response = await fetch('data/schools.json'); 
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             schoolData = await response.json();
             
