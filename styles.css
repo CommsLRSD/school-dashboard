@@ -113,6 +113,19 @@ body {
     transform: scale(1.05);
 }
 
+.header-logo-desktop {
+    display: none;
+}
+
+.header-logo-mobile {
+    display: block;
+}
+
+.hamburger-icon {
+    width: 24px;
+    height: 24px;
+}
+
 .content-body { 
     padding: 2rem; 
     max-width: 1600px; 
@@ -122,7 +135,7 @@ body {
 
 #content-subtitle { 
     font-family: var(--font-title); 
-    font-size: 1.75rem; 
+    font-size: 2.25rem; 
     font-weight: 700;
     margin-bottom: 1.5rem; 
     color: var(--text-color);
@@ -167,6 +180,10 @@ body {
 
 .sidebar-logo-vertical {
     display: none;
+}
+
+.sidebar-logo-horizontal {
+    display: block;
 }
 
 .sidebar-close-btn {
@@ -411,11 +428,15 @@ body {
 }
 
 .card-header-icon { 
-    color: var(--primary-red); 
+    color: var(--primary-green); 
     margin-right: 0.75rem; 
     font-size: 1.1rem; 
     width: 20px; 
     text-align: center;
+}
+
+.list-card .card-header-icon {
+    color: var(--primary-red);
 }
 
 .card-title { 
@@ -498,6 +519,12 @@ body {
 /* Utilization Card */
 .utilization-card .card-body { 
     justify-content: center;
+    align-items: center;
+}
+
+.utilization-card.over-capacity .card-body {
+    background-color: rgba(178, 52, 39, 0.1);
+    border-radius: 0 0 12px 12px;
 }
 
 .progress-bar-container { 
@@ -519,6 +546,58 @@ body {
 
 .over-capacity .progress-bar-fill { 
     background: var(--over-capacity-red);
+}
+
+/* Stats Combined Card */
+.stats-combined-card .card-body {
+    padding: 1rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    height: 100%;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    background: var(--bg-color);
+    border-radius: 8px;
+    transition: all var(--transition-base);
+}
+
+.stat-item:hover {
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-item.over-capacity {
+    background-color: rgba(178, 52, 39, 0.1);
+}
+
+.stat-item-label {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.stat-item-value {
+    font-family: var(--font-title);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-red);
+    line-height: 1;
+}
+
+.stat-item.over-capacity .stat-item-value {
+    color: var(--over-capacity-red);
 }
 
 /* Chart Card */
@@ -626,6 +705,16 @@ body {
     opacity: 1; 
 }
 
+@media (min-width: 993px) {
+    .header-logo-desktop {
+        display: block;
+    }
+    
+    .header-logo-mobile {
+        display: none;
+    }
+}
+
 @media (max-width: 992px) {
     .sidebar { 
         transform: translateX(-100%); 
@@ -655,8 +744,15 @@ body {
     }
     
     .sidebar-logo-vertical {
+        display: none;
+    }
+    
+    .header-logo-desktop {
+        display: none;
+    }
+    
+    .header-logo-mobile {
         display: block;
-        height: 45px;
     }
 }
 
