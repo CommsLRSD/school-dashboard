@@ -87,6 +87,15 @@ body {
     flex-grow: 1;
 }
 
+.header-logo-main {
+    height: 50px;
+    transition: transform var(--transition-base);
+}
+
+.header-logo-main:hover {
+    transform: scale(1.02);
+}
+
 .header-titles h1 { 
     font-family: var(--font-title); 
     font-size: 2rem; 
@@ -779,6 +788,7 @@ body {
 .detail-value { 
     color: var(--text-light);
     font-weight: 500;
+    text-align: right;
 }
 
 .yes-badge, .no-badge { 
@@ -907,6 +917,10 @@ body {
     
     .header-titles h1 {
         font-size: 1.25rem;
+    }
+    
+    .header-logo-main {
+        height: 32px;
     }
     
     .header-logo {
