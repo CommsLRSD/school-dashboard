@@ -71,7 +71,7 @@ body {
 .main-header { 
     display: flex; 
     align-items: center; 
-    padding: 1.25rem 2rem; 
+    padding: 1rem 2rem; 
     background: #ffffff;
     border-bottom: 1px solid var(--border-color); 
     position: sticky; 
@@ -155,10 +155,10 @@ body {
     display: flex; 
     align-items: center; 
     justify-content: space-between;
-    padding: 1.25rem 1.5rem; 
+    padding: 1rem 1.5rem; 
     border-bottom: 1px solid var(--border-color); 
     flex-shrink: 0;
-    min-height: 77px;
+    min-height: 70px;
 }
 
 .sidebar-logo-link {
@@ -399,11 +399,11 @@ body {
     align-items: center;
     text-decoration: none; 
     color: var(--text-light); 
-    padding: 0.75rem 1rem; 
-    margin: 0.2rem 0;
-    border-radius: 8px; 
+    padding: 0.625rem 1rem; 
+    margin: 0.15rem 0;
+    border-radius: 6px; 
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     transition: all var(--transition-base);
     position: relative;
 }
@@ -478,8 +478,8 @@ body {
 .card-header-icon { 
     color: var(--primary-red); 
     margin-right: 0.75rem; 
-    font-size: 1.1rem; 
-    width: 20px; 
+    font-size: 1rem; 
+    width: 18px; 
     text-align: center;
 }
 
