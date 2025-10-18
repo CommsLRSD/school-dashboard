@@ -1150,8 +1150,8 @@ body {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    bottom: 0.5rem !important;
-    right: 0.5rem !important;
+    bottom: 1.5rem !important;
+    right: 1.5rem !important;
 }
 
 .jigts-widget-trigger:hover {
@@ -1171,8 +1171,8 @@ body {
 
 /* Position the language selection menu above and to the left of the icon */
 .jigts-widget-menu {
-    bottom: 1.5rem !important;
-    right: 1.5rem !important;
+    bottom: 80px !important;
+    right: 20px !important;
 }
 
 /* Remove hover effect from language code display */
@@ -1199,8 +1199,8 @@ body {
     .jigts-widget-trigger {
         width: 45px !important;
         height: 45px !important;
-        bottom: 0.5rem !important;
-        right: 0.5rem !important;
+        bottom: 1.5rem !important;
+        right: 1.5rem !important;
     }
     
     .jigts-widget-trigger svg,
@@ -1211,7 +1211,7 @@ body {
     
     /* Keep menu positioning consistent on mobile */
     .jigts-widget-menu {
-        bottom: 1rem !important;
-        right: 1rem !important;
+        bottom: 75px !important;
+        right: 15px !important;
     }
 }
