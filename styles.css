@@ -1273,3 +1273,24 @@ body {
         min-width: 180px !important;
     }
 }
+
+/* Status Icon Styles */
+.status-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.status-icon-requested {
+    filter: brightness(0) saturate(100%) invert(26%) sepia(55%) saturate(1726%) hue-rotate(340deg) brightness(92%) contrast(89%);
+}
+
+.status-icon-inprogress {
+    filter: brightness(0) saturate(100%) invert(68%) sepia(86%) saturate(629%) hue-rotate(0deg) brightness(97%) contrast(104%);
+}
+
+.status-icon-completed {
+    filter: brightness(0) saturate(100%) invert(57%) sepia(33%) saturate(661%) hue-rotate(110deg) brightness(93%) contrast(85%);
+}

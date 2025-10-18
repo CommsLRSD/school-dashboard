@@ -661,7 +661,7 @@
     "id": "drdwpenner",
     "schoolName": "Dr. D.W. Penner School",
     "schoolType": "School",
-    "headerImage": "public/drdwpenner.jpg",
+    "headerImage": "public/penner.jpg",
     "address": "121 Hazelwood Cres.",
     "phone": "(204) 256-1135",
     "program": "K-7 (K-8 in 2025), English Program",
@@ -906,7 +906,7 @@
     "id": "ecoleguyot",
     "schoolName": "École Guyot",
     "schoolType": "École",
-    "headerImage": "public/ecoleguyot.jpg",
+    "headerImage": "public/guyot.jpg",
     "address": "400 Willowlake Cres.",
     "phone": "(204) 257-2540",
     "program": "K-8, French Immersion",
@@ -1028,7 +1028,7 @@
     "id": "ecolehenribergeron",
     "schoolName": "École Henri-Bergeron",
     "schoolType": "École",
-    "headerImage": "public/ecolehenribergeron.jpg",
+    "headerImage": "public/henribergeron.jpg",
     "address": "363 Enfield Cres.",
     "phone": "(204) 233-7079",
     "program": "French Immersion 5-8; Middle Immersion 4-6, French Immersion & Middle Immersion",
@@ -1143,7 +1143,7 @@
     "id": "ecolehowden",
     "schoolName": "École Howden",
     "schoolType": "École",
-    "headerImage": "public/ecolehowden.jpg",
+    "headerImage": "public/howden.jpg",
     "address": "150 Howden Rd.",
     "phone": "(204) 257-0656",
     "program": "K-8 (K-6 in 2025), French Immersion",
@@ -1631,6 +1631,98 @@
           "Extend stairway walls for safety",
           "New gender neutral washroom"
         ]
+      }
+    },
+    "meta": {
+      "user": "CommsLRSD",
+      "updated": "2025-10-16 17:22:16"
+    },
+    "familyOfSchools": "BÉLIVEAU FOS",
+    "schoolLevel": "Elementary School"
+  },
+  "ecolesagecreekbonavista": {
+    "id": "ecolesagecreekbonavista",
+    "schoolName": "École Sage Creek Bonavista",
+    "schoolType": "École",
+    "headerImage": "public/sagecreekbonavista.png",
+    "address": "355 Des Hivernants Blvd.",
+    "phone": "Board Office",
+    "program": "K-8, French Immersion Program",
+    "enrolment": {
+      "capacity": 900,
+      "current": 0,
+      "projection": {
+        "2025-26": "90-97",
+        "2026-27": "859-861",
+        "2027-28": "855-880",
+        "2028-29": "836-876"
+      },
+      "history": {
+        "labels": [
+          "2020_21",
+          "2021_22",
+          "2022_23",
+          "2023_24"
+        ],
+        "values": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "details": {
+      "Built": 2025,
+      "Age": "0 years",
+      "Size": "103548 ft²",
+      "Modular": 0
+    },
+    "additions": [],
+    "building": {
+      "Air Conditioning": "Full building",
+      "Heating": "Natural gas",
+      "LED Lighting": "Hallways, band, office, library, Rooms 101-103, 142, 203, 204"
+    },
+    "catchment": {
+      "migration": "+0.0%",
+      "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+    },
+    "transportation": {
+      "Parking spots": "Not specified",
+      "Bus Loop": "YES"
+    },
+    "accessibility": {
+      "Girls' washrooms": 1,
+      "Boys' washrooms": 1,
+      "Gender neutral washrooms": 24,
+      "Universal washroom": "YES",
+      "Elevator": "YES",
+      "Accessible parking stalls": 9,
+      "Accessible entrance": "YES",
+      "Automatic entrance door operators": "YES"
+    },
+    "playground": [
+      "2 Play areas",
+      "Basketball court",
+      "City Property: Pump Track",
+      "Soccer field"
+    ],
+    "childcare": {
+      "Infant (0-23 months)": 0,
+      "Pre-school (2-6 years)": 0,
+      "School-age (7+ years)": 0
+    },
+    "projects": {
+      "provincial": {
+        "requested": [],
+        "inProgress": [],
+        "completed": []
+      },
+      "local": {
+        "requested": [],
+        "inProgress": [],
+        "completed": []
       }
     },
     "meta": {
@@ -3993,6 +4085,116 @@
     "familyOfSchools": "NELSON MCINTYRE FOS",
     "schoolLevel": "Elementary School"
   },
+  "sagecreek": {
+    "id": "sagecreek",
+    "schoolName": "Sage Creek School",
+    "schoolType": "School",
+    "headerImage": "public/sagecreek.jpg",
+    "address": "315 Sage Creek Blvd.",
+    "phone": "(204) 253-8199",
+    "program": "K-8 (transitioning to English K-8 only in 2025/26), English Program",
+    "enrolment": {
+      "capacity": 600,
+      "current": 654,
+      "projection": {
+        "2025-26": "722-821 (Eng. K-8 only)",
+        "2026-27": "702-775 (Eng. K-8 only)",
+        "2027-28": "668-705 (Eng. K-8 only)",
+        "2028-29": "636-654 (Eng. K-8 only)"
+      },
+      "history": {
+        "labels": [
+          "2020_21",
+          "2021_22",
+          "2022_23",
+          "2023_24"
+        ],
+        "values": [
+          769,
+          694,
+          747,
+          787
+        ]
+      }
+    },
+    "details": {
+      "Built": 2017,
+      "Age": "7 years",
+      "Size": "76940 ft²",
+      "Modular": 0
+    },
+    "additions": [],
+    "building": {
+      "Air Conditioning": "Full building",
+      "Heating": "Geothermal, electric",
+      "LED Lighting": "Hallways, band, office, library, classrooms (6)"
+    },
+    "catchment": {
+      "migration": "+6.9%",
+      "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+    },
+    "transportation": {
+      "Parking spots": 48,
+      "Bus Loop": "YES"
+    },
+    "accessibility": {
+      "Girls' washrooms": 1,
+      "Boys' washrooms": 1,
+      "Gender neutral washrooms": 20,
+      "Universal washroom": "YES",
+      "Elevator": "YES",
+      "Accessible parking stalls": 1,
+      "Accessible entrance": "YES",
+      "Automatic entrance door operators": "YES"
+    },
+    "playground": [
+      "2 Play structures",
+      "City Property: Play structure, Basketball court, Tennis court"
+    ],
+    "childcare": {
+      "Infant (0-23 months)": 20,
+      "Pre-school (2-6 years)": 64,
+      "School-age (7+ years)": 132
+    },
+    "projects": {
+      "provincial": {
+        "requested": [
+          "Number one priority: Addition and renovations to J.H. Bruns Collegiate to allow for transition from grade 8 to grade 9",
+          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
+          "New Elementary School: Precinct J neighbourhood",
+          "New Elementary School: Precinct K neighbourhood",
+          "New High School: Precinct K neighbourhood"
+        ],
+        "inProgress": [],
+        "completed": []
+      },
+      "local": {
+        "requested": [
+          "Parking lot expansion",
+          "Sump pump spout diversion",
+          "Floor drain repair",
+          "Concrete bollards removal",
+          "School grounds redevelopment",
+          "Commons area reconfiguration",
+          "Demising wall demolition"
+        ],
+        "inProgress": [],
+        "completed": [
+          "Lower washroom fixture height",
+          "Remove temporary partitions in commons area and makerspace areas",
+          "Reinstall equipment in makerspace and teacher space in kitchen",
+          "Demising wall",
+          "Additional access door"
+        ]
+      }
+    },
+    "meta": {
+      "user": "CommsLRSD",
+      "updated": "2025-10-16 17:22:16"
+    },
+    "familyOfSchools": "J.H. BRUNS FOS",
+    "schoolLevel": "Elementary School"
+  },
   "samuelburland": {
     "id": "samuelburland",
     "schoolName": "Samuel Burland School",
@@ -4114,7 +4316,7 @@
     "id": "shamrock",
     "schoolName": "Shamrock School",
     "schoolType": "School",
-    "headerImage": "public/shamrock.jpg",
+    "headerImage": "public/shamrock.png",
     "address": "831 Beaverhill Blvd.",
     "phone": "(204) 257-0637",
     "program": "K-8, English Program",
@@ -4830,208 +5032,6 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "GLENLAWN FOS",
-    "schoolLevel": "Elementary School"
-  },
-  "ecolesagecreekbonavista": {
-    "id": "ecolesagecreekbonavista",
-    "schoolName": "École Sage Creek Bonavista",
-    "schoolType": "École",
-    "headerImage": "public/sagecreekbonavista.png",
-    "address": "355 Des Hivernants Blvd.",
-    "phone": "Board Office",
-    "program": "K-8, French Immersion Program",
-    "enrolment": {
-      "capacity": 900,
-      "current": 0,
-      "projection": {
-        "2025-26": "90-97",
-        "2026-27": "859-861",
-        "2027-28": "855-880",
-        "2028-29": "836-876"
-      },
-      "history": {
-        "labels": [
-          "2020_21",
-          "2021_22",
-          "2022_23",
-          "2023_24"
-        ],
-        "values": [
-          0,
-          0,
-          0,
-          0
-        ]
-      }
-    },
-    "details": {
-      "Built": 2025,
-      "Age": "0 years",
-      "Size": "103548 ft²",
-      "Modular": 0
-    },
-    "additions": [],
-    "building": {
-      "Air Conditioning": "Full building",
-      "Heating": "Natural gas",
-      "LED Lighting": "Hallways, band, office, library, Rooms 101-103, 142, 203, 204"
-    },
-    "catchment": {
-      "migration": "+0.0%",
-      "description": "Net annual movement in and out of catchment (5-yr. avg.)"
-    },
-    "transportation": {
-      "Parking spots": "Not specified",
-      "Bus Loop": "YES"
-    },
-    "accessibility": {
-      "Girls' washrooms": 1,
-      "Boys' washrooms": 1,
-      "Gender neutral washrooms": 24,
-      "Universal washroom": "YES",
-      "Elevator": "YES",
-      "Accessible parking stalls": 9,
-      "Accessible entrance": "YES",
-      "Automatic entrance door operators": "YES"
-    },
-    "playground": [
-      "2 Play areas",
-      "Basketball court",
-      "City Property: Pump Track",
-      "Soccer field"
-    ],
-    "childcare": {
-      "Infant (0-23 months)": 0,
-      "Pre-school (2-6 years)": 0,
-      "School-age (7+ years)": 0
-    },
-    "projects": {
-      "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
-      },
-      "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
-      }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
-    },
-    "familyOfSchools": "BÉLIVEAU FOS",
-    "schoolLevel": "Elementary School"
-  },
-  "sagecreek": {
-    "id": "sagecreek",
-    "schoolName": "Sage Creek School",
-    "schoolType": "School",
-    "headerImage": "public/sagecreek.jpg",
-    "address": "315 Sage Creek Blvd.",
-    "phone": "(204) 253-8199",
-    "program": "K-8 (transitioning to English K-8 only in 2025/26), English Program",
-    "enrolment": {
-      "capacity": 600,
-      "current": 654,
-      "projection": {
-        "2025-26": "722-821 (Eng. K-8 only)",
-        "2026-27": "702-775 (Eng. K-8 only)",
-        "2027-28": "668-705 (Eng. K-8 only)",
-        "2028-29": "636-654 (Eng. K-8 only)"
-      },
-      "history": {
-        "labels": [
-          "2020_21",
-          "2021_22",
-          "2022_23",
-          "2023_24"
-        ],
-        "values": [
-          769,
-          694,
-          747,
-          787
-        ]
-      }
-    },
-    "details": {
-      "Built": 2017,
-      "Age": "7 years",
-      "Size": "76940 ft²",
-      "Modular": 0
-    },
-    "additions": [],
-    "building": {
-      "Air Conditioning": "Full building",
-      "Heating": "Geothermal, electric",
-      "LED Lighting": "Hallways, band, office, library, classrooms (6)"
-    },
-    "catchment": {
-      "migration": "+6.9%",
-      "description": "Net annual movement in and out of catchment (5-yr. avg.)"
-    },
-    "transportation": {
-      "Parking spots": 48,
-      "Bus Loop": "YES"
-    },
-    "accessibility": {
-      "Girls' washrooms": 1,
-      "Boys' washrooms": 1,
-      "Gender neutral washrooms": 20,
-      "Universal washroom": "YES",
-      "Elevator": "YES",
-      "Accessible parking stalls": 1,
-      "Accessible entrance": "YES",
-      "Automatic entrance door operators": "YES"
-    },
-    "playground": [
-      "2 Play structures",
-      "City Property: Play structure, Basketball court, Tennis court"
-    ],
-    "childcare": {
-      "Infant (0-23 months)": 20,
-      "Pre-school (2-6 years)": 64,
-      "School-age (7+ years)": 132
-    },
-    "projects": {
-      "provincial": {
-        "requested": [
-          "Number one priority: Addition and renovations to J.H. Bruns Collegiate to allow for transition from grade 8 to grade 9",
-          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
-          "New Elementary School: Precinct J neighbourhood",
-          "New Elementary School: Precinct K neighbourhood",
-          "New High School: Precinct K neighbourhood"
-        ],
-        "inProgress": [],
-        "completed": []
-      },
-      "local": {
-        "requested": [
-          "Parking lot expansion",
-          "Sump pump spout diversion",
-          "Floor drain repair",
-          "Concrete bollards removal",
-          "School grounds redevelopment",
-          "Commons area reconfiguration",
-          "Demising wall demolition"
-        ],
-        "inProgress": [],
-        "completed": [
-          "Lower washroom fixture height",
-          "Remove temporary partitions in commons area and makerspace areas",
-          "Reinstall equipment in makerspace and teacher space in kitchen",
-          "Demising wall",
-          "Additional access door"
-        ]
-      }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
-    },
-    "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "Elementary School"
   }
 }
