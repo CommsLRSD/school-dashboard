@@ -1179,10 +1179,15 @@ body {
     pointer-events: none !important;
 }
 
-/* Position the language selection menu above and to the right edge - more compact */
+/* Position the language selection menu centered in viewport - 75% of original width */
 .jigts-widget-menu {
-    bottom: calc(0.75rem + 44px + 0.5rem) !important;
-    right: 0.75rem !important;
+    bottom: auto !important;
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translate(-50%, -50%) !important;
+    width: 75% !important;
+    max-width: 600px !important;
     max-height: min(400px, calc(100vh - 120px)) !important;
     overflow-y: auto !important;
     border-radius: 10px !important;
@@ -1237,17 +1242,20 @@ body {
         font-size: 10px !important;
     }
     
-    /* Keep menu positioning consistent on mobile - ensure it's visible even with keyboard */
+    /* Keep menu centered on mobile */
     .jigts-widget-menu {
-        /* Position menu higher to avoid keyboard overlap */
-        bottom: calc(0.5rem + 40px + 0.5rem) !important;
-        right: 0.5rem !important;
+        /* Center in viewport */
+        bottom: auto !important;
+        top: 50% !important;
+        left: 50% !important;
+        right: auto !important;
+        transform: translate(-50%, -50%) !important;
         /* Limit max height to ensure it doesn't extend beyond viewport */
         max-height: min(300px, calc(100vh - 100px)) !important;
-        /* Ensure menu stays in view even when keyboard is active */
+        /* Ensure menu stays in view */
         position: fixed !important;
+        width: 75% !important;
         max-width: calc(100vw - 1rem) !important;
-        width: auto !important;
         min-width: 200px !important;
     }
     
