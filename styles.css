@@ -1150,8 +1150,8 @@ body {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    bottom: .75rem !important;
-    right: .75rem !important;
+    bottom: 1.5rem !important;
+    right: 1.5rem !important;
 }
 
 .jigts-widget-trigger:hover {
@@ -1169,18 +1169,49 @@ body {
     height: 24px !important;
 }
 
+/* Position the language selection menu above and to the left of the icon */
+.jigts-widget-menu {
+    bottom: 80px !important;
+    right: 20px !important;
+}
+
+/* Remove hover effect from language code display */
+.jigts-widget-trigger span,
+.jigts-widget-trigger .jigts-language-code {
+    pointer-events: none !important;
+}
+
+.jigts-widget-trigger span:hover,
+.jigts-widget-trigger .jigts-language-code:hover {
+    background: transparent !important;
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+/* Hide the full language name tooltip on hover */
+.jigts-widget-trigger[title]:hover::after {
+    content: none !important;
+    display: none !important;
+}
+
 /* Mobile responsiveness for translation widget */
 @media (max-width: 576px) {
     .jigts-widget-trigger {
         width: 45px !important;
         height: 45px !important;
-        bottom: 1rem !important;
-        right: 1rem !important;
+        bottom: 1.5rem !important;
+        right: 1.5rem !important;
     }
     
     .jigts-widget-trigger svg,
     .jigts-widget-trigger i {
         width: 20px !important;
         height: 20px !important;
+    }
+    
+    /* Keep menu positioning consistent on mobile */
+    .jigts-widget-menu {
+        bottom: 75px !important;
+        right: 15px !important;
     }
 }
