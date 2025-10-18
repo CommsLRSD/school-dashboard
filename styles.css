@@ -1139,19 +1139,20 @@ body {
 
 /* --- Translation Widget Custom Styling --- */
 .jigts-widget-trigger {
-    opacity: 0.7 !important;
+    opacity: 0.85 !important;
     transition: all var(--transition-base) !important;
     background: var(--card-bg) !important;
     border: 1px solid var(--border-color) !important;
     box-shadow: var(--shadow-md) !important;
     border-radius: 50% !important;
-    width: 50px !important;
-    height: 50px !important;
+    width: 44px !important;
+    height: 44px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    bottom: 0.5rem !important;
-    right: 0.5rem !important;
+    bottom: 0.75rem !important;
+    right: 0.75rem !important;
+    padding: 0 !important;
 }
 
 .jigts-widget-trigger:hover {
@@ -1165,22 +1166,44 @@ body {
 .jigts-widget-trigger svg,
 .jigts-widget-trigger i {
     color: var(--primary-red) !important;
-    width: 24px !important;
-    height: 24px !important;
+    width: 20px !important;
+    height: 20px !important;
 }
 
-/* Position the language selection menu above and to the right edge aligned with 0.5rem from window edge */
-.jigts-widget-menu {
-    bottom: calc(0.5rem + 50px + 0.5rem) !important;
-    right: 0.5rem !important;
-}
-
-/* Remove hover effect from language code display */
+/* Make the language code text smaller and more compact */
 .jigts-widget-trigger span,
 .jigts-widget-trigger .jigts-language-code {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
     pointer-events: none !important;
 }
 
+/* Position the language selection menu above and to the right edge - more compact */
+.jigts-widget-menu {
+    bottom: calc(0.75rem + 44px + 0.5rem) !important;
+    right: 0.75rem !important;
+    max-height: min(400px, calc(100vh - 120px)) !important;
+    overflow-y: auto !important;
+    border-radius: 10px !important;
+    box-shadow: var(--shadow-xl) !important;
+    border: 1px solid var(--border-color) !important;
+    padding: 0.5rem !important;
+}
+
+/* Make menu items more compact */
+.jigts-widget-menu .jigts-language-item {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.875rem !important;
+    border-radius: 6px !important;
+    margin: 0.125rem 0 !important;
+}
+
+.jigts-widget-menu .jigts-language-item:hover {
+    background: var(--bg-color) !important;
+}
+
+/* Remove hover effect from language code display */
 .jigts-widget-trigger span:hover,
 .jigts-widget-trigger .jigts-language-code:hover {
     background: transparent !important;
@@ -1197,21 +1220,48 @@ body {
 /* Mobile responsiveness for translation widget */
 @media (max-width: 576px) {
     .jigts-widget-trigger {
-        width: 45px !important;
-        height: 45px !important;
+        width: 40px !important;
+        height: 40px !important;
         bottom: 0.5rem !important;
         right: 0.5rem !important;
     }
     
     .jigts-widget-trigger svg,
     .jigts-widget-trigger i {
-        width: 20px !important;
-        height: 20px !important;
+        width: 18px !important;
+        height: 18px !important;
     }
     
-    /* Keep menu positioning consistent on mobile with right edge at 0.5rem */
+    .jigts-widget-trigger span,
+    .jigts-widget-trigger .jigts-language-code {
+        font-size: 10px !important;
+    }
+    
+    /* Keep menu positioning consistent on mobile - ensure it's visible even with keyboard */
     .jigts-widget-menu {
-        bottom: calc(0.5rem + 45px + 0.5rem) !important;
+        /* Position menu higher to avoid keyboard overlap */
+        bottom: calc(0.5rem + 40px + 0.5rem) !important;
         right: 0.5rem !important;
+        /* Limit max height to ensure it doesn't extend beyond viewport */
+        max-height: min(300px, calc(100vh - 100px)) !important;
+        /* Ensure menu stays in view even when keyboard is active */
+        position: fixed !important;
+        max-width: calc(100vw - 1rem) !important;
+        width: auto !important;
+        min-width: 200px !important;
+    }
+    
+    /* Make menu items slightly smaller on mobile */
+    .jigts-widget-menu .jigts-language-item {
+        padding: 0.4rem 0.6rem !important;
+        font-size: 0.8125rem !important;
+    }
+}
+
+/* Extra small devices - ensure menu is always visible */
+@media (max-width: 380px) {
+    .jigts-widget-menu {
+        max-height: min(250px, calc(100vh - 80px)) !important;
+        min-width: 180px !important;
     }
 }
