@@ -548,7 +548,7 @@ body {
 }
 
 .warning-icon-red {
-    color: var(--accent-red);
+    color: #B23427;
 }
 
 .warning-icon-yellow {
@@ -646,6 +646,11 @@ body {
     align-items: center;
 }
 
+.utilization-card.yellow-zone .card-body {
+    background-color: rgba(245, 158, 11, 0.1);
+    border-radius: 0 0 12px 12px;
+}
+
 .utilization-card.over-capacity .card-body {
     background-color: rgba(178, 52, 39, 0.1);
     border-radius: 0 0 12px 12px;
@@ -666,6 +671,10 @@ body {
     background: var(--primary-green);
     border-radius: 100px;
     transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.yellow-zone .progress-bar-fill {
+    background: #f59e0b;
 }
 
 .over-capacity .progress-bar-fill { 
@@ -698,6 +707,10 @@ body {
     box-shadow: var(--shadow-sm);
 }
 
+.stat-row.yellow-zone {
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
 .stat-row.over-capacity {
     background-color: rgba(178, 52, 39, 0.1);
 }
@@ -717,6 +730,10 @@ body {
     line-height: 1;
 }
 
+.stat-row.yellow-zone .stat-row-value {
+    color: #f59e0b;
+}
+
 .stat-row.over-capacity .stat-row-value {
     color: var(--over-capacity-red);
 }
@@ -725,6 +742,10 @@ body {
     width: 100%;
     height: 8px;
     margin-top: 0.75rem;
+}
+
+.stat-row .progress-bar-fill.yellow-zone {
+    background: #f59e0b;
 }
 
 .stat-row .progress-bar-fill.over-capacity {
@@ -761,6 +782,10 @@ body {
     box-shadow: var(--shadow-sm);
 }
 
+.stat-item.yellow-zone {
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
 .stat-item.over-capacity {
     background-color: rgba(178, 52, 39, 0.1);
 }
@@ -783,6 +808,10 @@ body {
     line-height: 1;
 }
 
+.stat-item.yellow-zone .stat-item-value {
+    color: #f59e0b;
+}
+
 .stat-item.over-capacity .stat-item-value {
     color: var(--over-capacity-red);
 }
@@ -791,6 +820,10 @@ body {
     width: 100%;
     height: 8px;
     margin-top: 0.75rem;
+}
+
+.stat-item .progress-bar-fill.yellow-zone {
+    background: #f59e0b;
 }
 
 .stat-item .progress-bar-fill.over-capacity {
