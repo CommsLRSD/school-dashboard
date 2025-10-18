@@ -90,7 +90,7 @@ body {
 }
 
 .header-logo-main {
-    height: 75px;
+    height: 60px;
     transition: transform var(--transition-base);
 }
 
@@ -167,8 +167,8 @@ body {
     }
 }
 
-/* --- Sidebar --- */
-.sidebar-header { 
+/* ---  --- */
+.-header { 
     display: flex; 
     align-items: center; 
     justify-content: space-between;
@@ -188,7 +188,7 @@ body {
 }
 
 .sidebar-logo {
-    height: 40px;
+    height: 60px;
 }
 
 .sidebar-close-btn {
