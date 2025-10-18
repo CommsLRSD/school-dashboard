@@ -375,7 +375,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             e.stopPropagation();
                             showCustomPopup('Go to category view?', e.clientX, e.clientY, () => {
                                 currentViewMode = 'category';
-                                selectedCategoryId = cardType;
+                                // Map enrolment, capacity, and utilization to enrolment_capacity category
+                                if (cardType === 'enrolment' || cardType === 'capacity' || cardType === 'utilization') {
+                                    selectedCategoryId = 'enrolment_capacity';
+                                } else {
+                                    selectedCategoryId = cardType;
+                                }
                                 updateView();
                             });
                         });
