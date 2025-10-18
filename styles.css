@@ -1136,3 +1136,13 @@ body {
 .popup-overlay.show {
     display: block;
 }
+
+/* --- Translation Widget Custom Styling --- */
+.jigts-widget-trigger {
+    opacity: 0.7 !important;
+    transition: opacity var(--transition-base) !important;
+}
+
+.jigts-widget-trigger:hover {
+    opacity: 1 !important;
+}
