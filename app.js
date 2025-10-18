@@ -33,6 +33,14 @@ document.addEventListener('DOMContentLoaded', function() {
         "projects_local": "Locally Funded Capital Projects"
     };
 
+    // --- Utility Functions ---
+    function formatNumber(num) {
+        // Convert to number if string, handle edge cases
+        const number = typeof num === 'string' ? parseFloat(num.replace(/,/g, '')) : num;
+        if (isNaN(number)) return num; // Return original if not a number
+        return number.toLocaleString('en-US');
+    }
+
     // --- Main Initialization ---
     async function initializeApp() {
         try {
@@ -184,19 +192,27 @@ document.addEventListener('DOMContentLoaded', function() {
         switch(cardType) {
             case 'school_header': return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${school.headerImage}" alt="${school.schoolName}"><h2 class="school-name-title">${school.schoolName}</h2></div></div>`;
             
-            case 'details': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-info-circle"></i><h2 class="card-title">Details</h2></div><div class="card-body"><ul class="detail-list">${Object.entries({"Address": school.address, "Phone": school.phone, "Program": school.program, ...school.details}).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val}</span></li>`).join('')}</ul></div></div>`;
+            case 'details': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-info-circle"></i><h2 class="card-title">Details</h2></div><div class="card-body"><ul class="detail-list">${Object.entries({"Address": school.address, "Phone": school.phone, "Program": school.program, ...school.details}).map(([key, val]) => {
+                // Format numeric values in detail values (except years which should not have commas)
+                let formattedVal = val;
+                if (key === 'Modular') {
+                    formattedVal = formatNumber(val);
+                }
+                // Built is a year, don't format it with commas
+                return `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${formattedVal}</span></li>`;
+            }).join('')}</ul></div></div>`;
             
             case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-plus-square"></i><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
 
-            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.capacity}</div><div class="stat-label">Classroom Capacity</div></div></div>`;
+            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div></div></div>`;
             
-            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.current}</div><div class="stat-label">Current Enrolment (Sept. 30)</div></div></div>`;
+            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment (Sept. 30)</div></div></div>`;
             
             case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div>`;
 
-            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${school.enrolment.current}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${school.enrolment.capacity}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
+            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(school.enrolment.current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(school.enrolment.capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
 
-            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${school.enrolment.current}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${school.enrolment.capacity}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul></div></div>`;
+            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul></div></div>`;
 
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historic Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
@@ -221,20 +237,62 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (cardType === 'projects_provincial' || cardType === 'projects_local') {
                     const projectType = cardType.split('_')[1];
                     data = school.projects[projectType];
-                    listItems = ['requested', 'inProgress', 'completed'].flatMap(status => 
-                        (data && data[status] && data[status].length > 0) 
-                        ? [`<li class="detail-item"><span class="detail-label">${status.charAt(0).toUpperCase() + status.slice(1)}</span></li>`, ...data[status].map(item => `<li class="detail-item" style="padding-left: 1rem;"><i class="fas fa-check-circle" style="color: var(--primary-green); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`)] 
-                        : []
-                    ).join('');
+                    
+                    // Define status icons and colors
+                    const statusConfig = {
+                        'requested': { icon: 'circle', color: '#ef4444' },      // Red
+                        'inProgress': { icon: 'circle', color: '#f59e0b' },     // Yellow
+                        'completed': { icon: 'check-circle', color: 'var(--primary-green)' }  // Green
+                    };
+                    
+                    listItems = ['requested', 'inProgress', 'completed'].flatMap(status => {
+                        if (data && data[status] && data[status].length > 0) {
+                            const config = statusConfig[status];
+                            const statusLabel = status === 'inProgress' ? 'In Progress' : status.charAt(0).toUpperCase() + status.slice(1);
+                            
+                            return [
+                                `<li class="detail-item"><span class="detail-label">${statusLabel}</span></li>`,
+                                ...data[status].map(item => 
+                                    `<li class="detail-item" style="padding-left: 1rem;"><i class="fas fa-${config.icon}" style="color: ${config.color}; margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`
+                                )
+                            ];
+                        }
+                        return [];
+                    }).join('');
                 } else if (cardType === 'playground') {
                     data = school[cardType];
                     listItems = Array.isArray(data) ? data.map(item => {
-                        const icon = playgroundIcons[item] || 'circle';
-                        return `<li class="detail-item"><i class="fas fa-${icon}" style="color: var(--primary-red); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`;
-                    }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : val}</span></li>`).join('');
+                        // Check if item starts with "City Property:"
+                        if (item.startsWith('City Property:')) {
+                            // Extract the items after "City Property:"
+                            const cityPropertyItems = item.substring(14).trim(); // Remove "City Property: "
+                            
+                            // First add the "City Property" label
+                            let result = '<li class="detail-item"><span class="detail-label">City Property</span></li>';
+                            
+                            // Split by comma and create individual items
+                            const items = cityPropertyItems.split(',').map(i => i.trim());
+                            result += items.map(subItem => {
+                                const icon = playgroundIcons[subItem] || 'circle';
+                                return `<li class="detail-item" style="padding-left: 1rem;"><i class="fas fa-${icon}" style="color: var(--primary-red); margin-right: 0.5rem; font-size: 0.875rem;"></i>${subItem}</li>`;
+                            }).join('');
+                            
+                            return result;
+                        } else {
+                            const icon = playgroundIcons[item] || 'circle';
+                            return `<li class="detail-item"><i class="fas fa-${icon}" style="color: var(--primary-red); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`;
+                        }
+                    }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
                 } else {
                     data = school[cardType === 'building_systems' ? 'building' : cardType];
-                    listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : val}</span></li>`).join('');
+                    listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => {
+                        // Format numeric values
+                        let formattedVal = val;
+                        if (val !== "YES" && val !== "NO" && !isNaN(val) && val !== '' && val !== 'n/a') {
+                            formattedVal = formatNumber(val);
+                        }
+                        return `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formattedVal}</span></li>`;
+                    }).join('');
                 }
 
                 return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-${icons[cardType]}"></i><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems || '<li class="detail-item">No data available.</li>'}</ul></div></div>`;
