@@ -66,9 +66,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Helper function to fix label text (e.g., add line breaks)
     const formatLabel = (label) => {
-        // Replace "Automatic entrance door operators" with proper line break
+        // Replace "Automatic entrance door operators" with more concise label
         if (label === 'Automatic entrance door operators') {
-            return 'Accessible entrance door<br>operators';
+            return 'Automatic entrance door operators';
         }
         return label;
     };
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Determine icon color based on status
                         let iconColor, iconClass;
                         if (status === 'requested') {
-                            iconColor = 'var(--over-capacity-red)'; // Red
+                            iconColor = '#f59e0b'; // Yellow (changed from red)
                             iconClass = 'fa-circle';
                         } else if (status === 'inProgress') {
                             iconColor = '#f59e0b'; // Yellow
@@ -294,8 +294,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         const statusLabel = status === 'inProgress' ? 'In Progress' : status.charAt(0).toUpperCase() + status.slice(1);
                         return [
-                            `<li class="detail-item"><span class="detail-label"><i class="fas ${iconClass}" style="color: ${iconColor}; margin-right: 0.5rem; font-size: 0.875rem;"></i>${statusLabel}</span></li>`,
-                            ...data[status].map(item => `<li class="detail-item" style="padding-left: 1rem;">${item}</li>`)
+                            `<li class="detail-item"><span class="detail-label">${statusLabel}</span></li>`,
+                            ...data[status].map(item => `<li class="detail-item" style="padding-left: 1rem;"><span class="detail-value"><i class="fas ${iconClass}" style="color: ${iconColor}; margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</span></li>`)
                         ];
                     }).join('');
                 } else if (cardType === 'playground') {
