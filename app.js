@@ -163,8 +163,11 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     const createCard = (school, cardType) => {
-        const isOverCapacity = school.enrolment.current / school.enrolment.capacity >= 1;
-        const capacityClass = isOverCapacity ? 'over-capacity' : '';
+        const utilization = school.enrolment.current / school.enrolment.capacity;
+        const utilizationPercent = (utilization * 100).toFixed(1);
+        const isOverCapacity = utilization >= 1;
+        const isYellowZone = utilization >= 0.95 && utilization < 1;
+        const capacityClass = isOverCapacity ? 'over-capacity' : (isYellowZone ? 'yellow-zone' : '');
         const sizeClass = getTileSizeClass(cardType);
 
         switch(cardType) {
@@ -178,11 +181,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${school.enrolment.current}</div><div class="stat-label">Current Enrolment (Sept. 30)</div></div></div>`;
             
-            case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div>`;
+            case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div>`;
 
-            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${school.enrolment.current}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${school.enrolment.capacity}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div></div></div>`;
+            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${school.enrolment.current}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${school.enrolment.capacity}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
 
-            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${school.enrolment.current}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${school.enrolment.capacity}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></li></ul></div></div>`;
+            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${school.enrolment.current}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${school.enrolment.capacity}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul></div></div>`;
 
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historical Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
@@ -393,14 +396,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const cardHTML = filteredSchools.map(school => {
                 const utilization = school.enrolment.current / school.enrolment.capacity;
-                const utilizationPercent = Math.round(utilization * 100);
+                const utilizationPercent = (utilization * 100).toFixed(1);
                 let warningIcon = '';
                 
                 // Show warning icons for enrolment_capacity cards
                 if (showWarningIcons) {
-                    if (utilizationPercent >= 100) {
+                    if (utilization >= 1) {
                         warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
-                    } else if (utilizationPercent >= 95 && utilizationPercent < 100) {
+                    } else if (utilization >= 0.95 && utilization < 1) {
                         warningIcon = '<i class="fas fa-exclamation-circle warning-icon warning-icon-yellow"></i>';
                     }
                 }
