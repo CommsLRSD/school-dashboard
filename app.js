@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const categories = {
         "details": "Contact & Building Info",
         "enrolment_capacity": "Enrolment & Classroom Capacity",
-        "history": "Historical Enrolment",
+        "history": "Historic Enrolment",
         "projection": "Projected Enrolment",
         "additions": "Building Additions",
         "building_systems": "Building Systems",
@@ -122,6 +122,17 @@ document.addEventListener('DOMContentLoaded', function() {
             // Convert to proper case while preserving "FOS" 
             const displayName = fos.split(' ').map((word, index, arr) => {
                 if (word === 'FOS') return 'FOS';
+                // Special handling for abbreviations like "J.H." and hyphenated names
+                if (word.includes('.')) {
+                    // Keep uppercase for abbreviations (e.g., "J.H.")
+                    return word.toUpperCase();
+                }
+                if (word.includes('-')) {
+                    // Handle hyphenated names (e.g., "JEANNE-SAUVÉ" -> "Jeanne-Sauvé")
+                    return word.split('-').map(part => 
+                        part.charAt(0).toUpperCase() + part.slice(1).toLowerCase()
+                    ).join('-');
+                }
                 // Title case for other words
                 return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
             }).join(' ');
@@ -187,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${school.enrolment.current}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${school.enrolment.capacity}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul></div></div>`;
 
-            case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historical Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
+            case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historic Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
             case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-bar"></i><h2 class="card-title">Projected Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
@@ -251,9 +262,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (chartInstances[chartId]) chartInstances[chartId].destroy();
 
+        // Calculate unified y-axis max for both history and projection charts
+        const historyMax = Math.max(...school.enrolment.history.values);
+        const projectionValues = Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0]));
+        const projectionMax = Math.max(...projectionValues);
+        const combinedMax = Math.max(historyMax, projectionMax);
+        // Round up to nearest 50
+        const yAxisMax = Math.ceil(combinedMax / 50) * 50;
+
         if (type === 'history') {
-            const maxValue = Math.max(...school.enrolment.history.values);
-            const yAxisMax = Math.ceil(maxValue * 1.15);
             chartInstances[chartId] = new Chart(ctx, {
                 type: 'line', 
                 data: { 
@@ -287,9 +304,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         } else if (type === 'projection') {
-            const projectionValues = Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0]));
-            const maxValue = Math.max(...projectionValues);
-            const yAxisMax = Math.ceil(maxValue * 1.15);
             chartInstances[chartId] = new Chart(ctx, {
                 type: 'line', 
                 data: { 
