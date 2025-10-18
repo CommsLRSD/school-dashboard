@@ -66,9 +66,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Helper function to fix label text (e.g., add line breaks)
     const formatLabel = (label) => {
-        // Replace "Automatic entrance door operators" with proper line break
+        // Replace "Automatic entrance door operators" with proper label
         if (label === 'Automatic entrance door operators') {
-            return 'Accessible entrance door<br>operators';
+            return 'Accessible entrance door operators';
         }
         return label;
     };
