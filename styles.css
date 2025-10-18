@@ -1150,8 +1150,8 @@ body {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    bottom: 1.5rem !important;
-    right: 1.5rem !important;
+    bottom: .75rem !important;
+    right: .75rem !important;
 }
 
 .jigts-widget-trigger:hover {
