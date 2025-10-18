@@ -1199,8 +1199,8 @@ body {
     .jigts-widget-trigger {
         width: 45px !important;
         height: 45px !important;
-        bottom: 1.5rem !important;
-        right: 1.5rem !important;
+        bottom: 0.5rem !important;
+        right: 0.5rem !important;
     }
     
     .jigts-widget-trigger svg,
@@ -1211,7 +1211,7 @@ body {
     
     /* Keep menu positioning consistent on mobile */
     .jigts-widget-menu {
-        bottom: 75px !important;
-        right: 15px !important;
+        bottom: 1rem !important;
+        right: 1rem !important;
     }
 }
