@@ -90,7 +90,7 @@ body {
 }
 
 .header-logo-main {
-    height: 75px;
+    height: 40px;
     transition: transform var(--transition-base);
 }
 
@@ -187,7 +187,7 @@ body {
 }
 
 .sidebar-logo {
-    height: 75px;
+    height: 40px;
 }
 
 .sidebar-close-btn {
