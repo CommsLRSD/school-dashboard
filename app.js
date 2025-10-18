@@ -1,37 +1,4 @@
-// --- Landing Page Navigation ---
-// This code handles navigation between the landing page and dashboard
-const landingPage = document.getElementById('landing-page');
-const dashboardContent = document.getElementById('dashboard-content');
-const exploreBtn = document.getElementById('explore-btn');
-
-function showDashboard() {
-    if (landingPage && dashboardContent) {
-        landingPage.style.display = 'none';
-        dashboardContent.style.display = 'block';
-    }
-}
-
-function showLandingPage() {
-    if (landingPage && dashboardContent) {
-        landingPage.style.display = 'flex';
-        dashboardContent.style.display = 'none';
-    }
-}
-
-// Add event listener for explore button
-if (exploreBtn) {
-    exploreBtn.addEventListener('click', showDashboard);
-}
-
-// --- Main Application Code ---
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // Add event listener for dashboard logo to return to landing page
-    const dashboardLogo = document.getElementById('dashboard-logo');
-    if (dashboardLogo) {
-        dashboardLogo.addEventListener('click', showLandingPage);
-        dashboardLogo.style.cursor = 'pointer';
-    }
     
     // --- Global Variables ---
     const cardGrid = document.getElementById('card-grid');
