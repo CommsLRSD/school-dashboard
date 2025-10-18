@@ -129,32 +129,85 @@
     <script src="app.js"></script>
     
     <!-- JigsawStack Translation Widget -->
-    <script defer src="https://unpkg.com/translation-widget@latest/dist/index.min.js"></script>
-    <script defer type="module">
-        TranslationWidget("pk_5e0c38e24f577b80325e53ba31d998c62941ae8f60934a9105f8548796feb7ec9f07defc08d67273679911c6deb722c38ebdf6056e484b90b51b3fa533663b86024uWF5OOXIfV3FQWmd9Y", {
-            pageLanguage: "en",
-            position: "bottom-right",
-            autoDetectLanguage: false,
-            showUI: true
-        });
-        
-        // Remove hover tooltips from the translate widget language code
-        const observer = new MutationObserver(() => {
-            const trigger = document.querySelector('.jigts-widget-trigger');
-            if (trigger) {
-                // Remove title attribute to prevent tooltip
-                trigger.removeAttribute('title');
-                // Monitor for changes and keep removing the title
-                setInterval(() => {
-                    const triggerElement = document.querySelector('.jigts-widget-trigger');
-                    if (triggerElement && triggerElement.hasAttribute('title')) {
-                        triggerElement.removeAttribute('title');
+    <script>
+        // Load translation widget and initialize when ready
+        (function() {
+            const initWidget = function() {
+                if (typeof TranslationWidget !== 'undefined') {
+                    try {
+                        TranslationWidget("pk_5e0c38e24f577b80325e53ba31d998c62941ae8f60934a9105f8548796feb7ec9f07defc08d67273679911c6deb722c38ebdf6056e484b90b51b3fa533663b86024uWF5OOXIfV3FQWmd9Y", {
+                            pageLanguage: "en",
+                            position: "bottom-right",
+                            autoDetectLanguage: false,
+                            showUI: true
+                        });
+                        
+                        // Remove hover tooltips from the translate widget language code
+                        const observer = new MutationObserver(() => {
+                            const trigger = document.querySelector('.jigts-widget-trigger');
+                            if (trigger) {
+                                // Remove title attribute to prevent tooltip
+                                trigger.removeAttribute('title');
+                                // Monitor for changes and keep removing the title
+                                setInterval(() => {
+                                    const triggerElement = document.querySelector('.jigts-widget-trigger');
+                                    if (triggerElement && triggerElement.hasAttribute('title')) {
+                                        triggerElement.removeAttribute('title');
+                                    }
+                                }, 100);
+                                observer.disconnect();
+                            }
+                        });
+                        observer.observe(document.body, { childList: true, subtree: true });
+                    } catch (e) {
+                        console.error('Translation widget initialization error:', e);
                     }
-                }, 100);
-                observer.disconnect();
-            }
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
+                } else {
+                    console.warn('TranslationWidget not available');
+                }
+            };
+            
+            // Try loading from CDN first
+            const cdnScript = document.createElement('script');
+            cdnScript.src = 'https://unpkg.com/translation-widget@latest/dist/index.min.js';
+            cdnScript.defer = true;
+            
+            cdnScript.onload = function() {
+                if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                    setTimeout(initWidget, 100);
+                } else {
+                    window.addEventListener('DOMContentLoaded', function() {
+                        setTimeout(initWidget, 100);
+                    });
+                }
+            };
+            
+            // Fallback to local version if CDN fails
+            cdnScript.onerror = function() {
+                console.log('CDN failed, loading local translation widget');
+                const localScript = document.createElement('script');
+                localScript.src = 'public/translation-widget.js';
+                localScript.defer = true;
+                
+                localScript.onload = function() {
+                    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                        setTimeout(initWidget, 100);
+                    } else {
+                        window.addEventListener('DOMContentLoaded', function() {
+                            setTimeout(initWidget, 100);
+                        });
+                    }
+                };
+                
+                localScript.onerror = function() {
+                    console.error('Failed to load translation widget from both CDN and local source');
+                };
+                
+                document.head.appendChild(localScript);
+            };
+            
+            document.head.appendChild(cdnScript);
+        })();
     </script>
 </body>
 </html>
