@@ -861,10 +861,11 @@ body {
 .detail-item { 
     display: flex; 
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 0.75rem 0; 
     border-bottom: 1px solid var(--border-color); 
     font-size: 0.875rem;
+    gap: 1rem;
 }
 
 .detail-item:last-child { 
@@ -874,12 +875,18 @@ body {
 .detail-label { 
     font-weight: 500;
     color: var(--text-color);
+    flex: 0 0 auto;
+    max-width: 60%;
+    word-wrap: break-word;
 }
 
 .detail-value { 
     color: var(--text-light);
     font-weight: 500;
     text-align: right;
+    margin-left: auto;
+    padding-left: 1rem;
+    flex-shrink: 0;
 }
 
 .yes-badge, .no-badge { 
