@@ -123,20 +123,43 @@
                 </button>
             </div>
         </div>
+        
+        <!-- Custom Translation Widget -->
+        <div class="translation-widget" id="translation-widget">
+            <button class="translation-toggle" id="translation-toggle" aria-label="Translate page">
+                <i class="fas fa-language"></i>
+            </button>
+            <div class="translation-panel" id="translation-panel">
+                <div class="translation-header">
+                    <h3>Translate Page</h3>
+                    <button class="translation-close" id="translation-close" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="translation-body">
+                    <label for="target-language">Select Language:</label>
+                    <select id="target-language" class="language-select">
+                        <option value="en">English (Original)</option>
+                        <option value="es">Spanish - Español</option>
+                        <option value="fr">French - Français</option>
+                        <option value="de">German - Deutsch</option>
+                        <option value="zh">Chinese - 中文</option>
+                        <option value="ar">Arabic - العربية</option>
+                        <option value="pt">Portuguese - Português</option>
+                        <option value="ru">Russian - Русский</option>
+                        <option value="ja">Japanese - 日本語</option>
+                        <option value="ko">Korean - 한국어</option>
+                        <option value="it">Italian - Italiano</option>
+                        <option value="vi">Vietnamese - Tiếng Việt</option>
+                        <option value="hi">Hindi - हिन्दी</option>
+                    </select>
+                    <div class="translation-status" id="translation-status"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Main JavaScript File -->
     <script src="app.js"></script>
-    
-    <!-- JigsawStack Translation Widget -->
-    <script defer src="https://unpkg.com/translation-widget@latest/dist/index.min.js"></script>
-    <script defer type="module">
-        TranslationWidget("pk_5e0c38e24f577b80325e53ba31d998c62941ae8f60934a9105f8548796feb7ec9f07defc08d67273679911c6deb722c38ebdf6056e484b90b51b3fa533663b86024uWF5OOXIfV3FQWmd9Y", {
-            pageLanguage: "en",
-            position: "bottom-left",
-            autoDetectLanguage: false,
-            showUI: true
-        });
-    </script>
 </body>
 </html>

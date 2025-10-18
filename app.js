@@ -689,3 +689,285 @@ document.addEventListener('DOMContentLoaded', function() {
 
     initializeApp();
 });
+
+// --- Translation Widget Implementation ---
+document.addEventListener('DOMContentLoaded', function() {
+    const API_KEY = 'pk_5e0c38e24f577b80325e53ba31d998c62941ae8f60934a9105f8548796feb7ec9f07defc08d67273679911c6deb722c38ebdf6056e484b90b51b3fa533663b86024uWF5OOXIfV3FQWmd9Y';
+    const API_ENDPOINT = 'https://api.jigsawstack.com/v1/ai/translate';
+    
+    const translationToggle = document.getElementById('translation-toggle');
+    const translationPanel = document.getElementById('translation-panel');
+    const translationClose = document.getElementById('translation-close');
+    const targetLanguageSelect = document.getElementById('target-language');
+    const translationStatus = document.getElementById('translation-status');
+    
+    let currentLanguage = 'en';
+    let originalContent = null;
+    
+    // Toggle translation panel
+    translationToggle.addEventListener('click', () => {
+        const isVisible = translationPanel.classList.contains('show');
+        if (isVisible) {
+            translationPanel.classList.remove('show');
+        } else {
+            translationPanel.classList.add('show');
+        }
+    });
+    
+    // Close translation panel
+    translationClose.addEventListener('click', () => {
+        translationPanel.classList.remove('show');
+    });
+    
+    // Close panel when clicking outside
+    document.addEventListener('click', (e) => {
+        const widget = document.getElementById('translation-widget');
+        if (widget && !widget.contains(e.target)) {
+            translationPanel.classList.remove('show');
+        }
+    });
+    
+    // Handle language selection
+    targetLanguageSelect.addEventListener('change', async (e) => {
+        const targetLang = e.target.value;
+        
+        if (targetLang === 'en') {
+            // Restore original content
+            if (originalContent) {
+                restoreOriginalContent();
+                currentLanguage = 'en';
+                translationStatus.textContent = 'Restored to English';
+                translationStatus.className = 'translation-status';
+            }
+            return;
+        }
+        
+        // Save original content if not already saved
+        if (!originalContent) {
+            saveOriginalContent();
+        }
+        
+        await translatePage(targetLang);
+    });
+    
+    function saveOriginalContent() {
+        originalContent = {
+            title: document.title,
+            subtitle: document.getElementById('content-subtitle')?.textContent,
+            cards: [],
+            footer: document.getElementById('footer-timestamp')?.textContent,
+        };
+        
+        // Save all card titles and content
+        document.querySelectorAll('.data-card').forEach((card, index) => {
+            const cardData = {
+                index: index,
+                header: card.querySelector('.card-title')?.textContent,
+                labels: [],
+                values: []
+            };
+            
+            card.querySelectorAll('.detail-label').forEach(label => {
+                cardData.labels.push(label.textContent);
+            });
+            
+            card.querySelectorAll('.stat-label').forEach(label => {
+                cardData.labels.push(label.textContent);
+            });
+            
+            card.querySelectorAll('.stat-row-label').forEach(label => {
+                cardData.labels.push(label.textContent);
+            });
+            
+            card.querySelectorAll('.school-name-title').forEach(title => {
+                cardData.values.push(title.textContent);
+            });
+            
+            originalContent.cards.push(cardData);
+        });
+    }
+    
+    function restoreOriginalContent() {
+        if (!originalContent) return;
+        
+        document.title = originalContent.title;
+        
+        const subtitle = document.getElementById('content-subtitle');
+        if (subtitle && originalContent.subtitle) {
+            subtitle.textContent = originalContent.subtitle;
+        }
+        
+        const footer = document.getElementById('footer-timestamp');
+        if (footer && originalContent.footer) {
+            footer.textContent = originalContent.footer;
+        }
+        
+        // Restore card content
+        document.querySelectorAll('.data-card').forEach((card, index) => {
+            const cardData = originalContent.cards[index];
+            if (!cardData) return;
+            
+            const cardTitle = card.querySelector('.card-title');
+            if (cardTitle && cardData.header) {
+                cardTitle.textContent = cardData.header;
+            }
+            
+            let labelIndex = 0;
+            card.querySelectorAll('.detail-label').forEach(label => {
+                if (cardData.labels[labelIndex]) {
+                    label.textContent = cardData.labels[labelIndex];
+                    labelIndex++;
+                }
+            });
+            
+            card.querySelectorAll('.stat-label').forEach(label => {
+                if (cardData.labels[labelIndex]) {
+                    label.textContent = cardData.labels[labelIndex];
+                    labelIndex++;
+                }
+            });
+            
+            card.querySelectorAll('.stat-row-label').forEach(label => {
+                if (cardData.labels[labelIndex]) {
+                    label.textContent = cardData.labels[labelIndex];
+                    labelIndex++;
+                }
+            });
+            
+            let valueIndex = 0;
+            card.querySelectorAll('.school-name-title').forEach(title => {
+                if (cardData.values[valueIndex]) {
+                    title.textContent = cardData.values[valueIndex];
+                    valueIndex++;
+                }
+            });
+        });
+    }
+    
+    async function translatePage(targetLang) {
+        translationStatus.textContent = 'Translating...';
+        translationStatus.className = 'translation-status translating';
+        
+        try {
+            // Collect all text to translate
+            const textsToTranslate = [];
+            const elements = [];
+            
+            // Add page title
+            if (document.title) {
+                textsToTranslate.push(document.title);
+                elements.push({ type: 'title' });
+            }
+            
+            // Add subtitle
+            const subtitle = document.getElementById('content-subtitle');
+            if (subtitle?.textContent) {
+                textsToTranslate.push(subtitle.textContent);
+                elements.push({ type: 'subtitle', element: subtitle });
+            }
+            
+            // Add footer
+            const footer = document.getElementById('footer-timestamp');
+            if (footer?.textContent) {
+                textsToTranslate.push(footer.textContent);
+                elements.push({ type: 'footer', element: footer });
+            }
+            
+            // Add card titles
+            document.querySelectorAll('.card-title').forEach(title => {
+                if (title.textContent && !title.textContent.includes('%')) {
+                    textsToTranslate.push(title.textContent);
+                    elements.push({ type: 'cardTitle', element: title });
+                }
+            });
+            
+            // Add detail labels
+            document.querySelectorAll('.detail-label').forEach(label => {
+                if (label.textContent) {
+                    textsToTranslate.push(label.textContent);
+                    elements.push({ type: 'detailLabel', element: label });
+                }
+            });
+            
+            // Add stat labels
+            document.querySelectorAll('.stat-label').forEach(label => {
+                if (label.textContent) {
+                    textsToTranslate.push(label.textContent);
+                    elements.push({ type: 'statLabel', element: label });
+                }
+            });
+            
+            // Add stat row labels
+            document.querySelectorAll('.stat-row-label').forEach(label => {
+                if (label.textContent) {
+                    textsToTranslate.push(label.textContent);
+                    elements.push({ type: 'statRowLabel', element: label });
+                }
+            });
+            
+            // Add school name titles
+            document.querySelectorAll('.school-name-title').forEach(title => {
+                if (title.textContent) {
+                    textsToTranslate.push(title.textContent);
+                    elements.push({ type: 'schoolName', element: title });
+                }
+            });
+            
+            if (textsToTranslate.length === 0) {
+                translationStatus.textContent = 'No content to translate';
+                translationStatus.className = 'translation-status error';
+                return;
+            }
+            
+            // Call JigsawStack API
+            const response = await fetch(API_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': API_KEY
+                },
+                body: JSON.stringify({
+                    text: textsToTranslate,
+                    target_language: targetLang,
+                    current_language: 'en'
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Translation failed: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            if (!data.success || !data.translated_text) {
+                throw new Error('Translation API returned invalid response');
+            }
+            
+            // Apply translations
+            data.translated_text.forEach((translatedText, index) => {
+                const elementData = elements[index];
+                if (!elementData) return;
+                
+                if (elementData.type === 'title') {
+                    document.title = translatedText;
+                } else if (elementData.element) {
+                    elementData.element.textContent = translatedText;
+                }
+            });
+            
+            currentLanguage = targetLang;
+            translationStatus.textContent = 'Translation complete!';
+            translationStatus.className = 'translation-status';
+            
+            // Clear status after 3 seconds
+            setTimeout(() => {
+                translationStatus.textContent = '';
+            }, 3000);
+            
+        } catch (error) {
+            console.error('Translation error:', error);
+            translationStatus.textContent = 'Translation failed. Please try again.';
+            translationStatus.className = 'translation-status error';
+        }
+    }
+});

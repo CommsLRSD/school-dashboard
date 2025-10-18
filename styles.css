@@ -1137,12 +1137,150 @@ body {
     display: block;
 }
 
-/* --- Translation Widget Custom Styling --- */
-.jigts-widget-trigger {
-    opacity: 0.7 !important;
-    transition: opacity var(--transition-base) !important;
+/* --- Custom Translation Widget Styling --- */
+.translation-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
 }
 
-.jigts-widget-trigger:hover {
-    opacity: 1 !important;
+.translation-toggle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary-red);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-base);
+}
+
+.translation-toggle:hover {
+    background: var(--over-capacity-red);
+    transform: scale(1.1);
+    box-shadow: var(--shadow-xl);
+}
+
+.translation-panel {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow-xl);
+    min-width: 280px;
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all var(--transition-base);
+}
+
+.translation-panel.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.translation-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.translation-header h3 {
+    font-family: var(--font-title);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.translation-close {
+    background: transparent;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color var(--transition-base);
+}
+
+.translation-close:hover {
+    color: var(--primary-red);
+}
+
+.translation-body {
+    padding: 1rem;
+}
+
+.translation-body label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.language-select {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.language-select:hover {
+    border-color: var(--primary-green);
+}
+
+.language-select:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(43, 166, 128, 0.2);
+}
+
+.translation-status {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.translation-status.translating {
+    color: var(--primary-green);
+}
+
+.translation-status.error {
+    color: var(--accent-red);
+}
+
+@media (max-width: 576px) {
+    .translation-widget {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .translation-toggle {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+    
+    .translation-panel {
+        min-width: 260px;
+    }
 }
