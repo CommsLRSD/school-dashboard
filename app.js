@@ -239,7 +239,25 @@ document.addEventListener('DOMContentLoaded', function() {
         switch(cardType) {
             case 'school_header': return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${school.headerImage}" alt="${school.schoolName}"><h2 class="school-name-title">${school.schoolName}</h2></div></div>`;
             
-            case 'details': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-info-circle"></i><h2 class="card-title">Details</h2></div><div class="card-body"><ul class="detail-list">${Object.entries({"Address": school.address, "Phone": school.phone, "Program": school.program, ...school.details}).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${formatNumber(val)}</span></li>`).join('')}</ul></div></div>`;
+            case 'details': {
+                // Calculate age dynamically from Built year
+                const currentYear = new Date().getFullYear();
+                const builtYear = school.details.Built;
+                const calculatedAge = builtYear ? `${currentYear - builtYear} years` : school.details.Age;
+                
+                // Create details object with calculated age and renamed Modular field
+                const detailsData = {
+                    "Address": school.address,
+                    "Phone": school.phone,
+                    "Program": school.program,
+                    "Built": school.details.Built,
+                    "Age": calculatedAge,
+                    "Size": school.details.Size,
+                    "Modular Classrooms": school.details.Modular
+                };
+                
+                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-info-circle"></i><h2 class="card-title">Details</h2></div><div class="card-body"><ul class="detail-list">${Object.entries(detailsData).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${formatNumber(val)}</span></li>`).join('')}</ul></div></div>`;
+            }
             
             case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-plus-square"></i><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
 
@@ -300,15 +318,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     }).join('');
                 } else if (cardType === 'playground') {
                     data = school[cardType];
-                    listItems = Array.isArray(data) ? data.map(item => {
+                    listItems = Array.isArray(data) ? data.flatMap(item => {
                         // Check if this is a City Property item
                         if (item.startsWith('City Property:')) {
-                            const cityPropertyItem = item.replace('City Property:', '').trim();
-                            return `<li class="detail-item"><span class="detail-label">City Property</span><span class="detail-value">${cityPropertyItem}</span></li>`;
+                            const cityPropertyItems = item.replace('City Property:', '').trim();
+                            // Split by comma and create separate rows for each item
+                            const items = cityPropertyItems.split(',').map(i => i.trim());
+                            return [
+                                `<li class="detail-item"><span class="detail-label">City Property</span></li>`,
+                                ...items.map(cityItem => `<li class="detail-item" style="padding-left: 1rem;">${cityItem}</li>`)
+                            ];
                         }
                         // Regular playground items with icons
                         const icon = playgroundIcons[item] || 'circle';
-                        return `<li class="detail-item"><i class="fas fa-${icon}" style="color: var(--primary-red); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`;
+                        return [`<li class="detail-item"><i class="fas fa-${icon}" style="color: var(--primary-red); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`];
                     }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
                 } else {
                     data = school[cardType === 'building_systems' ? 'building' : cardType];
@@ -349,10 +372,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const yAxisMax = Math.ceil(combinedMax / 50) * 50;
 
         if (type === 'history') {
+            // Convert underscores to hyphens in labels (e.g., 2024_25 -> 2024-25)
+            const formattedLabels = school.enrolment.history.labels.map(label => label.replace(/_/g, '-'));
+            
             chartInstances[chartId] = new Chart(ctx, {
                 type: 'line', 
                 data: { 
-                    labels: school.enrolment.history.labels, 
+                    labels: formattedLabels, 
                     datasets: [{ 
                         data: school.enrolment.history.values, 
                         borderColor: '#BE5247', 
