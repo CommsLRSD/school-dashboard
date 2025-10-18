@@ -848,6 +848,37 @@ body {
     text-align: right;
 }
 
+/* Make enrolment/capacity values more prominent */
+.detail-value.enrolment-value,
+.detail-value.capacity-value {
+    font-family: var(--font-title);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-red);
+}
+
+.detail-value.utilization-value {
+    font-family: var(--font-title);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-red);
+}
+
+.detail-item.over-capacity .detail-value.utilization-value {
+    color: var(--over-capacity-red);
+}
+
+/* Progress bar item styling */
+.detail-item.progress-item {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: none;
+}
+
+.detail-item.progress-item .progress-bar-container {
+    margin: 0;
+}
+
 .yes-badge, .no-badge { 
     padding: 0.2rem 0.6rem; 
     border-radius: 100px; 

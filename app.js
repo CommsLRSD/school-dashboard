@@ -20,9 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const categories = {
         "details": "Contact & Building Info",
-        "capacity": "Capacity",
-        "enrolment": "Enrolment",
-        "utilization": "Utilization",
+        "enrolment_capacity": "Enrolment & Classroom Capacity",
         "history": "Historical Enrolment",
         "projection": "Projected Enrolment",
         "additions": "Building Additions",
@@ -183,6 +181,8 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div>`;
 
             case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${school.enrolment.current}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${school.enrolment.capacity}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></div></div></div></div>`;
+
+            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${school.enrolment.current}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${school.enrolment.capacity}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${Math.round(school.enrolment.current / school.enrolment.capacity * 100)}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, school.enrolment.current / school.enrolment.capacity * 100)}%"></div></div></li></ul></div></div>`;
 
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historical Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
@@ -388,16 +388,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // Single category view
             const cardType = selectedCategoryId;
             
-            // For capacity, enrolment, or utilization, use combined stats card
-            const useStatsCard = ['capacity', 'enrolment', 'utilization'].includes(cardType);
+            // Show warning icons for enrolment_capacity cards
+            const showWarningIcons = cardType === 'enrolment_capacity';
             
             const cardHTML = filteredSchools.map(school => {
                 const utilization = school.enrolment.current / school.enrolment.capacity;
                 const utilizationPercent = Math.round(utilization * 100);
                 let warningIcon = '';
                 
-                // Show warning icons for stats-related cards
-                if (useStatsCard) {
+                // Show warning icons for enrolment_capacity cards
+                if (showWarningIcons) {
                     if (utilizationPercent >= 100) {
                         warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
                     } else if (utilizationPercent >= 95 && utilizationPercent < 100) {
@@ -408,8 +408,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Create a simple header with school name only (no images)
                 const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}${warningIcon}</h2></div>`;
                 
-                // Use stats card for capacity/enrolment/utilization
-                const fullCard = useStatsCard ? createCard(school, 'stats') : createCard(school, cardType);
+                // Create card with the selected category type
+                const fullCard = createCard(school, cardType);
                 return fullCard.replace(/<div class="card-header">.*?<\/div>/, header);
             }).join('');
             cardGrid.innerHTML = cardHTML;
