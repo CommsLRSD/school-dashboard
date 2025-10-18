@@ -24,38 +24,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
 </head>
 <body>
-    <!-- Landing Page -->
-    <header id="landing-page">
-        <div class="landing-container">
-            <img src="public/dashboard-logo.svg" alt="Annual School Building Review Dashboard" class="landing-logo">
-            <h1 class="landing-title">Welcome to the School Profile Dashboard</h1>
-            <p class="landing-description">Explore comprehensive school data and insights</p>
-            <div class="landing-features">
-                <div class="landing-feature">
-                    <i class="fas fa-school"></i>
-                    <h3>Browse by School</h3>
-                    <p>View detailed profiles for individual schools</p>
-                </div>
-                <div class="landing-feature">
-                    <i class="fas fa-th-large"></i>
-                    <h3>Compare by Category</h3>
-                    <p>Analyze specific categories across all schools</p>
-                </div>
-                <div class="landing-feature">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Interactive Data</h3>
-                    <p>Explore charts, statistics, and historical trends</p>
-                </div>
-            </div>
-            <button id="explore-btn" class="explore-btn">
-                <span>Explore Dashboard</span>
-                <i class="fas fa-arrow-right"></i>
-            </button>
-        </div>
-    </header>
-
-    <!-- Dashboard Content (initially hidden) -->
-    <div id="dashboard-content" style="display: none;">
     <div class="dashboard-layout">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
@@ -125,7 +93,7 @@
             <header class="main-header">
                 <button id="sidebar-toggle-btn" class="sidebar-toggle-btn"><img src="public/hamburger.svg" alt="Menu" class="hamburger-icon"></button>
                 <div class="header-titles">
-                    <img src="public/dashboard-logo.svg" alt="Annual School Building Review Dashboard" class="header-logo-main" id="dashboard-logo">
+                    <img src="public/dashboard-logo.svg" alt="Annual School Building Review Dashboard" class="header-logo-main">
                 </div>
                 <div class="header-toolbar">
                     <img src="public/lrsd-logo.svg" alt="LRSD Logo" class="header-logo header-logo-desktop">
@@ -156,7 +124,6 @@
             </div>
         </div>
     </div>
-    <!-- End Dashboard Content -->
 
     <!-- Main JavaScript File -->
     <script src="app.js"></script>
