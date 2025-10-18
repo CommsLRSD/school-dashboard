@@ -330,22 +330,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     listItems = ['requested', 'inProgress', 'completed'].flatMap(status => {
                         if (!data || !data[status] || data[status].length === 0) return [];
                         
-                        // Determine icon color based on status
-                        let iconColor, iconClass;
+                        // Determine SVG icon based on status
+                        let iconSvg, iconClass;
                         if (status === 'requested') {
-                            iconColor = 'var(--over-capacity-red)'; // Red
-                            iconClass = 'fa-circle';
+                            iconSvg = 'public/requested.svg';
+                            iconClass = 'status-icon-requested';
                         } else if (status === 'inProgress') {
-                            iconColor = '#f59e0b'; // Yellow
-                            iconClass = 'fa-circle';
+                            iconSvg = 'public/inprogress.svg';
+                            iconClass = 'status-icon-inprogress';
                         } else { // completed
-                            iconColor = 'var(--primary-green)'; // Green
-                            iconClass = 'fa-check-circle';
+                            iconSvg = 'public/completed.svg';
+                            iconClass = 'status-icon-completed';
                         }
                         
                         const statusLabel = status === 'inProgress' ? 'In Progress' : status.charAt(0).toUpperCase() + status.slice(1);
                         return [
-                            `<li class="detail-item"><span class="detail-label"><i class="fas ${iconClass}" style="color: ${iconColor}; margin-right: 0.5rem; font-size: 0.875rem;"></i>${statusLabel}</span></li>`,
+                            `<li class="detail-item"><span class="detail-label"><img src="${iconSvg}" alt="${statusLabel}" class="status-icon ${iconClass}" />${statusLabel}</span></li>`,
                             ...data[status].map(item => `<li class="detail-item" style="padding-left: 1rem;">${item}</li>`)
                         ];
                     }).join('');
