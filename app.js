@@ -536,7 +536,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateView(); 
             } 
         });
-        schoolListContainer.addEventListener('click', (e) => { e.preventDefault(); const target = e.target.closest('.nav-list-item'); if (target) { selectedSchoolId = target.dataset.id; updateView(); } });
+        schoolListContainer.addEventListener('click', (e) => { 
+            e.preventDefault(); 
+            const target = e.target.closest('.nav-list-item'); 
+            if (target) { 
+                selectedSchoolId = target.dataset.id; 
+                updateView(); 
+                // Close sidebar on mobile after selection
+                if (window.innerWidth <= 992) {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.remove('visible');
+                }
+            } 
+        });
         categoryListContainer.addEventListener('click', (e) => { 
             e.preventDefault(); 
             const target = e.target.closest('.nav-list-item'); 
@@ -549,6 +561,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const combinedFilter = document.getElementById('combined-filter');
                 if (combinedFilter) combinedFilter.value = 'all';
                 updateView();
+                // Close sidebar on mobile after selection
+                if (window.innerWidth <= 992) {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.remove('visible');
+                }
             } 
         });
         

@@ -673,11 +673,13 @@ body {
     transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.yellow-zone .progress-bar-fill {
+.yellow-zone .progress-bar-fill,
+.progress-bar-fill.yellow-zone {
     background: #f59e0b;
 }
 
-.over-capacity .progress-bar-fill { 
+.over-capacity .progress-bar-fill,
+.progress-bar-fill.over-capacity { 
     background: var(--over-capacity-red);
 }
 
