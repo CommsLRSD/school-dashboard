@@ -22,6 +22,9 @@
     <!-- Chart.js Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+    
+    <!-- i18next Library -->
+    <script src="https://cdn.jsdelivr.net/npm/i18next@23.7.6/i18next.min.js"></script>
 </head>
 <body>
     <div class="dashboard-layout">
@@ -31,23 +34,23 @@
                 <a href="https://www.lrsd.net/" class="sidebar-logo-link" target="_blank" rel="noopener noreferrer">
                     <img src="public/lrsd-logo.svg" alt="LRSD Logo" class="sidebar-logo">
                 </a>
-                <button id="sidebar-close-btn" class="sidebar-close-btn" aria-label="Close sidebar">
+                <button id="sidebar-close-btn" class="sidebar-close-btn" data-i18n="[aria-label]tooltips.closeSidebar" aria-label="Close sidebar">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <nav class="sidebar-nav">
                 <div class="nav-view-selector">
-                    <a href="#" class="nav-view-link active" data-view="school">Schools</a>
-                    <a href="#" class="nav-view-link" data-view="category">Categories</a>
+                    <a href="#" class="nav-view-link active" data-view="school" data-i18n="nav.schools">Schools</a>
+                    <a href="#" class="nav-view-link" data-view="category" data-i18n="nav.categories">Categories</a>
                 </div>
 
                 <div id="school-list-container" class="nav-list-container active">
                     <!-- Search controls for schools -->
                     <div class="search-controls">
                         <div class="search-group">
-                            <label for="school-search" class="search-label">Search</label>
+                            <label for="school-search" class="search-label" data-i18n="nav.search">Search</label>
                             <div class="search-input-wrapper">
-                                <input type="text" id="school-search" class="search-input" placeholder="Search schools...">
+                                <input type="text" id="school-search" class="search-input" data-i18n="[placeholder]nav.searchPlaceholder" placeholder="Search schools...">
                                 <i class="fas fa-search search-icon"></i>
                             </div>
                         </div>
@@ -63,14 +66,14 @@
                     <!-- Combined Filter Dropdown -->
                     <div class="filter-controls">
                         <div class="filter-group">
-                            <label for="combined-filter" class="filter-label">Filter by</label>
+                            <label for="combined-filter" class="filter-label" data-i18n="nav.filterBy">Filter by</label>
                             <div class="custom-select-wrapper">
                                 <select id="combined-filter" class="filter-select">
-                                    <option value="all">All Schools</option>
-                                    <option disabled>— School Level —</option>
-                                    <option value="elementary">Elementary Schools</option>
-                                    <option value="highschool">High Schools</option>
-                                    <option disabled>— Family of Schools —</option>
+                                    <option value="all" data-i18n="nav.allSchools">All Schools</option>
+                                    <option disabled data-i18n="nav.schoolLevel">— School Level —</option>
+                                    <option value="elementary" data-i18n="nav.elementarySchools">Elementary Schools</option>
+                                    <option value="highschool" data-i18n="nav.highSchools">High Schools</option>
+                                    <option disabled data-i18n="nav.familyOfSchools">— Family of Schools —</option>
                                     <!-- FOS options will be populated by JS -->
                                 </select>
                             </div>
@@ -96,6 +99,11 @@
                     <img src="public/dashboard-logo.svg" alt="Annual School Building Review Dashboard" class="header-logo-main">
                 </div>
                 <div class="header-toolbar">
+                    <select id="language-switcher" class="language-switcher" aria-label="Select Language">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="es">Español</option>
+                    </select>
                     <img src="public/lrsd-logo.svg" alt="LRSD Logo" class="header-logo header-logo-desktop">
                 </div>
             </header>

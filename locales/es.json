@@ -1,0 +1,92 @@
+{
+  "app": {
+    "title": "Panel de control de revisión anual de edificios escolares"
+  },
+  "nav": {
+    "schools": "Escuelas",
+    "categories": "Categorías",
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar escuelas...",
+    "filterBy": "Filtrar por",
+    "allSchools": "Todas las escuelas",
+    "schoolLevel": "— Nivel escolar —",
+    "elementarySchools": "Escuelas primarias",
+    "highSchools": "Escuelas secundarias",
+    "familyOfSchools": "— Familia de escuelas —"
+  },
+  "categories": {
+    "details": "Contacto e información del edificio",
+    "enrolment_capacity": "Inscripción y capacidad del aula",
+    "history": "Inscripción histórica",
+    "projection": "Inscripción proyectada",
+    "additions": "Adiciones de edificios",
+    "building_systems": "Sistemas del edificio",
+    "accessibility": "Accesibilidad",
+    "playground": "Características del patio de recreo",
+    "transportation": "Transporte",
+    "childcare": "Cuidado infantil",
+    "projects_provincial": "Proyectos de capital financiados por la provincia",
+    "projects_local": "Proyectos de capital financiados localmente"
+  },
+  "cards": {
+    "details": "Detalles",
+    "additions": "Adiciones",
+    "capacity": "Capacidad",
+    "enrolment": "Inscripción",
+    "utilization": "Utilización",
+    "buildingSystems": "Sistemas del edificio",
+    "accessibility": "Accesibilidad",
+    "playground": "Patio de recreo",
+    "transportation": "Transporte",
+    "childcare": "Cuidado infantil",
+    "provincialProjects": "Proyectos de capital financiados por la provincia",
+    "localProjects": "Proyectos de capital financiados localmente",
+    "statistics": "Estadísticas",
+    "historicEnrolment": "Inscripción histórica",
+    "projectedEnrolment": "Inscripción proyectada"
+  },
+  "labels": {
+    "address": "Dirección",
+    "phone": "Teléfono",
+    "program": "Programa",
+    "built": "Construido",
+    "age": "Edad",
+    "size": "Tamaño",
+    "modular": "Modular",
+    "enrolmentLabel": "Inscripción",
+    "capacityLabel": "Capacidad",
+    "utilizationLabel": "Utilización",
+    "classroomCapacity": "Capacidad del aula",
+    "currentEnrolment": "Inscripción actual (30 de sept.)",
+    "cityProperty": "Propiedad de la ciudad",
+    "accessibleEntranceDoorOperators": "Operadores de puertas de entrada accesibles",
+    "noAdditions": "No hay adiciones registradas.",
+    "noData": "No hay datos disponibles.",
+    "chartsRequireChartJS": "Los gráficos requieren la biblioteca Chart.js"
+  },
+  "badges": {
+    "yes": "SÍ",
+    "no": "NO"
+  },
+  "projectStatus": {
+    "requested": "Solicitado",
+    "inProgress": "En progreso",
+    "completed": "Completado"
+  },
+  "popup": {
+    "goToCategoryView": "¿Ir a la vista de categoría?",
+    "goToSchoolView": "¿Ir a la vista de escuela?"
+  },
+  "tooltips": {
+    "viewAllSchoolsCategory": "Ver todas las escuelas para esta categoría",
+    "viewAllCategoriesSchool": "Ver todas las categorías para esta escuela",
+    "closeSidebar": "Cerrar barra lateral",
+    "menu": "Menú"
+  },
+  "footer": {
+    "dataUpdated": "Datos actualizados"
+  },
+  "language": {
+    "select": "Seleccionar idioma"
+  }
+}

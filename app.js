@@ -1,4 +1,54 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    
+    // --- i18n Initialization ---
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    
+    await i18next.init({
+        lng: savedLanguage,
+        fallbackLng: 'en',
+        resources: {}
+    });
+    
+    // Load translation files
+    const languages = ['en', 'fr', 'es'];
+    for (const lang of languages) {
+        try {
+            const response = await fetch(`locales/${lang}.json`);
+            const translations = await response.json();
+            i18next.addResourceBundle(lang, 'translation', translations);
+        } catch (error) {
+            console.error(`Failed to load ${lang} translations:`, error);
+        }
+    }
+    
+    // Set initial language
+    await i18next.changeLanguage(savedLanguage);
+    
+    // Helper function to translate elements with data-i18n attributes
+    const translatePage = () => {
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            const translation = i18next.t(key);
+            
+            // Handle special cases for attributes
+            if (key.startsWith('[')) {
+                const match = key.match(/\[(.*?)\](.*)/);
+                if (match) {
+                    const attr = match[1];
+                    const translationKey = match[2];
+                    element.setAttribute(attr, i18next.t(translationKey));
+                }
+            } else {
+                element.textContent = translation;
+            }
+        });
+        
+        // Update page title
+        document.title = i18next.t('app.title');
+    };
+    
+    // Initial translation
+    translatePage();
     
     // --- Global Variables ---
     const cardGrid = document.getElementById('card-grid');
@@ -68,24 +118,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const formatLabel = (label) => {
         // Replace "Automatic entrance door operators" with proper label
         if (label === 'Automatic entrance door operators') {
-            return 'Accessible entrance door operators';
+            return i18next.t('labels.accessibleEntranceDoorOperators');
         }
         return label;
     };
 
     const categories = {
-        "details": "Contact & Building Info",
-        "enrolment_capacity": "Enrolment & Classroom Capacity",
-        "history": "Historic Enrolment",
-        "projection": "Projected Enrolment",
-        "additions": "Building Additions",
-        "building_systems": "Building Systems",
-        "accessibility": "Accessibility",
-        "playground": "Playground Features",
-        "transportation": "Transportation",
-        "childcare": "Childcare",
-        "projects_provincial": "Provincially Funded Capital Projects",
-        "projects_local": "Locally Funded Capital Projects"
+        "details": () => i18next.t("categories.details"),
+        "enrolment_capacity": () => i18next.t("categories.enrolment_capacity"),
+        "history": () => i18next.t("categories.history"),
+        "projection": () => i18next.t("categories.projection"),
+        "additions": () => i18next.t("categories.additions"),
+        "building_systems": () => i18next.t("categories.building_systems"),
+        "accessibility": () => i18next.t("categories.accessibility"),
+        "playground": () => i18next.t("categories.playground"),
+        "transportation": () => i18next.t("categories.transportation"),
+        "childcare": () => i18next.t("categories.childcare"),
+        "projects_provincial": () => i18next.t("categories.projects_provincial"),
+        "projects_local": () => i18next.t("categories.projects_local")
     };
 
     // --- Main Initialization ---
@@ -202,9 +252,13 @@ document.addEventListener('DOMContentLoaded', function() {
             combinedFilter.innerHTML = currentOptions + fosOptions;
         }
 
+        // Remove old category links if they exist
+        const oldCategoryLinks = categoryListContainer.querySelectorAll('.nav-list-item');
+        oldCategoryLinks.forEach(link => link.remove());
+        
         // Add category links after the existing filter buttons
         const categoryLinks = Object.entries(categories).map(([key, name]) => 
-            `<a href="#" class="nav-list-item" data-type="category" data-id="${key}">${name}</a>`
+            `<a href="#" class="nav-list-item" data-type="category" data-id="${key}">${name()}</a>`
         ).join('');
         categoryListContainer.innerHTML += categoryLinks;
     }
@@ -239,27 +293,35 @@ document.addEventListener('DOMContentLoaded', function() {
         switch(cardType) {
             case 'school_header': return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${school.headerImage}" alt="${school.schoolName}"><h2 class="school-name-title">${school.schoolName}</h2></div></div>`;
             
-            case 'details': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-info-circle"></i><h2 class="card-title">Details</h2></div><div class="card-body"><ul class="detail-list">${Object.entries({"Address": school.address, "Phone": school.phone, "Program": school.program, ...school.details}).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${formatNumber(val)}</span></li>`).join('')}</ul></div></div>`;
+            case 'details': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-info-circle"></i><h2 class="card-title">${i18next.t('cards.details')}</h2></div><div class="card-body"><ul class="detail-list">${Object.entries({[i18next.t('labels.address')]: school.address, [i18next.t('labels.phone')]: school.phone, [i18next.t('labels.program')]: school.program, ...school.details}).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${formatNumber(val)}</span></li>`).join('')}</ul></div></div>`;
             
-            case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-plus-square"></i><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
+            case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-plus-square"></i><h2 class="card-title">${i18next.t('cards.additions')}</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || `<li class="detail-item">${i18next.t('labels.noAdditions')}</li>`}</ul></div></div>`;
 
-            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div></div></div>`;
+            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">${i18next.t('cards.capacity')}</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">${i18next.t('labels.classroomCapacity')}</div></div></div>`;
             
-            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment (Sept. 30)</div></div></div>`;
+            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">${i18next.t('cards.enrolment')}</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">${i18next.t('labels.currentEnrolment')}</div></div></div>`;
             
-            case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div>`;
+            case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">${i18next.t('cards.utilization')}</h2></div><div class="card-body"><div class="stat-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div>`;
 
-            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(school.enrolment.current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(school.enrolment.capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
+            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">${i18next.t('cards.statistics')}</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">${i18next.t('cards.enrolment')}</div><div class="stat-row-value">${formatNumber(school.enrolment.current)}</div></div><div class="stat-row"><div class="stat-row-label">${i18next.t('cards.capacity')}</div><div class="stat-row-value">${formatNumber(school.enrolment.capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">${i18next.t('cards.utilization')}</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
 
-            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul></div></div>`;
+            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">${i18next.t('categories.enrolment_capacity')}</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">${i18next.t('labels.enrolmentLabel')}</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">${i18next.t('labels.capacityLabel')}</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">${i18next.t('labels.utilizationLabel')}</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul></div></div>`;
 
-            case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historic Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
+            case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">${i18next.t('cards.historicEnrolment')}</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
-            case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-bar"></i><h2 class="card-title">Projected Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
+            case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-bar"></i><h2 class="card-title">${i18next.t('cards.projectedEnrolment')}</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
             default: { // For all other simple list cards
                 const icons = { building_systems: 'cogs', accessibility: 'universal-access', playground: 'basketball-ball', transportation: 'bus', childcare: 'child', projects_provincial: 'hard-hat', projects_local: 'hard-hat' };
-                const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincially Funded Capital Projects', projects_local: 'Locally Funded Capital Projects' };
+                const titles = { 
+                    building_systems: () => i18next.t('cards.buildingSystems'), 
+                    accessibility: () => i18next.t('cards.accessibility'), 
+                    playground: () => i18next.t('cards.playground'), 
+                    transportation: () => i18next.t('cards.transportation'), 
+                    childcare: () => i18next.t('cards.childcare'), 
+                    projects_provincial: () => i18next.t('cards.provincialProjects'), 
+                    projects_local: () => i18next.t('cards.localProjects') 
+                };
                 
                 const playgroundIcons = {
                     'Basketball Court': 'basketball-ball',
@@ -292,7 +354,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             iconClass = 'fa-check-circle';
                         }
                         
-                        const statusLabel = status === 'inProgress' ? 'In Progress' : status.charAt(0).toUpperCase() + status.slice(1);
+                        const statusLabel = i18next.t(`projectStatus.${status}`);
                         return [
                             `<li class="detail-item"><span class="detail-label"><i class="fas ${iconClass}" style="color: ${iconColor}; margin-right: 0.5rem; font-size: 0.875rem;"></i>${statusLabel}</span></li>`,
                             ...data[status].map(item => `<li class="detail-item" style="padding-left: 1rem;">${item}</li>`)
@@ -304,18 +366,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Check if this is a City Property item
                         if (item.startsWith('City Property:')) {
                             const cityPropertyItem = item.replace('City Property:', '').trim();
-                            return `<li class="detail-item"><span class="detail-label">City Property</span><span class="detail-value">${cityPropertyItem}</span></li>`;
+                            return `<li class="detail-item"><span class="detail-label">${i18next.t('labels.cityProperty')}</span><span class="detail-value">${cityPropertyItem}</span></li>`;
                         }
                         // Regular playground items with icons
                         const icon = playgroundIcons[item] || 'circle';
                         return `<li class="detail-item"><i class="fas fa-${icon}" style="color: var(--primary-red); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`;
-                    }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
+                    }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? `<span class="yes-badge">${i18next.t('badges.yes')}</span>` : val === "NO" ? `<span class="no-badge">${i18next.t('badges.no')}</span>` : formatNumber(val)}</span></li>`).join('');
                 } else {
                     data = school[cardType === 'building_systems' ? 'building' : cardType];
-                    listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
+                    listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? `<span class="yes-badge">${i18next.t('badges.yes')}</span>` : val === "NO" ? `<span class="no-badge">${i18next.t('badges.no')}</span>` : formatNumber(val)}</span></li>`).join('');
                 }
 
-                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-${icons[cardType]}"></i><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems || '<li class="detail-item">No data available.</li>'}</ul></div></div>`;
+                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-${icons[cardType]}"></i><h2 class="card-title">${titles[cardType]()}</h2></div><div class="card-body"><ul class="detail-list">${listItems || `<li class="detail-item">${i18next.t('labels.noData')}</li>`}</ul></div></div>`;
             }
         }
     }
@@ -327,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const chartCard = document.querySelector(`.chart-card[data-chart="${type}"][data-school-id="${school.id}"]`);
             if (chartCard) {
                 const chartContainer = chartCard.querySelector('.chart-container');
-                chartContainer.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 2rem;">Charts require Chart.js library</p>';
+                chartContainer.innerHTML = `<p style="text-align: center; color: var(--text-light); padding: 2rem;">${i18next.t('labels.chartsRequireChartJS')}</p>`;
             }
             return;
         }
@@ -448,10 +510,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (header) {
                         const navIcon = document.createElement('i');
                         navIcon.className = 'fas fa-external-link-alt card-nav-icon';
-                        navIcon.title = 'View all schools for this category';
+                        navIcon.title = i18next.t('tooltips.viewAllSchoolsCategory');
                         navIcon.addEventListener('click', (e) => {
                             e.stopPropagation();
-                            showCustomPopup('Go to category view?', e.clientX, e.clientY, () => {
+                            showCustomPopup(i18next.t('popup.goToCategoryView'), e.clientX, e.clientY, () => {
                                 currentViewMode = 'category';
                                 // Map enrolment, capacity, and utilization to enrolment_capacity category
                                 if (cardType === 'enrolment' || cardType === 'capacity' || cardType === 'utilization') {
@@ -471,7 +533,7 @@ document.addEventListener('DOMContentLoaded', function() {
             renderChart(school, 'projection');
         } else {
             // Category view
-            contentSubtitle.textContent = categories[selectedCategoryId];
+            contentSubtitle.textContent = categories[selectedCategoryId]();
             
             // Filter schools based on current filter
             let filteredSchools = Object.values(schoolData);
@@ -525,10 +587,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (header) {
                         const navIcon = document.createElement('i');
                         navIcon.className = 'fas fa-external-link-alt card-nav-icon';
-                        navIcon.title = 'View all categories for this school';
+                        navIcon.title = i18next.t('tooltips.viewAllCategoriesSchool');
                         navIcon.addEventListener('click', (e) => {
                             e.stopPropagation();
-                            showCustomPopup('Go to school view?', e.clientX, e.clientY, () => {
+                            showCustomPopup(i18next.t('popup.goToSchoolView'), e.clientX, e.clientY, () => {
                                 currentViewMode = 'school';
                                 selectedSchoolId = schoolId;
                                 updateView();
@@ -546,7 +608,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const firstSchool = schoolData[Object.keys(schoolData)[0]];
-        if (firstSchool?.meta) footerTimestamp.textContent = `Data updated ${firstSchool.meta.updated}`;
+        if (firstSchool?.meta) footerTimestamp.textContent = `${i18next.t('footer.dataUpdated')} ${firstSchool.meta.updated}`;
     }
 
     // --- Custom Popup Functions ---
@@ -684,6 +746,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
         if (sidebarCloseBtn) {
             sidebarCloseBtn.addEventListener('click', toggleSidebar);
+        }
+        
+        // Language switcher
+        const languageSwitcher = document.getElementById('language-switcher');
+        if (languageSwitcher) {
+            languageSwitcher.addEventListener('change', async (e) => {
+                const newLang = e.target.value;
+                await i18next.changeLanguage(newLang);
+                localStorage.setItem('language', newLang);
+                
+                // Translate all static elements
+                translatePage();
+                
+                // Repopulate sidebar to update category names
+                populateSidebarControls();
+                
+                // Update the current view
+                updateView();
+            });
+            
+            // Set initial language value
+            languageSwitcher.value = savedLanguage;
         }
     }
 

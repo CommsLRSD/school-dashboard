@@ -1,0 +1,92 @@
+{
+  "app": {
+    "title": "Tableau de bord de l'examen annuel des bâtiments scolaires"
+  },
+  "nav": {
+    "schools": "Écoles",
+    "categories": "Catégories",
+    "search": "Rechercher",
+    "searchPlaceholder": "Rechercher des écoles...",
+    "filterBy": "Filtrer par",
+    "allSchools": "Toutes les écoles",
+    "schoolLevel": "— Niveau scolaire —",
+    "elementarySchools": "Écoles élémentaires",
+    "highSchools": "Écoles secondaires",
+    "familyOfSchools": "— Famille d'écoles —"
+  },
+  "categories": {
+    "details": "Coordonnées et informations sur le bâtiment",
+    "enrolment_capacity": "Inscription et capacité des salles de classe",
+    "history": "Inscriptions historiques",
+    "projection": "Inscriptions projetées",
+    "additions": "Ajouts de bâtiments",
+    "building_systems": "Systèmes de bâtiment",
+    "accessibility": "Accessibilité",
+    "playground": "Caractéristiques de l'aire de jeux",
+    "transportation": "Transport",
+    "childcare": "Garderie",
+    "projects_provincial": "Projets d'immobilisations financés par la province",
+    "projects_local": "Projets d'immobilisations financés localement"
+  },
+  "cards": {
+    "details": "Détails",
+    "additions": "Ajouts",
+    "capacity": "Capacité",
+    "enrolment": "Inscription",
+    "utilization": "Utilisation",
+    "buildingSystems": "Systèmes de bâtiment",
+    "accessibility": "Accessibilité",
+    "playground": "Aire de jeux",
+    "transportation": "Transport",
+    "childcare": "Garderie",
+    "provincialProjects": "Projets d'immobilisations financés par la province",
+    "localProjects": "Projets d'immobilisations financés localement",
+    "statistics": "Statistiques",
+    "historicEnrolment": "Inscriptions historiques",
+    "projectedEnrolment": "Inscriptions projetées"
+  },
+  "labels": {
+    "address": "Adresse",
+    "phone": "Téléphone",
+    "program": "Programme",
+    "built": "Construit",
+    "age": "Âge",
+    "size": "Taille",
+    "modular": "Modulaire",
+    "enrolmentLabel": "Inscription",
+    "capacityLabel": "Capacité",
+    "utilizationLabel": "Utilisation",
+    "classroomCapacity": "Capacité de la salle de classe",
+    "currentEnrolment": "Inscription actuelle (30 sept.)",
+    "cityProperty": "Propriété de la ville",
+    "accessibleEntranceDoorOperators": "Opérateurs de porte d'entrée accessibles",
+    "noAdditions": "Aucun ajout enregistré.",
+    "noData": "Aucune donnée disponible.",
+    "chartsRequireChartJS": "Les graphiques nécessitent la bibliothèque Chart.js"
+  },
+  "badges": {
+    "yes": "OUI",
+    "no": "NON"
+  },
+  "projectStatus": {
+    "requested": "Demandé",
+    "inProgress": "En cours",
+    "completed": "Terminé"
+  },
+  "popup": {
+    "goToCategoryView": "Aller à la vue catégorie?",
+    "goToSchoolView": "Aller à la vue école?"
+  },
+  "tooltips": {
+    "viewAllSchoolsCategory": "Voir toutes les écoles pour cette catégorie",
+    "viewAllCategoriesSchool": "Voir toutes les catégories pour cette école",
+    "closeSidebar": "Fermer la barre latérale",
+    "menu": "Menu"
+  },
+  "footer": {
+    "dataUpdated": "Données mises à jour"
+  },
+  "language": {
+    "select": "Sélectionner la langue"
+  }
+}

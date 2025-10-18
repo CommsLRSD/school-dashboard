@@ -1,0 +1,92 @@
+{
+  "app": {
+    "title": "Annual School Building Review Dashboard"
+  },
+  "nav": {
+    "schools": "Schools",
+    "categories": "Categories",
+    "search": "Search",
+    "searchPlaceholder": "Search schools...",
+    "filterBy": "Filter by",
+    "allSchools": "All Schools",
+    "schoolLevel": "— School Level —",
+    "elementarySchools": "Elementary Schools",
+    "highSchools": "High Schools",
+    "familyOfSchools": "— Family of Schools —"
+  },
+  "categories": {
+    "details": "Contact & Building Info",
+    "enrolment_capacity": "Enrolment & Classroom Capacity",
+    "history": "Historic Enrolment",
+    "projection": "Projected Enrolment",
+    "additions": "Building Additions",
+    "building_systems": "Building Systems",
+    "accessibility": "Accessibility",
+    "playground": "Playground Features",
+    "transportation": "Transportation",
+    "childcare": "Childcare",
+    "projects_provincial": "Provincially Funded Capital Projects",
+    "projects_local": "Locally Funded Capital Projects"
+  },
+  "cards": {
+    "details": "Details",
+    "additions": "Additions",
+    "capacity": "Capacity",
+    "enrolment": "Enrolment",
+    "utilization": "Utilization",
+    "buildingSystems": "Building Systems",
+    "accessibility": "Accessibility",
+    "playground": "Playground",
+    "transportation": "Transportation",
+    "childcare": "Childcare",
+    "provincialProjects": "Provincially Funded Capital Projects",
+    "localProjects": "Locally Funded Capital Projects",
+    "statistics": "Statistics",
+    "historicEnrolment": "Historic Enrolment",
+    "projectedEnrolment": "Projected Enrolment"
+  },
+  "labels": {
+    "address": "Address",
+    "phone": "Phone",
+    "program": "Program",
+    "built": "Built",
+    "age": "Age",
+    "size": "Size",
+    "modular": "Modular",
+    "enrolmentLabel": "Enrolment",
+    "capacityLabel": "Capacity",
+    "utilizationLabel": "Utilization",
+    "classroomCapacity": "Classroom Capacity",
+    "currentEnrolment": "Current Enrolment (Sept. 30)",
+    "cityProperty": "City Property",
+    "accessibleEntranceDoorOperators": "Accessible entrance door operators",
+    "noAdditions": "No additions on record.",
+    "noData": "No data available.",
+    "chartsRequireChartJS": "Charts require Chart.js library"
+  },
+  "badges": {
+    "yes": "YES",
+    "no": "NO"
+  },
+  "projectStatus": {
+    "requested": "Requested",
+    "inProgress": "In Progress",
+    "completed": "Completed"
+  },
+  "popup": {
+    "goToCategoryView": "Go to category view?",
+    "goToSchoolView": "Go to school view?"
+  },
+  "tooltips": {
+    "viewAllSchoolsCategory": "View all schools for this category",
+    "viewAllCategoriesSchool": "View all categories for this school",
+    "closeSidebar": "Close sidebar",
+    "menu": "Menu"
+  },
+  "footer": {
+    "dataUpdated": "Data updated"
+  },
+  "language": {
+    "select": "Select Language"
+  }
+}
