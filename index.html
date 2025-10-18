@@ -137,6 +137,24 @@
             autoDetectLanguage: false,
             showUI: true
         });
+        
+        // Remove hover tooltips from the translate widget language code
+        const observer = new MutationObserver(() => {
+            const trigger = document.querySelector('.jigts-widget-trigger');
+            if (trigger) {
+                // Remove title attribute to prevent tooltip
+                trigger.removeAttribute('title');
+                // Monitor for changes and keep removing the title
+                setInterval(() => {
+                    const triggerElement = document.querySelector('.jigts-widget-trigger');
+                    if (triggerElement && triggerElement.hasAttribute('title')) {
+                        triggerElement.removeAttribute('title');
+                    }
+                }, 100);
+                observer.disconnect();
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
     </script>
 </body>
 </html>
