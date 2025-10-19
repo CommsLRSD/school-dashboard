@@ -484,33 +484,35 @@ document.addEventListener('DOMContentLoaded', function() {
             subtitleObserver.disconnect();
         }
         
-        // Only show sticky banner in category view
-        if (currentViewMode === 'category') {
-            const observerOptions = {
-                root: null,
-                rootMargin: '-100px 0px 0px 0px',
-                threshold: 0
-            };
-            
-            subtitleObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (!entry.isIntersecting) {
-                        // Subtitle is out of view, show sticky banner
-                        stickyBanner.classList.add('visible');
-                        stickyBannerText.textContent = contentSubtitle.textContent.toUpperCase();
+        // Show sticky banner in both school and category views
+        const observerOptions = {
+            root: null,
+            rootMargin: '-100px 0px 0px 0px',
+            threshold: 0
+        };
+        
+        subtitleObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    // Subtitle is out of view, show sticky banner
+                    stickyBanner.classList.add('visible');
+                    if (currentViewMode === 'school') {
+                        // In school view, show school name
+                        const school = schoolData[selectedSchoolId];
+                        stickyBannerText.textContent = school.schoolName.toUpperCase();
                     } else {
-                        // Subtitle is in view, hide sticky banner
-                        stickyBanner.classList.remove('visible');
+                        // In category view, show category title
+                        stickyBannerText.textContent = contentSubtitle.textContent.toUpperCase();
                     }
-                });
-            }, observerOptions);
-            
-            if (contentSubtitle) {
-                subtitleObserver.observe(contentSubtitle);
-            }
-        } else {
-            // Hide sticky banner in school view
-            stickyBanner.classList.remove('visible');
+                } else {
+                    // Subtitle is in view, hide sticky banner
+                    stickyBanner.classList.remove('visible');
+                }
+            });
+        }, observerOptions);
+        
+        if (contentSubtitle) {
+            subtitleObserver.observe(contentSubtitle);
         }
     }
     
