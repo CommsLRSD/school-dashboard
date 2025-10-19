@@ -12,12 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const categoryListContainer = document.getElementById('category-list-container');
     const stickyBanner = document.getElementById('sticky-category-banner');
     const stickyBannerText = stickyBanner.querySelector('.sticky-category-text');
-    const landingPage = document.getElementById('landing-page');
-    const carouselTrack = document.getElementById('carousel-track');
 
     let schoolData = {};
     let chartInstances = {};
-    let currentViewMode = 'landing';
+    let currentViewMode = 'school';
     let selectedSchoolId = '';
     let selectedCategoryId = '';
     let filterValue = 'all'; // Combined filter value
@@ -137,7 +135,6 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedCategoryId = Object.keys(categories)[0];
 
             populateSidebarControls();
-            populateLandingCarousel();
             setupEventListeners();
             updateView();
         } catch (error) {
@@ -147,44 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- UI Population ---
-    function populateLandingCarousel() {
-        const schools = Object.values(schoolData);
-        const totalSchools = schools.length;
-        
-        // Calculate responsive radius based on viewport
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-        const minDimension = Math.min(viewportWidth, viewportHeight - 200);
-        const radius = Math.max(300, minDimension * 0.4);
-        
-        carouselTrack.innerHTML = '';
-        
-        schools.forEach((school, index) => {
-            const angle = (index / totalSchools) * 2 * Math.PI;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
-            
-            const card = document.createElement('div');
-            card.className = 'school-card-carousel';
-            card.style.left = `${x}px`;
-            card.style.top = `${y}px`;
-            card.dataset.schoolId = school.id;
-            
-            card.innerHTML = `
-                <img src="${school.headerImage}" alt="${school.schoolName}">
-                <div class="school-card-name">${school.schoolName}</div>
-            `;
-            
-            card.addEventListener('click', () => {
-                currentViewMode = 'school';
-                selectedSchoolId = school.id;
-                updateView();
-            });
-            
-            carouselTrack.appendChild(card);
-        });
-    }
-    
     function populateSchoolList(searchTerm = '') {
         // Normalize search term for accent-insensitive and case-insensitive search
         const normalizedSearch = normalizeString(searchTerm);
@@ -519,15 +478,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Main View Logic ---
     function setupStickyBanner() {
-        // Hide sticky banner on landing page
-        if (currentViewMode === 'landing') {
-            stickyBanner.classList.remove('visible');
-            stickyBanner.style.display = 'none';
-            return;
-        }
-        
-        // Always show the sticky banner for other views
-        stickyBanner.style.display = '';
+        // Always show the sticky banner
         stickyBanner.classList.add('visible');
         
         // Update banner text based on current view
@@ -543,24 +494,6 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.values(chartInstances).forEach(chart => chart.destroy());
         chartInstances = {};
         cardGrid.innerHTML = ''; 
-
-        // Handle landing page view
-        if (currentViewMode === 'landing') {
-            landingPage.classList.add('active');
-            cardGrid.classList.add('hidden');
-            populateLandingCarousel();
-            
-            // Hide nav view selector on landing
-            document.querySelectorAll('.nav-view-link').forEach(link => link.classList.remove('active'));
-            document.querySelectorAll('.nav-list-container').forEach(c => c.classList.remove('active'));
-            
-            setupStickyBanner();
-            return;
-        }
-        
-        // Hide landing page for other views
-        landingPage.classList.remove('active');
-        cardGrid.classList.remove('hidden');
 
         document.querySelectorAll('.nav-view-link').forEach(link => link.classList.toggle('active', link.dataset.view === currentViewMode));
         document.querySelectorAll('.nav-list-container').forEach(c => c.classList.toggle('active', c.id.startsWith(currentViewMode)));
@@ -744,27 +677,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Event Listeners ---
     function setupEventListeners() {
-        // Handle window resize for carousel
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            if (currentViewMode === 'landing') {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                    populateLandingCarousel();
-                }, 250);
-            }
-        });
-        
-        // Handle clicking on the dashboard logo to return to landing page
-        const headerLogo = document.querySelector('.header-logo-main');
-        if (headerLogo) {
-            headerLogo.style.cursor = 'pointer';
-            headerLogo.addEventListener('click', () => {
-                currentViewMode = 'landing';
-                updateView();
-            });
-        }
-        
         navViewSelector.addEventListener('click', (e) => { 
             e.preventDefault(); 
             const target = e.target.closest('.nav-view-link'); 
