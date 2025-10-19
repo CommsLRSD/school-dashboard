@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const YEAR_DETECTION_MAX = 2100;
     const NUMBER_FORMAT_THRESHOLD = 1000;
     const CHART_Y_AXIS_ROUNDING = 50;
+    const BANNER_AUTO_HIDE_DELAY = 3000; // Auto-hide banner after 3 seconds
+    const BANNER_SCROLL_THRESHOLD = 100; // Show banner when scrolling more than 100px
     
     // --- Global Variables ---
     // Cache DOM elements for performance
@@ -27,6 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedSchoolId = '';
     let selectedCategoryId = '';
     let filterValue = 'all'; // Combined filter value
+    
+    // Sticky banner state management
+    let bannerAutoHideTimer = null;
+    let lastScrollPosition = 0;
+    let bannerVisible = false;
     
     // Memoization cache for string normalization
     const normalizationCache = new Map();
@@ -652,8 +659,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Main View Logic ---
     function setupStickyBanner() {
-        // Always show the sticky banner
-        stickyBanner.classList.add('visible');
+        // Show the sticky banner immediately
+        showBanner();
         
         // Update banner text based on current view
         if (currentViewMode === 'school') {
@@ -661,6 +668,36 @@ document.addEventListener('DOMContentLoaded', function() {
             stickyBannerText.textContent = school.schoolName.toUpperCase();
         } else {
             stickyBannerText.textContent = categories[selectedCategoryId].toUpperCase();
+        }
+        
+        // Auto-hide after a delay
+        if (bannerAutoHideTimer) {
+            clearTimeout(bannerAutoHideTimer);
+        }
+        bannerAutoHideTimer = setTimeout(() => {
+            hideBanner();
+        }, BANNER_AUTO_HIDE_DELAY);
+    }
+    
+    /**
+     * Show the sticky banner
+     */
+    function showBanner() {
+        if (!bannerVisible) {
+            stickyBanner.classList.add('visible');
+            stickyBanner.classList.remove('hidden');
+            bannerVisible = true;
+        }
+    }
+    
+    /**
+     * Hide the sticky banner
+     */
+    function hideBanner() {
+        if (bannerVisible) {
+            stickyBanner.classList.remove('visible');
+            stickyBanner.classList.add('hidden');
+            bannerVisible = false;
         }
     }
     
@@ -991,6 +1028,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         };
+        
+        // Scroll event listener for sticky banner behavior
+        let scrollTimer = null;
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollDelta = Math.abs(currentScroll - lastScrollPosition);
+            
+            // Show banner when scrolling more than threshold
+            if (scrollDelta > BANNER_SCROLL_THRESHOLD) {
+                showBanner();
+                
+                // Reset auto-hide timer on scroll
+                if (bannerAutoHideTimer) {
+                    clearTimeout(bannerAutoHideTimer);
+                }
+                
+                // Clear existing scroll timer
+                if (scrollTimer) {
+                    clearTimeout(scrollTimer);
+                }
+                
+                // Hide banner after user stops scrolling for a bit
+                scrollTimer = setTimeout(() => {
+                    bannerAutoHideTimer = setTimeout(() => {
+                        hideBanner();
+                    }, BANNER_AUTO_HIDE_DELAY);
+                }, 500); // Wait 500ms after scroll stops
+            }
+            
+            lastScrollPosition = currentScroll;
+        });
     }
 
     initializeApp();
