@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const navViewSelector = document.querySelector('.nav-view-selector');
     const schoolListContainer = document.getElementById('school-list-container');
     const categoryListContainer = document.getElementById('category-list-container');
+    const stickyBanner = document.getElementById('sticky-category-banner');
+    const stickyBannerText = stickyBanner.querySelector('.sticky-category-text');
 
     let schoolData = {};
     let chartInstances = {};
@@ -17,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedSchoolId = '';
     let selectedCategoryId = '';
     let filterValue = 'all'; // Combined filter value
+    let subtitleObserver = null; // For sticky banner
 
     // Helper function to format numbers with commas
     const formatNumber = (num) => {
@@ -475,6 +478,42 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- Main View Logic ---
+    function setupStickyBanner() {
+        // Clean up old observer if it exists
+        if (subtitleObserver) {
+            subtitleObserver.disconnect();
+        }
+        
+        // Only show sticky banner in category view
+        if (currentViewMode === 'category') {
+            const observerOptions = {
+                root: null,
+                rootMargin: '-100px 0px 0px 0px',
+                threshold: 0
+            };
+            
+            subtitleObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        // Subtitle is out of view, show sticky banner
+                        stickyBanner.classList.add('visible');
+                        stickyBannerText.textContent = contentSubtitle.textContent.toUpperCase();
+                    } else {
+                        // Subtitle is in view, hide sticky banner
+                        stickyBanner.classList.remove('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            if (contentSubtitle) {
+                subtitleObserver.observe(contentSubtitle);
+            }
+        } else {
+            // Hide sticky banner in school view
+            stickyBanner.classList.remove('visible');
+        }
+    }
+    
     function updateView() {
         Object.values(chartInstances).forEach(chart => chart.destroy());
         chartInstances = {};
@@ -604,6 +643,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const firstSchool = schoolData[Object.keys(schoolData)[0]];
         if (firstSchool?.meta) footerTimestamp.textContent = `Data updated ${firstSchool.meta.updated}`;
+        
+        // Setup sticky banner after view is updated
+        setupStickyBanner();
     }
 
     // --- Custom Popup Functions ---
