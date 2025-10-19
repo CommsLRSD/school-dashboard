@@ -487,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show sticky banner in both school and category views
         const observerOptions = {
             root: null,
-            rootMargin: '-100px 0px 0px 0px',
+            rootMargin: '0px 0px 0px 0px',
             threshold: 0
         };
         

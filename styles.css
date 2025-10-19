@@ -172,9 +172,9 @@ body {
 .sticky-category-banner {
     display: none;
     position: sticky;
-    top: calc(1.75rem + 1.75rem + 45px + 2px); /* Main header padding + logo height + border */
+    top: calc(1.75rem + 1.75rem + 45px + 1px); /* Main header padding + logo height + border */
     z-index: 99;
-    background: rgba(112, 112, 112, 0.85);
+    background: rgba(112, 112, 112, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
