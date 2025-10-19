@@ -1,6 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     
+    // --- Constants ---
+    const MOBILE_BREAKPOINT = 992;
+    const YEAR_DETECTION_MIN = 1800;
+    const YEAR_DETECTION_MAX = 2100;
+    const NUMBER_FORMAT_THRESHOLD = 1000;
+    const CHART_Y_AXIS_ROUNDING = 50;
+    
     // --- Global Variables ---
+    // Cache DOM elements for performance
     const cardGrid = document.getElementById('card-grid');
     const contentSubtitle = document.getElementById('content-subtitle');
     const footerTimestamp = document.getElementById('footer-timestamp');
@@ -11,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const schoolListContainer = document.getElementById('school-list-container');
     const categoryListContainer = document.getElementById('category-list-container');
     const stickyBanner = document.getElementById('sticky-category-banner');
-    const stickyBannerText = stickyBanner.querySelector('.sticky-category-text');
+    const stickyBannerText = stickyBanner?.querySelector('.sticky-category-text');
 
     let schoolData = {};
     let chartInstances = {};
@@ -19,17 +27,29 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedSchoolId = '';
     let selectedCategoryId = '';
     let filterValue = 'all'; // Combined filter value
+    
+    // Memoization cache for string normalization
+    const normalizationCache = new Map();
 
-    // Helper function to format numbers with commas
+    /**
+     * Helper function to format numbers with commas
+     * Optimized with early returns and clearer logic
+     * @param {number|string} num - The number to format
+     * @returns {string|number} Formatted number
+     */
     const formatNumber = (num) => {
+        // Handle null/undefined
+        if (num == null) return num;
+        
         // Handle number type first
         if (typeof num === 'number') {
             const numStr = num.toString();
-            // Don't format years (4-digit numbers between 1800-2100)
-            if (num >= 1800 && num <= 2100 && numStr.length === 4) {
+            // Don't format years (4-digit numbers between configured range)
+            if (num >= YEAR_DETECTION_MIN && num <= YEAR_DETECTION_MAX && numStr.length === 4) {
                 return numStr;
             }
-            if (num >= 1000) {
+            // Format numbers >= threshold with commas
+            if (num >= NUMBER_FORMAT_THRESHOLD) {
                 return num.toLocaleString('en-US');
             }
             return num;
@@ -40,26 +60,27 @@ document.addEventListener('DOMContentLoaded', function() {
             // Extract just the number part if it contains units like "ft²"
             const match = num.match(/^(\d+)\s*(.*)$/);
             if (match) {
-                const number = parseInt(match[1]);
+                const number = parseInt(match[1], 10);
                 const unit = match[2];
                 // Don't format years in the string
-                if (number >= 1800 && number <= 2100 && match[1].length === 4 && !unit) {
+                if (number >= YEAR_DETECTION_MIN && number <= YEAR_DETECTION_MAX && match[1].length === 4 && !unit) {
                     return num;
                 }
-                if (number >= 1000) {
+                // Format numbers with units
+                if (number >= NUMBER_FORMAT_THRESHOLD) {
                     return number.toLocaleString('en-US') + (unit ? ' ' + unit : '');
                 }
-                return num; // Return as-is if less than 1000
+                return num; // Return as-is if less than threshold
             }
             // Check if it's just a number string
-            if (!isNaN(num)) {
-                const number = parseInt(num);
-                // Don't format years (4-digit numbers between 1800-2100)
-                if (number >= 1800 && number <= 2100 && num.length === 4) {
+            const parsedNum = Number(num);
+            if (!isNaN(parsedNum)) {
+                // Don't format years (4-digit numbers between configured range)
+                if (parsedNum >= YEAR_DETECTION_MIN && parsedNum <= YEAR_DETECTION_MAX && num.length === 4) {
                     return num;
                 }
-                if (number >= 1000) {
-                    return number.toLocaleString('en-US');
+                if (parsedNum >= NUMBER_FORMAT_THRESHOLD) {
+                    return parsedNum.toLocaleString('en-US');
                 }
             }
         }
@@ -75,8 +96,13 @@ document.addEventListener('DOMContentLoaded', function() {
         return label;
     };
 
-    // Helper function to parse program field into grades and program name
+    /**
+     * Helper function to parse program field into grades and program name
+     * @param {string} programString - The program field to parse
+     * @returns {{grades: string, program: string}} Parsed grades and program
+     */
     const parseProgramField = (programString) => {
+        // Handle null/undefined/empty string
         if (!programString) return { grades: '', program: '' };
         
         // Look for the last comma that separates grades from program name
@@ -119,27 +145,50 @@ document.addEventListener('DOMContentLoaded', function() {
         "projects_local": "Locally Funded Capital Projects"
     };
 
-    // --- Main Initialization ---
+    /**
+     * Main Initialization Function
+     * Loads data, sets up event listeners, and initializes the view
+     */
     async function initializeApp() {
         try {
-            // Check if Chart is available, register plugin if it is
+            // Check if Chart.js is available and register plugin
             if (typeof Chart !== 'undefined' && typeof ChartDataLabels !== 'undefined') {
                 Chart.register(ChartDataLabels);
             }
             
+            // Fetch school data with proper error handling
             const response = await fetch('data/schools.json'); 
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            // Parse JSON data
             schoolData = await response.json();
             
-            selectedSchoolId = Object.keys(schoolData)[0];
+            // Validate that we have data
+            const schoolIds = Object.keys(schoolData);
+            if (schoolIds.length === 0) {
+                throw new Error('No school data available');
+            }
+            
+            // Initialize selected IDs with first available values
+            selectedSchoolId = schoolIds[0];
             selectedCategoryId = Object.keys(categories)[0];
 
+            // Initialize UI components
             populateSidebarControls();
             setupEventListeners();
             updateView();
         } catch (error) {
             console.error("Failed to load or initialize school data:", error);
-            cardGrid.innerHTML = `<p style="color: red; text-align: center;">Error: Could not load school data. Check console.</p>`;
+            // Display user-friendly error message with proper escaping
+            const errorMessage = error.message || 'Unknown error occurred';
+            cardGrid.textContent = ''; // Clear existing content
+            const errorElement = document.createElement('p');
+            errorElement.style.color = 'red';
+            errorElement.style.textAlign = 'center';
+            errorElement.textContent = `Error: Could not load school data. ${errorMessage}`;
+            cardGrid.appendChild(errorElement);
         }
     }
 
@@ -240,9 +289,31 @@ document.addEventListener('DOMContentLoaded', function() {
         categoryListContainer.innerHTML += categoryLinks;
     }
     
-    // Helper function to normalize strings (case-insensitive, accent-insensitive)
+    /**
+     * Helper function to normalize strings (case-insensitive, accent-insensitive)
+     * Uses memoization for performance improvement
+     * @param {string} str - String to normalize
+     * @returns {string} Normalized string
+     */
     function normalizeString(str) {
-        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        if (!str) return '';
+        
+        // Check cache first for performance
+        if (normalizationCache.has(str)) {
+            return normalizationCache.get(str);
+        }
+        
+        // Normalize and cache result
+        const normalized = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        normalizationCache.set(str, normalized);
+        
+        // Limit cache size to prevent memory issues
+        if (normalizationCache.size > 100) {
+            const firstKey = normalizationCache.keys().next().value;
+            normalizationCache.delete(firstKey);
+        }
+        
+        return normalized;
     }
 
     // --- Card Creation Functions ---
@@ -259,8 +330,35 @@ document.addEventListener('DOMContentLoaded', function() {
         return '';
     };
 
+    /**
+     * Sanitizes HTML to prevent XSS attacks
+     * @param {string} str - String to sanitize
+     * @returns {string} Sanitized string
+     */
+    const sanitizeHTML = (str) => {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    };
+    
+    /**
+     * Creates a data card element based on school data and card type
+     * @param {Object} school - School data object
+     * @param {string} cardType - Type of card to create
+     * @returns {string} HTML string for the card
+     */
     const createCard = (school, cardType) => {
-        const utilization = school.enrolment.current / school.enrolment.capacity;
+        // Validate input
+        if (!school || !cardType) {
+            console.warn('createCard: Invalid parameters', { school, cardType });
+            return '';
+        }
+        
+        // Calculate utilization safely with null checks
+        const current = school.enrolment?.current || 0;
+        const capacity = school.enrolment?.capacity || 1; // Avoid division by zero
+        const utilization = current / capacity;
         const utilizationPercent = (utilization * 100).toFixed(1);
         const isOverCapacity = utilization >= 1;
         const isYellowZone = utilization >= 0.95 && utilization < 1;
@@ -268,7 +366,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const sizeClass = getTileSizeClass(cardType);
 
         switch(cardType) {
-            case 'school_header': return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${school.headerImage}" alt="${school.schoolName}"><h2 class="school-name-title">${school.schoolName}</h2></div></div>`;
+            case 'school_header': 
+                // Sanitize data to prevent XSS
+                const headerImage = sanitizeHTML(school.headerImage || '');
+                const schoolName = sanitizeHTML(school.schoolName || '');
+                return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${headerImage}" alt="${schoolName}"><h2 class="school-name-title">${schoolName}</h2></div></div>`;
             
             case 'details': {
                 // Calculate age dynamically from Built year
@@ -386,33 +488,85 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // --- Chart Rendering ---
+    /**
+     * Chart Rendering Function
+     * Creates and manages Chart.js instances with proper cleanup
+     * @param {Object} school - School data object
+     * @param {string} type - Chart type ('history' or 'projection')
+     */
     const renderChart = (school, type) => {
+        // Validate input parameters
+        if (!school || !type) {
+            console.warn('renderChart: Invalid parameters', { school, type });
+            return;
+        }
+        
         // Skip chart rendering if Chart.js is not available
         if (typeof Chart === 'undefined') {
             const chartCard = document.querySelector(`.chart-card[data-chart="${type}"][data-school-id="${school.id}"]`);
             if (chartCard) {
                 const chartContainer = chartCard.querySelector('.chart-container');
-                chartContainer.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 2rem;">Charts require Chart.js library</p>';
+                if (chartContainer) {
+                    // Use textContent for security instead of innerHTML
+                    chartContainer.textContent = '';
+                    const message = document.createElement('p');
+                    message.style.textAlign = 'center';
+                    message.style.color = 'var(--text-light)';
+                    message.style.padding = '2rem';
+                    message.textContent = 'Charts require Chart.js library';
+                    chartContainer.appendChild(message);
+                }
             }
             return;
         }
         
+        // Find chart card element
         const chartCard = document.querySelector(`.chart-card[data-chart="${type}"][data-school-id="${school.id}"]`);
-        if (!chartCard) return;
+        if (!chartCard) {
+            console.warn(`renderChart: Chart card not found for ${type} - ${school.id}`);
+            return;
+        }
+        
         const canvas = chartCard.querySelector('canvas');
+        if (!canvas) {
+            console.warn(`renderChart: Canvas not found in chart card for ${type} - ${school.id}`);
+            return;
+        }
+        
         const ctx = canvas.getContext('2d');
+        if (!ctx) {
+            console.warn(`renderChart: Could not get 2D context for ${type} - ${school.id}`);
+            return;
+        }
+        
         const chartId = `${type}-${school.id}`;
 
-        if (chartInstances[chartId]) chartInstances[chartId].destroy();
+        // Properly destroy existing chart instance to prevent memory leaks
+        if (chartInstances[chartId]) {
+            try {
+                chartInstances[chartId].destroy();
+                delete chartInstances[chartId];
+            } catch (error) {
+                console.error(`Error destroying chart ${chartId}:`, error);
+            }
+        }
 
         // Calculate unified y-axis max for both history and projection charts
-        const historyMax = Math.max(...school.enrolment.history.values);
-        const projectionValues = Object.values(school.enrolment.projection).map(v => parseInt(v.split('-')[0]));
-        const projectionMax = Math.max(...projectionValues);
+        // Add null checks for data integrity
+        const historyValues = school.enrolment?.history?.values || [];
+        const historyMax = historyValues.length > 0 ? Math.max(...historyValues) : 0;
+        
+        const projectionData = school.enrolment?.projection || {};
+        const projectionValues = Object.values(projectionData)
+            .map(v => {
+                const parsed = parseInt(String(v).split('-')[0], 10);
+                return isNaN(parsed) ? 0 : parsed;
+            });
+        const projectionMax = projectionValues.length > 0 ? Math.max(...projectionValues) : 0;
+        
         const combinedMax = Math.max(historyMax, projectionMax);
-        // Round up to nearest 50
-        const yAxisMax = Math.ceil(combinedMax / 50) * 50;
+        // Round up to nearest configured rounding value for consistent axis
+        const yAxisMax = Math.ceil(combinedMax / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
 
         if (type === 'history') {
             // Convert underscores to hyphens in labels (e.g., 2024_25 -> 2024-25)
@@ -500,9 +654,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    /**
+     * Updates the view based on current mode (school or category)
+     * Properly cleans up resources before re-rendering
+     */
     function updateView() {
-        Object.values(chartInstances).forEach(chart => chart.destroy());
+        // Clean up existing chart instances to prevent memory leaks
+        Object.values(chartInstances).forEach(chart => {
+            try {
+                chart.destroy();
+            } catch (error) {
+                console.error('Error destroying chart:', error);
+            }
+        });
         chartInstances = {};
+        
+        // Clear grid content
         cardGrid.innerHTML = ''; 
 
         document.querySelectorAll('.nav-view-link').forEach(link => link.classList.toggle('active', link.dataset.view === currentViewMode));
