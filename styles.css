@@ -225,22 +225,6 @@ body {
     height: 40px;
 }
 
-.sidebar-close-btn {
-    display: none;
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-    color: var(--text-light);
-    cursor: pointer;
-    padding: 0.5rem;
-    margin-left: auto;
-    transition: color var(--transition-base);
-}
-
-.sidebar-close-btn:hover {
-    color: var(--primary-red);
-}
-
 .sidebar-nav { 
     flex-grow: 1; 
     overflow-y: auto; 
@@ -1006,10 +990,6 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-    
-    .sidebar-close-btn {
-        display: block;
     }
     
     .header-logo-desktop {

@@ -754,10 +754,6 @@ document.addEventListener('DOMContentLoaded', function() {
         function toggleSidebar() { const isOpen = sidebar.classList.toggle('open'); sidebarOverlay.classList.toggle('visible', isOpen); }
         sidebarToggleBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(); });
         sidebarOverlay.addEventListener('click', toggleSidebar);
-        const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
-        if (sidebarCloseBtn) {
-            sidebarCloseBtn.addEventListener('click', toggleSidebar);
-        }
     }
 
     initializeApp();
