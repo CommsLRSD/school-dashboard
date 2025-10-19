@@ -330,16 +330,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     listItems = ['requested', 'inProgress', 'completed'].flatMap(status => {
                         if (!data || !data[status] || data[status].length === 0) return [];
                         
-                        // Determine SVG icon based on status
+                        // Use completed.svg for all statuses with different color filters
                         let iconSvg, iconClass;
+                        iconSvg = 'public/completed.svg';
                         if (status === 'requested') {
-                            iconSvg = 'public/requested.svg';
                             iconClass = 'status-icon-requested';
                         } else if (status === 'inProgress') {
-                            iconSvg = 'public/inprogress.svg';
                             iconClass = 'status-icon-inprogress';
                         } else { // completed
-                            iconSvg = 'public/completed.svg';
                             iconClass = 'status-icon-completed';
                         }
                         
