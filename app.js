@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div></div></div>`;
             
-            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment (Sept. 30)</div></div></div>`;
+            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><div class="enrolment-footnote">Data as of Sept. 30, 2025</div></div></div>`;
             
             case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div>`;
 
