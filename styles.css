@@ -147,14 +147,7 @@ body {
 }
 
 #content-subtitle { 
-    font-family: var(--font-title); 
-    font-size: 2.25rem; 
-    font-weight: 700;
-    margin-bottom: 1.5rem; 
-    color: #707070;
-    letter-spacing: -0.025em;
-    animation: slideInLeft 0.5s ease-out;
-    font-variant: small-caps;
+    display: none;
 }
 
 @keyframes slideInLeft {
@@ -170,11 +163,10 @@ body {
 
 /* --- Sticky Category Banner --- */
 .sticky-category-banner {
-    display: none;
     position: sticky;
-    top: calc(1.75rem + 1.75rem + 45px + 2px); /* Main header padding + logo height + border */
+    top: 0;
     z-index: 99;
-    background: rgba(112, 112, 112, 0.85);
+    background: rgba(112, 112, 112, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
@@ -1070,10 +1062,6 @@ body {
     
     .content-body { 
         padding: 1rem; 
-    }
-    
-    #content-subtitle { 
-        font-size: 1.5rem; 
     }
     
     .stat-value { 

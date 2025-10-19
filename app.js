@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedSchoolId = '';
     let selectedCategoryId = '';
     let filterValue = 'all'; // Combined filter value
-    let subtitleObserver = null; // For sticky banner
 
     // Helper function to format numbers with commas
     const formatNumber = (num) => {
@@ -479,40 +478,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Main View Logic ---
     function setupStickyBanner() {
-        // Clean up old observer if it exists
-        if (subtitleObserver) {
-            subtitleObserver.disconnect();
-        }
+        // Always show the sticky banner
+        stickyBanner.classList.add('visible');
         
-        // Show sticky banner in both school and category views
-        const observerOptions = {
-            root: null,
-            rootMargin: '-100px 0px 0px 0px',
-            threshold: 0
-        };
-        
-        subtitleObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) {
-                    // Subtitle is out of view, show sticky banner
-                    stickyBanner.classList.add('visible');
-                    if (currentViewMode === 'school') {
-                        // In school view, show school name
-                        const school = schoolData[selectedSchoolId];
-                        stickyBannerText.textContent = school.schoolName.toUpperCase();
-                    } else {
-                        // In category view, show category title
-                        stickyBannerText.textContent = contentSubtitle.textContent.toUpperCase();
-                    }
-                } else {
-                    // Subtitle is in view, hide sticky banner
-                    stickyBanner.classList.remove('visible');
-                }
-            });
-        }, observerOptions);
-        
-        if (contentSubtitle) {
-            subtitleObserver.observe(contentSubtitle);
+        // Update banner text based on current view
+        if (currentViewMode === 'school') {
+            const school = schoolData[selectedSchoolId];
+            stickyBannerText.textContent = school.schoolName.toUpperCase();
+        } else {
+            stickyBannerText.textContent = categories[selectedCategoryId].toUpperCase();
         }
     }
     
@@ -531,7 +505,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (currentViewMode === 'school') {
             const school = schoolData[selectedSchoolId];
-            contentSubtitle.textContent = school.schoolName;
             const cardTypes = ['school_header', 'details', 'additions', 'capacity', 'enrolment', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
             cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
             
@@ -569,7 +542,6 @@ document.addEventListener('DOMContentLoaded', function() {
             renderChart(school, 'projection');
         } else {
             // Category view
-            contentSubtitle.textContent = categories[selectedCategoryId];
             
             // Filter schools based on current filter
             let filteredSchools = Object.values(schoolData);
