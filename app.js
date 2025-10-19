@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const stickyBannerText = stickyBanner.querySelector('.sticky-category-text');
     const landingPage = document.getElementById('landing-page');
     const contentBody = document.querySelector('.content-body');
-    const getStartedBtn = document.getElementById('get-started-btn');
+    const carouselTrack = document.getElementById('carousel-track');
+    const carouselPrev = document.getElementById('carousel-prev');
+    const carouselNext = document.getElementById('carousel-next');
 
     let schoolData = {};
     let chartInstances = {};
@@ -22,6 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedSchoolId = '';
     let selectedCategoryId = '';
     let filterValue = 'all'; // Combined filter value
+    let carouselPosition = 0;
+    let carouselCards = [];
 
     // Helper function to format numbers with commas
     const formatNumber = (num) => {
@@ -138,12 +142,66 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedCategoryId = Object.keys(categories)[0];
 
             populateSidebarControls();
+            initializeCarousel();
             setupEventListeners();
             updateView();
         } catch (error) {
             console.error("Failed to load or initialize school data:", error);
             cardGrid.innerHTML = `<p style="color: red; text-align: center;">Error: Could not load school data. Check console.</p>`;
         }
+    }
+
+    // --- Carousel Functions ---
+    function initializeCarousel() {
+        // Get all schools and shuffle for variety
+        const schools = Object.values(schoolData);
+        
+        // Create carousel cards
+        carouselCards = schools.map((school, index) => {
+            const card = document.createElement('div');
+            card.className = 'carousel-card';
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.innerHTML = `
+                <img src="${school.headerImage}" alt="${school.schoolName}">
+                <div class="carousel-card-overlay">
+                    <h3 class="carousel-card-title">${school.schoolName}</h3>
+                </div>
+            `;
+            
+            // Add click handler to navigate to school
+            card.addEventListener('click', () => {
+                currentViewMode = 'school';
+                selectedSchoolId = school.id;
+                updateView();
+            });
+            
+            return card;
+        });
+        
+        // Append cards to track
+        carouselCards.forEach(card => carouselTrack.appendChild(card));
+        
+        // Set initial position to show first few cards centered
+        updateCarouselPosition();
+    }
+    
+    function updateCarouselPosition() {
+        const cardWidth = 320; // Match CSS width
+        const gap = 24; // Match CSS gap (1.5rem)
+        const offset = -(carouselPosition * (cardWidth + gap));
+        carouselTrack.style.transform = `translateX(${offset}px)`;
+    }
+    
+    function moveCarousel(direction) {
+        const maxPosition = Math.max(0, carouselCards.length - 3); // Show 3 cards at a time
+        
+        if (direction === 'next' && carouselPosition < maxPosition) {
+            carouselPosition++;
+        } else if (direction === 'prev' && carouselPosition > 0) {
+            carouselPosition--;
+        }
+        
+        updateCarouselPosition();
     }
 
     // --- UI Population ---
@@ -697,12 +755,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Event Listeners ---
     function setupEventListeners() {
-        // Get Started button - navigate to first school
-        getStartedBtn.addEventListener('click', () => {
-            currentViewMode = 'school';
-            selectedSchoolId = Object.keys(schoolData)[0]; // First school (Archwood)
-            updateView();
-        });
+        // Carousel navigation
+        if (carouselNext) {
+            carouselNext.addEventListener('click', () => moveCarousel('next'));
+        }
+        
+        if (carouselPrev) {
+            carouselPrev.addEventListener('click', () => moveCarousel('prev'));
+        }
         
         navViewSelector.addEventListener('click', (e) => { 
             e.preventDefault(); 

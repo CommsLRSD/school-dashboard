@@ -164,41 +164,43 @@ body {
 /* --- Landing Page --- */
 .landing-page {
     display: none;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - 98px); /* Subtract header height */
-    padding: 2rem;
+    padding: 2rem 1rem;
     background: linear-gradient(135deg, rgba(190, 82, 71, 0.05) 0%, rgba(43, 166, 128, 0.05) 100%);
+    overflow: hidden;
 }
 
 .landing-page.active {
     display: flex;
 }
 
-.landing-content {
+.landing-logo-container {
     text-align: center;
-    max-width: 600px;
-    animation: fadeInUp 0.8s ease-out;
+    margin-bottom: 2rem;
+    animation: fadeInScale 0.8s ease-out;
+    z-index: 10;
 }
 
-@keyframes fadeInUp {
+@keyframes fadeInScale {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: scale(0.8);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: scale(1);
     }
 }
 
 .landing-logo {
-    width: 200px;
-    height: 200px;
-    margin: 0 auto 2rem;
+    width: 180px;
+    height: 180px;
     display: block;
     animation: logoFloat 3s ease-in-out infinite;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
 }
 
 @keyframes logoFloat {
@@ -210,57 +212,181 @@ body {
     }
 }
 
-.landing-title {
-    font-family: var(--font-title);
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.2;
-}
-
-.landing-subtitle {
-    font-size: 1.125rem;
-    color: var(--text-light);
-    margin-bottom: 2.5rem;
-    line-height: 1.6;
-}
-
-.landing-button {
-    display: inline-flex;
+/* Carousel Styles */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 2.5rem;
-    font-family: var(--font-body);
-    font-size: 1.125rem;
-    font-weight: 600;
+    gap: 1rem;
+}
+
+.carousel-track-wrapper {
+    flex: 1;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 1rem 0;
+}
+
+.carousel-card {
+    flex-shrink: 0;
+    width: 320px;
+    height: 240px;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-md);
+    animation: slideInCarousel 0.6s ease-out backwards;
+}
+
+@keyframes slideInCarousel {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.carousel-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+}
+
+.carousel-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.carousel-card:hover img {
+    transform: scale(1.1);
+}
+
+.carousel-card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
     color: white;
-    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
-    border: none;
-    border-radius: 50px;
+    padding: 1.5rem 1rem 1rem;
+    transition: all var(--transition-base);
+}
+
+.carousel-card:hover .carousel-card-overlay {
+    background: linear-gradient(to top, rgba(190, 82, 71, 0.9) 0%, rgba(190, 82, 71, 0.3) 100%);
+}
+
+.carousel-card-title {
+    font-family: var(--font-title);
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-nav {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     transition: all var(--transition-base);
-    box-shadow: 0 10px 25px rgba(190, 82, 71, 0.3);
+    color: var(--text-light);
+    flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
 }
 
-.landing-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(190, 82, 71, 0.4);
+.carousel-nav:hover {
+    background: var(--primary-red);
+    color: white;
+    border-color: var(--primary-red);
+    transform: scale(1.1);
+    box-shadow: var(--shadow-md);
 }
 
-.landing-button:active {
-    transform: translateY(-1px);
+.carousel-nav:active {
+    transform: scale(0.95);
 }
 
-.landing-button i {
-    transition: transform var(--transition-base);
+.carousel-nav i {
+    font-size: 1.25rem;
 }
 
-.landing-button:hover i {
-    transform: translateX(5px);
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .landing-logo {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .landing-logo-container {
+        margin-bottom: 1.5rem;
+    }
+    
+    .carousel-card {
+        width: 260px;
+        height: 200px;
+    }
+    
+    .carousel-nav {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .carousel-nav i {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .landing-page {
+        padding: 1rem 0.5rem;
+    }
+    
+    .landing-logo {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .carousel-container {
+        gap: 0.5rem;
+    }
+    
+    .carousel-card {
+        width: 220px;
+        height: 170px;
+    }
+    
+    .carousel-card-title {
+        font-size: 0.95rem;
+    }
+    
+    .carousel-nav {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .carousel-nav i {
+        font-size: 0.875rem;
+    }
 }
 
 /* --- Sticky Category Banner --- */
@@ -1148,27 +1274,6 @@ body {
     
     .stat-value { 
         font-size: 2.5rem; 
-    }
-    
-    /* Landing Page Mobile */
-    .landing-logo {
-        width: 150px;
-        height: 150px;
-        margin-bottom: 1.5rem;
-    }
-    
-    .landing-title {
-        font-size: 1.75rem;
-    }
-    
-    .landing-subtitle {
-        font-size: 1rem;
-        margin-bottom: 2rem;
-    }
-    
-    .landing-button {
-        padding: 0.875rem 2rem;
-        font-size: 1rem;
     }
 }
 
