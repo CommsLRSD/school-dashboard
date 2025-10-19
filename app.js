@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const CHART_Y_AXIS_ROUNDING = 50;
     const BANNER_AUTO_HIDE_DELAY = 3000; // Auto-hide banner after 3 seconds
     const BANNER_SCROLL_THRESHOLD = 100; // Show banner when scrolling more than 100px
+    const BANNER_TOP_THRESHOLD = 200; // Keep banner visible when within 200px from top
     
     // --- Global Variables ---
     // Cache DOM elements for performance
@@ -670,13 +671,25 @@ document.addEventListener('DOMContentLoaded', function() {
             stickyBannerText.textContent = categories[selectedCategoryId].toUpperCase();
         }
         
-        // Auto-hide after a delay
-        if (bannerAutoHideTimer) {
-            clearTimeout(bannerAutoHideTimer);
+        // Check if we're near the top of the page
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // If we're at or near the top, keep banner visible (don't auto-hide)
+        if (currentScroll <= BANNER_TOP_THRESHOLD) {
+            // Clear any existing auto-hide timer
+            if (bannerAutoHideTimer) {
+                clearTimeout(bannerAutoHideTimer);
+                bannerAutoHideTimer = null;
+            }
+        } else {
+            // Auto-hide after a delay when further down the page
+            if (bannerAutoHideTimer) {
+                clearTimeout(bannerAutoHideTimer);
+            }
+            bannerAutoHideTimer = setTimeout(() => {
+                hideBanner();
+            }, BANNER_AUTO_HIDE_DELAY);
         }
-        bannerAutoHideTimer = setTimeout(() => {
-            hideBanner();
-        }, BANNER_AUTO_HIDE_DELAY);
     }
     
     /**
@@ -1036,26 +1049,41 @@ document.addEventListener('DOMContentLoaded', function() {
             const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
             const scrollDelta = Math.abs(currentScroll - lastScrollPosition);
             
-            // Show banner when scrolling more than threshold
-            if (scrollDelta > BANNER_SCROLL_THRESHOLD) {
+            // Always show banner when at or near the top of the page
+            if (currentScroll <= BANNER_TOP_THRESHOLD) {
                 showBanner();
                 
-                // Reset auto-hide timer on scroll
+                // Clear any auto-hide timers when at the top
                 if (bannerAutoHideTimer) {
                     clearTimeout(bannerAutoHideTimer);
+                    bannerAutoHideTimer = null;
                 }
-                
-                // Clear existing scroll timer
                 if (scrollTimer) {
                     clearTimeout(scrollTimer);
+                    scrollTimer = null;
                 }
-                
-                // Hide banner after user stops scrolling for a bit
-                scrollTimer = setTimeout(() => {
-                    bannerAutoHideTimer = setTimeout(() => {
-                        hideBanner();
-                    }, BANNER_AUTO_HIDE_DELAY);
-                }, 500); // Wait 500ms after scroll stops
+            } else {
+                // Show banner when scrolling more than threshold (further down the page)
+                if (scrollDelta > BANNER_SCROLL_THRESHOLD) {
+                    showBanner();
+                    
+                    // Reset auto-hide timer on scroll
+                    if (bannerAutoHideTimer) {
+                        clearTimeout(bannerAutoHideTimer);
+                    }
+                    
+                    // Clear existing scroll timer
+                    if (scrollTimer) {
+                        clearTimeout(scrollTimer);
+                    }
+                    
+                    // Hide banner after user stops scrolling for a bit
+                    scrollTimer = setTimeout(() => {
+                        bannerAutoHideTimer = setTimeout(() => {
+                            hideBanner();
+                        }, BANNER_AUTO_HIDE_DELAY);
+                    }, 500); // Wait 500ms after scroll stops
+                }
             }
             
             lastScrollPosition = currentScroll;

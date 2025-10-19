@@ -1052,6 +1052,12 @@ body {
         height: 32px;
     }
     
+    /* Fix sticky banner position for mobile portrait */
+    .sticky-category-banner {
+        top: calc(1rem + 1rem + 32px + 1px); /* Position below header (padding + padding + logo height + border) */
+        height: calc((1rem + 1rem + 32px) / 3); /* 1/3 of main header height */
+    }
+    
     .content-body { 
         padding: 1rem; 
     }
