@@ -166,7 +166,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 99;
-    background: rgba(112, 112, 112, 0.7);
+    background: rgba(112, 112, 112, 0.45);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
