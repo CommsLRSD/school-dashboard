@@ -1163,6 +1163,7 @@ body {
 
 /* --- Translation Widget Custom Styling --- */
 .jigts-widget-trigger {
+    position: fixed !important;
     opacity: 0.85 !important;
     transition: all var(--transition-base) !important;
     background: var(--card-bg) !important;
@@ -1177,6 +1178,7 @@ body {
     bottom: 0.75rem !important;
     right: 0.75rem !important;
     padding: 0 !important;
+    z-index: 300 !important;
 }
 
 .jigts-widget-trigger:hover {
@@ -1205,6 +1207,7 @@ body {
 
 /* Position the language selection menu centered in viewport - 75% of original width */
 .jigts-widget-menu {
+    position: fixed !important;
     bottom: auto !important;
     top: 50% !important;
     left: 50% !important;
@@ -1218,6 +1221,7 @@ body {
     box-shadow: var(--shadow-xl) !important;
     border: 1px solid var(--border-color) !important;
     padding: 0.5rem !important;
+    z-index: 1000 !important;
 }
 
 /* Make menu items more compact */
