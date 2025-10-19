@@ -632,6 +632,7 @@ body {
     align-items: center; 
     justify-content: center; 
     text-align: center;
+    position: relative;
 }
 
 .stat-value { 
@@ -653,6 +654,16 @@ body {
     font-size: 0.9rem; 
     margin-top: 0.5rem; 
     color: var(--text-light);
+}
+
+.enrolment-footnote {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 0.7rem;
+    color: var(--text-lighter);
+    font-weight: 400;
+    text-align: right;
 }
 
 .over-capacity .stat-value { 
@@ -905,7 +916,9 @@ body {
     text-align: right;
     margin-left: auto;
     padding-left: 1rem;
-    flex-shrink: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 .yes-badge, .no-badge { 
