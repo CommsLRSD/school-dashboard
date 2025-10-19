@@ -709,16 +709,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         navIcon.title = 'View all schools for this category';
                         navIcon.addEventListener('click', (e) => {
                             e.stopPropagation();
-                            showCustomPopup('Go to category view?', e.clientX, e.clientY, () => {
-                                currentViewMode = 'category';
-                                // Map enrolment, capacity, and utilization to enrolment_capacity category
-                                if (cardType === 'enrolment' || cardType === 'capacity' || cardType === 'utilization') {
-                                    selectedCategoryId = 'enrolment_capacity';
-                                } else {
-                                    selectedCategoryId = cardType;
-                                }
-                                updateView();
-                            });
+                            currentViewMode = 'category';
+                            // Map enrolment, capacity, and utilization to enrolment_capacity category
+                            if (cardType === 'enrolment' || cardType === 'capacity' || cardType === 'utilization') {
+                                selectedCategoryId = 'enrolment_capacity';
+                            } else {
+                                selectedCategoryId = cardType;
+                            }
+                            updateView();
                         });
                         header.appendChild(navIcon);
                     }
@@ -785,11 +783,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         navIcon.title = 'View all categories for this school';
                         navIcon.addEventListener('click', (e) => {
                             e.stopPropagation();
-                            showCustomPopup('Go to school view?', e.clientX, e.clientY, () => {
-                                currentViewMode = 'school';
-                                selectedSchoolId = schoolId;
-                                updateView();
-                            });
+                            currentViewMode = 'school';
+                            selectedSchoolId = schoolId;
+                            updateView();
                         });
                         header.appendChild(navIcon);
                     }
