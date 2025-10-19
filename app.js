@@ -522,10 +522,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hide sticky banner on landing page
         if (currentViewMode === 'landing') {
             stickyBanner.classList.remove('visible');
+            stickyBanner.style.display = 'none';
             return;
         }
         
         // Always show the sticky banner for other views
+        stickyBanner.style.display = '';
         stickyBanner.classList.add('visible');
         
         // Update banner text based on current view
@@ -752,6 +754,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 250);
             }
         });
+        
+        // Handle clicking on the dashboard logo to return to landing page
+        const headerLogo = document.querySelector('.header-logo-main');
+        if (headerLogo) {
+            headerLogo.style.cursor = 'pointer';
+            headerLogo.addEventListener('click', () => {
+                currentViewMode = 'landing';
+                updateView();
+            });
+        }
         
         navViewSelector.addEventListener('click', (e) => { 
             e.preventDefault(); 
