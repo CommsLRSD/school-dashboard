@@ -161,6 +161,108 @@ body {
     }
 }
 
+/* --- Landing Page --- */
+.landing-page {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 98px); /* Subtract header height */
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(190, 82, 71, 0.05) 0%, rgba(43, 166, 128, 0.05) 100%);
+}
+
+.landing-page.active {
+    display: flex;
+}
+
+.landing-content {
+    text-align: center;
+    max-width: 600px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.landing-logo {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 2rem;
+    display: block;
+    animation: logoFloat 3s ease-in-out infinite;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+}
+
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.landing-title {
+    font-family: var(--font-title);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+}
+
+.landing-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.landing-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-green) 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    box-shadow: 0 10px 25px rgba(190, 82, 71, 0.3);
+}
+
+.landing-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(190, 82, 71, 0.4);
+}
+
+.landing-button:active {
+    transform: translateY(-1px);
+}
+
+.landing-button i {
+    transition: transform var(--transition-base);
+}
+
+.landing-button:hover i {
+    transform: translateX(5px);
+}
+
 /* --- Sticky Category Banner --- */
 .sticky-category-banner {
     position: sticky;
@@ -1046,6 +1148,27 @@ body {
     
     .stat-value { 
         font-size: 2.5rem; 
+    }
+    
+    /* Landing Page Mobile */
+    .landing-logo {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .landing-title {
+        font-size: 1.75rem;
+    }
+    
+    .landing-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .landing-button {
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
     }
 }
 

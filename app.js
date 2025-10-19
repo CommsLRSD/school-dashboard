@@ -12,10 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const categoryListContainer = document.getElementById('category-list-container');
     const stickyBanner = document.getElementById('sticky-category-banner');
     const stickyBannerText = stickyBanner.querySelector('.sticky-category-text');
+    const landingPage = document.getElementById('landing-page');
+    const contentBody = document.querySelector('.content-body');
+    const getStartedBtn = document.getElementById('get-started-btn');
 
     let schoolData = {};
     let chartInstances = {};
-    let currentViewMode = 'school';
+    let currentViewMode = 'landing';
     let selectedSchoolId = '';
     let selectedCategoryId = '';
     let filterValue = 'all'; // Combined filter value
@@ -478,7 +481,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Main View Logic ---
     function setupStickyBanner() {
-        // Always show the sticky banner
+        // Hide the sticky banner on landing page
+        if (currentViewMode === 'landing') {
+            stickyBanner.classList.remove('visible');
+            return;
+        }
+        
+        // Always show the sticky banner for school and category views
         stickyBanner.classList.add('visible');
         
         // Update banner text based on current view
@@ -494,6 +503,17 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.values(chartInstances).forEach(chart => chart.destroy());
         chartInstances = {};
         cardGrid.innerHTML = ''; 
+
+        // Handle landing page view
+        if (currentViewMode === 'landing') {
+            landingPage.classList.add('active');
+            contentBody.style.display = 'none';
+            setupStickyBanner();
+            return;
+        } else {
+            landingPage.classList.remove('active');
+            contentBody.style.display = 'block';
+        }
 
         document.querySelectorAll('.nav-view-link').forEach(link => link.classList.toggle('active', link.dataset.view === currentViewMode));
         document.querySelectorAll('.nav-list-container').forEach(c => c.classList.toggle('active', c.id.startsWith(currentViewMode)));
@@ -677,6 +697,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Event Listeners ---
     function setupEventListeners() {
+        // Get Started button - navigate to first school
+        getStartedBtn.addEventListener('click', () => {
+            currentViewMode = 'school';
+            selectedSchoolId = Object.keys(schoolData)[0]; // First school (Archwood)
+            updateView();
+        });
+        
         navViewSelector.addEventListener('click', (e) => { 
             e.preventDefault(); 
             const target = e.target.closest('.nav-view-link'); 
@@ -696,6 +723,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault(); 
             const target = e.target.closest('.nav-list-item'); 
             if (target) { 
+                currentViewMode = 'school';
                 selectedSchoolId = target.dataset.id; 
                 updateView(); 
                 // Close sidebar on mobile after selection
@@ -709,6 +737,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault(); 
             const target = e.target.closest('.nav-list-item'); 
             if (target) {
+                currentViewMode = 'category';
                 const categoryId = target.dataset.id;
                 selectedCategoryId = categoryId;
                 // Reset filter when clicking a category link
