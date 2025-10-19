@@ -1308,11 +1308,11 @@ body {
 }
 
 .status-icon-requested {
-    filter: brightness(0) saturate(100%) invert(85%) sepia(78%) saturate(2476%) hue-rotate(0deg) brightness(98%) contrast(104%);
+    filter: brightness(0) saturate(100%) invert(28%) sepia(64%) saturate(2072%) hue-rotate(346deg) brightness(91%) contrast(88%);
 }
 
 .status-icon-inprogress {
-    filter: brightness(0) saturate(100%) invert(85%) sepia(78%) saturate(2476%) hue-rotate(0deg) brightness(98%) contrast(104%);
+    filter: brightness(0) saturate(100%) invert(28%) sepia(64%) saturate(2072%) hue-rotate(346deg) brightness(91%) contrast(88%);
 }
 
 .status-icon-completed {
