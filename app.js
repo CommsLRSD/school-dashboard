@@ -300,7 +300,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><div class="enrolment-footnote">Data as of Sept. 30, 2025</div></div></div>`;
             
-            case 'utilization': return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization</h2></div><div class="card-body"><div class="stat-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div>`;
+            case 'utilization': {
+                let warningIcon = '';
+                if (isOverCapacity) {
+                    warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
+                } else if (isYellowZone) {
+                    warningIcon = '<i class="fas fa-exclamation-circle warning-icon warning-icon-yellow"></i>';
+                }
+                return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization${warningIcon}</h2></div><div class="card-body"><div class="stat-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div>`;
+            }
 
             case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(school.enrolment.current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(school.enrolment.capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
 
@@ -332,14 +340,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     listItems = ['requested', 'inProgress', 'completed'].flatMap(status => {
                         if (!data || !data[status] || data[status].length === 0) return [];
                         
-                        // Use completed.svg for all statuses with different color filters
+                        // Use correct SVG for each status with appropriate color filters
                         let iconSvg, iconClass;
-                        iconSvg = 'public/completed.svg';
                         if (status === 'requested') {
+                            iconSvg = 'public/requested.svg';
                             iconClass = 'status-icon-requested';
                         } else if (status === 'inProgress') {
+                            iconSvg = 'public/inprogress.svg';
                             iconClass = 'status-icon-inprogress';
                         } else { // completed
+                            iconSvg = 'public/completed.svg';
                             iconClass = 'status-icon-completed';
                         }
                         
