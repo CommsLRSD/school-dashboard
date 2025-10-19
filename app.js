@@ -799,7 +799,13 @@ document.addEventListener('DOMContentLoaded', function() {
         setupStickyBanner();
     }
 
-    // --- Custom Popup Functions ---
+    /**
+     * Shows a custom confirmation popup dialog
+     * @param {string} message - Message to display
+     * @param {number} x - X coordinate for popup position
+     * @param {number} y - Y coordinate for popup position
+     * @param {Function} onConfirm - Callback function on confirmation
+     */
     function showCustomPopup(message, x, y, onConfirm) {
         const popup = document.querySelector('.custom-popup');
         const overlay = document.querySelector('.popup-overlay');
@@ -807,6 +813,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const confirmBtn = document.querySelector('.popup-button-confirm');
         const cancelBtn = document.querySelector('.popup-button-cancel');
         
+        // Validate required elements
+        if (!popup || !overlay || !popupMessage || !confirmBtn || !cancelBtn) {
+            console.error('showCustomPopup: Required popup elements not found');
+            return;
+        }
+        
+        // Use textContent for security instead of innerHTML
         popupMessage.textContent = message;
         
         // Position popup near click location
@@ -830,26 +843,41 @@ document.addEventListener('DOMContentLoaded', function() {
         popup.classList.add('show');
         overlay.classList.add('show');
         
-        const handleConfirm = () => {
+        const cleanup = () => {
             popup.classList.remove('show');
             overlay.classList.remove('show');
-            onConfirm();
             confirmBtn.removeEventListener('click', handleConfirm);
             cancelBtn.removeEventListener('click', handleCancel);
             overlay.removeEventListener('click', handleCancel);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+        
+        const handleConfirm = () => {
+            cleanup();
+            if (typeof onConfirm === 'function') {
+                onConfirm();
+            }
         };
         
         const handleCancel = () => {
-            popup.classList.remove('show');
-            overlay.classList.remove('show');
-            confirmBtn.removeEventListener('click', handleConfirm);
-            cancelBtn.removeEventListener('click', handleCancel);
-            overlay.removeEventListener('click', handleCancel);
+            cleanup();
+        };
+        
+        // Add keyboard support (Enter to confirm, Escape to cancel)
+        const handleKeyDown = (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleConfirm();
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                handleCancel();
+            }
         };
         
         confirmBtn.addEventListener('click', handleConfirm);
         cancelBtn.addEventListener('click', handleCancel);
         overlay.addEventListener('click', handleCancel);
+        document.addEventListener('keydown', handleKeyDown);
     }
 
     // --- Event Listeners ---
@@ -876,10 +904,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 selectedSchoolId = target.dataset.id; 
                 updateView(); 
                 // Close sidebar on mobile after selection
-                if (window.innerWidth <= 992) {
-                    sidebar.classList.remove('open');
-                    sidebarOverlay.classList.remove('visible');
-                }
+                closeSidebarOnMobile();
             } 
         });
         categoryListContainer.addEventListener('click', (e) => { 
@@ -895,10 +920,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (combinedFilter) combinedFilter.value = 'all';
                 updateView();
                 // Close sidebar on mobile after selection
-                if (window.innerWidth <= 992) {
-                    sidebar.classList.remove('open');
-                    sidebarOverlay.classList.remove('visible');
-                }
+                closeSidebarOnMobile();
             } 
         });
         
@@ -928,9 +950,41 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        function toggleSidebar() { const isOpen = sidebar.classList.toggle('open'); sidebarOverlay.classList.toggle('visible', isOpen); }
-        sidebarToggleBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(); });
-        sidebarOverlay.addEventListener('click', toggleSidebar);
+        /**
+         * Toggles sidebar visibility for mobile view
+         * Updates ARIA attributes for accessibility
+         */
+        function toggleSidebar() { 
+            const isOpen = sidebar.classList.toggle('open'); 
+            sidebarOverlay.classList.toggle('visible', isOpen);
+            // Update ARIA attribute for accessibility
+            if (sidebarToggleBtn) {
+                sidebarToggleBtn.setAttribute('aria-expanded', isOpen.toString());
+            }
+        }
+        
+        // Sidebar toggle event listeners
+        if (sidebarToggleBtn) {
+            sidebarToggleBtn.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                toggleSidebar(); 
+            });
+        }
+        
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', toggleSidebar);
+        }
+        
+        // Close sidebar when clicking on a nav item on mobile
+        const closeSidebarOnMobile = () => {
+            if (window.innerWidth <= MOBILE_BREAKPOINT) {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('visible');
+                if (sidebarToggleBtn) {
+                    sidebarToggleBtn.setAttribute('aria-expanded', 'false');
+                }
+            }
+        };
     }
 
     initializeApp();
