@@ -33,9 +33,9 @@
 <body>
     <div class="dashboard-layout">
         <!-- Sidebar Navigation -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
             <div class="sidebar-header">
-                <a href="https://www.lrsd.net/" class="sidebar-logo-link" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.lrsd.net/" class="sidebar-logo-link" target="_blank" rel="noopener noreferrer" aria-label="Visit LRSD website">
                     <img src="public/lrsd-logo.svg" alt="LRSD Logo" class="sidebar-logo">
                 </a>
             </div>
@@ -51,8 +51,8 @@
                         <div class="search-group">
                             <label for="school-search" class="search-label">Search</label>
                             <div class="search-input-wrapper">
-                                <input type="text" id="school-search" class="search-input" placeholder="Search schools...">
-                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" id="school-search" class="search-input" placeholder="Search schools..." aria-label="Search schools by name" autocomplete="off">
+                                <i class="fas fa-search search-icon" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                         <div class="filter-group">
                             <label for="combined-filter" class="filter-label">Filter by</label>
                             <div class="custom-select-wrapper">
-                                <select id="combined-filter" class="filter-select">
+                                <select id="combined-filter" class="filter-select" aria-label="Filter schools by level or family">
                                     <option value="all">All Schools</option>
                                     <option disabled>— School Level —</option>
                                     <option value="elementary">Elementary Schools</option>
@@ -95,7 +95,7 @@
         <!-- Main Content Area -->
         <div class="main-content">
             <header class="main-header">
-                <button id="sidebar-toggle-btn" class="sidebar-toggle-btn"><img src="public/hamburger.svg" alt="Menu" class="hamburger-icon"></button>
+                <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" aria-label="Toggle sidebar menu" aria-expanded="false" aria-controls="sidebar"><img src="public/hamburger.svg" alt="" class="hamburger-icon" aria-hidden="true"></button>
                 <div class="header-titles">
                     <img src="public/dashboard-logo.svg" alt="Annual School Building Review Dashboard" class="header-logo-main">
                 </div>
@@ -109,7 +109,7 @@
             </div>
             <div class="content-body">
                 <h2 id="content-subtitle"></h2>
-                <main class="card-grid" id="card-grid">
+                <main class="card-grid" id="card-grid" role="main" aria-label="School information cards">
                     <!-- Data cards will be generated here -->
                 </main>
             </div>
@@ -138,24 +138,6 @@
     
     <!-- JigsawStack Translation Widget -->
     <script src="https://unpkg.com/translation-widget@latest/dist/index.min.js"></script>
-    <script>
-        // Initialize translation widget when DOM is ready
-        window.addEventListener('DOMContentLoaded', function() {
-            if (typeof TranslationWidget !== 'undefined') {
-                try {
-                    TranslationWidget("pk_5e0c38e24f577b80325e53ba31d998c62941ae8f60934a9105f8548796feb7ec9f07defc08d67273679911c6deb722c38ebdf6056e484b90b51b3fa533663b86024uWF5OOXIfV3FQWmd9Y", {
-                        pageLanguage: "en",
-                        position: "bottom-right",
-                        autoDetectLanguage: false,
-                        showUI: true
-                    });
-                } catch (e) {
-                    console.error('Translation widget initialization error:', e);
-                }
-            } else {
-                console.warn('TranslationWidget library not loaded');
-            }
-        });
-    </script>
+    <script src="public/translation-widget-config.js"></script>
 </body>
 </html>
