@@ -193,20 +193,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- UI Population ---
+    /**
+     * Populates the school list in the sidebar with optional filtering
+     * @param {string} searchTerm - Optional search term to filter schools
+     */
     function populateSchoolList(searchTerm = '') {
-        // Normalize search term for accent-insensitive and case-insensitive search
-        const normalizedSearch = normalizeString(searchTerm);
+        // Validate and sanitize search term
+        const safeSearchTerm = typeof searchTerm === 'string' ? searchTerm.trim() : '';
         
-        // Find the container for school links (after search controls)
+        // Normalize search term for accent-insensitive and case-insensitive search
+        const normalizedSearch = normalizeString(safeSearchTerm);
+        
+        // Filter and map school data to HTML with proper sanitization
         const schoolLinksHTML = Object.keys(schoolData)
             .filter(schoolId => {
-                if (!searchTerm) return true;
-                const schoolName = schoolData[schoolId].schoolName;
+                if (!safeSearchTerm) return true;
+                const schoolName = schoolData[schoolId]?.schoolName || '';
                 return normalizeString(schoolName).includes(normalizedSearch);
             })
-            .map(schoolId => 
-                `<a href="#" class="nav-list-item" data-type="school" data-id="${schoolId}">${schoolData[schoolId].schoolName}</a>`
-            ).join('');
+            .map(schoolId => {
+                const schoolName = sanitizeHTML(schoolData[schoolId]?.schoolName || '');
+                const schoolIdSafe = sanitizeHTML(schoolId);
+                return `<a href="#" class="nav-list-item" data-type="school" data-id="${schoolIdSafe}">${schoolName}</a>`;
+            })
+            .join('');
         
         // Find existing search controls or create placeholder
         const searchControls = schoolListContainer.querySelector('.search-controls');
