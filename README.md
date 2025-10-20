@@ -18,6 +18,7 @@ You can view the live version of this project on GitHub Pages:
 - **Interactive Charts:** Utilizes Chart.js to render historical and projected enrollment data.
 - **Responsive Design:** The layout is fully responsive and optimized for desktop, tablet, and mobile viewing.
 - **Simple & Scalable:** Built with standard HTML, CSS, and JavaScript, with no complex frameworks required.
+- **Secure by Design:** Implements industry-standard security practices including CSP, security headers, and SRI for external resources.
 
 ---
 
@@ -76,3 +77,21 @@ This project structure is optimized for easy deployment to GitHub Pages.
 6.  Click **Save**.
 
 After a minute or two, your site will be live at the URL provided on that page.
+
+---
+
+## Security
+
+This application implements comprehensive security measures to protect users and data:
+
+- **Content Security Policy (CSP)** - Prevents XSS and code injection attacks
+- **Security Headers** - Includes X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, and more
+- **Subresource Integrity (SRI)** - Verifies external resources haven't been tampered with
+- **Input Sanitization** - All user inputs are validated and sanitized
+- **Secure API Key Management** - API keys properly separated with security documentation
+
+For detailed security information, deployment guidelines, and production hardening steps, see:
+- [SECURITY.md](SECURITY.md) - Comprehensive security documentation
+- [SECURITY_IMPROVEMENTS.md](SECURITY_IMPROVEMENTS.md) - Summary of all security enhancements
+
+**Security Status:** ✅ CodeQL scan passed with 0 vulnerabilities
