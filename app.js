@@ -149,6 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "playground": "Playground Features",
         "transportation": "Transportation",
         "childcare": "Childcare",
+        "catchment_map": "Catchment Map",
         "projects_provincial": "Provincially Funded Capital Projects",
         "projects_local": "Locally Funded Capital Projects"
     };
@@ -437,6 +438,37 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historic Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
             case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-bar"></i><h2 class="card-title">Projected Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
+
+            case 'catchment_map': {
+                // Generate map filename from school id
+                const mapFilename = `public/maps/${school.id}map.jpg`;
+                const schoolName = sanitizeHTML(school.schoolName || '');
+                const migration = school.catchment?.migration || 'N/A';
+                const description = school.catchment?.description || '';
+                
+                return `<div class="data-card catchment-map-card ${sizeClass}">
+                    <div class="card-header">
+                        <i class="card-header-icon fas fa-map-marked-alt"></i>
+                        <h2 class="card-title">Catchment Map</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="catchment-map-container">
+                            <img src="${mapFilename}" alt="Catchment map for ${schoolName}" class="catchment-map-thumbnail" data-map-src="${mapFilename}">
+                            <div class="catchment-map-overlay">
+                                <i class="fas fa-search-plus"></i>
+                                <span>Click to view full map</span>
+                            </div>
+                        </div>
+                        <ul class="detail-list">
+                            <li class="detail-item">
+                                <span class="detail-label">Migration</span>
+                                <span class="detail-value">${migration}</span>
+                            </li>
+                            <li class="detail-item detail-note">${description}</li>
+                        </ul>
+                    </div>
+                </div>`;
+            }
 
             default: { // For all other simple list cards
                 const icons = { building_systems: 'cogs', accessibility: 'universal-access', playground: 'basketball-ball', transportation: 'bus', childcare: 'child', projects_provincial: 'hard-hat', projects_local: 'hard-hat' };
@@ -742,7 +774,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (currentViewMode === 'school') {
             const school = schoolData[selectedSchoolId];
-            const cardTypes = ['school_header', 'details', 'additions', 'enrolment', 'capacity', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
+            const cardTypes = ['school_header', 'details', 'additions', 'enrolment', 'capacity', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'catchment_map', 'projects_provincial', 'projects_local'];
             cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
             
             // Add staggered animation delays and navigation icons
@@ -1089,6 +1121,189 @@ document.addEventListener('DOMContentLoaded', function() {
             lastScrollPosition = currentScroll;
         });
     }
+
+    /**
+     * Catchment Map Lightbox Functionality
+     * Handles opening, closing, zooming, and panning of map images
+     */
+    function setupMapLightbox() {
+        const lightbox = document.getElementById('map-lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const closeBtn = lightbox.querySelector('.map-lightbox-close');
+        const overlay = lightbox.querySelector('.map-lightbox-overlay');
+        const zoomInBtn = document.getElementById('zoom-in-btn');
+        const zoomOutBtn = document.getElementById('zoom-out-btn');
+        const resetZoomBtn = document.getElementById('reset-zoom-btn');
+        
+        let scale = 1;
+        let translateX = 0;
+        let translateY = 0;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        
+        // Open lightbox when clicking on map thumbnail
+        document.addEventListener('click', (e) => {
+            const thumbnail = e.target.closest('.catchment-map-thumbnail');
+            if (thumbnail) {
+                const mapSrc = thumbnail.dataset.mapSrc;
+                openLightbox(mapSrc);
+            }
+        });
+        
+        function openLightbox(imageSrc) {
+            lightboxImage.src = imageSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            resetTransform();
+        }
+        
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+            resetTransform();
+        }
+        
+        function resetTransform() {
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateTransform();
+            lightboxImage.classList.remove('zoomed');
+        }
+        
+        function updateTransform() {
+            lightboxImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        }
+        
+        function zoomIn() {
+            scale = Math.min(scale + 0.5, 5);
+            updateTransform();
+            if (scale > 1) {
+                lightboxImage.classList.add('zoomed');
+            }
+        }
+        
+        function zoomOut() {
+            scale = Math.max(scale - 0.5, 0.5);
+            updateTransform();
+            if (scale <= 1) {
+                lightboxImage.classList.remove('zoomed');
+                translateX = 0;
+                translateY = 0;
+                updateTransform();
+            }
+        }
+        
+        // Event listeners
+        closeBtn.addEventListener('click', closeLightbox);
+        overlay.addEventListener('click', closeLightbox);
+        zoomInBtn.addEventListener('click', zoomIn);
+        zoomOutBtn.addEventListener('click', zoomOut);
+        resetZoomBtn.addEventListener('click', resetTransform);
+        
+        // ESC key to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+        
+        // Mouse wheel zoom
+        lightboxImage.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                zoomIn();
+            } else {
+                zoomOut();
+            }
+        });
+        
+        // Drag to pan (only when zoomed)
+        lightboxImage.addEventListener('mousedown', (e) => {
+            if (scale > 1) {
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                lightboxImage.classList.add('dragging');
+                e.preventDefault();
+            }
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                updateTransform();
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                lightboxImage.classList.remove('dragging');
+            }
+        });
+        
+        // Touch support for mobile
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let initialDistance = 0;
+        let initialScale = 1;
+        
+        lightboxImage.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1 && scale > 1) {
+                // Single touch for panning
+                isDragging = true;
+                touchStartX = e.touches[0].clientX - translateX;
+                touchStartY = e.touches[0].clientY - translateY;
+            } else if (e.touches.length === 2) {
+                // Two touches for pinch zoom
+                isDragging = false;
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                initialDistance = Math.sqrt(dx * dx + dy * dy);
+                initialScale = scale;
+            }
+        });
+        
+        lightboxImage.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            
+            if (e.touches.length === 1 && isDragging && scale > 1) {
+                // Pan
+                translateX = e.touches[0].clientX - touchStartX;
+                translateY = e.touches[0].clientY - touchStartY;
+                updateTransform();
+            } else if (e.touches.length === 2) {
+                // Pinch zoom
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const scaleChange = distance / initialDistance;
+                scale = Math.min(Math.max(initialScale * scaleChange, 0.5), 5);
+                updateTransform();
+                
+                if (scale > 1) {
+                    lightboxImage.classList.add('zoomed');
+                } else {
+                    lightboxImage.classList.remove('zoomed');
+                    translateX = 0;
+                    translateY = 0;
+                    updateTransform();
+                }
+            }
+        });
+        
+        lightboxImage.addEventListener('touchend', (e) => {
+            if (e.touches.length === 0) {
+                isDragging = false;
+            }
+        });
+    }
+
+    // Initialize lightbox after DOM is ready
+    setupMapLightbox();
 
     initializeApp();
 });

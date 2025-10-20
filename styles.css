@@ -1276,3 +1276,221 @@ body {
 .status-icon-completed {
     filter: brightness(0) saturate(100%) invert(57%) sepia(33%) saturate(661%) hue-rotate(110deg) brightness(93%) contrast(85%);
 }
+
+/* --- Catchment Map Card Styles --- */
+.catchment-map-card {
+    cursor: default;
+}
+
+.catchment-map-container {
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+}
+
+.catchment-map-container:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.catchment-map-thumbnail {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform var(--transition-base);
+}
+
+.catchment-map-container:hover .catchment-map-thumbnail {
+    transform: scale(1.05);
+}
+
+.catchment-map-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.catchment-map-container:hover .catchment-map-overlay {
+    opacity: 1;
+}
+
+.catchment-map-overlay i {
+    font-size: 2rem;
+}
+
+.detail-note {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    font-style: italic;
+    padding-left: 0 !important;
+}
+
+/* --- Map Lightbox Styles --- */
+.map-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.map-lightbox.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.map-lightbox-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    cursor: pointer;
+}
+
+.map-lightbox-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+    z-index: 10001;
+    backdrop-filter: blur(10px);
+}
+
+.map-lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+.map-lightbox-controls {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    z-index: 10001;
+}
+
+.map-control-btn {
+    width: 3rem;
+    height: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+    backdrop-filter: blur(10px);
+}
+
+.map-control-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+.map-control-btn:active {
+    transform: scale(0.95);
+}
+
+.map-lightbox-content {
+    width: 90%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.map-lightbox-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    cursor: grab;
+    transition: transform 0.2s ease-out;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.map-lightbox-image.dragging {
+    cursor: grabbing;
+    transition: none;
+}
+
+.map-lightbox-image.zoomed {
+    cursor: move;
+}
+
+/* Mobile adjustments for lightbox */
+@media (max-width: 768px) {
+    .map-lightbox-close,
+    .map-control-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+    }
+    
+    .map-lightbox-close {
+        top: 1rem;
+        right: 1rem;
+    }
+    
+    .map-lightbox-controls {
+        top: 1rem;
+        left: 1rem;
+        gap: 0.5rem;
+    }
+    
+    .map-lightbox-content {
+        width: 95%;
+        height: 95%;
+    }
+}
