@@ -21,7 +21,7 @@ The application implements a strict Content Security Policy through meta tags in
 - `font-src`: Allow fonts from self, Google Fonts, Font Awesome, and data URIs
 - `img-src`: Allow images from self, data URIs, and HTTPS sources
 - `connect-src`: Allow connections to self and JigsawStack API
-- `frame-src 'none'`: Block all iframes
+- `frame-src https://www.lrsd.net`: Allow iframes only from www.lrsd.net
 - `object-src 'none'`: Block plugins like Flash
 - `base-uri 'self'`: Prevent base tag injection
 - `form-action 'self'`: Only allow form submissions to same origin

@@ -30,7 +30,7 @@
     
     # Content Security Policy - adjust as needed for your deployment
     # This is a more relaxed CSP for production deployments
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.jigsawstack.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: https:; connect-src 'self' https://cdn.jigsawstack.com https://api.jigsawstack.com https://fonts.googleapis.com https://fonts.gstatic.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.jigsawstack.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: https:; connect-src 'self' https://cdn.jigsawstack.com https://api.jigsawstack.com https://fonts.googleapis.com https://fonts.gstatic.com; frame-src https://www.lrsd.net; object-src 'none'; base-uri 'self'; form-action 'self'"
     
     # Strict Transport Security (HSTS) - Force HTTPS for 1 year
     # IMPORTANT: Only enable this after confirming HTTPS is working properly!
