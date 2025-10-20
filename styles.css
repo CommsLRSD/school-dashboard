@@ -1279,65 +1279,88 @@ body {
 
 /* --- Catchment Map Card Styles --- */
 .catchment-map-card {
-    cursor: default;
+    cursor: pointer;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.catchment-map-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
 .catchment-map-card .card-body {
-    overflow-y: auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
 }
 
 .catchment-map-container {
     position: relative;
     width: 100%;
-    border-radius: 8px;
+    height: 100%;
     overflow: hidden;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-base);
-    /* Limit the height to ensure it fits within the card with space for migration info */
-    max-height: 150px;
 }
 
-.catchment-map-container:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
-}
-
-.catchment-map-thumbnail {
+.catchment-map-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform var(--transition-base);
+    transition: transform var(--transition-slow);
 }
 
-.catchment-map-container:hover .catchment-map-thumbnail {
+.catchment-map-card:hover .catchment-map-image {
     transform: scale(1.05);
 }
 
-.catchment-map-overlay {
+.catchment-map-content {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    opacity: 0;
-    transition: opacity var(--transition-base);
+    justify-content: flex-end;
+    padding: 1.5rem 1.25rem;
     color: white;
+}
+
+.catchment-map-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.catchment-map-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.catchment-info-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
     font-size: 0.875rem;
+}
+
+.catchment-label {
     font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.catchment-map-container:hover .catchment-map-overlay {
-    opacity: 1;
+.catchment-value {
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.catchment-map-overlay i {
-    font-size: 2rem;
+.catchment-info-note {
+    font-size: 0.75rem;
+    font-style: italic;
+    opacity: 0.9;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    line-height: 1.4;
 }
 
 .detail-note {

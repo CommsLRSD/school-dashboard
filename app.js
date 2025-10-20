@@ -440,32 +440,27 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-bar"></i><h2 class="card-title">Projected Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
             case 'catchment_map': {
-                // Generate map filename from school id
-                const mapFilename = `public/maps/${school.id}map.jpg`;
+                // Generate map filename from school id using new naming convention
+                const mapFilename = `public/maps/${school.id}-map.jpg`;
                 const schoolName = sanitizeHTML(school.schoolName || '');
                 const migration = school.catchment?.migration || 'N/A';
                 const description = school.catchment?.description || '';
                 
                 return `<div class="data-card catchment-map-card ${sizeClass}">
-                    <div class="card-header">
-                        <i class="card-header-icon fas fa-map-marked-alt"></i>
-                        <h2 class="card-title">Catchment Map</h2>
-                    </div>
                     <div class="card-body">
                         <div class="catchment-map-container">
-                            <img src="${mapFilename}" alt="Catchment map for ${schoolName}" class="catchment-map-thumbnail" data-map-src="${mapFilename}">
-                            <div class="catchment-map-overlay">
-                                <i class="fas fa-search-plus"></i>
-                                <span>Click to view full map</span>
+                            <img src="${mapFilename}" alt="Catchment map for ${schoolName}" class="catchment-map-image" data-map-src="${mapFilename}">
+                            <div class="catchment-map-content">
+                                <h2 class="catchment-map-title">Catchment Map</h2>
+                                <div class="catchment-map-info">
+                                    <div class="catchment-info-item">
+                                        <span class="catchment-label">Migration:</span>
+                                        <span class="catchment-value">${migration}</span>
+                                    </div>
+                                    <div class="catchment-info-note">${description}</div>
+                                </div>
                             </div>
                         </div>
-                        <ul class="detail-list">
-                            <li class="detail-item">
-                                <span class="detail-label">Migration</span>
-                                <span class="detail-value">${migration}</span>
-                            </li>
-                            <li class="detail-item detail-note">${description}</li>
-                        </ul>
                     </div>
                 </div>`;
             }
