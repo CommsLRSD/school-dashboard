@@ -779,23 +779,41 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Add navigation icon to cards in school view (except school_header)
                 const cardType = cardTypes[index];
                 if (cardType !== 'school_header') {
-                    const header = card.querySelector('.card-header');
-                    if (header) {
-                        const navIcon = document.createElement('i');
-                        navIcon.className = 'fas fa-external-link-alt card-nav-icon';
-                        navIcon.title = 'View all schools for this category';
-                        navIcon.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            currentViewMode = 'category';
-                            // Map enrolment, capacity, and utilization to enrolment_capacity category
-                            if (cardType === 'enrolment' || cardType === 'capacity' || cardType === 'utilization') {
-                                selectedCategoryId = 'enrolment_capacity';
-                            } else {
+                    // Special handling for catchment map card (no header, icon goes in bottom right)
+                    if (cardType === 'catchment_map') {
+                        const mapContent = card.querySelector('.catchment-map-content');
+                        if (mapContent) {
+                            const navIcon = document.createElement('i');
+                            navIcon.className = 'fas fa-external-link-alt card-nav-icon card-nav-icon-bottom-right';
+                            navIcon.title = 'View all schools for this category';
+                            navIcon.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                currentViewMode = 'category';
                                 selectedCategoryId = cardType;
-                            }
-                            updateView();
-                        });
-                        header.appendChild(navIcon);
+                                updateView();
+                            });
+                            mapContent.appendChild(navIcon);
+                        }
+                    } else {
+                        // Regular cards with headers
+                        const header = card.querySelector('.card-header');
+                        if (header) {
+                            const navIcon = document.createElement('i');
+                            navIcon.className = 'fas fa-external-link-alt card-nav-icon';
+                            navIcon.title = 'View all schools for this category';
+                            navIcon.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                currentViewMode = 'category';
+                                // Map enrolment, capacity, and utilization to enrolment_capacity category
+                                if (cardType === 'enrolment' || cardType === 'capacity' || cardType === 'utilization') {
+                                    selectedCategoryId = 'enrolment_capacity';
+                                } else {
+                                    selectedCategoryId = cardType;
+                                }
+                                updateView();
+                            });
+                            header.appendChild(navIcon);
+                        }
                     }
                 }
             });
@@ -853,18 +871,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Add navigation icon to cards in category view
                 const schoolId = filteredSchools[index]?.id;
                 if (schoolId) {
-                    const header = card.querySelector('.card-header');
-                    if (header) {
-                        const navIcon = document.createElement('i');
-                        navIcon.className = 'fas fa-external-link-alt card-nav-icon';
-                        navIcon.title = 'View all categories for this school';
-                        navIcon.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            currentViewMode = 'school';
-                            selectedSchoolId = schoolId;
-                            updateView();
-                        });
-                        header.appendChild(navIcon);
+                    // Special handling for catchment map card (no header, icon goes in bottom right)
+                    if (cardType === 'catchment_map') {
+                        const mapContent = card.querySelector('.catchment-map-content');
+                        if (mapContent) {
+                            const navIcon = document.createElement('i');
+                            navIcon.className = 'fas fa-external-link-alt card-nav-icon card-nav-icon-bottom-right';
+                            navIcon.title = 'View all categories for this school';
+                            navIcon.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                currentViewMode = 'school';
+                                selectedSchoolId = schoolId;
+                                updateView();
+                            });
+                            mapContent.appendChild(navIcon);
+                        }
+                    } else {
+                        // Regular cards with headers
+                        const header = card.querySelector('.card-header');
+                        if (header) {
+                            const navIcon = document.createElement('i');
+                            navIcon.className = 'fas fa-external-link-alt card-nav-icon';
+                            navIcon.title = 'View all categories for this school';
+                            navIcon.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                currentViewMode = 'school';
+                                selectedSchoolId = schoolId;
+                                updateView();
+                            });
+                            header.appendChild(navIcon);
+                        }
                     }
                 }
             });
@@ -996,11 +1032,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (target) {
                 const categoryId = target.dataset.id;
                 selectedCategoryId = categoryId;
-                // Reset filter when clicking a category link
-                filterValue = 'all';
-                // Reset dropdown
-                const combinedFilter = document.getElementById('combined-filter');
-                if (combinedFilter) combinedFilter.value = 'all';
+                // Don't reset filter when clicking a category link - preserve the current filter
                 updateView();
                 // Close sidebar on mobile after selection
                 closeSidebarOnMobile();
