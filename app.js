@@ -583,8 +583,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const projectionMax = projectionValues.length > 0 ? Math.max(...projectionValues) : 0;
         
         const combinedMax = Math.max(historyMax, projectionMax);
+        // Ensure y-axis max is at least 50 higher than the highest data point
+        const minYAxisMax = combinedMax + 50;
         // Round up to nearest configured rounding value for consistent axis
-        const yAxisMax = Math.ceil(combinedMax / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
+        const yAxisMax = Math.max(
+            Math.ceil(combinedMax / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING,
+            Math.ceil(minYAxisMax / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING
+        );
 
         if (type === 'history') {
             // Convert underscores to hyphens in labels (e.g., 2024_25 -> 2024-25)
@@ -742,7 +747,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (currentViewMode === 'school') {
             const school = schoolData[selectedSchoolId];
-            const cardTypes = ['school_header', 'details', 'additions', 'capacity', 'enrolment', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
+            // Detect mobile viewport and reorder capacity/enrolment cards accordingly
+            const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+            const cardTypes = isMobile 
+                ? ['school_header', 'details', 'additions', 'enrolment', 'capacity', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local']
+                : ['school_header', 'details', 'additions', 'capacity', 'enrolment', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local'];
             cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
             
             // Add staggered animation delays and navigation icons
