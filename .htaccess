@@ -1,0 +1,102 @@
+# Apache Server Configuration for Security Headers
+# This file should be placed in the root directory of your web application
+# Requires mod_headers to be enabled: sudo a2enmod headers
+
+# Enable RewriteEngine for HTTPS redirect
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Force HTTPS (uncomment in production with SSL certificate)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    # Prevent clickjacking attacks by controlling if the site can be framed
+    Header always set X-Frame-Options "SAMEORIGIN"
+    
+    # Prevent MIME type sniffing
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # Enable XSS protection in older browsers
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Control referrer information sent to other sites
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Disable potentially dangerous browser features
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    
+    # Content Security Policy - adjust as needed for your deployment
+    # This is a more relaxed CSP for production deployments
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.jigsawstack.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: https:; connect-src 'self' https://cdn.jigsawstack.com https://api.jigsawstack.com https://fonts.googleapis.com https://fonts.gstatic.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
+    
+    # Strict Transport Security (HSTS) - Force HTTPS for 1 year
+    # IMPORTANT: Only enable this after confirming HTTPS is working properly!
+    # Once enabled, the browser will refuse to connect over HTTP for the specified time
+    # Uncomment the next line in production with valid SSL certificate:
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# Disable directory listing
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
+# Protect sensitive files from being accessed
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Protect config files
+<FilesMatch "^(config\.js|\.gitignore|\.htaccess|SECURITY\.md)$">
+    # Allow config.js to be served (needed by the application)
+    <FilesMatch "^config\.js$">
+        Require all granted
+    </FilesMatch>
+    # Deny access to other sensitive files
+    <FilesMatch "^(\.gitignore|\.htaccess|SECURITY\.md)$">
+        Require all denied
+    </FilesMatch>
+</FilesMatch>
+
+# Enable gzip compression for better performance
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Set cache control headers for static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    
+    # CSS and JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    
+    # Fonts
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    
+    # HTML
+    ExpiresByType text/html "access plus 0 seconds"
+    
+    # JSON data
+    ExpiresByType application/json "access plus 0 seconds"
+</IfModule>
+
+# Custom error pages (optional - create these files if needed)
+# ErrorDocument 404 /404.html
+# ErrorDocument 500 /500.html
+
+# Prevent access to git files
+<FilesMatch "^\.git">
+    Require all denied
+</FilesMatch>
