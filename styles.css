@@ -1282,6 +1282,10 @@ body {
     cursor: default;
 }
 
+.catchment-map-card .card-body {
+    overflow-y: auto;
+}
+
 .catchment-map-container {
     position: relative;
     width: 100%;
@@ -1291,6 +1295,8 @@ body {
     cursor: pointer;
     box-shadow: var(--shadow-sm);
     transition: all var(--transition-base);
+    /* Limit the height to ensure it fits within the card with space for migration info */
+    max-height: 150px;
 }
 
 .catchment-map-container:hover {
@@ -1300,7 +1306,8 @@ body {
 
 .catchment-map-thumbnail {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     display: block;
     transition: transform var(--transition-base);
 }

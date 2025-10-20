@@ -1142,12 +1142,15 @@ document.addEventListener('DOMContentLoaded', function() {
         let startX = 0;
         let startY = 0;
         
-        // Open lightbox when clicking on map thumbnail
+        // Open lightbox when clicking on map container
         document.addEventListener('click', (e) => {
-            const thumbnail = e.target.closest('.catchment-map-thumbnail');
-            if (thumbnail) {
-                const mapSrc = thumbnail.dataset.mapSrc;
-                openLightbox(mapSrc);
+            const container = e.target.closest('.catchment-map-container');
+            if (container) {
+                const thumbnail = container.querySelector('.catchment-map-thumbnail');
+                if (thumbnail) {
+                    const mapSrc = thumbnail.dataset.mapSrc;
+                    openLightbox(mapSrc);
+                }
             }
         });
         
