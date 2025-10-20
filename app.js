@@ -1141,9 +1141,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('click', (e) => {
             const container = e.target.closest('.catchment-map-container');
             if (container) {
-                const thumbnail = container.querySelector('.catchment-map-thumbnail');
-                if (thumbnail) {
-                    const mapSrc = thumbnail.dataset.mapSrc;
+                const mapImage = container.querySelector('.catchment-map-image');
+                if (mapImage) {
+                    const mapSrc = mapImage.dataset.mapSrc;
                     openLightbox(mapSrc);
                 }
             }
