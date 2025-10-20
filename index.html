@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Annual School Building Review Dashboard</title>
     
+    <!-- Security Headers -->
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.jigsawstack.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: https:; connect-src 'self' https://cdn.jigsawstack.com https://api.jigsawstack.com https://fonts.googleapis.com https://fonts.gstatic.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="public/favicon.svg">
     
@@ -21,14 +31,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="styles.css">
     
     <!-- Chart.js Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha384-D5x4fBjPEvHDZciWdJm+hS+ljDRBv+r1bWKSfVzLljAe8aL2V3LS30LyNIp+wC0v" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js" integrity="sha384-QPn3kk1RYc00W80tyKCDK1SLXWDG7a0u4qJJrLz5JvKLGGYNbcOHzZeJQCqPdQsj" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="dashboard-layout">
@@ -160,7 +170,10 @@
     <!-- Main JavaScript File -->
     <script src="app.js"></script>
     
+    <!-- Translation Widget Configuration -->
+    <script src="config.js"></script>
+    
     <!-- JigsawStack Translation Widget -->
-    <script src="https://cdn.jigsawstack.com/jigts-widget.js" data-jigts-api-key="pk_d15868bbd7b0fbb5f94982b49983f4d1db175eb021b098c3324494f2686ccee8d35ed90d50e819f666e46221fb56b52d3eb6bbe36ee015bdcdc33165d51f45c5024I6bd1gY13TBTetD7Kq"></script>
+    <script src="https://cdn.jigsawstack.com/jigts-widget.js" crossorigin="anonymous"></script>
 </body>
 </html>
