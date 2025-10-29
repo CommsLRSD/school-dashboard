@@ -6,7 +6,7 @@
     "headerImage": "public/archwood.jpg",
     "address": "800 Archibald St.",
     "phone": "(204) 233-7983",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 210,
       "current": 182,
@@ -137,7 +137,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "NELSON MCINTYRE FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "beliveau": {
     "id": "beliveau",
@@ -146,7 +147,7 @@
     "headerImage": "public/beliveau.jpg",
     "address": "296 Speers Rd.",
     "phone": "(204) 255-3205",
-    "program": "7-12, French Immersion",
+    "program": "French Immersion",
     "enrolment": {
       "capacity": 650,
       "current": 678,
@@ -278,7 +279,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
-    "schoolLevel": "High School"
+    "schoolLevel": "High School",
+    "grades": "7-12"
   },
   "cjs": {
     "id": "cjs",
@@ -287,7 +289,7 @@
     "headerImage": "public/cjs.jpg",
     "address": "1128 Dakota St.",
     "phone": "(204) 257-0124",
-    "program": "9-12, French Immersion",
+    "program": "French Immersion",
     "enrolment": {
       "capacity": 900,
       "current": 847,
@@ -407,7 +409,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
-    "schoolLevel": "High School"
+    "schoolLevel": "High School",
+    "grades": "9-12"
   },
   "dakota": {
     "id": "dakota",
@@ -416,7 +419,7 @@
     "headerImage": "public/dakota.jpg",
     "address": "661 Dakota St.",
     "phone": "(204) 256-4366",
-    "program": "9-12, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 1075,
       "current": 1494,
@@ -542,7 +545,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "DAKOTA FOS",
-    "schoolLevel": "High School"
+    "schoolLevel": "High School",
+    "grades": "9-12"
   },
   "darwin": {
     "id": "darwin",
@@ -551,7 +555,7 @@
     "headerImage": "public/darwin.jpg",
     "address": "175 Darwin St.",
     "phone": "(204) 257-2904",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 290,
       "current": 279,
@@ -655,7 +659,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "DAKOTA FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "drdwpenner": {
     "id": "drdwpenner",
@@ -664,7 +669,7 @@
     "headerImage": "public/penner.jpg",
     "address": "121 Hazelwood Cres.",
     "phone": "(204) 256-1135",
-    "program": "K-7 (K-8 in 2025), English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 230,
       "current": 227,
@@ -775,7 +780,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "GLENLAWN FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-7 (K-8 in 2025)"
   },
   "ecolegeorgemcdowell": {
     "id": "ecolegeorgemcdowell",
@@ -784,7 +790,7 @@
     "headerImage": "public/georgemcdowell.jpg",
     "address": "366 Paddington Rd.",
     "phone": "(204) 253-1492",
-    "program": "6-8, French Immersion",
+    "program": "French Immersion",
     "enrolment": {
       "capacity": 350,
       "current": 345,
@@ -900,7 +906,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "6-8"
   },
   "ecoleguyot": {
     "id": "ecoleguyot",
@@ -909,7 +916,7 @@
     "headerImage": "public/guyot.jpg",
     "address": "400 Willowlake Cres.",
     "phone": "(204) 257-2540",
-    "program": "K-8, French Immersion",
+    "program": "French Immersion",
     "enrolment": {
       "capacity": 390,
       "current": 430,
@@ -1022,7 +1029,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "ecolehenribergeron": {
     "id": "ecolehenribergeron",
@@ -1031,7 +1039,7 @@
     "headerImage": "public/henribergeron.jpg",
     "address": "363 Enfield Cres.",
     "phone": "(204) 233-7079",
-    "program": "French Immersion 5-8; Middle Immersion 4-6, French Immersion & Middle Immersion",
+    "program": "French Immersion & Middle Immersion",
     "enrolment": {
       "capacity": 300,
       "current": 221,
@@ -1137,7 +1145,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "French Immersion 5-8; Middle Immersion 4-6"
   },
   "ecolehowden": {
     "id": "ecolehowden",
@@ -1146,7 +1155,7 @@
     "headerImage": "public/howden.jpg",
     "address": "150 Howden Rd.",
     "phone": "(204) 257-0656",
-    "program": "K-8 (K-6 in 2025), French Immersion",
+    "program": "French Immersion",
     "enrolment": {
       "capacity": 355,
       "current": 421,
@@ -1268,7 +1277,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8 (K-6 in 2025)"
   },
   "ecolejulieriel": {
     "id": "ecolejulieriel",
@@ -1277,7 +1287,7 @@
     "headerImage": "public/julieriel.jpeg",
     "address": "316 Ashworth St.",
     "phone": "(204) 253-2363",
-    "program": "French Immersion K-5; Middle Immersion 4-6, French Immersion & Middle Immersion",
+    "program": "French Immersion & Middle Immersion",
     "enrolment": {
       "capacity": 375,
       "current": 364,
@@ -1382,7 +1392,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "French Immersion K-5; Middle Immersion 4-6"
   },
   "ecolemarieannegaboury": {
     "id": "ecolemarieannegaboury",
@@ -1391,7 +1402,7 @@
     "headerImage": "public/marieannegaboury.jpg",
     "address": "95 Pulberry St.",
     "phone": "(204) 253-9704",
-    "program": "K-8, French Immersion",
+    "program": "French Immersion",
     "enrolment": {
       "capacity": 420,
       "current": 426,
@@ -1514,7 +1525,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "ecoleprovencher": {
     "id": "ecoleprovencher",
@@ -1523,7 +1535,7 @@
     "headerImage": "public/provencher.jpg",
     "address": "320 ave de la Cathedrale",
     "phone": "(204) 233-0222",
-    "program": "K-4, French Immersion",
+    "program": "French Immersion",
     "enrolment": {
       "capacity": 290,
       "current": 290,
@@ -1638,7 +1650,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-4"
   },
   "ecolesagecreekbonavista": {
     "id": "ecolesagecreekbonavista",
@@ -1647,7 +1660,7 @@
     "headerImage": "public/sagecreekbonavista.png",
     "address": "355 Des Hivernants Blvd.",
     "phone": "Board Office",
-    "program": "K-8, French Immersion Program",
+    "program": "French Immersion Program",
     "enrolment": {
       "capacity": 900,
       "current": 0,
@@ -1730,7 +1743,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "ecolestgermain": {
     "id": "ecolestgermain",
@@ -1739,7 +1753,7 @@
     "headerImage": "public/stgermain.jpg",
     "address": "77 John Forsyth Rd.",
     "phone": "(204) 254-0120",
-    "program": "K-5, French Immersion",
+    "program": "French Immersion",
     "enrolment": {
       "capacity": 405,
       "current": 399,
@@ -1840,7 +1854,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-5"
   },
   "ecolevanbelleghem": {
     "id": "ecolevanbelleghem",
@@ -1849,7 +1864,7 @@
     "headerImage": "public/vanbelleghem.jpg",
     "address": "10 Vermillion Rd.",
     "phone": "(204) 255-1134",
-    "program": "K-8, French Immersion",
+    "program": "French Immersion",
     "enrolment": {
       "capacity": 365,
       "current": 450,
@@ -1969,7 +1984,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "ecolevarennes": {
     "id": "ecolevarennes",
@@ -1978,7 +1994,7 @@
     "headerImage": "public/varennes.png",
     "address": "22 Varennes Ave.",
     "phone": "(204) 253-1375",
-    "program": "K-8, French Immersion",
+    "program": "French Immersion",
     "enrolment": {
       "capacity": 400,
       "current": 420,
@@ -2107,7 +2123,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "frontenac": {
     "id": "frontenac",
@@ -2116,7 +2133,7 @@
     "headerImage": "public/frontenac.jpg",
     "address": "866 Autumnwood Dr.",
     "phone": "(204) 257-0609",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 450,
       "current": 418,
@@ -2241,7 +2258,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "WINDSOR PARK FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "generalvanier": {
     "id": "generalvanier",
@@ -2250,7 +2268,7 @@
     "headerImage": "public/generalvanier.jpg",
     "address": "18 Lomond Blvd.",
     "phone": "(204) 255-1400",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 235,
       "current": 234,
@@ -2364,7 +2382,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "WINDSOR PARK FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "glenlawn": {
     "id": "glenlawn",
@@ -2373,7 +2392,7 @@
     "headerImage": "public/glenlawn.jpg",
     "address": "770 St. Mary's Rd.",
     "phone": "(204) 233-3986",
-    "program": "9-12, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 1000,
       "current": 1104,
@@ -2496,7 +2515,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "GLENLAWN FOS",
-    "schoolLevel": "High School"
+    "schoolLevel": "High School",
+    "grades": "9-12"
   },
   "glenwood": {
     "id": "glenwood",
@@ -2505,7 +2525,7 @@
     "headerImage": "public/glenwood.jpg",
     "address": "51 Blenheim Ave.",
     "phone": "(204) 233-3619",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 280,
       "current": 267,
@@ -2624,7 +2644,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "GLENLAWN FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "hspaul": {
     "id": "hspaul",
@@ -2633,7 +2654,7 @@
     "headerImage": "public/hspaul.jpg",
     "address": "160 Southglen Blvd.",
     "phone": "(204) 254-7477",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 375,
       "current": 383,
@@ -2741,7 +2762,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "DAKOTA FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "hastings": {
     "id": "hastings",
@@ -2750,7 +2772,7 @@
     "headerImage": "public/hastings.jpg",
     "address": "50 Hastings Blvd.",
     "phone": "(204) 253-1371",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 260,
       "current": 238,
@@ -2854,7 +2876,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "DAKOTA FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "highbury": {
     "id": "highbury",
@@ -2863,7 +2886,7 @@
     "headerImage": "public/highbury.jpg",
     "address": "99 Highbury Rd.",
     "phone": "(204) 254-5078",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 400,
       "current": 450,
@@ -2986,7 +3009,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "DAKOTA FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "islandlakes": {
     "id": "islandlakes",
@@ -2995,7 +3019,7 @@
     "headerImage": "public/islandlakes.jpg",
     "address": "445 Island Shore Blvd.",
     "phone": "(204) 254-6247",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 540,
       "current": 752,
@@ -3108,7 +3132,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "jhbruns": {
     "id": "jhbruns",
@@ -3117,7 +3142,7 @@
     "headerImage": "public/jhbruns.jpg",
     "address": "250 Lakewood Blvd.",
     "phone": "(204) 257-2928",
-    "program": "9-12, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 700,
       "current": 856,
@@ -3233,7 +3258,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
-    "schoolLevel": "High School"
+    "schoolLevel": "High School",
+    "grades": "9-12"
   },
   "lavallee": {
     "id": "lavallee",
@@ -3242,7 +3268,7 @@
     "headerImage": "public/lavallee.jpg",
     "address": "505 St. Anne's Rd.",
     "phone": "(204) 257-1388",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 210,
       "current": 161,
@@ -3346,7 +3372,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "DAKOTA FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "louisrielartstech": {
     "id": "louisrielartstech",
@@ -3355,7 +3382,7 @@
     "headerImage": "public/lratc.jpg",
     "address": "5 deBourmont Ave.",
     "phone": "(204) 237-8951",
-    "program": "Grade 11, 12, post-secondary, Technical Vocational",
+    "program": "Technical Vocational",
     "enrolment": {
       "capacity": 331,
       "current": 141,
@@ -3462,7 +3489,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "schoolLevel": "High School",
-    "familyOfSchools": "Other"
+    "familyOfSchools": "Other",
+    "grades": "Grade 11, 12, post-secondary"
   },
   "marion": {
     "id": "marion",
@@ -3471,7 +3499,7 @@
     "headerImage": "public/marion.jpg",
     "address": "619 Des Meurons St.",
     "phone": "(204) 233-2893",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 250,
       "current": 259,
@@ -3589,7 +3617,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "NELSON MCINTYRE FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "minnetonka": {
     "id": "minnetonka",
@@ -3598,7 +3627,7 @@
     "headerImage": "public/minnetonka.jpg",
     "address": "200 Minnetonka St.",
     "phone": "(204) 257-8114",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 205,
       "current": 171,
@@ -3701,7 +3730,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "GLENLAWN FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "nelsonmcintyre": {
     "id": "nelsonmcintyre",
@@ -3710,7 +3740,7 @@
     "headerImage": "public/nelsonmacintyre.jpg",
     "address": "188 St. Mary's Rd.",
     "phone": "(204) 237-0219",
-    "program": "9-12, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 650,
       "current": 393,
@@ -3838,7 +3868,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "NELSON MCINTYRE FOS",
-    "schoolLevel": "High School"
+    "schoolLevel": "High School",
+    "grades": "9-12"
   },
   "niakwaplace": {
     "id": "niakwaplace",
@@ -3847,7 +3878,7 @@
     "headerImage": "public/niakwa.jpg",
     "address": "200 Pebblebeach Rd.",
     "phone": "(204) 257-0640",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 260,
       "current": 248,
@@ -3954,7 +3985,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "nordale": {
     "id": "nordale",
@@ -3963,7 +3995,7 @@
     "headerImage": "public/nordaleschool.jpeg",
     "address": "99 Birchdale Ave.",
     "phone": "(204) 237-0202",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 230,
       "current": 180,
@@ -4083,7 +4115,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "NELSON MCINTYRE FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "sagecreek": {
     "id": "sagecreek",
@@ -4092,7 +4125,7 @@
     "headerImage": "public/sagecreek.jpg",
     "address": "315 Sage Creek Blvd.",
     "phone": "(204) 253-8199",
-    "program": "K-8 (transitioning to English K-8 only in 2025/26), English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 600,
       "current": 654,
@@ -4193,7 +4226,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8 (transitioning to English K-8 only in 2025/26)"
   },
   "samuelburland": {
     "id": "samuelburland",
@@ -4202,7 +4236,7 @@
     "headerImage": "public/samuelburland.jpg",
     "address": "192 Burland Ave.",
     "phone": "(204) 254-0124",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 450,
       "current": 421,
@@ -4310,7 +4344,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "GLENLAWN FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "shamrock": {
     "id": "shamrock",
@@ -4319,7 +4354,7 @@
     "headerImage": "public/shamrock.png",
     "address": "831 Beaverhill Blvd.",
     "phone": "(204) 257-0637",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 640,
       "current": 633,
@@ -4438,7 +4473,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "stgeorge": {
     "id": "stgeorge",
@@ -4447,7 +4483,7 @@
     "headerImage": "public/stgeorge.jpg",
     "address": "151 St. George Rd.",
     "phone": "(204) 253-2646",
-    "program": "K-6 (Grades 7 & 8 moved to Windsor School in 2024-25), English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 410,
       "current": 344,
@@ -4554,7 +4590,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "GLENLAWN FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-6 (Grades 7 & 8 moved to Windsor School in 2024-25)"
   },
   "victorhlwyatt": {
     "id": "victorhlwyatt",
@@ -4563,7 +4600,7 @@
     "headerImage": "public/victorwyatt.jpg",
     "address": "485 Meadowood Dr.",
     "phone": "(204) 255-7880",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 325,
       "current": 317,
@@ -4664,7 +4701,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "DAKOTA FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "victormager": {
     "id": "victormager",
@@ -4673,7 +4711,7 @@
     "headerImage": "public/victormager.jpg",
     "address": "81 Beliveau Rd.",
     "phone": "(204) 253-9873",
-    "program": "K-8, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 420,
       "current": 402,
@@ -4784,7 +4822,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "DAKOTA FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8"
   },
   "windsorpark": {
     "id": "windsorpark",
@@ -4793,7 +4832,7 @@
     "headerImage": "public/windsorpark.jpg",
     "address": "1015 Cottonwood Rd.",
     "phone": "(204) 256-7316",
-    "program": "9-12, English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 700,
       "current": 709,
@@ -4904,7 +4943,8 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "WINDSOR PARK FOS",
-    "schoolLevel": "High School"
+    "schoolLevel": "High School",
+    "grades": "9-12"
   },
   "windsor": {
     "id": "windsor",
@@ -4913,7 +4953,7 @@
     "headerImage": "public/windsorschool.jpg",
     "address": "80 Cunnington Ave.",
     "phone": "(204) 237-4057",
-    "program": "K-8 (Includes Grades 7 & 8 students relocated from St. George School), English Program",
+    "program": "English Program",
     "enrolment": {
       "capacity": 260,
       "current": 235,
@@ -5032,6 +5072,7 @@
       "updated": "2025-10-16 17:22:16"
     },
     "familyOfSchools": "GLENLAWN FOS",
-    "schoolLevel": "Elementary School"
+    "schoolLevel": "Elementary School",
+    "grades": "K-8 (Includes Grades 7 & 8 students relocated from St. George School)"
   }
 }

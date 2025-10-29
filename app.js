@@ -104,39 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return label;
     };
 
-    /**
-     * Helper function to parse program field into grades and program name
-     * @param {string} programString - The program field to parse
-     * @returns {{grades: string, program: string}} Parsed grades and program
-     */
-    const parseProgramField = (programString) => {
-        // Handle null/undefined/empty string
-        if (!programString) return { grades: '', program: '' };
-        
-        // Look for the last comma that separates grades from program name
-        const lastCommaIndex = programString.lastIndexOf(',');
-        
-        if (lastCommaIndex === -1) {
-            // No comma found, treat entire string as program
-            return { grades: '', program: programString.trim() };
-        }
-        
-        // Split at the last comma
-        const beforeLastComma = programString.substring(0, lastCommaIndex).trim();
-        const afterLastComma = programString.substring(lastCommaIndex + 1).trim();
-        
-        // Check if what comes after the last comma looks like a program name
-        // (contains words like "Program", "Immersion", "Vocational", etc.)
-        const isProgramName = /Program|Immersion|Vocational/i.test(afterLastComma);
-        
-        if (isProgramName) {
-            return { grades: beforeLastComma, program: afterLastComma };
-        } else {
-            // The last comma doesn't separate grades from program
-            // Treat entire string as grades
-            return { grades: programString.trim(), program: '' };
-        }
-    };
+
 
     const categories = {
         "details": "Contact & Building Info",
@@ -397,15 +365,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 const builtYear = school.details.Built;
                 const calculatedAge = builtYear ? `${currentYear - builtYear} years` : school.details.Age;
                 
-                // Parse program field to separate grades and program name
-                const { grades, program } = parseProgramField(school.program);
-                
                 // Create details object with calculated age, renamed Modular field, and separated Grades/Program
                 const detailsData = {
                     "Address": school.address,
                     "Phone": school.phone,
-                    "Grades": grades,
-                    "Program": program,
+                    "Grades": school.grades,
+                    "Program": school.program,
                     "Built": school.details.Built,
                     "Age": calculatedAge,
                     "Size": school.details.Size,
