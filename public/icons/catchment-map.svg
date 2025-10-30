@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 61.69 61.69">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #b23427;
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+
+      .cls-3 {
+        clip-path: url(#clippath-1);
+      }
+
+      .cls-4 {
+        clip-path: url(#clippath-3);
+      }
+
+      .cls-5 {
+        clip-path: url(#clippath-2);
+      }
+
+      .cls-6 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-2" x="17.39" width="24" height="36.48"/>
+    </clipPath>
+    <clipPath id="clippath-1">
+      <rect class="cls-2" x="40.06" y="17.82" width="21.64" height="43.88"/>
+    </clipPath>
+    <clipPath id="clippath-2">
+      <rect class="cls-2" y="17.82" width="18.72" height="43.88"/>
+    </clipPath>
+    <clipPath id="clippath-3">
+      <rect class="cls-2" x="20.06" y="25.82" width="18.67" height="35.88"/>
+    </clipPath>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <g class="cls-6">
+        <path class="cls-1" d="M29.48,0C23.13,0,17.95,5.18,17.95,11.54c0,5.84,9.36,21.91,10.43,23.72.23.39.65.63,1.1.63s.88-.24,1.1-.63c1.07-1.81,10.43-17.88,10.43-23.72C41.02,5.18,35.84,0,29.48,0ZM29.48,15.38c-2.12,0-3.84-1.72-3.84-3.84s1.72-3.84,3.84-3.84,3.84,1.72,3.84,3.84-1.72,3.84-3.84,3.84Z"/>
+      </g>
+      <g class="cls-3">
+        <path class="cls-1" d="M61.04,18.22c-.31-.24-.72-.33-1.1-.23l-18.92,4.73v38.53l19.54-4.88c.57-.15.97-.66.97-1.24V19.23c0-.4-.18-.77-.49-1.01Z"/>
+      </g>
+      <g class="cls-5">
+        <path class="cls-1" d="M17.95,18.26L.93,23.12C.38,23.28,0,23.78,0,24.35v35.89c0,.41.19.78.51,1.03.23.17.5.26.77.26.12,0,.24-.02.35-.05l16.31-4.66V18.26Z"/>
+      </g>
+      <g class="cls-4">
+        <path class="cls-1" d="M32.8,36.56c-.69,1.17-1.96,1.89-3.31,1.89s-2.63-.72-3.31-1.89c-1.47-2.5-3.64-6.31-5.66-10.39v30.58l17.95,4.48V26.18c-2.03,4.07-4.19,7.89-5.66,10.39Z"/>
+      </g>
+    </g>
+  </g>
+</svg>
