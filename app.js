@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         return 'public/icon/baseball.svg';
                     }
                     // Soccer-related items
-                    if (itemLower.includes('soccer') || itemLower.includes('football field')) {
+                    if (itemLower.includes('soccer')) {
                         return 'public/icon/soccer.svg';
                     }
                     // Climbing-related items
@@ -467,9 +467,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         return 'public/icon/climbing.svg';
                     }
                     // Nature-related items (gardens, outdoor classrooms, shade structures)
-                    if (itemLower.includes('garden') || itemLower.includes('outdoor classroom') || 
-                        itemLower.includes('nature') || itemLower.includes('shade structure') ||
-                        itemLower.includes('outdoor learning') || itemLower.includes('rain garden')) {
+                    const natureKeywords = ['garden', 'outdoor classroom', 'nature', 'shade structure', 'outdoor learning', 'rain garden'];
+                    if (natureKeywords.some(keyword => itemLower.includes(keyword))) {
                         return 'public/icon/nature.svg';
                     }
                     
