@@ -13,10 +13,10 @@
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
     
     <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.jigsawstack.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://cdn.jigsawstack.com https://api.jigsawstack.com https://fonts.googleapis.com https://fonts.gstatic.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.jigsawstack.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: https:; connect-src 'self' https://cdn.jigsawstack.com https://api.jigsawstack.com https://fonts.googleapis.com https://fonts.gstatic.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="public/icons/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="public/favicon.svg">
     
     <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="public/apple-icon.png">
@@ -29,6 +29,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="styles.css">
@@ -43,7 +46,7 @@
         <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
             <div class="sidebar-header">
                 <a href="https://www.lrsd.net/" class="sidebar-logo-link" target="_blank" rel="noopener noreferrer" aria-label="Visit LRSD website">
-                    <img src="public/icons/lrsd-logo.svg" alt="LRSD Logo" class="sidebar-logo">
+                    <img src="public/lrsd-logo.svg" alt="LRSD Logo" class="sidebar-logo">
                 </a>
             </div>
             <nav class="sidebar-nav">
@@ -59,7 +62,7 @@
                             <label for="school-search" class="search-label">Search</label>
                             <div class="search-input-wrapper">
                                 <input type="text" id="school-search" class="search-input" placeholder="Search schools..." aria-label="Search schools by name" autocomplete="off">
-                                <img src="public/icons/search.svg" alt="" class="search-icon" aria-hidden="true">
+                                <i class="fas fa-search search-icon" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
@@ -102,12 +105,12 @@
         <!-- Main Content Area -->
         <div class="main-content">
             <header class="main-header">
-                <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" aria-label="Toggle sidebar menu" aria-expanded="false" aria-controls="sidebar"><img src="public/icons/hamburger.svg" alt="" class="hamburger-icon" aria-hidden="true"></button>
+                <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" aria-label="Toggle sidebar menu" aria-expanded="false" aria-controls="sidebar"><img src="public/hamburger.svg" alt="" class="hamburger-icon" aria-hidden="true"></button>
                 <div class="header-titles">
-                    <img src="public/icons/dashboard-logo.svg" alt="Annual School Building Review Dashboard" class="header-logo-main">
+                    <img src="public/dashboard-logo.svg" alt="Annual School Building Review Dashboard" class="header-logo-main">
                 </div>
                 <div class="header-toolbar">
-                    <img src="public/icons/lrsd-logo.svg" alt="LRSD Logo" class="header-logo header-logo-desktop">
+                    <img src="public/lrsd-logo.svg" alt="LRSD Logo" class="header-logo header-logo-desktop">
                 </div>
             </header>
             <!-- Sticky Category Banner -->
@@ -131,10 +134,10 @@
             <div class="popup-message"></div>
             <div class="popup-buttons">
                 <button class="popup-button popup-button-confirm">
-                    ✓
+                    <i class="fas fa-check"></i>
                 </button>
                 <button class="popup-button popup-button-cancel">
-                    ✕
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
         </div>
@@ -144,17 +147,17 @@
             <div class="map-lightbox-overlay"></div>
             <div class="map-lightbox-container">
                 <button class="map-lightbox-close" aria-label="Close lightbox">
-                    <img src="public/icons/lightbox-close.svg" alt="Close" />
+                    <i class="fas fa-times"></i>
                 </button>
                 <div class="map-lightbox-controls">
                     <button class="map-control-btn" id="zoom-in-btn" aria-label="Zoom in">
-                        <img src="public/icons/lightbox-zoomin.svg" alt="Zoom in" />
+                        <i class="fas fa-search-plus"></i>
                     </button>
                     <button class="map-control-btn" id="zoom-out-btn" aria-label="Zoom out">
-                        <img src="public/icons/lightbox-zoomout.svg" alt="Zoom out" />
+                        <i class="fas fa-search-minus"></i>
                     </button>
                     <button class="map-control-btn" id="reset-zoom-btn" aria-label="Reset zoom">
-                        <img src="public/icons/lightbox-recentreimage.svg" alt="Reset zoom" />
+                        <i class="fas fa-expand-arrows-alt"></i>
                     </button>
                 </div>
                 <div class="map-lightbox-content">

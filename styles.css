@@ -441,15 +441,14 @@ body {
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
+    color: var(--text-light);
+    font-size: 0.875rem;
     pointer-events: none;
-    transition: opacity var(--transition-base);
-    opacity: 0.6;
+    transition: color var(--transition-base);
 }
 
 .search-input:focus ~ .search-icon {
-    opacity: 0.8;
+    color: var(--primary-green);
 }
 
 .search-separator {
@@ -542,20 +541,11 @@ body {
 }
 
 .card-header-icon { 
+    color: var(--primary-red); 
     margin-right: 0.75rem; 
+    font-size: 1.1rem; 
     width: 20px; 
-    height: 20px;
-    filter: brightness(0) saturate(100%) invert(28%) sepia(62%) saturate(2288%) hue-rotate(345deg) brightness(89%) contrast(88%);
-}
-
-/* Elementary school icons are red (default) */
-.school-icon-elementary {
-    filter: brightness(0) saturate(100%) invert(28%) sepia(62%) saturate(2288%) hue-rotate(345deg) brightness(89%) contrast(88%);
-}
-
-/* High school icons are green */
-.school-icon-highschool {
-    filter: brightness(0) saturate(100%) invert(64%) sepia(15%) saturate(1523%) hue-rotate(96deg) brightness(93%) contrast(84%);
+    text-align: center;
 }
 
 .card-title { 
@@ -572,24 +562,21 @@ body {
 
 .warning-icon {
     margin-left: 0.5rem;
-    width: 18px;
-    height: 18px;
-    display: inline-block;
-    vertical-align: middle;
+    font-size: 1.1rem;
 }
 
 .warning-icon-red {
-    filter: brightness(0) saturate(100%) invert(28%) sepia(82%) saturate(1500%) hue-rotate(345deg) brightness(85%) contrast(88%);
+    color: #B23427;
 }
 
 .warning-icon-yellow {
-    filter: brightness(0) saturate(100%) invert(69%) sepia(82%) saturate(1749%) hue-rotate(3deg) brightness(101%) contrast(94%);
+    color: #f59e0b;
 }
 
 .card-nav-icon {
     margin-left: auto;
-    width: 18px;
-    height: 18px;
+    font-size: 1rem;
+    color: var(--text-lighter);
     opacity: 0.6;
     cursor: pointer;
     transition: all var(--transition-base);
@@ -1129,7 +1116,7 @@ body {
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 0.9rem;
     transition: all var(--transition-base);
     display: flex;
     align-items: center;
@@ -1137,6 +1124,11 @@ body {
     gap: 0.5rem;
     min-width: 50px;
     min-height: 50px;
+}
+
+.popup-button i {
+    opacity: 1;
+    font-size: 1.5rem;
 }
 
 .popup-button-confirm {
@@ -1283,24 +1275,6 @@ body {
 
 .status-icon-completed {
     filter: brightness(0) saturate(100%) invert(57%) sepia(33%) saturate(661%) hue-rotate(110deg) brightness(93%) contrast(85%);
-}
-
-/* Playground icon styles */
-.playground-icon {
-    width: 0.875rem;
-    height: 0.875rem;
-    margin-right: 0.5rem;
-    vertical-align: middle;
-    display: inline-block;
-    filter: brightness(0) saturate(100%) invert(28%) sepia(62%) saturate(2288%) hue-rotate(345deg) brightness(89%) contrast(88%);
-}
-
-/* Lightbox control button images */
-.map-lightbox-close img,
-.map-control-btn img {
-    width: 100%;
-    height: 100%;
-    display: block;
 }
 
 /* --- Catchment Map Card Styles --- */
