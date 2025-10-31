@@ -450,6 +450,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const getPlaygroundIcon = (item) => {
                     const itemLower = item.toLowerCase();
                     
+                    // Play structure items (check before other keywords since "play structure" is specific)
+                    if (itemLower.includes('play structure')) {
+                        return 'public/icon/play-structure.svg';
+                    }
                     // Basketball-related items
                     if (itemLower.includes('basketball')) {
                         return 'public/icon/basketball.svg';
@@ -461,6 +465,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Soccer-related items
                     if (itemLower.includes('soccer')) {
                         return 'public/icon/soccer.svg';
+                    }
+                    // Football-related items (using soccer icon as football typically refers to soccer)
+                    if (itemLower.includes('football')) {
+                        return 'public/icon/soccer.svg';
+                    }
+                    // Volleyball-related items
+                    if (itemLower.includes('volleyball')) {
+                        return 'public/icon/volleyball.svg';
+                    }
+                    // Slide-related items
+                    if (itemLower.includes('slide')) {
+                        return 'public/icon/slide.svg';
                     }
                     // Climbing-related items
                     if (itemLower.includes('climbing') || itemLower.includes('climb')) {
@@ -514,7 +530,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 `<li class="detail-item"><span class="detail-label">City Property</span></li>`,
                                 ...items.map(cityItem => {
                                     const icon = getPlaygroundIcon(cityItem);
-                                    return `<li class="detail-item" style="padding-left: 1rem;"><img src="${icon}" alt="" class="playground-item-icon">${cityItem}</li>`;
+                                    return `<li class="detail-item"><img src="${icon}" alt="" class="playground-item-icon">${cityItem}</li>`;
                                 })
                             ];
                         }
