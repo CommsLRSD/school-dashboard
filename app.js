@@ -528,7 +528,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         // Regular playground items with icons
                         const iconName = playgroundIcons[item] || 'playground';
-                        return [`<li class="detail-item">${createIconImg(iconName, 'playground-icon', '')}${item}</li>`];
+                        return [`<li class="detail-item">${createIconImg(iconName, 'playground-icon', '')}<span style="margin-left: 0.5rem;">${item}</span></li>`];
                     }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
                 } else {
                     data = school[cardType === 'building_systems' ? 'building' : cardType];
