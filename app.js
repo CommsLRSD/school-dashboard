@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Card Creation Functions ---
     const getTileSizeClass = (cardType) => {
         // Cards that should be double-width
-        if (['school_header', 'history', 'projection'].includes(cardType)) {
+        if (['school_header', 'history', 'projection', 'playground'].includes(cardType)) {
             return 'tile-double-width';
         }
         // Cards that should be double-height for more content
@@ -543,7 +543,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
                 }
 
-                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="${icons[cardType]}" alt="" class="card-header-icon"><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems || '<li class="detail-item">No data available.</li>'}</ul></div></div>`;
+                // Add note for capital projects cards
+                const cardNote = (cardType === 'projects_provincial' || cardType === 'projects_local') 
+                    ? '<div class="card-note">*2020–34</div>' 
+                    : '';
+                
+                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="${icons[cardType]}" alt="" class="card-header-icon"><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems || '<li class="detail-item">No data available.</li>'}</ul>${cardNote}</div></div>`;
             }
         }
     }

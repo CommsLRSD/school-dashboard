@@ -913,6 +913,15 @@ body {
     border-bottom: none; 
 }
 
+.card-note {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.75rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
 .detail-label { 
     font-weight: 500;
     color: var(--text-color);
