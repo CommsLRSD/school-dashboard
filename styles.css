@@ -568,11 +568,13 @@ body {
 }
 
 .warning-icon-red {
-    /* Red color applied via SVG file */
+    /* Red color #B23427 applied via CSS filter */
+    filter: invert(31%) sepia(25%) saturate(1537%) hue-rotate(335deg) brightness(85%) contrast(85%);
 }
 
 .warning-icon-yellow {
-    /* Yellow color applied via SVG file */
+    /* Yellow color #f59e0b applied via CSS filter */
+    filter: invert(68%) sepia(77%) saturate(2181%) hue-rotate(0deg) brightness(101%) contrast(95%);
 }
 
 .card-nav-icon {
@@ -582,11 +584,15 @@ body {
     opacity: 0.6;
     cursor: pointer;
     transition: all var(--transition-base);
+    /* Light grey color (var(--text-lighter) = #adb5bd) applied via CSS filter */
+    filter: invert(76%) sepia(6%) saturate(273%) hue-rotate(169deg) brightness(92%) contrast(87%);
 }
 
 .card-nav-icon:hover {
     opacity: 1;
     transform: scale(1.1);
+    /* Red color (var(--primary-red) = #BE5247) applied via CSS filter on hover */
+    filter: invert(47%) sepia(19%) saturate(1618%) hue-rotate(318deg) brightness(89%) contrast(83%);
 }
 
 .card-body { 
