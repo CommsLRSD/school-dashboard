@@ -13,7 +13,7 @@
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
     
     <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.jigsawstack.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: https:; connect-src 'self' https://cdn.jigsawstack.com https://api.jigsawstack.com https://fonts.googleapis.com https://fonts.gstatic.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.jigsawstack.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://cdn.jigsawstack.com https://api.jigsawstack.com https://fonts.googleapis.com https://fonts.gstatic.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="public/favicon.svg">
@@ -30,9 +30,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    
+
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="styles.css">
     
@@ -62,7 +60,7 @@
                             <label for="school-search" class="search-label">Search</label>
                             <div class="search-input-wrapper">
                                 <input type="text" id="school-search" class="search-input" placeholder="Search schools..." aria-label="Search schools by name" autocomplete="off">
-                                <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                                <img src="public/icon/search.svg" alt="" class="search-icon" aria-hidden="true">
                             </div>
                         </div>
                     </div>
@@ -134,10 +132,10 @@
             <div class="popup-message"></div>
             <div class="popup-buttons">
                 <button class="popup-button popup-button-confirm">
-                    <i class="fas fa-check"></i>
+                    ✓
                 </button>
                 <button class="popup-button popup-button-cancel">
-                    <i class="fas fa-times"></i>
+                    <img src="public/icon/lightbox-close.svg" alt="Cancel" class="popup-icon">
                 </button>
             </div>
         </div>
@@ -147,17 +145,17 @@
             <div class="map-lightbox-overlay"></div>
             <div class="map-lightbox-container">
                 <button class="map-lightbox-close" aria-label="Close lightbox">
-                    <i class="fas fa-times"></i>
+                    <img src="public/icon/lightbox-close.svg" alt="" class="lightbox-btn-icon">
                 </button>
                 <div class="map-lightbox-controls">
                     <button class="map-control-btn" id="zoom-in-btn" aria-label="Zoom in">
-                        <i class="fas fa-search-plus"></i>
+                        <img src="public/icon/lightbox-zoomin.svg" alt="" class="lightbox-btn-icon">
                     </button>
                     <button class="map-control-btn" id="zoom-out-btn" aria-label="Zoom out">
-                        <i class="fas fa-search-minus"></i>
+                        <img src="public/icon/lightbox-zoomout.svg" alt="" class="lightbox-btn-icon">
                     </button>
                     <button class="map-control-btn" id="reset-zoom-btn" aria-label="Reset zoom">
-                        <i class="fas fa-expand-arrows-alt"></i>
+                        <img src="public/icon/lightbox-recentreimage.svg" alt="" class="lightbox-btn-icon">
                     </button>
                 </div>
                 <div class="map-lightbox-content">

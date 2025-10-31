@@ -441,14 +441,15 @@ body {
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-light);
-    font-size: 0.875rem;
+    width: 0.875rem;
+    height: 0.875rem;
     pointer-events: none;
-    transition: color var(--transition-base);
+    transition: opacity var(--transition-base);
+    opacity: 0.6;
 }
 
 .search-input:focus ~ .search-icon {
-    color: var(--primary-green);
+    opacity: 0.8;
 }
 
 .search-separator {
@@ -541,11 +542,10 @@ body {
 }
 
 .card-header-icon { 
-    color: var(--primary-red); 
-    margin-right: 0.75rem; 
-    font-size: 1.1rem; 
     width: 20px; 
-    text-align: center;
+    height: 20px;
+    margin-right: 0.75rem; 
+    flex-shrink: 0;
 }
 
 .card-title { 
@@ -562,28 +562,29 @@ body {
 
 .warning-icon {
     margin-left: 0.5rem;
-    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    vertical-align: middle;
 }
 
 .warning-icon-red {
-    color: #B23427;
+    /* Red color applied via SVG file */
 }
 
 .warning-icon-yellow {
-    color: #f59e0b;
+    /* Yellow color applied via SVG file */
 }
 
 .card-nav-icon {
     margin-left: auto;
-    font-size: 1rem;
-    color: var(--text-lighter);
+    width: 1rem;
+    height: 1rem;
     opacity: 0.6;
     cursor: pointer;
     transition: all var(--transition-base);
 }
 
 .card-nav-icon:hover {
-    color: var(--primary-red);
     opacity: 1;
     transform: scale(1.1);
 }
@@ -907,6 +908,15 @@ body {
     flex: 0 0 auto;
     max-width: 60%;
     word-wrap: break-word;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.playground-item-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex-shrink: 0;
 }
 
 .detail-value { 
@@ -1131,9 +1141,15 @@ body {
     font-size: 1.5rem;
 }
 
+.popup-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
 .popup-button-confirm {
     background: var(--accent-green);
     color: white;
+    font-size: 1.5rem;
 }
 
 .popup-button-confirm:hover {
@@ -1410,8 +1426,6 @@ body {
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
-    color: white;
-    font-size: 1.5rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1425,6 +1439,12 @@ body {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.5);
     transform: scale(1.1);
+}
+
+.lightbox-btn-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    opacity: 0.8;
 }
 
 .map-lightbox-controls {
@@ -1443,8 +1463,6 @@ body {
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
-    color: white;
-    font-size: 1.25rem;
     cursor: pointer;
     display: flex;
     align-items: center;
