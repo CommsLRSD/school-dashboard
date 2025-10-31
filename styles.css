@@ -316,17 +316,22 @@ body {
 }
 
 .custom-select-wrapper::after {
-    content: '\f078'; /* Font Awesome chevron-down */
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    font-size: 0.75rem;
-    color: var(--text-light);
+    content: '';
+    background-image: url('public/icon/filter.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 0.875rem;
+    height: 0.875rem;
+    opacity: 0.6;
+    /* Light grey color (var(--text-lighter) = #adb5bd) applied via CSS filter */
+    filter: invert(76%) sepia(6%) saturate(273%) hue-rotate(169deg) brightness(92%) contrast(87%);
     position: absolute;
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    transition: color var(--transition-base), transform var(--transition-base);
+    transition: opacity var(--transition-base), transform var(--transition-base);
 }
 
 .filter-select {
@@ -370,8 +375,8 @@ body {
 }
 
 .custom-select-wrapper:has(.filter-select:focus)::after {
-    color: var(--primary-green);
-    transform: translateY(-50%) rotate(180deg);
+    opacity: 1;
+    /* Keep the same filter, no rotation since it's not a chevron */
 }
 
 .category-separator {
@@ -568,8 +573,8 @@ body {
 }
 
 .warning-icon-red {
-    /* Red color #B23427 applied via CSS filter */
-    filter: invert(31%) sepia(25%) saturate(1537%) hue-rotate(335deg) brightness(85%) contrast(85%);
+    /* Red color #B23427 (var(--over-capacity-red)) applied via CSS filter */
+    filter: invert(27%) sepia(55%) saturate(1258%) hue-rotate(338deg) brightness(93%) contrast(87%);
 }
 
 .warning-icon-yellow {

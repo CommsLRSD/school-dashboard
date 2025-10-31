@@ -446,15 +446,50 @@ document.addEventListener('DOMContentLoaded', function() {
                 };
                 const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincially Funded Capital Projects', projects_local: 'Locally Funded Capital Projects' };
                 
-                const playgroundIcons = {
-                    'Basketball Court': 'public/icon/basketball.svg',
-                    'Basketball Action Play': 'public/icon/basketball.svg',
-                    'Steel Play structure': 'public/icon/play-structure.svg',
-                    'Wooden Play structure': 'public/icon/play-structure.svg',
-                    'Climbing dome': 'public/icon/climbing.svg',
-                    'Shade structure': 'public/icon/nature.svg',
-                    'Soccer nets': 'public/icon/soccer.svg',
-                    'Baseball Diamond': 'public/icon/baseball.svg'
+                // Function to determine the appropriate icon for a playground item
+                const getPlaygroundIcon = (item) => {
+                    const itemLower = item.toLowerCase();
+                    
+                    // Play structure items (check before other keywords since "play structure" is specific)
+                    if (itemLower.includes('play structure')) {
+                        return 'public/icon/play-structure.svg';
+                    }
+                    // Basketball-related items
+                    if (itemLower.includes('basketball')) {
+                        return 'public/icon/basketball.svg';
+                    }
+                    // Baseball-related items
+                    if (itemLower.includes('baseball')) {
+                        return 'public/icon/baseball.svg';
+                    }
+                    // Soccer-related items
+                    if (itemLower.includes('soccer')) {
+                        return 'public/icon/soccer.svg';
+                    }
+                    // Football-related items (using soccer icon as football typically refers to soccer)
+                    if (itemLower.includes('football')) {
+                        return 'public/icon/soccer.svg';
+                    }
+                    // Volleyball-related items
+                    if (itemLower.includes('volleyball')) {
+                        return 'public/icon/volleyball.svg';
+                    }
+                    // Slide-related items
+                    if (itemLower.includes('slide')) {
+                        return 'public/icon/slide.svg';
+                    }
+                    // Climbing-related items
+                    if (itemLower.includes('climbing') || itemLower.includes('climb')) {
+                        return 'public/icon/climbing.svg';
+                    }
+                    // Nature-related items (gardens, outdoor classrooms, shade structures)
+                    const natureKeywords = ['garden', 'outdoor classroom', 'nature', 'shade structure', 'outdoor learning', 'rain garden'];
+                    if (natureKeywords.some(keyword => itemLower.includes(keyword))) {
+                        return 'public/icon/nature.svg';
+                    }
+                    
+                    // Default to playground icon for general items
+                    return 'public/icon/playground.svg';
                 };
                 
                 let data, listItems;
@@ -492,12 +527,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             // Split by comma and create separate rows for each item
                             const items = cityPropertyItems.split(',').map(i => i.trim());
                             return [
-                                `<li class="detail-item"><span class="detail-label"><img src="public/icon/playground.svg" alt="" class="playground-item-icon">City Property</span></li>`,
-                                ...items.map(cityItem => `<li class="detail-item" style="padding-left: 1rem;">${cityItem}</li>`)
+                                `<li class="detail-item"><span class="detail-label">City Property</span></li>`,
+                                ...items.map(cityItem => {
+                                    const icon = getPlaygroundIcon(cityItem);
+                                    return `<li class="detail-item"><img src="${icon}" alt="" class="playground-item-icon">${cityItem}</li>`;
+                                })
                             ];
                         }
                         // Regular playground items with icons
-                        const icon = playgroundIcons[item] || 'public/icon/playground.svg';
+                        const icon = getPlaygroundIcon(item);
                         return [`<li class="detail-item"><img src="${icon}" alt="" class="playground-item-icon">${item}</li>`];
                     }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
                 } else {
