@@ -104,6 +104,16 @@ document.addEventListener('DOMContentLoaded', function() {
         return label;
     };
 
+    /**
+     * Helper function to create icon img tags for custom SVG icons
+     * @param {string} iconName - The name of the icon file (without .svg extension)
+     * @param {string} className - Additional CSS classes for the icon
+     * @param {string} alt - Alt text for the icon
+     * @returns {string} HTML img tag for the icon
+     */
+    const createIconImg = (iconName, className = '', alt = '') => {
+        return `<img src="public/icons/${iconName}.svg" alt="${alt}" class="${className}" aria-hidden="true">`;
+    };
 
 
     const categories = {
@@ -381,32 +391,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     "Modular Classrooms": school.details.Modular
                 };
                 
-                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-info-circle"></i><h2 class="card-title">Details</h2></div><div class="card-body"><ul class="detail-list">${Object.entries(detailsData).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${formatNumber(val)}</span></li>`).join('')}</ul></div></div>`;
+                return `<div class="data-card list-card ${sizeClass}"><div class="card-header">${createIconImg('details', 'card-header-icon')}<h2 class="card-title">Details</h2></div><div class="card-body"><ul class="detail-list">${Object.entries(detailsData).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${formatNumber(val)}</span></li>`).join('')}</ul></div></div>`;
             }
             
-            case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-plus-square"></i><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
+            case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header">${createIconImg('additions', 'card-header-icon')}<h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
 
-            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div></div></div>`;
+            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header">${createIconImg('capacity', 'card-header-icon')}<h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div></div></div>`;
             
-            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-user-graduate"></i><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><div class="enrolment-footnote">Data as of Sept. 30, 2025</div></div></div>`;
+            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header">${createIconImg('enrolment', 'card-header-icon')}<h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><div class="enrolment-footnote">Data as of Sept. 30, 2025</div></div></div>`;
             
             case 'utilization': {
                 let warningIcon = '';
                 if (isOverCapacity) {
-                    warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
+                    warningIcon = createIconImg('red-warning', 'warning-icon warning-icon-red');
                 } else if (isYellowZone) {
-                    warningIcon = '<i class="fas fa-exclamation-circle warning-icon warning-icon-yellow"></i>';
+                    warningIcon = createIconImg('yellow-warning', 'warning-icon warning-icon-yellow');
                 }
-                return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-percent"></i><h2 class="card-title">Utilization${warningIcon}</h2></div><div class="card-body"><div class="stat-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div>`;
+                return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header">${createIconImg('utilization', 'card-header-icon')}<h2 class="card-title">Utilization${warningIcon}</h2></div><div class="card-body"><div class="stat-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div>`;
             }
 
-            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-chart-pie"></i><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(school.enrolment.current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(school.enrolment.capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
+            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header">${createIconImg('enrolment', 'card-header-icon')}<h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(school.enrolment.current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(school.enrolment.capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
 
-            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-users"></i><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul></div></div>`;
+            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header">${createIconImg('capacity', 'card-header-icon')}<h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul></div></div>`;
 
-            case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-line"></i><h2 class="card-title">Historic Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
+            case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header">${createIconImg('enrolment-charts', 'card-header-icon')}<h2 class="card-title">Historic Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
-            case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header"><i class="card-header-icon fas fa-chart-bar"></i><h2 class="card-title">Projected Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
+            case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header">${createIconImg('enrolment-charts', 'card-header-icon')}<h2 class="card-title">Projected Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
             case 'catchment_map': {
                 // Generate map filename from school id using new naming convention
@@ -416,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const description = school.catchment?.description || '';
                 
                 return `<div class="data-card catchment-map-card ${sizeClass}">
-                    <div class="card-header"><i class="card-header-icon fas fa-map-marked-alt"></i><h2 class="card-title">Catchment Map</h2></div>
+                    <div class="card-header">${createIconImg('catchment-map', 'card-header-icon')}<h2 class="card-title">Catchment Map</h2></div>
                     <div class="card-body">
                         <div class="catchment-map-container">
                             <img src="${mapFilename}" alt="Catchment map for ${schoolName}" class="catchment-map-image" data-map-src="${mapFilename}">
@@ -435,18 +445,32 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             default: { // For all other simple list cards
-                const icons = { building_systems: 'cogs', accessibility: 'universal-access', playground: 'basketball-ball', transportation: 'bus', childcare: 'child', projects_provincial: 'hard-hat', projects_local: 'hard-hat' };
+                const icons = { 
+                    building_systems: 'building-systems', 
+                    accessibility: 'accessibility', 
+                    playground: 'playground', 
+                    transportation: 'transportation', 
+                    childcare: 'childcare', 
+                    projects_provincial: 'provincial-funded', 
+                    projects_local: 'local-funded' 
+                };
                 const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincially Funded Capital Projects', projects_local: 'Locally Funded Capital Projects' };
                 
                 const playgroundIcons = {
-                    'Basketball Court': 'basketball-ball',
-                    'Basketball Action Play': 'basketball-ball',
-                    'Steel Play structure': 'tower-cell',
-                    'Wooden Play structure': 'tree',
-                    'Climbing dome': 'mountain',
-                    'Shade structure': 'umbrella',
-                    'Soccer nets': 'futbol',
-                    'Baseball Diamond': 'baseball-ball'
+                    'Basketball Court': 'basketball',
+                    'Basketball Action Play': 'basketball',
+                    'Steel Play structure': 'play-structure',
+                    'Wooden Play structure': 'play-structure',
+                    'Climbing dome': 'climbing',
+                    'Shade structure': 'playground',
+                    'Soccer nets': 'soccer',
+                    'Baseball Diamond': 'baseball',
+                    'Swings': 'swing',
+                    'Slide': 'slide',
+                    'Four Square': 'four-square',
+                    'Volleyball Court': 'volleyball',
+                    'Outdoor classroom': 'nature',
+                    'Garden': 'nature'
                 };
                 
                 let data, listItems;
@@ -459,13 +483,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Use correct SVG for each status with appropriate color filters
                         let iconSvg, iconClass;
                         if (status === 'requested') {
-                            iconSvg = 'public/requested.svg';
+                            iconSvg = 'public/icons/requested.svg';
                             iconClass = 'status-icon-requested';
                         } else if (status === 'inProgress') {
-                            iconSvg = 'public/inprogress.svg';
+                            iconSvg = 'public/icons/inprogress.svg';
                             iconClass = 'status-icon-inprogress';
                         } else { // completed
-                            iconSvg = 'public/completed.svg';
+                            iconSvg = 'public/icons/completed.svg';
                             iconClass = 'status-icon-completed';
                         }
                         
@@ -485,19 +509,33 @@ document.addEventListener('DOMContentLoaded', function() {
                             const items = cityPropertyItems.split(',').map(i => i.trim());
                             return [
                                 `<li class="detail-item"><span class="detail-label">City Property</span></li>`,
-                                ...items.map(cityItem => `<li class="detail-item" style="padding-left: 1rem;">${cityItem}</li>`)
+                                ...items.map(cityItem => {
+                                    // Determine icon for city property items
+                                    let iconName = 'playground'; // default
+                                    const lowerItem = cityItem.toLowerCase();
+                                    if (lowerItem.includes('basketball')) iconName = 'basketball';
+                                    else if (lowerItem.includes('baseball')) iconName = 'baseball';
+                                    else if (lowerItem.includes('soccer')) iconName = 'soccer';
+                                    else if (lowerItem.includes('climbing')) iconName = 'climbing';
+                                    else if (lowerItem.includes('garden') || lowerItem.includes('outdoor classroom')) iconName = 'nature';
+                                    else if (lowerItem.includes('swing')) iconName = 'swing';
+                                    else if (lowerItem.includes('slide')) iconName = 'slide';
+                                    else if (lowerItem.includes('volleyball')) iconName = 'volleyball';
+                                    
+                                    return `<li class="detail-item" style="padding-left: 1rem;">${createIconImg(iconName, 'playground-icon', '')}<span style="margin-left: 0.5rem;">${cityItem}</span></li>`;
+                                })
                             ];
                         }
                         // Regular playground items with icons
-                        const icon = playgroundIcons[item] || 'circle';
-                        return [`<li class="detail-item"><i class="fas fa-${icon}" style="color: var(--primary-red); margin-right: 0.5rem; font-size: 0.875rem;"></i>${item}</li>`];
+                        const iconName = playgroundIcons[item] || 'playground';
+                        return [`<li class="detail-item">${createIconImg(iconName, 'playground-icon', '')}${item}</li>`];
                     }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
                 } else {
                     data = school[cardType === 'building_systems' ? 'building' : cardType];
                     listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
                 }
 
-                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><i class="card-header-icon fas fa-${icons[cardType]}"></i><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems || '<li class="detail-item">No data available.</li>'}</ul></div></div>`;
+                return `<div class="data-card list-card ${sizeClass}"><div class="card-header">${createIconImg(icons[cardType], 'card-header-icon')}<h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems || '<li class="detail-item">No data available.</li>'}</ul></div></div>`;
             }
         }
     }
@@ -751,8 +789,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     // All cards with headers get navigation icon in header
                     const header = card.querySelector('.card-header');
                     if (header) {
-                        const navIcon = document.createElement('i');
-                        navIcon.className = 'fas fa-external-link-alt card-nav-icon';
+                        const navIcon = document.createElement('img');
+                        navIcon.src = 'public/icons/navigation.svg';
+                        navIcon.className = 'card-nav-icon';
+                        navIcon.alt = 'Navigate';
                         navIcon.title = 'View all schools for this category';
                         navIcon.addEventListener('click', (e) => {
                             e.stopPropagation();
@@ -801,14 +841,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Show warning icons for enrolment_capacity cards
                 if (showWarningIcons) {
                     if (utilization >= 1) {
-                        warningIcon = '<i class="fas fa-exclamation-triangle warning-icon warning-icon-red"></i>';
+                        warningIcon = createIconImg('red-warning', 'warning-icon warning-icon-red');
                     } else if (utilization >= 0.95 && utilization < 1) {
-                        warningIcon = '<i class="fas fa-exclamation-circle warning-icon warning-icon-yellow"></i>';
+                        warningIcon = createIconImg('yellow-warning', 'warning-icon warning-icon-yellow');
                     }
                 }
                 
+                // Determine school icon based on schoolType (elementary vs high school)
+                const isHighSchool = school.schoolType === 'Collegiate' || school.schoolType === 'Collège';
+                const schoolIconName = isHighSchool ? 'highschool' : 'elementary';
+                const schoolIconClass = isHighSchool ? 'card-header-icon school-icon-highschool' : 'card-header-icon school-icon-elementary';
+                
                 // Create a simple header with school name only (no images)
-                const header = `<div class="card-header"><i class="card-header-icon fas fa-school"></i><h2 class="card-title">${school.schoolName}${warningIcon}</h2></div>`;
+                const header = `<div class="card-header">${createIconImg(schoolIconName, schoolIconClass)}<h2 class="card-title">${school.schoolName}${warningIcon}</h2></div>`;
                 
                 // Create card with the selected category type
                 const fullCard = createCard(school, cardType);
@@ -826,8 +871,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     // All cards with headers get navigation icon in header
                     const header = card.querySelector('.card-header');
                     if (header) {
-                        const navIcon = document.createElement('i');
-                        navIcon.className = 'fas fa-external-link-alt card-nav-icon';
+                        const navIcon = document.createElement('img');
+                        navIcon.src = 'public/icons/navigation.svg';
+                        navIcon.className = 'card-nav-icon';
+                        navIcon.alt = 'Navigate';
                         navIcon.title = 'View all categories for this school';
                         navIcon.addEventListener('click', (e) => {
                             e.stopPropagation();

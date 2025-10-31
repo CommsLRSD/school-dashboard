@@ -30,9 +30,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="styles.css">
     
@@ -62,7 +59,7 @@
                             <label for="school-search" class="search-label">Search</label>
                             <div class="search-input-wrapper">
                                 <input type="text" id="school-search" class="search-input" placeholder="Search schools..." aria-label="Search schools by name" autocomplete="off">
-                                <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                                <img src="public/icons/search.svg" alt="" class="search-icon" aria-hidden="true">
                             </div>
                         </div>
                     </div>
@@ -105,7 +102,7 @@
         <!-- Main Content Area -->
         <div class="main-content">
             <header class="main-header">
-                <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" aria-label="Toggle sidebar menu" aria-expanded="false" aria-controls="sidebar"><img src="public/hamburger.svg" alt="" class="hamburger-icon" aria-hidden="true"></button>
+                <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" aria-label="Toggle sidebar menu" aria-expanded="false" aria-controls="sidebar"><img src="public/icons/hamburger.svg" alt="" class="hamburger-icon" aria-hidden="true"></button>
                 <div class="header-titles">
                     <img src="public/dashboard-logo.svg" alt="Annual School Building Review Dashboard" class="header-logo-main">
                 </div>
@@ -134,10 +131,10 @@
             <div class="popup-message"></div>
             <div class="popup-buttons">
                 <button class="popup-button popup-button-confirm">
-                    <i class="fas fa-check"></i>
+                    ✓
                 </button>
                 <button class="popup-button popup-button-cancel">
-                    <i class="fas fa-times"></i>
+                    ✕
                 </button>
             </div>
         </div>
@@ -147,17 +144,17 @@
             <div class="map-lightbox-overlay"></div>
             <div class="map-lightbox-container">
                 <button class="map-lightbox-close" aria-label="Close lightbox">
-                    <i class="fas fa-times"></i>
+                    <img src="public/icons/lightbox-close.svg" alt="Close" />
                 </button>
                 <div class="map-lightbox-controls">
                     <button class="map-control-btn" id="zoom-in-btn" aria-label="Zoom in">
-                        <i class="fas fa-search-plus"></i>
+                        <img src="public/icons/lightbox-zoomin.svg" alt="Zoom in" />
                     </button>
                     <button class="map-control-btn" id="zoom-out-btn" aria-label="Zoom out">
-                        <i class="fas fa-search-minus"></i>
+                        <img src="public/icons/lightbox-zoomout.svg" alt="Zoom out" />
                     </button>
                     <button class="map-control-btn" id="reset-zoom-btn" aria-label="Reset zoom">
-                        <i class="fas fa-expand-arrows-alt"></i>
+                        <img src="public/icons/lightbox-recentreimage.svg" alt="Reset zoom" />
                     </button>
                 </div>
                 <div class="map-lightbox-content">
