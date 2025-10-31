@@ -276,6 +276,12 @@ body {
     box-shadow: var(--shadow-sm);
 }
 
+.nav-guide-link {
+    flex: 0 0 auto;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8rem;
+}
+
 .nav-list-container { 
     display: none; 
 }

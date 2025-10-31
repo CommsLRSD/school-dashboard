@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Guide - Annual School Building Review Dashboard</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.jigsawstack.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://cdn.jigsawstack.com https://api.jigsawstack.com https://fonts.googleapis.com https://fonts.gstatic.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="public/favicon.svg">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="public/apple-icon.png">
+    
+    <!-- Android Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="public/android-icon.png">
+    <link rel="manifest" crossorigin="use-credentials" href="data:application/json,{&quot;icons&quot;:[{&quot;src&quot;:&quot;public/android-maskable-icon.png&quot;,&quot;sizes&quot;:&quot;512x512&quot;,&quot;type&quot;:&quot;image/png&quot;,&quot;purpose&quot;:&quot;maskable&quot;}]}">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+            <div class="sidebar-header">
+                <a href="https://www.lrsd.net/" class="sidebar-logo-link" target="_blank" rel="noopener noreferrer" aria-label="Visit LRSD website">
+                    <img src="public/lrsd-logo.svg" alt="LRSD Logo" class="sidebar-logo">
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-view-selector">
+                    <a href="index.html" class="nav-view-link">Back to Dashboard</a>
+                </div>
+            </nav>
+            <footer class="sidebar-footer">
+                <p style="font-size: 0.75rem; color: var(--text-light); padding: 1rem;">Dashboard Guide</p>
+            </footer>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header class="main-header">
+                <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" aria-label="Toggle sidebar menu" aria-expanded="false" aria-controls="sidebar"><img src="public/hamburger.svg" alt="" class="hamburger-icon" aria-hidden="true"></button>
+                <div class="header-titles">
+                    <img src="public/dashboard-logo.svg" alt="Annual School Building Review Dashboard" class="header-logo-main">
+                </div>
+                <div class="header-toolbar">
+                    <img src="public/lrsd-logo.svg" alt="LRSD Logo" class="header-logo header-logo-desktop">
+                </div>
+            </header>
+            
+            <!-- Sticky Category Banner -->
+            <div class="sticky-category-banner visible" id="sticky-category-banner">
+                <span class="sticky-category-text">DASHBOARD GUIDE</span>
+            </div>
+            
+            <div class="content-body">
+                <h2 id="content-subtitle">Understanding Your School Dashboard</h2>
+                <main class="card-grid" id="card-grid" role="main" aria-label="Dashboard guide cards">
+                    
+                    <!-- School Header Card Guide -->
+                    <div class="data-card list-card tile-double-width">
+                        <div class="card-header">
+                            <img src="public/icon/accessibility.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Welcome to the Dashboard</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 1rem;">This dashboard provides comprehensive information about each school in the Louis Riel School Division. Use the sidebar to browse schools individually or view data by category across all schools.</p>
+                            <p><strong>Two viewing modes:</strong></p>
+                            <ul class="detail-list">
+                                <li class="detail-item"><strong>Schools View:</strong> See all data cards for a single school</li>
+                                <li class="detail-item" style="border-bottom: none;"><strong>Categories View:</strong> Compare the same data card across all schools</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Details Card Guide -->
+                    <div class="data-card list-card tile-double-height">
+                        <div class="card-header">
+                            <img src="public/icon/accessibility.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Details</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 0.75rem;"><strong>What it shows:</strong></p>
+                            <p style="margin-bottom: 1rem;">Basic contact and building information for each school.</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>Key information includes:</strong></p>
+                            <ul class="detail-list">
+                                <li class="detail-item">School address and phone number</li>
+                                <li class="detail-item">Grade levels served</li>
+                                <li class="detail-item">Academic program type</li>
+                                <li class="detail-item">Year built and building age</li>
+                                <li class="detail-item">Total building size</li>
+                                <li class="detail-item" style="border-bottom: none;">Number of modular classrooms</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Enrolment & Capacity Guide -->
+                    <div class="data-card list-card">
+                        <div class="card-header">
+                            <img src="public/icon/enrolment-charts.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Enrolment & Capacity</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 0.75rem;"><strong>What it shows:</strong></p>
+                            <p style="margin-bottom: 0.75rem;">Current student enrolment, classroom capacity, and utilization percentage.</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>How to use it:</strong></p>
+                            <p>The utilization percentage helps identify schools that are over or under capacity. Green indicates healthy utilization, while red indicates over-capacity.</p>
+                        </div>
+                    </div>
+
+                    <!-- Historic & Projected Enrolment Guide -->
+                    <div class="data-card list-card tile-double-width">
+                        <div class="card-header">
+                            <img src="public/icon/enrolment-charts.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Historic & Projected Enrolment</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 0.75rem;"><strong>What it shows:</strong></p>
+                            <p style="margin-bottom: 0.75rem;">Charts showing past enrolment trends and future projections.</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>How to use it:</strong></p>
+                            <p>These charts help understand enrolment patterns and plan for future capacity needs. Historic data shows the past 4 years, while projections look ahead to help with planning decisions.</p>
+                        </div>
+                    </div>
+
+                    <!-- Building Additions Guide -->
+                    <div class="data-card list-card">
+                        <div class="card-header">
+                            <img src="public/icon/building-systems.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Building Additions</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 0.75rem;"><strong>What it shows:</strong></p>
+                            <p style="margin-bottom: 0.75rem;">History of building expansions with year and size added.</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>How to use it:</strong></p>
+                            <p>Provides context about the school's growth over time and helps understand the building's structure.</p>
+                        </div>
+                    </div>
+
+                    <!-- Building Systems Guide -->
+                    <div class="data-card list-card">
+                        <div class="card-header">
+                            <img src="public/icon/building-systems.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Building Systems</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 0.75rem;"><strong>What it shows:</strong></p>
+                            <p style="margin-bottom: 0.75rem;">Information about major building systems including HVAC, lighting, and heating.</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>How to use it:</strong></p>
+                            <p>Understand what building systems are in place and identify potential upgrade needs.</p>
+                        </div>
+                    </div>
+
+                    <!-- Accessibility Guide -->
+                    <div class="data-card list-card tile-double-height">
+                        <div class="card-header">
+                            <img src="public/icon/accessibility.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Accessibility</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 0.75rem;"><strong>What it shows:</strong></p>
+                            <p style="margin-bottom: 1rem;">Accessibility features and facilities available at each school.</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>Key information includes:</strong></p>
+                            <ul class="detail-list">
+                                <li class="detail-item">Number and types of washrooms</li>
+                                <li class="detail-item">Universal washroom availability</li>
+                                <li class="detail-item">Elevator availability</li>
+                                <li class="detail-item">Accessible parking stalls</li>
+                                <li class="detail-item">Accessible entrance features</li>
+                                <li class="detail-item" style="border-bottom: none;">Automatic door operators</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Playground Guide -->
+                    <div class="data-card list-card tile-double-width">
+                        <div class="card-header">
+                            <img src="public/icon/playground.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Playground Features</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 0.75rem;"><strong>What it shows:</strong></p>
+                            <p style="margin-bottom: 0.75rem;">List of outdoor play equipment and recreational facilities available.</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>How to use it:</strong></p>
+                            <p>Understand the outdoor amenities available for students. Some items may be designated as City Property, indicating shared community use.</p>
+                        </div>
+                    </div>
+
+                    <!-- Transportation Guide -->
+                    <div class="data-card list-card">
+                        <div class="card-header">
+                            <img src="public/icon/transportation.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Transportation</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 0.75rem;"><strong>What it shows:</strong></p>
+                            <p style="margin-bottom: 0.75rem;">Parking availability and bus loop information.</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>How to use it:</strong></p>
+                            <p>Helps understand vehicle access and drop-off/pick-up facilities at each school.</p>
+                        </div>
+                    </div>
+
+                    <!-- Childcare Guide -->
+                    <div class="data-card list-card">
+                        <div class="card-header">
+                            <img src="public/icon/childcare.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Childcare</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 0.75rem;"><strong>What it shows:</strong></p>
+                            <p style="margin-bottom: 0.75rem;">Available childcare spaces by age group at the school.</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>Age groups:</strong></p>
+                            <ul class="detail-list">
+                                <li class="detail-item">Infant (0-23 months)</li>
+                                <li class="detail-item">Pre-school (2-6 years)</li>
+                                <li class="detail-item" style="border-bottom: none;">School-age (7+ years)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Catchment Map Guide -->
+                    <div class="data-card list-card">
+                        <div class="card-header">
+                            <img src="public/icon/accessibility.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Catchment Map</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 0.75rem;"><strong>What it shows:</strong></p>
+                            <p style="margin-bottom: 0.75rem;">Geographic boundary of the school's catchment area and migration statistics.</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>How to use it:</strong></p>
+                            <p>Click the map to view it in full size. Migration percentage shows net annual movement in and out of the catchment area (5-year average).</p>
+                        </div>
+                    </div>
+
+                    <!-- Capital Projects Guide -->
+                    <div class="data-card list-card tile-double-height">
+                        <div class="card-header">
+                            <img src="public/icon/provincial-funded.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Provincially Funded Capital Projects</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 0.75rem;"><strong>What it shows:</strong></p>
+                            <p style="margin-bottom: 1rem;">Major renovation and construction projects funded by the provincial government.</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>Project statuses:</strong></p>
+                            <ul class="detail-list">
+                                <li class="detail-item"><strong>Requested:</strong> Projects submitted for approval</li>
+                                <li class="detail-item"><strong>In Progress:</strong> Currently under construction</li>
+                                <li class="detail-item" style="border-bottom: none;"><strong>Completed:</strong> Finished projects</li>
+                            </ul>
+                            <div class="card-note">*2020–34</div>
+                        </div>
+                    </div>
+
+                    <!-- Local Projects Guide -->
+                    <div class="data-card list-card tile-double-height">
+                        <div class="card-header">
+                            <img src="public/icon/local-funded.svg" alt="" class="card-header-icon">
+                            <h2 class="card-title">Locally Funded Capital Projects</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 0.75rem;"><strong>What it shows:</strong></p>
+                            <p style="margin-bottom: 1rem;">Smaller-scale improvements and renovations funded by the school division.</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>Project statuses:</strong></p>
+                            <ul class="detail-list">
+                                <li class="detail-item"><strong>Requested:</strong> Projects planned or awaiting funding</li>
+                                <li class="detail-item"><strong>In Progress:</strong> Currently being completed</li>
+                                <li class="detail-item" style="border-bottom: none;"><strong>Completed:</strong> Finished improvements</li>
+                            </ul>
+                            <div class="card-note">*2020–34</div>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+        </div>
+        
+        <!-- Sidebar Overlay for mobile -->
+        <div class="sidebar-overlay"></div>
+    </div>
+
+    <!-- Simple JavaScript for mobile sidebar toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+            const sidebarOverlay = document.querySelector('.sidebar-overlay');
+            
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                sidebarOverlay.classList.toggle('active');
+            }
+            
+            if (sidebarToggleBtn) {
+                sidebarToggleBtn.addEventListener('click', toggleSidebar);
+            }
+            
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener('click', toggleSidebar);
+            }
+        });
+    </script>
+    
+    <!-- Translation Widget Configuration -->
+    <script src="config.js"></script>
+    
+    <!-- JigsawStack Translation Widget -->
+    <script src="https://cdn.jigsawstack.com/jigts-widget.js" crossorigin="anonymous"></script>
+</body>
+</html>

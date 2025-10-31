@@ -993,8 +993,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Event Listeners ---
     function setupEventListeners() {
         navViewSelector.addEventListener('click', (e) => { 
-            e.preventDefault(); 
             const target = e.target.closest('.nav-view-link'); 
+            // Skip if it's the guide link (has href attribute pointing to guide.html)
+            if (target && target.href && target.href.includes('guide.html')) {
+                return; // Allow default navigation
+            }
+            
+            e.preventDefault(); 
             if (target && target.dataset.view !== currentViewMode) { 
                 currentViewMode = target.dataset.view;
                 // Reset filter when switching views
