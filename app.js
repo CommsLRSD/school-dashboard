@@ -142,14 +142,22 @@ document.addEventListener('DOMContentLoaded', function() {
             // Parse JSON data
             schoolData = await response.json();
             
+            // Check for a school ID in the URL query parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const schoolIdFromUrl = urlParams.get('school');
+
             // Validate that we have data
             const schoolIds = Object.keys(schoolData);
             if (schoolIds.length === 0) {
                 throw new Error('No school data available');
             }
             
-            // Initialize selected IDs with first available values
-            selectedSchoolId = schoolIds[0];
+            // Set selectedSchoolId from URL if valid, otherwise use the first school
+            if (schoolIdFromUrl && schoolData[schoolIdFromUrl]) {
+                selectedSchoolId = schoolIdFromUrl;
+            } else {
+                selectedSchoolId = schoolIds[0];
+            }
             selectedCategoryId = Object.keys(categories)[0];
 
             // Initialize UI components
@@ -381,14 +389,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     "Modular Classrooms": school.details.Modular
                 };
                 
-                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/details.svg" alt="" class="card-header-icon"><h2 class="card-title">Details</h2></div><div class="card-body"><ul class="detail-list">${Object.entries(detailsData).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${formatNumber(val)}</span></li>`).join('')}</ul></div></div>`;
+                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/details.svg" alt="" class="card-header-icon"><h2 class="card-title">Details</h2></div><div class="card-body"><ul class="details-list">${Object.entries(detailsData).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${formatNumber(val)}</span></li>`).join('')}</ul></div></div>`;
             }
             
-            case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/additions.svg" alt="" class="card-header-icon"><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
+            case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/additions.svg" alt="" class="card-header-icon"><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="details-list">${Object.entries(school.additions).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${val}</span></li>`).join('')}</ul></div></div>`;
 
-            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div></div></div>`;
+            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Capacity</h2></div><div class="card-body"><p class="stat-number">${formatNumber(school.enrolment.capacity)}</p></div></div>`;
             
-            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><div class="enrolment-footnote">Data as of Sept. 30, 2025</div></div></div>`;
+            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment</h2></div><div class="card-body"><p class="stat-number">${formatNumber(school.enrolment.current)}</p></div></div>`;
             
             case 'utilization': {
                 let warningIcon = '';
@@ -397,16 +405,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (isYellowZone) {
                     warningIcon = '<img src="public/icon/yellow-warning.svg" alt="" class="warning-icon warning-icon-yellow">';
                 }
-                return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><img src="public/icon/utilization.svg" alt="" class="card-header-icon"><h2 class="card-title">Utilization${warningIcon}</h2></div><div class="card-body"><div class="stat-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div>`;
+                return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><img src="public/icon/utilization.svg" alt="" class="card-header-icon"><h2 class="card-title">Utilization</h2></div><div class="card-body">${warningIcon}<p class="stat-number">${utilizationPercent}%</p></div></div>`;
             }
 
-            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(school.enrolment.current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(school.enrolment.capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
+            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment Stats</h2></div><div class="card-body"><div class="stat-item"><span class="stat-label">Enrolment:</span><span class="stat-value">${formatNumber(school.enrolment.current)}</span></div><div class="stat-item"><span class="stat-label">Capacity:</span><span class="stat-value">${formatNumber(school.enrolment.capacity)}</span></div><div class="stat-item"><span class="stat-label">Utilization:</span><span class="stat-value">${utilizationPercent}%</span></div></div></div>`;
 
-            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul></div></div>`;
+            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment & Capacity</h2></div><div class="card-body"><ul class="details-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item"><span class="detail-label">Utilization</span><span class="detail-value">${utilizationPercent}%</span></li></ul></div></div>`;
 
-            case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><img src="public/icon/enrolment-charts.svg" alt="" class="card-header-icon"><h2 class="card-title">Historic Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
+            case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><img src="public/icon/enrolment-chart.svg" alt="" class="card-header-icon"><h2 class="card-title">Historic Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
-            case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header"><img src="public/icon/enrolment-charts.svg" alt="" class="card-header-icon"><h2 class="card-title">Projected Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
+            case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header"><img src="public/icon/enrolment-chart-up.svg" alt="" class="card-header-icon"><h2 class="card-title">Projected Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
             case 'catchment_map': {
                 // Generate map filename from school id using new naming convention
@@ -444,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     projects_provincial: 'public/icon/provincial-funded.svg', 
                     projects_local: 'public/icon/local-funded.svg' 
                 };
-                const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincially Funded Capital Projects', projects_local: 'Locally Funded Capital Projects' };
+                const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincially Funded', projects_local: 'Locally Funded' };
                 
                 // Function to determine the appropriate icon for a playground item
                 const getPlaygroundIcon = (item) => {
@@ -537,13 +545,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Regular playground items with icons
                         const icon = getPlaygroundIcon(item);
                         return [`<li class="detail-item"><img src="${icon}" alt="" class="playground-item-icon">${item}</li>`];
-                    }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
+                    }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<img src="public/icon/checkmark.svg" alt="Yes" class="checkmark-icon">' : val}</span></li>`).join('');
                 } else {
                     data = school[cardType === 'building_systems' ? 'building' : cardType];
-                    listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
+                    listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<img src="public/icon/checkmark.svg" alt="Yes" class="checkmark-icon">' : val}</span></li>`).join('');
                 }
 
-                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="${icons[cardType]}" alt="" class="card-header-icon"><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems || '<li class="detail-item">No data available.</li>'}</ul></div></div>`;
+                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="${icons[cardType]}" alt="" class="card-header-icon"><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="details-list">${listItems}</ul></div></div>`;
             }
         }
     }
@@ -784,7 +792,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (currentViewMode === 'school') {
             const school = schoolData[selectedSchoolId];
-            const cardTypes = ['school_header', 'details', 'additions', 'enrolment', 'capacity', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'catchment_map', 'projects_provincial', 'projects_local'];
+            const cardTypes = ['school_header', 'details', 'additions', 'enrolment', 'capacity', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'projects_provincial', 'projects_local', 'catchment_map'];
             cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
             
             // Add staggered animation delays and navigation icons
@@ -857,7 +865,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Create a simple header with school name and icon based on school level
                 const schoolIcon = school.schoolLevel === 'Elementary School' ? 'elementary.svg' : 'highschool.svg';
-                const header = `<div class="card-header"><img src="public/icon/${schoolIcon}" alt="" class="card-header-icon school-level-icon ${school.schoolLevel === 'Elementary School' ? 'elementary-icon' : 'highschool-icon'}"><h2 class="card-title">${school.schoolName}${warningIcon}</h2></div>`;
+                const header = `<div class="card-header"><img src="public/icon/${schoolIcon}" alt="" class="card-header-icon school-level-icon ${school.schoolLevel === 'Elementary School' ? 'elementary-icon' : 'highschool-icon'}"><h2 class="card-title">${school.schoolName}</h2>${warningIcon}</div>`;
                 
                 // Create card with the selected category type
                 const fullCard = createCard(school, cardType);
