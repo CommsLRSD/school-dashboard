@@ -128,16 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * @returns {Object} Object containing query parameters as key-value pairs
      */
     function getQueryParams() {
-        const params = {};
-        try {
-            const urlParams = new URLSearchParams(window.location.search);
-            for (const [key, value] of urlParams.entries()) {
-                params[key] = value;
-            }
-        } catch (error) {
-            console.warn('Error parsing URL parameters:', error);
-        }
-        return params;
+        return Object.fromEntries(new URLSearchParams(window.location.search));
     }
 
     /**
