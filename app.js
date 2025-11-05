@@ -124,22 +124,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * Helper function to parse URL query parameters
+     * Uses modern URLSearchParams API for robust parsing
      * @returns {Object} Object containing query parameters as key-value pairs
      */
     function getQueryParams() {
         const params = {};
-        const queryString = window.location.search.substring(1);
-        const pairs = queryString.split('&');
-        
-        for (let i = 0; i < pairs.length; i++) {
-            if (pairs[i]) {
-                const pair = pairs[i].split('=');
-                const key = decodeURIComponent(pair[0]);
-                const value = decodeURIComponent(pair[1] || '');
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            for (const [key, value] of urlParams.entries()) {
                 params[key] = value;
             }
+        } catch (error) {
+            console.warn('Error parsing URL parameters:', error);
         }
-        
         return params;
     }
 
