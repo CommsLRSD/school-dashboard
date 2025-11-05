@@ -123,6 +123,27 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     /**
+     * Helper function to parse URL query parameters
+     * @returns {Object} Object containing query parameters as key-value pairs
+     */
+    function getQueryParams() {
+        const params = {};
+        const queryString = window.location.search.substring(1);
+        const pairs = queryString.split('&');
+        
+        for (let i = 0; i < pairs.length; i++) {
+            if (pairs[i]) {
+                const pair = pairs[i].split('=');
+                const key = decodeURIComponent(pair[0]);
+                const value = decodeURIComponent(pair[1] || '');
+                params[key] = value;
+            }
+        }
+        
+        return params;
+    }
+
+    /**
      * Main Initialization Function
      * Loads data, sets up event listeners, and initializes the view
      */
@@ -148,9 +169,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error('No school data available');
             }
             
-            // Initialize selected IDs with first available values
+            // Initialize selected IDs with first available values as default
             selectedSchoolId = schoolIds[0];
             selectedCategoryId = Object.keys(categories)[0];
+            
+            // Check for school query parameter in URL
+            const queryParams = getQueryParams();
+            if (queryParams.school) {
+                // Validate that the school ID exists in the data
+                if (schoolData[queryParams.school]) {
+                    selectedSchoolId = queryParams.school;
+                } else {
+                    console.warn(`School "${queryParams.school}" not found in data. Loading default school.`);
+                }
+            }
 
             // Initialize UI components
             populateSidebarControls();
