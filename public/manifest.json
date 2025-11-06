@@ -1,0 +1,30 @@
+{
+  "name": "School Dashboard",
+  "short_name": "School Dashboard",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#BE5247",
+  "background_color": "#f8f9fa",
+  "description": "Annual School Building Review Dashboard",
+  "icons": [
+    {
+      "src": "/public/android-maskable-icon.png.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/public/android-maskable-icon.png.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/public/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
