@@ -17,6 +17,7 @@ You can view the live version of this project on GitHub Pages:
 - **Two Viewing Modes:** Users can browse by individual **School** or by **Category** (e.g., view the "Playground" card for all schools at once).
 - **Interactive Charts:** Utilizes Chart.js to render historical and projected enrollment data.
 - **Responsive Design:** The layout is fully responsive and optimized for desktop, tablet, and mobile viewing.
+- **Progressive Web App (PWA):** Installable on mobile and desktop devices with offline support.
 - **Simple & Scalable:** Built with standard HTML, CSS, and JavaScript, with no complex frameworks required.
 - **Secure by Design:** Implements industry-standard security practices including CSP, security headers, and SRI for external resources.
 
@@ -33,6 +34,8 @@ school-dashboard/
 │   └── schools.json      # All school data lives here. Edit this file to update content.
 │
 ├── public/
+│   ├── manifest.json     # PWA manifest file
+│   ├── service-worker.js # Service worker for offline support
 │   ├── archwood.jpg      # Image assets for each school.
 │   ├── beliveau.jpg
 │   ├── CJS.jpg
@@ -77,6 +80,38 @@ This project structure is optimized for easy deployment to GitHub Pages.
 6.  Click **Save**.
 
 After a minute or two, your site will be live at the URL provided on that page.
+
+---
+
+## Progressive Web App (PWA)
+
+This application is a fully functional Progressive Web App that can be installed on mobile devices and desktop computers.
+
+### PWA Features
+
+- **Installable:** Users can install the app on their home screen (mobile) or desktop for quick access
+- **Offline Support:** The app works offline after the first visit, caching essential assets
+- **App-like Experience:** Runs in standalone mode without browser UI when installed
+- **Fast Loading:** Uses service worker caching for instant loading on repeat visits
+
+### Installing the App
+
+**On Mobile (Android/iOS):**
+1. Open the dashboard in your mobile browser
+2. Look for the "Add to Home Screen" or "Install" prompt
+3. Follow the prompts to install
+4. The app will appear as an icon on your home screen
+
+**On Desktop (Chrome/Edge):**
+1. Look for the install icon in the address bar
+2. Click "Install" to add the app to your desktop
+3. The app will open in its own window
+
+### Technical Implementation
+
+- **Manifest:** `/public/manifest.json` defines app metadata, icons, and display mode
+- **Service Worker:** `/public/service-worker.js` handles offline caching and asset management
+- **Caching Strategy:** Cache-first with network fallback for optimal performance
 
 ---
 

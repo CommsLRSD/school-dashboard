@@ -18,12 +18,20 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="public/favicon.svg">
     
-    <!-- Apple Touch Icon -->
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="public/manifest.json">
+    
+    <!-- Theme Color (PWA) -->
+    <meta name="theme-color" content="#BE5247">
+    
+    <!-- Apple Touch Icon & iOS PWA Support -->
     <link rel="apple-touch-icon" href="public/apple-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="School Dashboard">
     
     <!-- Android Icons -->
     <link rel="icon" type="image/png" sizes="192x192" href="public/android-icon.png">
-    <link rel="manifest" crossorigin="use-credentials" href="data:application/json,{&quot;icons&quot;:[{&quot;src&quot;:&quot;public/android-maskable-icon.png&quot;,&quot;sizes&quot;:&quot;512x512&quot;,&quot;type&quot;:&quot;image/png&quot;,&quot;purpose&quot;:&quot;maskable&quot;}]}">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -173,5 +181,21 @@
     
     <!-- JigsawStack Translation Widget -->
     <script src="https://cdn.jigsawstack.com/jigts-widget.js" crossorigin="anonymous"></script>
+    
+    <!-- Service Worker Registration (PWA) -->
+    <script>
+        // Register Service Worker for PWA offline support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/public/service-worker.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered successfully:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
