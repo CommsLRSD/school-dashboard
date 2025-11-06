@@ -113,6 +113,27 @@ This application is a fully functional Progressive Web App that can be installed
 - **Service Worker:** `/public/service-worker.js` handles offline caching and asset management
 - **Caching Strategy:** Cache-first with network fallback for optimal performance
 
+### GitHub Pages Sub-Path Deployment
+
+**Important for Contributors:** This app is configured for GitHub Pages deployment at `/school-dashboard/`. The following files use this base path for proper PWA functionality:
+
+1. **`index.html`**: Contains `<base href="/school-dashboard/">` tag for proper asset resolution
+2. **`public/manifest.json`**: Has `start_url` and `scope` set to `/school-dashboard/`
+3. **`public/service-worker.js`**: Uses `BASE_PATH = '/school-dashboard'` for caching URLs
+4. **Service Worker Registration**: Explicitly sets scope to `/school-dashboard/`
+
+**When modifying PWA assets or paths:**
+- All asset links in HTML are relative (thanks to the `<base>` tag)
+- Service worker caches must include the base path prefix
+- Manifest URLs must be absolute with the base path
+- Test both browser and home screen PWA launches to ensure no 404 errors
+
+**For custom domain or root deployment:**
+- Change `<base href>` in `index.html` to `/` or your custom domain
+- Update `BASE_PATH` in `service-worker.js` to `/`
+- Update `start_url` and `scope` in `manifest.json` to `/`
+- Update icon paths in `manifest.json` accordingly
+
 ---
 
 ## Security

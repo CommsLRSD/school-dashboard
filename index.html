@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Annual School Building Review Dashboard</title>
     
+    <!-- Base URL for GitHub Pages sub-path deployment (PWA routing) -->
+    <base href="/school-dashboard/">
+    
     <!-- Security Headers -->
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -185,9 +188,12 @@
     <!-- Service Worker Registration (PWA) -->
     <script>
         // Register Service Worker for PWA offline support
+        // Using base-relative path for GitHub Pages sub-path deployment
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/public/service-worker.js')
+                navigator.serviceWorker.register('public/service-worker.js', {
+                    scope: '/school-dashboard/'
+                })
                     .then((registration) => {
                         console.log('Service Worker registered successfully:', registration.scope);
                     })
