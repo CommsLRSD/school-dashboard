@@ -1,23 +1,25 @@
 // Service Worker for School Dashboard PWA
-// Version 1.0.0
+// Version 1.1.0 - Updated for GitHub Pages sub-path deployment
 
-const CACHE_NAME = 'school-dashboard-v1';
+const CACHE_NAME = 'school-dashboard-v1.1';
+// Base path for GitHub Pages deployment
+const BASE_PATH = '/school-dashboard';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/app.js',
-  '/config.js',
-  '/public/favicon.svg',
-  '/public/apple-icon.png',
-  '/public/android-maskable-icon.png.png',
-  '/public/android-icon.png',
-  '/public/lrsd-logo.svg',
-  '/public/dashboard-logo.svg',
-  '/public/dashboard-logo-mobile.svg',
-  '/public/hamburger.svg',
-  '/public/vendor/chart.umd.min.js',
-  '/public/vendor/chartjs-plugin-datalabels.min.js'
+  `${BASE_PATH}/`,
+  `${BASE_PATH}/index.html`,
+  `${BASE_PATH}/styles.css`,
+  `${BASE_PATH}/app.js`,
+  `${BASE_PATH}/config.js`,
+  `${BASE_PATH}/public/favicon.svg`,
+  `${BASE_PATH}/public/apple-icon.png`,
+  `${BASE_PATH}/public/android-maskable-icon.png.png`,
+  `${BASE_PATH}/public/android-icon.png`,
+  `${BASE_PATH}/public/lrsd-logo.svg`,
+  `${BASE_PATH}/public/dashboard-logo.svg`,
+  `${BASE_PATH}/public/dashboard-logo-mobile.svg`,
+  `${BASE_PATH}/public/hamburger.svg`,
+  `${BASE_PATH}/public/vendor/chart.umd.min.js`,
+  `${BASE_PATH}/public/vendor/chartjs-plugin-datalabels.min.js`
 ];
 
 // Install event - cache assets
@@ -52,6 +54,12 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   // Skip cross-origin requests and non-GET requests
   if (!event.request.url.startsWith(self.location.origin) || event.request.method !== 'GET') {
+    return;
+  }
+
+  // Skip if request is not within our base path scope
+  const url = new URL(event.request.url);
+  if (!url.pathname.startsWith(BASE_PATH)) {
     return;
   }
 
