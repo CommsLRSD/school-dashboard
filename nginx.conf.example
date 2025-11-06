@@ -49,10 +49,16 @@ server {
         access_log off;
     }
     
-    # Don't cache HTML and JSON files
+    # Don't cache HTML and JSON files (including manifest.json)
     location ~* \.(html|json)$ {
         expires -1;
         add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0";
+    }
+    
+    # Service Worker should never be cached
+    location ~* service-worker\.js$ {
+        expires -1;
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
     }
     
     # Deny access to hidden files (except .well-known for Let's Encrypt)
@@ -137,6 +143,12 @@ server {
 #     location ~* \.(html|json)$ {
 #         expires -1;
 #         add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0";
+#     }
+#     
+#     # Service Worker should never be cached
+#     location ~* service-worker\.js$ {
+#         expires -1;
+#         add_header Cache-Control "no-cache, no-store, must-revalidate";
 #     }
 #     
 #     location ~ /\.(?!well-known) {
