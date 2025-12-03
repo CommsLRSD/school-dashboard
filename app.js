@@ -141,15 +141,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
-            // Parse JSON data
+            // Parse JSON data and extract global timestamp
             const data = await response.json();
+            const { lastUpdated: timestamp, ...schools } = data;
             
-            // Extract global timestamp
-            lastUpdated = data.lastUpdated || '';
-            
-            // Remove lastUpdated from data object to get only schools
-            delete data.lastUpdated;
-            schoolData = data;
+            lastUpdated = timestamp || '';
+            schoolData = schools;
             
             // Validate that we have data
             const schoolIds = Object.keys(schoolData);
@@ -638,7 +635,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const candidate = combinedMax + 100;
         const lowerMultiple = Math.floor(candidate / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
         const upperMultiple = Math.ceil(candidate / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
-        // Round down if candidate is ≤ threshold above lower multiple, otherwise round up
+        // Round down if within threshold distance of lower multiple, otherwise round up
         const rounded = (candidate - lowerMultiple <= CHART_Y_AXIS_ROUNDING_THRESHOLD) ? lowerMultiple : upperMultiple;
         // Ensure yAxisMax is always at least as large as the data maximum
         const yAxisMax = Math.max(rounded, combinedMax);
