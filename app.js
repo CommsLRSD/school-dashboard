@@ -638,6 +638,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Previous behavior: add 50 to max value, then round up to nearest multiple of 50
         const yAxisMax = Math.ceil((combinedMax + 50) / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
 
+        // Helper function for dynamic label positioning
+        const getLabelAlignment = (context) => {
+            // Move label below point if it's too close to the y-axis maximum
+            const value = context.dataset.data[context.dataIndex];
+            const threshold = yAxisMax * 0.95; // 95% of max
+            return value >= threshold ? 'bottom' : 'top';
+        };
+
         if (type === 'history') {
             // Convert underscores to hyphens in labels (e.g., 2024_25 -> 2024-25)
             const formattedLabels = school.enrolment.history.labels.map(label => label.replace(/_/g, '-'));
@@ -661,12 +669,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         legend: { display: false }, 
                         datalabels: typeof ChartDataLabels !== 'undefined' ? { 
                             anchor: 'end', 
-                            align: function(context) {
-                                // Move label below point if it's too close to the y-axis maximum
-                                const value = context.dataset.data[context.dataIndex];
-                                const threshold = yAxisMax * 0.95; // 95% of max
-                                return value >= threshold ? 'bottom' : 'top';
-                            },
+                            align: getLabelAlignment,
                             font: { weight: 'bold' },
                             color: '#BE5247'
                         } : { display: false } 
@@ -702,12 +705,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         legend: { display: false }, 
                         datalabels: typeof ChartDataLabels !== 'undefined' ? { 
                             anchor: 'end', 
-                            align: function(context) {
-                                // Move label below point if it's too close to the y-axis maximum
-                                const value = context.dataset.data[context.dataIndex];
-                                const threshold = yAxisMax * 0.95; // 95% of max
-                                return value >= threshold ? 'bottom' : 'top';
-                            },
+                            align: getLabelAlignment,
                             font: { weight: 'bold' },
                             color: '#2BA680'
                         } : { display: false } 
