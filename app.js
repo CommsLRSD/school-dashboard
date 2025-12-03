@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const stickyBannerText = stickyBanner?.querySelector('.sticky-category-text');
 
     let schoolData = {};
+    let lastUpdated = ''; // Global timestamp for data updates
     let chartInstances = {};
     let currentViewMode = 'school';
     let selectedSchoolId = '';
@@ -140,7 +141,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Parse JSON data
-            schoolData = await response.json();
+            const data = await response.json();
+            
+            // Extract global timestamp
+            lastUpdated = data.lastUpdated || '';
+            
+            // Remove lastUpdated from data object to get only schools
+            delete data.lastUpdated;
+            schoolData = data;
             
             // Validate that we have data
             const schoolIds = Object.keys(schoolData);
@@ -151,6 +159,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Initialize selected IDs with first available values
             selectedSchoolId = schoolIds[0];
             selectedCategoryId = Object.keys(categories)[0];
+            
+            // Set footer timestamp
+            if (lastUpdated) {
+                footerTimestamp.textContent = `Data updated ${lastUpdated}`;
+            }
 
             // Initialize UI components
             populateSidebarControls();
@@ -898,9 +911,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 filteredSchools.forEach(school => renderChart(school, cardType));
             }
         }
-        
-        const firstSchool = schoolData[Object.keys(schoolData)[0]];
-        if (firstSchool?.meta) footerTimestamp.textContent = `Data updated ${firstSchool.meta.updated}`;
         
         // Setup sticky banner after view is updated
         setupStickyBanner();

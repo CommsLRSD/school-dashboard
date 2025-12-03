@@ -1,4 +1,5 @@
 {
+  "lastUpdated": "12/03/2025",
   "archwood": {
     "id": "archwood",
     "schoolName": "Archwood School",
@@ -141,10 +142,6 @@
           "Installed Portable Air Conditioning units"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "NELSON MCINTYRE FOS",
     "schoolLevel": "Elementary School",
@@ -293,10 +290,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "High School",
     "grades": "7-12",
@@ -430,10 +423,6 @@
           "Library flooring replacement"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "High School",
@@ -576,10 +565,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "High School",
     "grades": "9-12",
@@ -699,10 +684,6 @@
           "Build demising wall between Room 8 and 9"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
@@ -831,10 +812,6 @@
           "Renovated Principal's and Vice Principal's Office, Create Copier Room"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
@@ -967,10 +944,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "Elementary School",
     "grades": "6-8",
@@ -1098,10 +1071,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-8",
@@ -1225,10 +1194,6 @@
           "Installed 100 lockers"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
@@ -1368,10 +1333,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-8 (K-6 in 2025)",
@@ -1491,10 +1452,6 @@
           "Replaced flooring in Room 11"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "Elementary School",
@@ -1635,10 +1592,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-8",
@@ -1768,10 +1721,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-4",
@@ -1868,10 +1817,6 @@
         "inProgress": [],
         "completed": []
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
@@ -1991,10 +1936,6 @@
           "Install Bottle Filling Station"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "Elementary School",
@@ -2131,10 +2072,6 @@
           "Installed Portable Air Conditioning units"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
@@ -2278,10 +2215,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-6 (Grades 7 & 8 moved to École Henri Bergeron in 2025-26)",
@@ -2424,10 +2357,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "WINDSOR PARK FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-8",
@@ -2555,10 +2484,6 @@
           "Blacktop repair"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "WINDSOR PARK FOS",
     "schoolLevel": "Elementary School",
@@ -2699,10 +2624,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "High School",
     "grades": "9-12",
@@ -2837,10 +2758,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-8",
@@ -2963,10 +2880,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-8",
@@ -3086,10 +2999,6 @@
           "Installed Fence and added walkpath in the school bus loop"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
@@ -3229,10 +3138,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-8",
@@ -3359,10 +3264,6 @@
           "Two classrooms added to library"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "Elementary School",
@@ -3496,10 +3397,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "High School",
     "grades": "9-12",
@@ -3617,10 +3514,6 @@
           "Conversion to classroom"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
@@ -3742,10 +3635,6 @@
         ],
         "completed": []
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "Other",
     "schoolLevel": "High School",
@@ -3882,10 +3771,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "NELSON MCINTYRE FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-8",
@@ -4003,10 +3888,6 @@
           "Installed Portable Air Conditioning units"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
@@ -4154,10 +4035,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "NELSON MCINTYRE FOS",
     "schoolLevel": "High School",
     "grades": "9-12",
@@ -4280,10 +4157,6 @@
           "Replaced counterops, sinks and urinals"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "Elementary School",
@@ -4421,10 +4294,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "NELSON MCINTYRE FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-8",
@@ -4541,10 +4410,6 @@
           "Reconfigure Classroom 139 and 140 to Makers Studio and Classroom 141 to Home Ecology"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "Elementary School",
@@ -4669,10 +4534,6 @@
           "Install cabinets along south wall"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
@@ -4809,10 +4670,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-8",
@@ -4935,10 +4792,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-6 (Grades 7 & 8 moved to Windsor School in 2024-25)",
@@ -5054,10 +4907,6 @@
           "Replaced flooring in Kindegarten"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
@@ -5189,10 +5038,6 @@
         ]
       }
     },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
-    },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-8",
@@ -5317,10 +5162,6 @@
           "Lighting Retrofit"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "WINDSOR PARK FOS",
     "schoolLevel": "High School",
@@ -5455,10 +5296,6 @@
           "Replaced Hallway Entrance Flooring"
         ]
       }
-    },
-    "meta": {
-      "user": "CommsLRSD",
-      "updated": "12/03/2025"
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
