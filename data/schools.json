@@ -283,7 +283,7 @@
     },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "High School",
-    "grades": "12-Jul",
+    "grades": "7-12",
     "program": "French Immersion"
   },
   "cjs": {
@@ -413,7 +413,7 @@
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "High School",
-    "grades": "12-Sep",
+    "grades": "9-12",
     "program": "French Immersion"
   },
   "dakota": {
@@ -550,7 +550,7 @@
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "High School",
-    "grades": "12-Sep",
+    "grades": "9-12",
     "program": "English Program"
   },
   "darwin": {
@@ -917,7 +917,7 @@
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "Elementary School",
-    "grades": "8-Jun",
+    "grades": "6-8",
     "program": "French Immersion"
   },
   "ecoleguyot": {
@@ -2541,7 +2541,7 @@
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "High School",
-    "grades": "12-Sep",
+    "grades": "9-12",
     "program": "English Program"
   },
   "glenwood": {
@@ -3290,7 +3290,7 @@
     },
     "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "High School",
-    "grades": "12-Sep",
+    "grades": "9-12",
     "program": "English Program"
   },
   "lavallee": {
@@ -3908,7 +3908,7 @@
     },
     "familyOfSchools": "NELSON MCINTYRE FOS",
     "schoolLevel": "High School",
-    "grades": "12-Sep",
+    "grades": "9-12",
     "program": "English Program"
   },
   "niakwaplace": {
@@ -5000,7 +5000,7 @@
     },
     "familyOfSchools": "WINDSOR PARK FOS",
     "schoolLevel": "High School",
-    "grades": "12-Sep",
+    "grades": "9-12",
     "program": "English Program"
   },
   "windsor": {
