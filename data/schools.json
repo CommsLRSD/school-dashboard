@@ -8,25 +8,25 @@
     "phone": "(204) 233-7983",
     "enrolment": {
       "capacity": 210,
-      "current": 182,
+      "current": 162,
       "projection": {
-        "2025-26": "181",
-        "2026-27": "182",
-        "2027-28": "177",
-        "2028-29": "184"
+        "2025-26": "186",
+        "2026-27": "189",
+        "2027-28": "195",
+        "2028-29": "193"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          179,
           199,
           229,
-          195
+          195,
+          184
         ]
       }
     },
@@ -60,7 +60,7 @@
       "LED Lighting": "Gym"
     },
     "catchment": {
-      "migration": "-0.7%",
+      "migration": "-0.70%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -109,7 +109,6 @@
       "local": {
         "requested": [
           "Main office renovation",
-          "Boys change room renewal",
           "Air conditioning installation",
           "DDC system",
           "Office renovation completion",
@@ -127,13 +126,17 @@
           "Kitchen island addition",
           "Cupboards",
           "Gym girls change room modification",
-          "Bottle filling station addition"
+          "Bottle filling station addition",
+          "Boys change room renewal",
+          "Replace Public Address System",
+          "Repair of cracks in Terrazo floor",
+          "Installed Portable Air Conditioning units"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "NELSON MCINTYRE FOS",
     "schoolLevel": "Elementary School",
@@ -149,25 +152,25 @@
     "phone": "(204) 255-3205",
     "enrolment": {
       "capacity": 650,
-      "current": 678,
+      "current": 672,
       "projection": {
-        "2025-26": "824-871",
-        "2026-27": "812-820",
-        "2027-28": "761-763",
-        "2028-29": "703"
+        "2025-26": "705",
+        "2026-27": "760",
+        "2027-28": "824",
+        "2028-29": "866"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          639,
           649,
           651,
-          649
+          649,
+          680
         ]
       }
     },
@@ -201,18 +204,18 @@
       "LED Lighting": "Gym, classrooms (3), main office, commons"
     },
     "catchment": {
-      "migration": "+3.3%",
+      "migration": "3.30%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 64,
+      "Parking spots": "64",
       "Bus Loop": "Inaccessible"
     },
     "accessibility": {
       "Girls' washrooms": 6,
       "Boys' washrooms": 6,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 0,
       "Accessible entrance": "YES",
@@ -230,6 +233,7 @@
     "projects": {
       "provincial": {
         "buildingMove": "French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd.",
+        "note": "Building Move: French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd.",
         "requested": [
           "New High School: Precinct K neighbourhood",
           "Addition with washrooms, fitness room, band/music rooms, administration office, entrance modifications, community room, site development",
@@ -242,8 +246,7 @@
           "Lighting retrofits",
           "Universal washroom",
           "Foods and nutrition lab renovation"
-        ],
-        "note": "Building Move: French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd."
+        ]
       },
       "local": {
         "requested": [
@@ -269,17 +272,18 @@
           "Removal of raised teachers desks",
           "Refinish gym floor",
           "Concrete stairs repair",
-          "Door & frame replacement"
+          "Door & frame replacement",
+          "Lighting Upgrade in the north section and second floor"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "High School",
-    "grades": "7-12",
+    "grades": "12-Jul",
     "program": "French Immersion"
   },
   "cjs": {
@@ -291,25 +295,25 @@
     "phone": "(204) 257-0124",
     "enrolment": {
       "capacity": 900,
-      "current": 847,
+      "current": 844,
       "projection": {
-        "2025-26": "811-891",
-        "2026-27": "857-917",
-        "2027-28": "878-918",
-        "2028-29": "829-849"
+        "2025-26": "917",
+        "2026-27": "907",
+        "2027-28": "885",
+        "2028-29": "878"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          635,
           684,
           687,
-          750
+          750,
+          847
         ]
       }
     },
@@ -339,18 +343,18 @@
       "LED Lighting": "Main entry, office, fitness room, gym offices, classrooms (28)"
     },
     "catchment": {
-      "migration": "-0.2%",
+      "migration": "-0.20%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 129,
+      "Parking spots": "129",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 3,
       "Boys' washrooms": 3,
       "Gender neutral washrooms": 6,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 2,
       "Accessible entrance": "YES",
@@ -389,7 +393,6 @@
           "Gym Bleachers",
           "School field redevelopment",
           "Gymnasium floor refinishing",
-          "Library flooring replacement",
           "Girls' washroom renovation",
           "Domestic piping replacement in crawlspace",
           "Lighting upgrade in all classrooms, hallways, and gymnasium",
@@ -399,17 +402,18 @@
           "None"
         ],
         "completed": [
-          "Exterior level landing for cafeteria doors"
+          "Exterior level landing for cafeteria doors",
+          "Library flooring replacement"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "High School",
-    "grades": "9-12",
+    "grades": "12-Sep",
     "program": "French Immersion"
   },
   "dakota": {
@@ -420,26 +424,26 @@
     "address": "661 Dakota St.",
     "phone": "(204) 256-4366",
     "enrolment": {
-      "capacity": 1075,
-      "current": 1494,
+      "capacity": 1025,
+      "current": 1509,
       "projection": {
-        "2025-26": "1,495-1,635",
-        "2026-27": "1,490-1,606",
-        "2027-28": "1,509-1,563",
-        "2028-29": "1,479-1,518"
+        "2025-26": "1620",
+        "2026-27": "1658",
+        "2027-28": "1684",
+        "2028-29": "1661"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          1219,
           1201,
           1342,
-          1400
+          1400,
+          1490
         ]
       }
     },
@@ -465,18 +469,18 @@
       "LED Lighting": "Theatre"
     },
     "catchment": {
-      "migration": "+0.1%",
+      "migration": "0.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 177,
+      "Parking spots": "177",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 4,
       "Boys' washrooms": 4,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -535,17 +539,18 @@
         ],
         "completed": [
           "Flooring replacement",
-          "Asphalt repair"
+          "Asphalt repair",
+          "Reverse Door from Gymnasium to Fitness room"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "High School",
-    "grades": "9-12",
+    "grades": "12-Sep",
     "program": "English Program"
   },
   "darwin": {
@@ -556,26 +561,26 @@
     "address": "175 Darwin St.",
     "phone": "(204) 257-2904",
     "enrolment": {
-      "capacity": 290,
-      "current": 279,
+      "capacity": 360,
+      "current": 229,
       "projection": {
-        "2025-26": "288",
-        "2026-27": "293",
-        "2027-28": "291",
-        "2028-29": "296"
+        "2025-26": "231",
+        "2026-27": "227",
+        "2027-28": "214",
+        "2028-29": "219"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          245,
           230,
           303,
-          292
+          292,
+          279
         ]
       }
     },
@@ -592,18 +597,18 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "-0.1%",
+      "migration": "-0.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 32,
+      "Parking spots": "32",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 4,
       "Boys' washrooms": 4,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 2,
       "Accessible entrance": "YES",
@@ -649,13 +654,15 @@
           "None"
         ],
         "completed": [
-          "Flooring removal & tile installation"
+          "Flooring removal & tile installation",
+          "Lighting upgrade in Office",
+          "Build demising wall between Room 8 and 9"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
@@ -670,26 +677,26 @@
     "address": "121 Hazelwood Cres.",
     "phone": "(204) 256-1135",
     "enrolment": {
-      "capacity": 230,
-      "current": 227,
+      "capacity": 290,
+      "current": 255,
       "projection": {
-        "2025-26": "206",
-        "2026-27": "210",
-        "2027-28": "205",
-        "2028-29": "215"
+        "2025-26": "261",
+        "2026-27": "258",
+        "2027-28": "252",
+        "2028-29": "247"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          159,
           168,
           198,
-          213
+          213,
+          227
         ]
       }
     },
@@ -711,18 +718,18 @@
       "LED Lighting": "Gym, Hygiene room"
     },
     "catchment": {
-      "migration": "+0.2%",
+      "migration": "0.20%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 30,
+      "Parking spots": "30",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 2,
       "Boys' washrooms": 2,
       "Gender neutral washrooms": 1,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -770,13 +777,16 @@
           "None"
         ],
         "completed": [
-          "Paving of parking lot"
+          "Paving of parking lot",
+          "Install Bottle Filling Station",
+          "Removed boot racks and installed lockers in the north east and north west entrances",
+          "Renovated Principal's and Vice Principal's Office, Create Copier Room"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
@@ -791,26 +801,26 @@
     "address": "366 Paddington Rd.",
     "phone": "(204) 253-1492",
     "enrolment": {
-      "capacity": 350,
-      "current": 345,
+      "capacity": 375,
+      "current": 364,
       "projection": {
-        "2025-26": "355",
-        "2026-27": "364",
-        "2027-28": "333",
-        "2028-29": "363"
+        "2025-26": "339",
+        "2026-27": "368",
+        "2027-28": "356",
+        "2028-29": "351"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          417,
           399,
           374,
-          391
+          391,
+          345
         ]
       }
     },
@@ -836,18 +846,18 @@
       "LED Lighting": "Multipurpose Room"
     },
     "catchment": {
-      "migration": "+1.1%",
+      "migration": "1.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 30,
+      "Parking spots": "30",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 2,
       "Boys' washrooms": 2,
       "Gender neutral washrooms": 1,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -896,17 +906,18 @@
         "completed": [
           "Classroom window replacements (Rms. 11-20)",
           "Flooring removal & tile installation (Rm. 15)",
-          "Classrooms (2) and hallway flooring"
+          "Classrooms (2) and hallway flooring",
+          "Replaced flooring in Library"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "Elementary School",
-    "grades": "6-8",
+    "grades": "8-Jun",
     "program": "French Immersion"
   },
   "ecoleguyot": {
@@ -917,26 +928,26 @@
     "address": "400 Willowlake Cres.",
     "phone": "(204) 257-2540",
     "enrolment": {
-      "capacity": 390,
-      "current": 430,
+      "capacity": 435,
+      "current": 423,
       "projection": {
-        "2025-26": "471",
-        "2026-27": "471",
-        "2027-28": "472",
-        "2028-29": "457"
+        "2025-26": "446",
+        "2026-27": "450",
+        "2027-28": "441",
+        "2028-29": "443"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          402,
           410,
           425,
-          434
+          434,
+          430
         ]
       }
     },
@@ -962,18 +973,18 @@
       "LED Lighting": "Classrooms (2), Guitar"
     },
     "catchment": {
-      "migration": "+2.0%",
+      "migration": "2.00%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 39,
+      "Parking spots": "39",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 3,
       "Boys' washrooms": 3,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "Required",
+      "Universal Washroom": "Required",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -1025,7 +1036,7 @@
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
@@ -1040,26 +1051,26 @@
     "address": "363 Enfield Cres.",
     "phone": "(204) 233-7079",
     "enrolment": {
-      "capacity": 300,
-      "current": 221,
+      "capacity": 350,
+      "current": 310,
       "projection": {
-        "2025-26": "284-310",
-        "2026-27": "271-284",
-        "2027-28": "259-264",
-        "2028-29": "246"
+        "2025-26": "292",
+        "2026-27": "290",
+        "2027-28": "337",
+        "2028-29": "385"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          242,
           259,
           212,
-          230
+          230,
+          222
         ]
       }
     },
@@ -1076,7 +1087,7 @@
       "LED Lighting": "Boys and girls washrooms"
     },
     "catchment": {
-      "migration": "-1.5%",
+      "migration": "-1.50%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -1087,7 +1098,7 @@
       "Girls' washrooms": 2,
       "Boys' washrooms": 2,
       "Gender neutral washrooms": 1,
-      "Universal washroom": "Required",
+      "Universal Washroom": "Required",
       "Elevator": "Required",
       "Accessible parking stalls": 0,
       "Accessible entrance": "YES",
@@ -1125,8 +1136,7 @@
           "Phys-ed office shower",
           "Lighting and ceiling tiles upgrade",
           "Tectum installation in gymnasium",
-          "Flooring",
-          "Entrance concrete landing replacement"
+          "Flooring"
         ],
         "inProgress": [
           "None"
@@ -1135,13 +1145,18 @@
           "Privacy curtains (shower & changerooms)",
           "Window replacements",
           "Flooring removal",
-          "Lockers"
+          "Lockers",
+          "Entrance concrete landing replacement",
+          "Replaced Public Address System",
+          "Soundproofing of Music Room",
+          "Build storage cage for guitars",
+          "Installed 100 lockers"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
@@ -1156,26 +1171,26 @@
     "address": "150 Howden Rd.",
     "phone": "(204) 257-0656",
     "enrolment": {
-      "capacity": 355,
-      "current": 421,
+      "capacity": 405,
+      "current": 307,
       "projection": {
-        "2025-26": "372",
-        "2026-27": "390",
-        "2027-28": "397",
-        "2028-29": "395"
+        "2025-26": "317",
+        "2026-27": "314",
+        "2027-28": "308",
+        "2028-29": "298"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          327,
           322,
           368,
-          398
+          398,
+          421
         ]
       }
     },
@@ -1197,18 +1212,18 @@
       "LED Lighting": "Gym, Classroom"
     },
     "catchment": {
-      "migration": "-0.1%",
+      "migration": "-0.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 33,
+      "Parking spots": "33",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 1,
       "Boys' washrooms": 1,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 0,
       "Accessible entrance": "YES",
@@ -1267,13 +1282,15 @@
           "Shelving installation",
           "Bottle filling station addition",
           "Old water fountains removal",
-          "Student services office"
+          "Student services office",
+          "Window replacemetn on the north side of the south hallway",
+          "Installed Portable Air Conditioning units"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
@@ -1288,26 +1305,26 @@
     "address": "316 Ashworth St.",
     "phone": "(204) 253-2363",
     "enrolment": {
-      "capacity": 375,
-      "current": 364,
+      "capacity": 355,
+      "current": 349,
       "projection": {
-        "2025-26": "325",
-        "2026-27": "332",
-        "2027-28": "350",
-        "2028-29": "355"
+        "2025-26": "349",
+        "2026-27": "329",
+        "2027-28": "316",
+        "2028-29": "304"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          316,
           341,
           353,
-          357
+          357,
+          364
         ]
       }
     },
@@ -1324,18 +1341,18 @@
       "LED Lighting": "Gym, hallway"
     },
     "catchment": {
-      "migration": "+1.3%",
+      "migration": "1.30%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 33,
+      "Parking spots": "33",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 2,
       "Boys' washrooms": 2,
       "Gender neutral washrooms": 0,
-      "Universal washroom": "Required",
+      "Universal Washroom": "Required",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -1382,13 +1399,14 @@
           "None"
         ],
         "completed": [
-          "Flooring replaced with tile"
+          "Flooring replaced with tile",
+          "Replaced flooring in Room 11"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "Elementary School",
@@ -1403,26 +1421,26 @@
     "address": "95 Pulberry St.",
     "phone": "(204) 253-9704",
     "enrolment": {
-      "capacity": 420,
-      "current": 426,
+      "capacity": 480,
+      "current": 421,
       "projection": {
-        "2025-26": "421",
-        "2026-27": "420",
-        "2027-28": "421",
-        "2028-29": "422"
+        "2025-26": "432",
+        "2026-27": "439",
+        "2027-28": "430",
+        "2028-29": "425"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          408,
           393,
           401,
-          416
+          416,
+          427
         ]
       }
     },
@@ -1444,18 +1462,18 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "+0.4%",
+      "migration": "0.40%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 40,
+      "Parking spots": "40",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 5,
       "Boys' washrooms": 4,
       "Gender neutral washrooms": 1,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -1487,7 +1505,7 @@
           "Relocation of school office and support space"
         ],
         "inProgress": [
-          "None"
+          "Heating and Ventilation Upgrades"
         ],
         "completed": [
           "Replacement of Chiller"
@@ -1515,13 +1533,15 @@
           "Shelving",
           "Sink",
           "White board",
-          "Coat hooks"
+          "Coat hooks",
+          "Replaced Flooring in Gymnasium and Library",
+          "Rebuild wall in Room #2"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "Elementary School",
@@ -1536,26 +1556,26 @@
     "address": "320 ave de la Cathedrale",
     "phone": "(204) 233-0222",
     "enrolment": {
-      "capacity": 290,
+      "capacity": 295,
       "current": 290,
       "projection": {
-        "2025-26": "345-398",
-        "2026-27": "332-356",
-        "2027-28": "323-239",
-        "2028-29": "318"
+        "2025-26": "264",
+        "2026-27": "301",
+        "2027-28": "350",
+        "2028-29": "417"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          259,
           256,
           285,
-          293
+          293,
+          290
         ]
       }
     },
@@ -1572,23 +1592,23 @@
       }
     ],
     "building": {
-      "Air Conditioning": "None",
+      "Air Conditioning": "Full building",
       "Heating": "Natural gas",
       "LED Lighting": "Childcare areas, meeting room 1, custodial room, washrooms (5), classrooms (9), second floor hallway, family centre room"
     },
     "catchment": {
-      "migration": "-1.5%",
+      "migration": "-1.50%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 32,
+      "Parking spots": "32",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 2,
       "Boys' washrooms": 2,
       "Gender neutral washrooms": 3,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "Required",
       "Accessible parking stalls": 0,
       "Accessible entrance": "Required",
@@ -1629,24 +1649,24 @@
           "Student washrooms renovation",
           "Acoustic material replacement",
           "Door and frames replacement",
-          "Gym bleacher replacement",
           "Storage room door",
           "Washroom walls refinishing",
-          "Doorway widening",
-          "Magnetic locks on second floor stairwell doors",
-          "Bike cage"
+          "Doorway widening"
         ],
         "inProgress": [],
         "completed": [
           "Window safety bars",
           "Extend stairway walls for safety",
-          "New gender neutral washroom"
+          "New gender neutral washroom",
+          "Magnetic locks on second floor stairwell doors",
+          "Bike cage",
+          "Install Bottle Filling Station"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
@@ -1661,20 +1681,20 @@
     "address": "355 Des Hivernants Blvd.",
     "phone": "Board Office",
     "enrolment": {
-      "capacity": 900,
-      "current": 0,
+      "capacity": 815,
+      "current": 816,
       "projection": {
-        "2025-26": "90-97",
-        "2026-27": "859-861",
-        "2027-28": "855-880",
-        "2028-29": "836-876"
+        "2025-26": "860",
+        "2026-27": "934",
+        "2027-28": "972",
+        "2028-29": "1024"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
           0,
@@ -1697,7 +1717,7 @@
       "LED Lighting": "Hallways, band, office, library, Rooms 101-103, 142, 203, 204"
     },
     "catchment": {
-      "migration": "+0.0%",
+      "migration": "0.00%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -1708,7 +1728,7 @@
       "Girls' washrooms": 1,
       "Boys' washrooms": 1,
       "Gender neutral washrooms": 24,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 9,
       "Accessible entrance": "YES",
@@ -1739,7 +1759,7 @@
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
@@ -1754,26 +1774,26 @@
     "address": "77 John Forsyth Rd.",
     "phone": "(204) 254-0120",
     "enrolment": {
-      "capacity": 405,
-      "current": 399,
+      "capacity": 400,
+      "current": 378,
       "projection": {
-        "2025-26": "356",
-        "2026-27": "365",
-        "2027-28": "391",
-        "2028-29": "399"
+        "2025-26": "357",
+        "2026-27": "315",
+        "2027-28": "292",
+        "2028-29": "279"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          483,
           469,
           471,
-          427
+          427,
+          398
         ]
       }
     },
@@ -1790,7 +1810,7 @@
       "LED Lighting": "Gym, mini-gym"
     },
     "catchment": {
-      "migration": "+1.0%",
+      "migration": "1.00%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -1801,7 +1821,7 @@
       "Girls' washrooms": 2,
       "Boys' washrooms": 2,
       "Gender neutral washrooms": 0,
-      "Universal washroom": "1",
+      "Universal Washroom": "1",
       "Elevator": "n/a",
       "Accessible parking stalls": 0,
       "Accessible entrance": "YES",
@@ -1829,14 +1849,16 @@
           "Make-up air replacement (2)"
         ],
         "inProgress": [],
-        "completed": []
+        "completed": [
+          "Boiler replacement",
+          "Direct Digital Control for HVAC system installation"
+        ]
       },
       "local": {
         "requested": [
           "Roof top unit replacement",
           "Staff room renovation",
-          "Partitions replacement in change room",
-          "Concrete play area repair"
+          "Partitions replacement in change room"
         ],
         "inProgress": [],
         "completed": [
@@ -1844,13 +1866,15 @@
           "Sound proofing",
           "Ceiling tile replacement (6 classrooms)",
           "Cubbies for students",
-          "White board relocation"
+          "White board relocation",
+          "Concrete play area repair",
+          "Install Bottle Filling Station"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "Elementary School",
@@ -1865,26 +1889,26 @@
     "address": "10 Vermillion Rd.",
     "phone": "(204) 255-1134",
     "enrolment": {
-      "capacity": 365,
-      "current": 450,
+      "capacity": 320,
+      "current": 318,
       "projection": {
-        "2025-26": "314-389",
-        "2026-27": "294-347",
-        "2027-28": "289-316",
-        "2028-29": "283-291"
+        "2025-26": "340",
+        "2026-27": "373",
+        "2027-28": "398",
+        "2028-29": "424"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          397,
           416,
           432,
-          447
+          447,
+          450
         ]
       }
     },
@@ -1906,18 +1930,18 @@
       "LED Lighting": "Kindergarten, library, music, MPR, classrooms (18)"
     },
     "catchment": {
-      "migration": "+8.0%",
+      "migration": "8.00%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 20,
+      "Parking spots": "20",
       "Bus Loop": "YES"
     },
     "accessibility": {
-      "Girls' washrooms": 2,
-      "Boys' washrooms": 2,
-      "Gender neutral washrooms": 1,
-      "Universal washroom": "Required",
+      "Girls' washrooms": 1,
+      "Boys' washrooms": 1,
+      "Gender neutral washrooms": 2,
+      "Universal Washroom": "Required",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -1958,7 +1982,6 @@
         "requested": [
           "Skylights covers removal",
           "Lighting upgrade",
-          "Gender-neutral washrooms",
           "Operable windows",
           "Asphalt play area replacement",
           "Soundproofing in multi-purpose room",
@@ -1974,13 +1997,16 @@
           "General renovations",
           "Flooring replacement (front & rear entrances)",
           "New classroom in library",
-          "Library reconfiguration to include kindergarten classroom with washroom"
+          "Library reconfiguration to include kindergarten classroom with washroom",
+          "Gender-neutral washrooms",
+          "Replaced entrance carpet",
+          "Installed Portable Air Conditioning units"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
@@ -1995,26 +2021,26 @@
     "address": "22 Varennes Ave.",
     "phone": "(204) 253-1375",
     "enrolment": {
-      "capacity": 400,
-      "current": 420,
+      "capacity": 425,
+      "current": 353,
       "projection": {
-        "2025-26": "390",
-        "2026-27": "400",
-        "2027-28": "411",
-        "2028-29": "425"
+        "2025-26": "399",
+        "2026-27": "402",
+        "2027-28": "389",
+        "2028-29": "370"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          384,
           370,
           358,
-          382
+          382,
+          421
         ]
       }
     },
@@ -2044,18 +2070,18 @@
       "LED Lighting": "Classrooms (3)"
     },
     "catchment": {
-      "migration": "-2.3%",
+      "migration": "-2.30%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 38,
+      "Parking spots": "38",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 2,
       "Boys' washrooms": 2,
       "Gender neutral washrooms": 1,
-      "Universal washroom": "Required",
+      "Universal Washroom": "Required",
       "Elevator": "Required",
       "Accessible parking stalls": 2,
       "Accessible entrance": "YES",
@@ -2095,8 +2121,6 @@
           "Ceiling tiles replacement",
           "Make-up air unit",
           "Flooring",
-          "Automatic door operators",
-          "Ramp at library door",
           "Ceiling and lighting upgrade",
           "Washrooms renovation",
           "Exhaust fan replacement",
@@ -2104,7 +2128,6 @@
           "Flooring replacement",
           "Windows replacement",
           "Gym ceiling acoustic material removal",
-          "Gym change room reconfiguration to sensory room",
           "Gym mezzanine expansion"
         ],
         "inProgress": [
@@ -2113,17 +2136,19 @@
         "completed": [
           "Flooring replacement",
           "Electrical plug installation (parking lot)",
-          "Intercom system"
+          "Intercom system",
+          "Automatic door operators",
+          "Ramp at library door"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "JEANNE-SAUVÉ FOS",
     "schoolLevel": "Elementary School",
-    "grades": "K-8",
+    "grades": "K-6 (Grades 7 & 8 moved to École Henri Bergeron in 2025-26)",
     "program": "French Immersion"
   },
   "frontenac": {
@@ -2134,26 +2159,26 @@
     "address": "866 Autumnwood Dr.",
     "phone": "(204) 257-0609",
     "enrolment": {
-      "capacity": 450,
-      "current": 418,
+      "capacity": 475,
+      "current": 398,
       "projection": {
-        "2025-26": "373",
-        "2026-27": "387",
-        "2027-28": "385",
-        "2028-29": "397"
+        "2025-26": "402",
+        "2026-27": "415",
+        "2027-28": "406",
+        "2028-29": "382"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          433,
           454,
           426,
-          406
+          406,
+          407
         ]
       }
     },
@@ -2191,18 +2216,18 @@
       "LED Lighting": "Staff room 34, room 28"
     },
     "catchment": {
-      "migration": "-1.2%",
+      "migration": "-1.20%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 55,
+      "Parking spots": "55",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 4,
       "Boys' washrooms": 4,
       "Gender neutral washrooms": 4,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -2239,8 +2264,7 @@
           "Ceiling tiles replacement",
           "Change room renovation",
           "Concrete accessible loading pad",
-          "Wall fracture",
-          "Canopy outside modular classrooms"
+          "Wall fracture"
         ],
         "inProgress": [],
         "completed": [
@@ -2248,13 +2272,17 @@
           "Step repairs",
           "Ramp repair",
           "Floor tile replacement",
-          "Playground asphalt resurfacing"
+          "Playground asphalt resurfacing",
+          "Canopy outside modular classrooms",
+          "Concrete sidewalk in the bus loading zone",
+          "Upgrade eye wash stations",
+          "Repair fracture in the wall between the existing and addition building"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "WINDSOR PARK FOS",
     "schoolLevel": "Elementary School",
@@ -2269,26 +2297,26 @@
     "address": "18 Lomond Blvd.",
     "phone": "(204) 255-1400",
     "enrolment": {
-      "capacity": 235,
-      "current": 234,
+      "capacity": 280,
+      "current": 218,
       "projection": {
-        "2025-26": "286",
-        "2026-27": "283",
-        "2027-28": "277",
-        "2028-29": "264"
+        "2025-26": "223",
+        "2026-27": "224",
+        "2027-28": "214",
+        "2028-29": "206"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          230,
           247,
           251,
-          261
+          261,
+          237
         ]
       }
     },
@@ -2314,18 +2342,18 @@
       "LED Lighting": "Room 6"
     },
     "catchment": {
-      "migration": "+2.2%",
+      "migration": "2.20%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 39,
+      "Parking spots": "39",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 4,
       "Boys' washrooms": 4,
       "Gender neutral washrooms": 4,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 0,
       "Accessible entrance": "YES",
@@ -2378,7 +2406,7 @@
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "WINDSOR PARK FOS",
     "schoolLevel": "Elementary School",
@@ -2394,25 +2422,25 @@
     "phone": "(204) 233-3986",
     "enrolment": {
       "capacity": 1000,
-      "current": 1104,
+      "current": 1000,
       "projection": {
-        "2025-26": "1,068-1,105",
-        "2026-27": "1,071-1,077",
-        "2027-28": "1,097-1,102",
-        "2028-29": "1,071-1,095"
+        "2025-26": "1055",
+        "2026-27": "1051",
+        "2027-28": "1091",
+        "2028-29": "1136"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          991,
           886,
           911,
-          1059
+          1059,
+          1105
         ]
       }
     },
@@ -2424,24 +2452,20 @@
     },
     "additions": [
       {
-        "year": "1956",
-        "size": ""
+        "year": "",
+        "size": "1965"
       },
       {
-        "year": "1965",
-        "size": ""
+        "year": "",
+        "size": "1972"
       },
       {
-        "year": "1972",
-        "size": ""
+        "year": "",
+        "size": "1975"
       },
       {
-        "year": "1975",
-        "size": ""
-      },
-      {
-        "year": "1997",
-        "size": "Rebuild"
+        "year": "",
+        "size": "1997"
       }
     ],
     "building": {
@@ -2450,18 +2474,18 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "-0.3%",
+      "migration": "-0.30%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 110,
+      "Parking spots": "110",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 5,
       "Boys' washrooms": 5,
       "Gender neutral washrooms": 9,
-      "Universal washroom": "1",
+      "Universal Washroom": "1",
       "Elevator": "Partial",
       "Accessible parking stalls": 5,
       "Accessible entrance": "YES",
@@ -2505,17 +2529,19 @@
           "Enclose junior high lab electrical panel",
           "Door replacement",
           "Foods and nutrition lab",
-          "Fire alarm upgrade"
+          "Fire alarm upgrade",
+          "Replaced flooring in Room 240",
+          "Renumbering of rooms"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "High School",
-    "grades": "9-12",
+    "grades": "12-Sep",
     "program": "English Program"
   },
   "glenwood": {
@@ -2526,26 +2552,26 @@
     "address": "51 Blenheim Ave.",
     "phone": "(204) 233-3619",
     "enrolment": {
-      "capacity": 280,
-      "current": 267,
+      "capacity": 325,
+      "current": 281,
       "projection": {
-        "2025-26": "285",
-        "2026-27": "290",
-        "2027-28": "289",
-        "2028-29": "287"
+        "2025-26": "268",
+        "2026-27": "269",
+        "2027-28": "281",
+        "2028-29": "279"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          172,
           198,
           216,
-          235
+          235,
+          266
         ]
       }
     },
@@ -2575,18 +2601,18 @@
       "LED Lighting": "Gym, office, storage, classrooms (4)"
     },
     "catchment": {
-      "migration": "-1.1%",
+      "migration": "-1.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 32,
+      "Parking spots": "32",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 2,
       "Boys' washrooms": 2,
       "Gender neutral washrooms": 5,
-      "Universal washroom": "Required",
+      "Universal Washroom": "Required",
       "Elevator": "Required",
       "Accessible parking stalls": 0,
       "Accessible entrance": "YES",
@@ -2634,13 +2660,14 @@
         ],
         "completed": [
           "Chimney repair",
-          "Pave parking lot with asphalt"
+          "Pave parking lot with asphalt",
+          "Replaced windows in the west wing"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
@@ -2655,26 +2682,26 @@
     "address": "160 Southglen Blvd.",
     "phone": "(204) 254-7477",
     "enrolment": {
-      "capacity": 375,
-      "current": 383,
+      "capacity": 425,
+      "current": 364,
       "projection": {
-        "2025-26": "350",
-        "2026-27": "351",
-        "2027-28": "375",
-        "2028-29": "381"
+        "2025-26": "373",
+        "2026-27": "361",
+        "2027-28": "368",
+        "2028-29": "377"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          397,
           394,
           413,
-          398
+          398,
+          383
         ]
       }
     },
@@ -2696,18 +2723,18 @@
       "LED Lighting": "Room 6"
     },
     "catchment": {
-      "migration": "-0.2%",
+      "migration": "-0.20%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 42,
+      "Parking spots": "42",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 2,
       "Boys' washrooms": 2,
       "Gender neutral washrooms": 1,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -2758,7 +2785,7 @@
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
@@ -2773,26 +2800,26 @@
     "address": "50 Hastings Blvd.",
     "phone": "(204) 253-1371",
     "enrolment": {
-      "capacity": 260,
-      "current": 238,
+      "capacity": 280,
+      "current": 207,
       "projection": {
-        "2025-26": "260",
-        "2026-27": "255",
-        "2027-28": "254",
-        "2028-29": "243"
+        "2025-26": "231",
+        "2026-27": "237",
+        "2027-28": "221",
+        "2028-29": "217"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          204,
           198,
           216,
-          235
+          235,
+          234
         ]
       }
     },
@@ -2809,7 +2836,7 @@
       "LED Lighting": "Gym, hallways, main entry, offices, storage, movement room, staff washrooms, custodial room, elevator"
     },
     "catchment": {
-      "migration": "-0.5%",
+      "migration": "-0.50%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -2820,7 +2847,7 @@
       "Girls' washrooms": 1,
       "Boys' washrooms": 1,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -2866,13 +2893,15 @@
         ],
         "completed": [
           "Portable A/C unit",
-          "Steps repair"
+          "Steps repair",
+          "Replaced windows on the west side of the building",
+          "Installed Fence and added walkpath in the school bus loop"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
@@ -2887,26 +2916,26 @@
     "address": "99 Highbury Rd.",
     "phone": "(204) 254-5078",
     "enrolment": {
-      "capacity": 400,
-      "current": 450,
+      "capacity": 445,
+      "current": 411,
       "projection": {
-        "2025-26": "423",
-        "2026-27": "425",
-        "2027-28": "437",
-        "2028-29": "440"
+        "2025-26": "433",
+        "2026-27": "410",
+        "2027-28": "394",
+        "2028-29": "384"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          403,
           409,
           407,
-          438
+          438,
+          450
         ]
       }
     },
@@ -2944,18 +2973,18 @@
       "LED Lighting": "Gym, multipurpose room stage, office, hygiene room"
     },
     "catchment": {
-      "migration": "+2.1%",
+      "migration": "2.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 41,
+      "Parking spots": "41",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 4,
       "Boys' washrooms": 4,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -2999,13 +3028,14 @@
         "completed": [
           "Dust collector layout reconfiguration and added electrical to accommodate the relocated equipment",
           "Painting of all classrooms",
-          "Interlock for dust collector installation"
+          "Interlock for dust collector installation",
+          "Repainting of the metal roof and metal overhang at the doorway"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
@@ -3020,26 +3050,26 @@
     "address": "445 Island Shore Blvd.",
     "phone": "(204) 254-6247",
     "enrolment": {
-      "capacity": 540,
-      "current": 752,
+      "capacity": 790,
+      "current": 710,
       "projection": {
-        "2025-26": "650-706",
-        "2026-27": "671-704",
-        "2027-28": "700-757",
-        "2028-29": "709-767"
+        "2025-26": "740",
+        "2026-27": "743",
+        "2027-28": "752",
+        "2028-29": "764"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          391,
           497,
           585,
-          687
+          687,
+          750
         ]
       }
     },
@@ -3061,18 +3091,18 @@
       "LED Lighting": "Classrooms (3)"
     },
     "catchment": {
-      "migration": "+9.5%",
+      "migration": "9.50%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 36,
+      "Parking spots": "36",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 3,
       "Boys' washrooms": 3,
       "Gender neutral washrooms": 7,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 2,
       "Accessible entrance": "YES",
@@ -3097,15 +3127,15 @@
           "New Elementary School: Precinct J neighbourhood",
           "New Elementary School: Precinct K neighbourhood",
           "New High School: Precinct K neighbourhood",
-          "Relocation of Modular Classrooms to ILCS from École Van Belleghem (summer 2025)",
           "Additional Air Make Up unit for gym",
           "Roof replacement (Partial)"
         ],
         "inProgress": [
-          "Relocation of Modular Classrooms (2) from St. Germain"
+          "Relocation of Modular Classrooms to ILCS from École Van Belleghem (summer 2025)"
         ],
         "completed": [
-          "Installation of Modular Classrooms (2)"
+          "Installation of Modular Classrooms (2)",
+          "Relocation of Modular Classrooms (2) from St. Germain"
         ]
       },
       "local": {
@@ -3128,7 +3158,7 @@
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "Elementary School",
@@ -3144,25 +3174,25 @@
     "phone": "(204) 257-2928",
     "enrolment": {
       "capacity": 700,
-      "current": 856,
+      "current": 978,
       "projection": {
-        "2025-26": "1,115-1,154",
-        "2026-27": "1,064-1,093",
-        "2027-28": "992-1,003",
-        "2028-29": "902"
+        "2025-26": "1051",
+        "2026-27": "1149",
+        "2027-28": "1227",
+        "2028-29": "1251"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          763,
           762,
           779,
-          780
+          780,
+          856
         ]
       }
     },
@@ -3184,18 +3214,18 @@
       "LED Lighting": "Hallway"
     },
     "catchment": {
-      "migration": "+5.8%",
+      "migration": "5.80%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 51,
+      "Parking spots": "51",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 3,
       "Boys' washrooms": 3,
       "Gender neutral washrooms": 1,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 0,
       "Accessible entrance": "YES",
@@ -3216,13 +3246,13 @@
           "New Elementary School: Precinct J neighbourhood",
           "New Elementary School: Precinct K neighbourhood",
           "New High School: Precinct K neighbourhood",
+          "Roof replacement (Partial)"
+        ],
+        "inProgress": [
           "Addition [≈26,000 ft2] with classrooms (9), Library, Fitness room, Cafeteria, Entrance (2)",
           "Optimize staff parking",
           "Outdoor recreation spaces",
           "Hardcourt sports plaza",
-          "Roof replacement (Partial)"
-        ],
-        "inProgress": [
           "Science classroom"
         ],
         "completed": [
@@ -3240,7 +3270,9 @@
           "Windows replacement",
           "Gym air conditioning"
         ],
-        "inProgress": [],
+        "inProgress": [
+          "Install 60 lockers"
+        ],
         "completed": [
           "Locker replacement",
           "Cupboard removal",
@@ -3254,11 +3286,11 @@
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "High School",
-    "grades": "9-12",
+    "grades": "12-Sep",
     "program": "English Program"
   },
   "lavallee": {
@@ -3270,25 +3302,25 @@
     "phone": "(204) 257-1388",
     "enrolment": {
       "capacity": 210,
-      "current": 161,
+      "current": 176,
       "projection": {
-        "2025-26": "192",
-        "2026-27": "186",
-        "2027-28": "183",
-        "2028-29": "183"
+        "2025-26": "168",
+        "2026-27": "172",
+        "2027-28": "172",
+        "2028-29": "172"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          142,
           149,
           169,
-          168
+          168,
+          161
         ]
       }
     },
@@ -3305,18 +3337,18 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "+0.1%",
+      "migration": "0.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 101,
+      "Parking spots": "101",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 4,
       "Boys' washrooms": 4,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -3368,7 +3400,7 @@
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
@@ -3384,25 +3416,25 @@
     "phone": "(204) 237-8951",
     "enrolment": {
       "capacity": 331,
-      "current": 141,
+      "current": 178,
       "projection": {
-        "2025-26": "N/A",
-        "2026-27": "N/A",
-        "2027-28": "N/A",
-        "2028-29": "N/A"
+        "2025-26": "149",
+        "2026-27": "147",
+        "2027-28": "148",
+        "2028-29": "150"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          135,
           118,
           147,
-          148
+          148,
+          141
         ]
       }
     },
@@ -3428,14 +3460,14 @@
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 66,
+      "Parking spots": "66",
       "Bus Loop": "N/A"
     },
     "accessibility": {
       "Girls' washrooms": 2,
       "Boys' washrooms": 2,
       "Gender neutral washrooms": 1,
-      "Universal washroom": "Required",
+      "Universal Washroom": "Required",
       "Elevator": "Required",
       "Accessible parking stalls": 2,
       "Accessible entrance": "YES",
@@ -3485,10 +3517,10 @@
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
-    "schoolLevel": "High School",
     "familyOfSchools": "Other",
+    "schoolLevel": "High School",
     "grades": "Grade 11, 12, post-secondary",
     "program": "Technical Vocational"
   },
@@ -3500,26 +3532,26 @@
     "address": "619 Des Meurons St.",
     "phone": "(204) 233-2893",
     "enrolment": {
-      "capacity": 250,
-      "current": 259,
+      "capacity": 300,
+      "current": 253,
       "projection": {
-        "2025-26": "357-428",
-        "2026-27": "322-354",
-        "2027-28": "296-304",
-        "2028-29": "263"
+        "2025-26": "281",
+        "2026-27": "333",
+        "2027-28": "412",
+        "2028-29": "520"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          113,
           139,
           144,
-          218
+          218,
+          259
         ]
       }
     },
@@ -3545,18 +3577,18 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "-1.5%",
+      "migration": "-1.50%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 37,
+      "Parking spots": "37",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 2,
       "Boys' washrooms": 2,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 4,
       "Accessible entrance": "YES",
@@ -3605,15 +3637,18 @@
           "Electrical rewiring",
           "Washrooms renovation"
         ],
-        "inProgress": [],
+        "inProgress": [
+          "Renovation of Washrooms"
+        ],
         "completed": [
-          "Air conditioning (entire school)"
+          "Air conditioning (entire school)",
+          "Rebuild demising wall between 22 and 24"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "NELSON MCINTYRE FOS",
     "schoolLevel": "Elementary School",
@@ -3628,25 +3663,25 @@
     "address": "200 Minnetonka St.",
     "phone": "(204) 257-8114",
     "enrolment": {
-      "capacity": 205,
-      "current": 171,
+      "capacity": 230,
+      "current": 172,
       "projection": {
-        "2025-26": "195",
-        "2026-27": "196",
-        "2027-28": "196",
-        "2028-29": "193"
+        "2025-26": "183",
+        "2026-27": "177",
+        "2027-28": "180",
+        "2028-29": "187"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          154,
           177,
           138,
+          171,
           171
         ]
       }
@@ -3664,18 +3699,18 @@
       "LED Lighting": "Gym, hallways, boys' & girls' washrooms, classrooms (7)"
     },
     "catchment": {
-      "migration": "+1.7%",
+      "migration": "1.70%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 56,
+      "Parking spots": "56",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 3,
       "Boys' washrooms": 3,
       "Gender neutral washrooms": 1,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 0,
       "Accessible entrance": "YES",
@@ -3720,13 +3755,14 @@
         "completed": [
           "Cabinets addition",
           "Lockers addition",
-          "Resurfacing main entrance"
+          "Resurfacing main entrance",
+          "Installed Portable Air Conditioning units"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
@@ -3742,25 +3778,25 @@
     "phone": "(204) 237-0219",
     "enrolment": {
       "capacity": 650,
-      "current": 393,
+      "current": 401,
       "projection": {
-        "2025-26": "424-519",
-        "2026-27": "420-280",
-        "2027-28": "404-436",
-        "2028-29": "386-399"
+        "2025-26": "378",
+        "2026-27": "416",
+        "2027-28": "479",
+        "2028-29": "527"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          305,
           316,
           313,
-          358
+          358,
+          387
         ]
       }
     },
@@ -3798,18 +3834,18 @@
       "LED Lighting": "Boiler room, office, storage, classrooms (3)"
     },
     "catchment": {
-      "migration": "-1.6%",
+      "migration": "-1.60%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 62,
+      "Parking spots": "62",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 3,
       "Boys' washrooms": 3,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -3858,17 +3894,21 @@
           "Basketball court expansion",
           "Floor refinishing",
           "Interlock for dust collector installation",
-          "Rooftop units replacement"
+          "Rooftop units replacement",
+          "Replaced flooring in Library",
+          "Replace rusty flagpole",
+          "Install wall in room 109",
+          "Install Bottle Filling Station"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "NELSON MCINTYRE FOS",
     "schoolLevel": "High School",
-    "grades": "9-12",
+    "grades": "12-Sep",
     "program": "English Program"
   },
   "niakwaplace": {
@@ -3880,25 +3920,25 @@
     "phone": "(204) 257-0640",
     "enrolment": {
       "capacity": 260,
-      "current": 248,
+      "current": 213,
       "projection": {
-        "2025-26": "297",
-        "2026-27": "303",
-        "2027-28": "292",
-        "2028-29": "283"
+        "2025-26": "243",
+        "2026-27": "249",
+        "2027-28": "231",
+        "2028-29": "229"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          262,
           232,
           250,
-          268
+          268,
+          248
         ]
       }
     },
@@ -3915,18 +3955,18 @@
       "LED Lighting": "Entire school"
     },
     "catchment": {
-      "migration": "+2.7%",
+      "migration": "2.70%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 40,
+      "Parking spots": "40",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 4,
       "Boys' washrooms": 4,
       "Gender neutral washrooms": 0,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -3975,13 +4015,15 @@
         ],
         "inProgress": [],
         "completed": [
-          "Asphalt repair"
+          "Asphalt repair",
+          "Replaced flooring for Library platform",
+          "Replaced counterops, sinks and urinals"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "Elementary School",
@@ -3997,25 +4039,25 @@
     "phone": "(204) 237-0202",
     "enrolment": {
       "capacity": 230,
-      "current": 180,
+      "current": 174,
       "projection": {
-        "2025-26": "173",
-        "2026-27": "176",
-        "2027-28": "180",
-        "2028-29": "177"
+        "2025-26": "181",
+        "2026-27": "184",
+        "2027-28": "181",
+        "2028-29": "183"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          135,
           132,
           172,
-          170
+          170,
+          180
         ]
       }
     },
@@ -4053,18 +4095,18 @@
       "LED Lighting": "Staff washroom, fan room"
     },
     "catchment": {
-      "migration": "-2.4%",
+      "migration": "-2.40%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 32,
+      "Parking spots": "32",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 3,
       "Boys' washrooms": 3,
       "Gender neutral washrooms": 0,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 0,
       "Accessible entrance": "Required",
@@ -4105,13 +4147,15 @@
         ],
         "inProgress": [],
         "completed": [
-          "Door & frame replacement"
+          "Door & frame replacement",
+          "Renovate Staff Room",
+          "Installed Portable Air Conditioning units"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "NELSON MCINTYRE FOS",
     "schoolLevel": "Elementary School",
@@ -4126,26 +4170,26 @@
     "address": "315 Sage Creek Blvd.",
     "phone": "(204) 253-8199",
     "enrolment": {
-      "capacity": 600,
-      "current": 654,
+      "capacity": 660,
+      "current": 645,
       "projection": {
-        "2025-26": "722-821 (Eng. K-8 only)",
-        "2026-27": "702-775 (Eng. K-8 only)",
-        "2027-28": "668-705 (Eng. K-8 only)",
-        "2028-29": "636-654 (Eng. K-8 only)"
+        "2025-26": "683",
+        "2026-27": "697",
+        "2027-28": "695",
+        "2028-29": "694"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          769,
           694,
           747,
-          787
+          787,
+          772
         ]
       }
     },
@@ -4162,18 +4206,18 @@
       "LED Lighting": "Hallways, band, office, library, classrooms (6)"
     },
     "catchment": {
-      "migration": "+6.9%",
+      "migration": "6.90%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 48,
+      "Parking spots": "48",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 1,
       "Boys' washrooms": 1,
       "Gender neutral washrooms": 20,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -4216,13 +4260,15 @@
           "Remove temporary partitions in commons area and makerspace areas",
           "Reinstall equipment in makerspace and teacher space in kitchen",
           "Demising wall",
-          "Additional access door"
+          "Additional access door",
+          "demolition of demising walls from the commons area",
+          "Reconfigure Classroom 139 and 140 to Makers Studio and Classroom 141 to Home Ecology"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "Elementary School",
@@ -4237,26 +4283,26 @@
     "address": "192 Burland Ave.",
     "phone": "(204) 254-0124",
     "enrolment": {
-      "capacity": 450,
-      "current": 421,
+      "capacity": 445,
+      "current": 402,
       "projection": {
-        "2025-26": "374",
-        "2026-27": "387",
-        "2027-28": "399",
-        "2028-29": "420"
+        "2025-26": "377",
+        "2026-27": "369",
+        "2027-28": "363",
+        "2028-29": "366"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          433,
           454,
           444,
-          448
+          448,
+          421
         ]
       }
     },
@@ -4273,18 +4319,18 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "+0.6%",
+      "migration": "0.60%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 38,
+      "Parking spots": "38",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 3,
       "Boys' washrooms": 3,
       "Gender neutral washrooms": 0,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 2,
       "Accessible entrance": "Required",
@@ -4334,13 +4380,15 @@
           "Ceiling track installation",
           "Flooring replacement",
           "Sidewalk repair",
-          "Hallway cabinets"
+          "Hallway cabinets",
+          "Add doorway to classroom 18 from the main hallway",
+          "Install cabinets along south wall"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
@@ -4355,26 +4403,26 @@
     "address": "831 Beaverhill Blvd.",
     "phone": "(204) 257-0637",
     "enrolment": {
-      "capacity": 640,
-      "current": 633,
+      "capacity": 525,
+      "current": 344,
       "projection": {
-        "2025-26": "299",
-        "2026-27": "294",
-        "2027-28": "298",
-        "2028-29": "306"
+        "2025-26": "289",
+        "2026-27": "362",
+        "2027-28": "455",
+        "2028-29": "540"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          499,
           563,
           588,
-          610
+          610,
+          634
         ]
       }
     },
@@ -4396,18 +4444,18 @@
       "LED Lighting": "Multipurpose room, music"
     },
     "catchment": {
-      "migration": "+4.6%",
+      "migration": "4.60%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 51,
+      "Parking spots": "51",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 8,
       "Boys' washrooms": 8,
       "Gender neutral washrooms": 5,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 2,
       "Accessible entrance": "YES",
@@ -4436,7 +4484,7 @@
           "Universal washroom"
         ],
         "inProgress": [
-          "Building envelope replacement"
+          "Building envelope replacement and new windows"
         ],
         "completed": [
           "Roof replacement (Partial)"
@@ -4463,13 +4511,15 @@
           "Ceiling track installation, Door & frame replacement",
           "Plumbing improvements",
           "Room 13 converted to kindergarten classroom",
-          "Lockers (75)"
+          "Lockers (75)",
+          "Remove Berm",
+          "Install Bottle Filling Station"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "Elementary School",
@@ -4484,26 +4534,26 @@
     "address": "151 St. George Rd.",
     "phone": "(204) 253-2646",
     "enrolment": {
-      "capacity": 410,
-      "current": 344,
+      "capacity": 385,
+      "current": 349,
       "projection": {
-        "2025-26": "361",
-        "2026-27": "385",
-        "2027-28": "393",
-        "2028-29": "401"
+        "2025-26": "372",
+        "2026-27": "377",
+        "2027-28": "352",
+        "2028-29": "351"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
           327,
-          327,
           377,
-          439
+          439,
+          344
         ]
       }
     },
@@ -4520,18 +4570,18 @@
       "LED Lighting": "Classrooms (3)"
     },
     "catchment": {
-      "migration": "-2.7%",
+      "migration": "-2.70%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 22,
+      "Parking spots": "22",
       "Bus Loop": "YES"
     },
     "accessibility": {
       "Girls' washrooms": 3,
       "Boys' washrooms": 3,
       "Gender neutral washrooms": 4,
-      "Universal washroom": "Required",
+      "Universal Washroom": "Required",
       "Elevator": "n/a",
       "Accessible parking stalls": 0,
       "Accessible entrance": "YES",
@@ -4580,13 +4630,14 @@
         "completed": [
           "Floor refinishing",
           "General renovations",
-          "Cabinet installation"
+          "Cabinet installation",
+          "Installed Portable Air Conditioning units"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
@@ -4601,26 +4652,26 @@
     "address": "485 Meadowood Dr.",
     "phone": "(204) 255-7880",
     "enrolment": {
-      "capacity": 325,
-      "current": 317,
+      "capacity": 375,
+      "current": 281,
       "projection": {
-        "2025-26": "370",
-        "2026-27": "372",
-        "2027-28": "350",
-        "2028-29": "336"
+        "2025-26": "315",
+        "2026-27": "315",
+        "2027-28": "310",
+        "2028-29": "320"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          224,
           260,
           284,
-          310
+          310,
+          312
         ]
       }
     },
@@ -4637,18 +4688,18 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "+2.0%",
+      "migration": "2.00%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 52,
+      "Parking spots": "52",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 5,
       "Boys' washrooms": 5,
       "Gender neutral washrooms": 4,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 2,
       "Accessible entrance": "YES",
@@ -4691,13 +4742,14 @@
         "completed": [
           "Flooring tile installation",
           "Repaint floors",
-          "Door & frame replacement"
+          "Door & frame replacement",
+          "Replaced flooring in Kindegarten"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
@@ -4713,25 +4765,25 @@
     "phone": "(204) 253-9873",
     "enrolment": {
       "capacity": 420,
-      "current": 402,
+      "current": 377,
       "projection": {
-        "2025-26": "351",
-        "2026-27": "359",
-        "2027-28": "378",
-        "2028-29": "392"
+        "2025-26": "412",
+        "2026-27": "398",
+        "2027-28": "386",
+        "2028-29": "373"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          330,
           337,
           375,
-          404
+          404,
+          401
         ]
       }
     },
@@ -4753,18 +4805,18 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "-6.7%",
+      "migration": "-6.70%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 50,
+      "Parking spots": "50",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 3,
       "Boys' washrooms": 3,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "Required",
@@ -4806,19 +4858,24 @@
           "Classrooms renovation",
           "Front entrance ramp"
         ],
-        "inProgress": [],
+        "inProgress": [
+          "Install ramp",
+          "Repair entrance sign and soffit framing"
+        ],
         "completed": [
           "Cabinet removal",
           "Lockers for staff",
           "General repairs (front entrance)",
           "Room reconfiguration for washer & dryer",
-          "Toilet & sink installation"
+          "Toilet & sink installation",
+          "install Signboard hinge system",
+          "Installed Portable Air Conditioning units"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "DAKOTA FOS",
     "schoolLevel": "Elementary School",
@@ -4834,25 +4891,25 @@
     "phone": "(204) 256-7316",
     "enrolment": {
       "capacity": 700,
-      "current": 709,
+      "current": 599,
       "projection": {
-        "2025-26": "507-567",
-        "2026-27": "506-561",
-        "2027-28": "611-672",
-        "2028-29": "659-711"
+        "2025-26": "532",
+        "2026-27": "440",
+        "2027-28": "446",
+        "2028-29": "476"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          605,
           670,
           702,
-          726
+          726,
+          703
         ]
       }
     },
@@ -4878,18 +4935,18 @@
       "LED Lighting": "Entire school"
     },
     "catchment": {
-      "migration": "+2.5%",
+      "migration": "2.50%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 100,
+      "Parking spots": "100",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 6,
       "Boys' washrooms": 6,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "YES",
+      "Universal Washroom": "YES",
       "Elevator": "YES",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -4939,11 +4996,11 @@
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "WINDSOR PARK FOS",
     "schoolLevel": "High School",
-    "grades": "9-12",
+    "grades": "12-Sep",
     "program": "English Program"
   },
   "windsor": {
@@ -4955,25 +5012,25 @@
     "phone": "(204) 237-4057",
     "enrolment": {
       "capacity": 260,
-      "current": 235,
+      "current": 234,
       "projection": {
-        "2025-26": "274",
-        "2026-27": "260",
-        "2027-28": "255",
-        "2028-29": "247"
+        "2025-26": "238",
+        "2026-27": "253",
+        "2027-28": "273",
+        "2028-29": "291"
       },
       "history": {
         "labels": [
-          "2020_21",
           "2021_22",
           "2022_23",
-          "2023_24"
+          "2023_24",
+          "2024_25"
         ],
         "values": [
-          154,
           134,
           138,
-          140
+          140,
+          234
         ]
       }
     },
@@ -4985,16 +5042,12 @@
     },
     "additions": [
       {
-        "year": "1957",
-        "size": ""
+        "year": "",
+        "size": "1961"
       },
       {
-        "year": "1961",
-        "size": ""
-      },
-      {
-        "year": "1964",
-        "size": ""
+        "year": "",
+        "size": "1964"
       }
     ],
     "building": {
@@ -5003,18 +5056,18 @@
       "LED Lighting": "Gym, office, conference room, hallway, hallway, art room"
     },
     "catchment": {
-      "migration": "+0.2%",
+      "migration": "0.20%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": 19,
+      "Parking spots": "19",
       "Bus Loop": "Required"
     },
     "accessibility": {
       "Girls' washrooms": 5,
       "Boys' washrooms": 5,
       "Gender neutral washrooms": 2,
-      "Universal washroom": "Required",
+      "Universal Washroom": "Required",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
@@ -5062,13 +5115,14 @@
         "completed": [
           "Parking lot paving",
           "General renovations",
-          "Door replacement"
+          "Door replacement",
+          "Replaced Hallway Entrance Flooring"
         ]
       }
     },
     "meta": {
       "user": "CommsLRSD",
-      "updated": "2025-10-16 17:22:16"
+      "updated": "10/16/2025 17:22"
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
