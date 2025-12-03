@@ -5,7 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const YEAR_DETECTION_MIN = 1800;
     const YEAR_DETECTION_MAX = 2100;
     const NUMBER_FORMAT_THRESHOLD = 1000;
+    const CHART_Y_AXIS_PADDING = 100; // Extra space above data maximum
     const CHART_Y_AXIS_ROUNDING = 50;
+    const CHART_Y_AXIS_ROUNDING_THRESHOLD = 15; // Threshold for rounding down vs up
     const BANNER_AUTO_HIDE_DELAY = 3000; // Auto-hide banner after 3 seconds
     const BANNER_SCROLL_THRESHOLD = 100; // Show banner when scrolling more than 100px
     const BANNER_TOP_THRESHOLD = 200; // Keep banner visible when within 200px from top
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const stickyBannerText = stickyBanner?.querySelector('.sticky-category-text');
 
     let schoolData = {};
+    let lastUpdated = ''; // Global timestamp for data updates
     let chartInstances = {};
     let currentViewMode = 'school';
     let selectedSchoolId = '';
@@ -139,8 +142,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
-            // Parse JSON data
-            schoolData = await response.json();
+            // Parse JSON data and extract global timestamp
+            const data = await response.json();
+            const { lastUpdated: timestamp, ...schools } = data;
+            
+            // Validate timestamp format (MM/DD/YYYY or M/D/YYYY)
+            const timestampRegex = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+            if (timestamp && !timestampRegex.test(timestamp)) {
+                console.warn('Invalid timestamp format:', timestamp);
+            }
+            lastUpdated = timestamp || '';
+            schoolData = schools;
             
             // Validate that we have data
             const schoolIds = Object.keys(schoolData);
@@ -151,6 +163,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Initialize selected IDs with first available values
             selectedSchoolId = schoolIds[0];
             selectedCategoryId = Object.keys(categories)[0];
+            
+            // Set footer timestamp
+            if (lastUpdated) {
+                footerTimestamp.textContent = `Data updated ${lastUpdated}`;
+            }
 
             // Initialize UI components
             populateSidebarControls();
@@ -620,8 +637,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const projectionMax = projectionValues.length > 0 ? Math.max(...projectionValues) : 0;
         
         const combinedMax = Math.max(historyMax, projectionMax);
-        // Ensure y-axis is at least 50 higher than the highest point, then round up to nearest configured rounding value for consistent axis
-        const yAxisMax = Math.ceil((combinedMax + 50) / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
+        // Add padding to the maximum value, then apply custom rounding logic
+        const candidate = combinedMax + CHART_Y_AXIS_PADDING;
+        const lowerMultiple = Math.floor(candidate / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
+        const upperMultiple = Math.ceil(candidate / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
+        // Round down if within threshold distance of lower multiple, otherwise round up
+        const rounded = (candidate - lowerMultiple <= CHART_Y_AXIS_ROUNDING_THRESHOLD) ? lowerMultiple : upperMultiple;
+        // Ensure yAxisMax is always at least as large as the data maximum
+        const yAxisMax = Math.max(rounded, combinedMax);
 
         if (type === 'history') {
             // Convert underscores to hyphens in labels (e.g., 2024_25 -> 2024-25)
@@ -894,9 +917,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 filteredSchools.forEach(school => renderChart(school, cardType));
             }
         }
-        
-        const firstSchool = schoolData[Object.keys(schoolData)[0]];
-        if (firstSchool?.meta) footerTimestamp.textContent = `Data updated ${firstSchool.meta.updated}`;
         
         // Setup sticky banner after view is updated
         setupStickyBanner();
