@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const YEAR_DETECTION_MIN = 1800;
     const YEAR_DETECTION_MAX = 2100;
     const NUMBER_FORMAT_THRESHOLD = 1000;
+    const CHART_Y_AXIS_PADDING = 100; // Extra space above data maximum
     const CHART_Y_AXIS_ROUNDING = 50;
     const CHART_Y_AXIS_ROUNDING_THRESHOLD = 15; // Threshold for rounding down vs up
     const BANNER_AUTO_HIDE_DELAY = 3000; // Auto-hide banner after 3 seconds
@@ -145,6 +146,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             const { lastUpdated: timestamp, ...schools } = data;
             
+            // Validate timestamp format (MM/DD/YYYY or M/D/YYYY)
+            const timestampRegex = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+            if (timestamp && !timestampRegex.test(timestamp)) {
+                console.warn('Invalid timestamp format:', timestamp);
+            }
             lastUpdated = timestamp || '';
             schoolData = schools;
             
@@ -631,8 +637,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const projectionMax = projectionValues.length > 0 ? Math.max(...projectionValues) : 0;
         
         const combinedMax = Math.max(historyMax, projectionMax);
-        // Add 100 to the maximum value, then apply custom rounding logic
-        const candidate = combinedMax + 100;
+        // Add padding to the maximum value, then apply custom rounding logic
+        const candidate = combinedMax + CHART_Y_AXIS_PADDING;
         const lowerMultiple = Math.floor(candidate / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
         const upperMultiple = Math.ceil(candidate / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
         // Round down if within threshold distance of lower multiple, otherwise round up
