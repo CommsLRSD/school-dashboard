@@ -616,12 +616,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const historyValues = school.enrolment?.history?.values || [];
         const historyMax = historyValues.length > 0 ? Math.max(...historyValues) : 0;
         
-        const projectionData = school.enrolment?.projection || {};
-        const projectionValues = Object.values(projectionData)
-            .map(v => {
-                const parsed = parseInt(String(v).split('-')[0], 10);
-                return isNaN(parsed) ? 0 : parsed;
-            });
+        const projectionValues = school.enrolment?.projection?.values || [];
         const projectionMax = projectionValues.length > 0 ? Math.max(...projectionValues) : 0;
         
         const combinedMax = Math.max(historyMax, projectionMax);
@@ -665,12 +660,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         } else if (type === 'projection') {
+            // Convert underscores to hyphens in labels (e.g., 2026_27 -> 2026-27)
+            const formattedLabels = school.enrolment.projection.labels.map(label => label.replace(/_/g, '-'));
+            
             chartInstances[chartId] = new Chart(ctx, {
                 type: 'line', 
                 data: { 
-                    labels: Object.keys(school.enrolment.projection), 
+                    labels: formattedLabels, 
                     datasets: [{ 
-                        data: projectionValues, 
+                        data: school.enrolment.projection.values, 
                         borderColor: '#2BA680', 
                         backgroundColor: 'rgba(43, 166, 128, 0.1)', 
                         fill: true, 
