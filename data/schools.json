@@ -2452,20 +2452,24 @@
     },
     "additions": [
       {
-        "year": "",
-        "size": "1965"
+        "year": "1956",
+        "size": ""
       },
       {
-        "year": "",
-        "size": "1972"
+        "year": "1965",
+        "size": ""
       },
       {
-        "year": "",
-        "size": "1975"
+        "year": "1972",
+        "size": ""
       },
       {
-        "year": "",
-        "size": "1997"
+        "year": "1975",
+        "size": ""
+      },
+      {
+        "year": "1997",
+        "size": "Rebuild"
       }
     ],
     "building": {
@@ -5042,12 +5046,16 @@
     },
     "additions": [
       {
-        "year": "",
-        "size": "1961"
+        "year": "1957",
+        "size": ""
       },
       {
-        "year": "",
-        "size": "1964"
+        "year": "1961",
+        "size": ""
+      },
+      {
+        "year": "1964",
+        "size": ""
       }
     ],
     "building": {
