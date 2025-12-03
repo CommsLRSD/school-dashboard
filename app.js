@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const YEAR_DETECTION_MAX = 2100;
     const NUMBER_FORMAT_THRESHOLD = 1000;
     const CHART_Y_AXIS_ROUNDING = 50;
+    const CHART_Y_AXIS_ROUNDING_THRESHOLD = 15; // Threshold for rounding down vs up
     const BANNER_AUTO_HIDE_DELAY = 3000; // Auto-hide banner after 3 seconds
     const BANNER_SCROLL_THRESHOLD = 100; // Show banner when scrolling more than 100px
     const BANNER_TOP_THRESHOLD = 200; // Keep banner visible when within 200px from top
@@ -637,8 +638,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const candidate = combinedMax + 100;
         const lowerMultiple = Math.floor(candidate / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
         const upperMultiple = Math.ceil(candidate / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
-        // Round down if candidate is ≤15 above lower multiple, otherwise round up
-        const yAxisMax = (candidate - lowerMultiple <= 15) ? lowerMultiple : upperMultiple;
+        // Round down if candidate is ≤ threshold above lower multiple, otherwise round up
+        const rounded = (candidate - lowerMultiple <= CHART_Y_AXIS_ROUNDING_THRESHOLD) ? lowerMultiple : upperMultiple;
+        // Ensure yAxisMax is always at least as large as the data maximum
+        const yAxisMax = Math.max(rounded, combinedMax);
 
         if (type === 'history') {
             // Convert underscores to hyphens in labels (e.g., 2024_25 -> 2024-25)
