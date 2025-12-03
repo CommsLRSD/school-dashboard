@@ -639,11 +639,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const yAxisMax = Math.ceil((combinedMax + 50) / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
 
         // Helper function for dynamic label positioning
+        // Places labels below points when near the top to prevent cut-off
         const getLabelAlignment = (context) => {
-            // Move label below point if it's too close to the y-axis maximum
             const value = context.dataset.data[context.dataIndex];
-            const threshold = yAxisMax * 0.95; // 95% of max
+            // Use 85% threshold to catch labels before they get cut off by the viewbox
+            const threshold = yAxisMax * 0.85;
             return value >= threshold ? 'bottom' : 'top';
+        };
+        
+        // Helper function for label offset
+        // Adds extra margin below the point when label is positioned below
+        const getLabelOffset = (context) => {
+            const value = context.dataset.data[context.dataIndex];
+            const threshold = yAxisMax * 0.85;
+            return value >= threshold ? 8 : 0; // 8px extra margin when below
         };
 
         if (type === 'history') {
@@ -670,6 +679,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         datalabels: typeof ChartDataLabels !== 'undefined' ? { 
                             anchor: 'end', 
                             align: getLabelAlignment,
+                            offset: getLabelOffset,
                             font: { weight: 'bold' },
                             color: '#BE5247'
                         } : { display: false } 
@@ -706,6 +716,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         datalabels: typeof ChartDataLabels !== 'undefined' ? { 
                             anchor: 'end', 
                             align: getLabelAlignment,
+                            offset: getLabelOffset,
                             font: { weight: 'bold' },
                             color: '#2BA680'
                         } : { display: false } 
