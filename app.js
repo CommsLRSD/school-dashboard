@@ -620,8 +620,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const projectionMax = projectionValues.length > 0 ? Math.max(...projectionValues) : 0;
         
         const combinedMax = Math.max(historyMax, projectionMax);
-        // Ensure y-axis is at least 50 higher than the highest point, then round up to nearest configured rounding value for consistent axis
-        const yAxisMax = Math.ceil((combinedMax + 50) / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
+        // Add 100 to the maximum value, then apply custom rounding logic
+        const candidate = combinedMax + 100;
+        const lowerMultiple = Math.floor(candidate / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
+        const upperMultiple = Math.ceil(candidate / CHART_Y_AXIS_ROUNDING) * CHART_Y_AXIS_ROUNDING;
+        // Round down if candidate is ≤15 above lower multiple, otherwise round up
+        const yAxisMax = (candidate - lowerMultiple <= 15) ? lowerMultiple : upperMultiple;
 
         if (type === 'history') {
             // Convert underscores to hyphens in labels (e.g., 2024_25 -> 2024-25)
