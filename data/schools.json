@@ -69,7 +69,7 @@
       "LED Lighting": "Gym"
     },
     "catchment": {
-      "migration": "-0.70%",
+      "migration": "-0.80%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -217,7 +217,7 @@
       "LED Lighting": "Gym, classrooms (3), main office, commons"
     },
     "catchment": {
-      "migration": "3.30%",
+      "migration": "3.60%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -360,7 +360,7 @@
       "LED Lighting": "Main entry, office, fitness room, gym offices, classrooms (28)"
     },
     "catchment": {
-      "migration": "-0.20%",
+      "migration": "0.20%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -490,7 +490,7 @@
       "LED Lighting": "Theatre"
     },
     "catchment": {
-      "migration": "0.10%",
+      "migration": "0.30%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -747,7 +747,7 @@
       "LED Lighting": "Gym, Hygiene room"
     },
     "catchment": {
-      "migration": "0.20%",
+      "migration": "0.30%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -879,7 +879,7 @@
       "LED Lighting": "Multipurpose Room"
     },
     "catchment": {
-      "migration": "1.10%",
+      "migration": "1.20%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -1128,7 +1128,7 @@
       "LED Lighting": "Boys and girls washrooms"
     },
     "catchment": {
-      "migration": "-1.50%",
+      "migration": "0.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -1257,7 +1257,7 @@
       "LED Lighting": "Gym, Classroom"
     },
     "catchment": {
-      "migration": "-0.10%",
+      "migration": "0.00%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -1515,7 +1515,7 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "0.40%",
+      "migration": "0.70%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -1654,7 +1654,7 @@
       "LED Lighting": "Childcare areas, meeting room 1, custodial room, washrooms (5), classrooms (9), second floor hallway, family centre room"
     },
     "catchment": {
-      "migration": "-1.50%",
+      "migration": "0.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -1778,7 +1778,7 @@
       "LED Lighting": "Hallways, band, office, library, Rooms 101-103, 142, 203, 204"
     },
     "catchment": {
-      "migration": "0.00%",
+      "migration": "N/A",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -1875,7 +1875,7 @@
       "LED Lighting": "Gym, mini-gym"
     },
     "catchment": {
-      "migration": "1.00%",
+      "migration": "1.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -1999,7 +1999,7 @@
       "LED Lighting": "Kindergarten, library, music, MPR, classrooms (18)"
     },
     "catchment": {
-      "migration": "8.00%",
+      "migration": "7.80%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -2143,7 +2143,7 @@
       "LED Lighting": "Classrooms (3)"
     },
     "catchment": {
-      "migration": "-2.30%",
+      "migration": "-1.60%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -2293,7 +2293,7 @@
       "LED Lighting": "Staff room 34, room 28"
     },
     "catchment": {
-      "migration": "-1.20%",
+      "migration": "-1.00%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -2423,7 +2423,7 @@
       "LED Lighting": "Room 6"
     },
     "catchment": {
-      "migration": "2.20%",
+      "migration": "2.00%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -2563,7 +2563,7 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "-0.30%",
+      "migration": "-0.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -2694,7 +2694,7 @@
       "LED Lighting": "Gym, office, storage, classrooms (4)"
     },
     "catchment": {
-      "migration": "-1.10%",
+      "migration": "-0.20%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -2820,7 +2820,7 @@
       "LED Lighting": "Room 6"
     },
     "catchment": {
-      "migration": "-0.20%",
+      "migration": "0.30%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -2937,7 +2937,7 @@
       "LED Lighting": "Gym, hallways, main entry, offices, storage, movement room, staff washrooms, custodial room, elevator"
     },
     "catchment": {
-      "migration": "-0.50%",
+      "migration": "-0.20%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -3078,7 +3078,7 @@
       "LED Lighting": "Gym, multipurpose room stage, office, hygiene room"
     },
     "catchment": {
-      "migration": "2.10%",
+      "migration": "1.50%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -3200,7 +3200,7 @@
       "LED Lighting": "Classrooms (3)"
     },
     "catchment": {
-      "migration": "9.50%",
+      "migration": "9.00%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -3327,7 +3327,7 @@
       "LED Lighting": "Hallway"
     },
     "catchment": {
-      "migration": "5.80%",
+      "migration": "5.90%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -3454,7 +3454,7 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "0.10%",
+      "migration": "0.70%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -3702,7 +3702,7 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "-1.50%",
+      "migration": "0.90%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -3828,7 +3828,7 @@
       "LED Lighting": "Gym, hallways, boys' & girls' washrooms, classrooms (7)"
     },
     "catchment": {
-      "migration": "1.70%",
+      "migration": "1.30%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -3967,7 +3967,7 @@
       "LED Lighting": "Boiler room, office, storage, classrooms (3)"
     },
     "catchment": {
-      "migration": "-1.60%",
+      "migration": "0.00%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -4236,7 +4236,7 @@
       "LED Lighting": "Staff washroom, fan room"
     },
     "catchment": {
-      "migration": "-2.40%",
+      "migration": "-1.00%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -4351,7 +4351,7 @@
       "LED Lighting": "Hallways, band, office, library, classrooms (6)"
     },
     "catchment": {
-      "migration": "6.90%",
+      "migration": "6.60%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -4468,7 +4468,7 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "0.60%",
+      "migration": "1.00%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -4597,7 +4597,7 @@
       "LED Lighting": "Multipurpose room, music"
     },
     "catchment": {
-      "migration": "4.60%",
+      "migration": "4.40%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -4727,7 +4727,7 @@
       "LED Lighting": "Classrooms (3)"
     },
     "catchment": {
-      "migration": "-2.70%",
+      "migration": "-2.30%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -4849,7 +4849,7 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "2.00%",
+      "migration": "2.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -4970,7 +4970,7 @@
       "LED Lighting": "None"
     },
     "catchment": {
-      "migration": "-6.70%",
+      "migration": "-4.40%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -5104,7 +5104,7 @@
       "LED Lighting": "Entire school"
     },
     "catchment": {
-      "migration": "2.50%",
+      "migration": "0.20%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
@@ -5233,7 +5233,7 @@
       "LED Lighting": "Gym, office, conference room, hallway, hallway, art room"
     },
     "catchment": {
-      "migration": "0.20%",
+      "migration": "-1.10%",
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
