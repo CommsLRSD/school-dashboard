@@ -677,6 +677,44 @@ body {
     text-align: right;
 }
 
+/* Capacity footnote - matches enrolment-footnote style */
+.capacity-footnote {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 0.7rem;
+    color: var(--text-lighter);
+    font-weight: 400;
+    text-align: right;
+}
+
+/* Tile footnotes for list cards (projects_local, accessibility) */
+.tile-footnote {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+    font-size: 0.7rem;
+    color: var(--text-lighter);
+    font-weight: 400;
+    text-align: right;
+}
+
+/* Footnote link styling */
+.footnote-link {
+    color: var(--text-lighter);
+    text-decoration: underline;
+    transition: color var(--transition-base);
+}
+
+.footnote-link:hover {
+    color: var(--primary-red);
+}
+
+.footnote-link:visited {
+    color: var(--text-lighter);
+}
+
 .over-capacity .stat-value { 
     color: var(--over-capacity-red);
 }
