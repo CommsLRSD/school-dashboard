@@ -779,7 +779,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Capacity line dataset (rendered first, behind the data)
                         {
                             data: formattedLabels.map(() => capacity),
-                            borderColor: '#FF0000',
+                            borderColor: 'rgba(190, 82, 71, 0.5)',
                             borderWidth: 1,
                             borderDash: [5, 5],
                             fill: false,
@@ -839,7 +839,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Capacity line dataset (rendered first, behind the data)
                         {
                             data: formattedLabels.map(() => capacity),
-                            borderColor: '#FF0000',
+                            borderColor: 'rgba(190, 82, 71, 0.5)',
                             borderWidth: 1,
                             borderDash: [5, 5],
                             fill: false,
