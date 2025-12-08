@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const BANNER_AUTO_HIDE_DELAY = 3000; // Auto-hide banner after 3 seconds
     const BANNER_SCROLL_THRESHOLD = 100; // Show banner when scrolling more than 100px
     const BANNER_TOP_THRESHOLD = 200; // Keep banner visible when within 200px from top
+    const SCHOOL_BUILDING_SPACE_STANDARDS_URL = 'https://media.lrsd.net/media/Default/medialib/school-building-space-standards_edited-may-2022.0ba97b51071.pdf';
     
     // --- Global Variables ---
     // Cache DOM elements for performance
@@ -401,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/additions.svg" alt="" class="card-header-icon"><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
 
-            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div></div></div>`;
+            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div><div class="capacity-footnote">20 students per K-3 classroom/<br>25 students per 4-12 classroom</div></div></div>`;
             
             case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><div class="enrolment-footnote">Data as of Sept. 30, 2025</div></div></div>`;
             
@@ -558,7 +559,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
                 }
 
-                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="${icons[cardType]}" alt="" class="card-header-icon"><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems || '<li class="detail-item">No data available.</li>'}</ul></div></div>`;
+                // Add footnotes for specific card types
+                let footnote = '';
+                if (cardType === 'projects_local') {
+                    footnote = '<div class="tile-footnote-static">Does not include routine upkeep and maintenance.</div>';
+                } else if (cardType === 'accessibility') {
+                    footnote = `<div class="tile-footnote"><a href="${SCHOOL_BUILDING_SPACE_STANDARDS_URL}" target="_blank" rel="noopener noreferrer" class="footnote-link">See School Building Space Standards</a></div>`;
+                }
+                
+                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="${icons[cardType]}" alt="" class="card-header-icon"><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems || '<li class="detail-item">No data available.</li>'}</ul>${footnote}</div></div>`;
             }
         }
     }
