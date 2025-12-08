@@ -39,6 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
         'Windsor School'
     ];
     
+    const PHOTO_CREDIT_ICON_PATH = 'public/icon/photo-credit.svg';
+    const PHOTO_CREDIT_TEXT = 'Winnipeg Architecture Foundation Collection';
+    
     // --- Global Variables ---
     // Cache DOM elements for performance
     const cardGrid = document.getElementById('card-grid');
@@ -443,7 +446,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Add photo credit for specific schools
                 const needsPhotoCredit = SCHOOLS_WITH_PHOTO_CREDIT.includes(school.schoolName);
                 const photoCredit = needsPhotoCredit 
-                    ? '<div class="photo-credit"><img src="public/icon/photo-credit.svg" alt="" aria-hidden="true" class="photo-credit-icon"><span class="photo-credit-text">Winnipeg Architecture Foundation Collection</span></div>' 
+                    ? `<div class="photo-credit"><img src="${sanitizeHTML(PHOTO_CREDIT_ICON_PATH)}" alt="" aria-hidden="true" class="photo-credit-icon"><span class="photo-credit-text">${sanitizeHTML(PHOTO_CREDIT_TEXT)}</span></div>` 
                     : '';
                 
                 return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${headerImage}" alt="${schoolName}"><h2 class="school-name-title">${schoolName}</h2>${photoCredit}</div></div>`;
