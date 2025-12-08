@@ -1273,6 +1273,7 @@ body {
     }
     
     /* Ensure list-card has adequate minimum height on mobile to prevent content/icon overlap */
+    /* 280px accounts for: header (48px) + 4 detail items (4 * 45px) + progress bar (30px) + icon space (40px) */
     .list-card {
         min-height: 280px;
     }
@@ -1286,11 +1287,13 @@ body {
 /* Mobile landscape orientation - additional spacing adjustments */
 @media (max-width: 992px) and (max-height: 600px) and (orientation: landscape) {
     /* Increase spacing between progress bar and info icon in landscape */
+    /* Same 3.5rem as portrait ensures consistent spacing across orientations */
     .list-card .card-body {
         padding-bottom: 3.5rem;
     }
     
     /* Ensure adequate minimum height in landscape */
+    /* 240px is appropriate for landscape where height is limited but width is greater */
     .list-card {
         min-height: 240px;
     }
