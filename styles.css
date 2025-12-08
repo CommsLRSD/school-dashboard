@@ -768,40 +768,6 @@ body {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* Photo credit for school header images */
-.photo-credit {
-    position: absolute;
-    bottom: 0.5rem;
-    right: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 0.2rem 0.4rem;
-    border-radius: 0.2rem;
-    opacity: 0.8;
-    transition: opacity var(--transition-base);
-}
-
-.photo-credit:hover {
-    opacity: 1;
-}
-
-.photo-credit-icon {
-    width: 10px;
-    height: 10px;
-    flex-shrink: 0;
-    filter: brightness(0) invert(1);
-}
-
-.photo-credit-text {
-    font-size: 0.6rem;
-    color: white;
-    white-space: nowrap;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    line-height: 1;
-}
-
 /* Stat Card */
 .stat-card .card-body { 
     align-items: center; 
