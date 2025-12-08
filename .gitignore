@@ -34,3 +34,4 @@ test-*.html
 
 # Ignore temporary files
 tmp/
+screenshots/

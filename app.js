@@ -768,17 +768,36 @@ document.addEventListener('DOMContentLoaded', function() {
             // Convert underscores to hyphens in labels (e.g., 2024_25 -> 2024-25)
             const formattedLabels = school.enrolment.history.labels.map(label => label.replace(/_/g, '-'));
             
+            // Get capacity value for the horizontal reference line
+            const capacity = school.enrolment?.capacity || 0;
+            
             chartInstances[chartId] = new Chart(ctx, {
                 type: 'line', 
                 data: { 
                     labels: formattedLabels, 
-                    datasets: [{ 
-                        data: school.enrolment.history.values, 
-                        borderColor: '#BE5247', 
-                        backgroundColor: 'rgba(190, 82, 71, 0.1)', 
-                        fill: true, 
-                        tension: 0.3 
-                    }] 
+                    datasets: [
+                        // Capacity line dataset (rendered first, behind the data)
+                        {
+                            data: formattedLabels.map(() => capacity),
+                            borderColor: 'rgba(190, 82, 71, 0.5)',
+                            borderWidth: 1,
+                            borderDash: [5, 5],
+                            fill: false,
+                            pointRadius: 0,
+                            pointHoverRadius: 0,
+                            tension: 0,
+                            order: 2
+                        },
+                        // Main data line
+                        { 
+                            data: school.enrolment.history.values, 
+                            borderColor: '#BE5247', 
+                            backgroundColor: 'rgba(190, 82, 71, 0.1)', 
+                            fill: true, 
+                            tension: 0.3,
+                            order: 1
+                        }
+                    ] 
                 },
                 options: { 
                     responsive: true, 
@@ -790,7 +809,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             align: getLabelAlignment,
                             offset: getLabelOffset,
                             font: { weight: 'bold' },
-                            color: '#BE5247'
+                            color: '#BE5247',
+                            display: function(context) {
+                                // Only show labels for the main data line (dataset index 1)
+                                return context.datasetIndex === 1;
+                            }
                         } : { display: false } 
                     },
                     scales: {
@@ -805,17 +828,36 @@ document.addEventListener('DOMContentLoaded', function() {
             // Convert underscores to hyphens in labels (e.g., 2026_27 -> 2026-27)
             const formattedLabels = school.enrolment.projection.labels.map(label => label.replace(/_/g, '-'));
             
+            // Get capacity value for the horizontal reference line
+            const capacity = school.enrolment?.capacity || 0;
+            
             chartInstances[chartId] = new Chart(ctx, {
                 type: 'line', 
                 data: { 
                     labels: formattedLabels, 
-                    datasets: [{ 
-                        data: school.enrolment.projection.values, 
-                        borderColor: '#2BA680', 
-                        backgroundColor: 'rgba(43, 166, 128, 0.1)', 
-                        fill: true, 
-                        tension: 0.3 
-                    }] 
+                    datasets: [
+                        // Capacity line dataset (rendered first, behind the data)
+                        {
+                            data: formattedLabels.map(() => capacity),
+                            borderColor: 'rgba(190, 82, 71, 0.5)',
+                            borderWidth: 1,
+                            borderDash: [5, 5],
+                            fill: false,
+                            pointRadius: 0,
+                            pointHoverRadius: 0,
+                            tension: 0,
+                            order: 2
+                        },
+                        // Main data line
+                        { 
+                            data: school.enrolment.projection.values, 
+                            borderColor: '#2BA680', 
+                            backgroundColor: 'rgba(43, 166, 128, 0.1)', 
+                            fill: true, 
+                            tension: 0.3,
+                            order: 1
+                        }
+                    ] 
                 },
                 options: { 
                     responsive: true, 
@@ -827,7 +869,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             align: getLabelAlignment,
                             offset: getLabelOffset,
                             font: { weight: 'bold' },
-                            color: '#2BA680'
+                            color: '#2BA680',
+                            display: function(context) {
+                                // Only show labels for the main data line (dataset index 1)
+                                return context.datasetIndex === 1;
+                            }
                         } : { display: false } 
                     },
                     scales: {
