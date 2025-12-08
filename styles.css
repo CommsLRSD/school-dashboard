@@ -634,8 +634,7 @@ body {
 }
 
 .card-back-close:focus {
-    outline: 2px solid var(--primary-red);
-    outline-offset: 2px;
+    outline: none;
     opacity: 1;
 }
 
@@ -1391,8 +1390,7 @@ body {
 }
 
 .info-icon-btn:focus {
-    outline: 2px solid var(--primary-red);
-    outline-offset: 2px;
+    outline: none;
     opacity: 1;
 }
 
