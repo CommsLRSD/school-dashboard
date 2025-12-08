@@ -402,9 +402,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/additions.svg" alt="" class="card-header-icon"><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
 
-            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div><button class="info-icon-btn" data-info-type="capacity" aria-label="Show capacity information"><img src="public/icon/info.svg" alt=""></button></div></div>`;
+            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div><div class="capacity-footnote">20 students per K-3 classroom/<br>25 students per 4-12 classroom</div></div></div>`;
             
-            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><button class="info-icon-btn" data-info-type="enrolment" aria-label="Show enrolment information"><img src="public/icon/info.svg" alt=""></button></div></div>`;
+            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><div class="enrolment-footnote">Data as of Sept. 30, 2025</div></div></div>`;
             
             case 'utilization': {
                 let warningIcon = '';
@@ -418,7 +418,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(school.enrolment.current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(school.enrolment.capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
 
-            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul><button class="info-icon-btn" data-info-type="enrolment_capacity" aria-label="Show enrolment and capacity information"><img src="public/icon/info.svg" alt=""></button></div></div>`;
+            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul></div></div>`;
 
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><img src="public/icon/enrolment-charts.svg" alt="" class="card-header-icon"><h2 class="card-title">Historic Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
@@ -940,25 +940,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Setup sticky banner after view is updated
         setupStickyBanner();
-        
-        // Add event listeners for info icon buttons
-        document.querySelectorAll('.info-icon-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const infoType = btn.dataset.infoType;
-                
-                if (infoType === 'capacity') {
-                    showInfoDialog('Capacity Information', "School's student capacity at 20 students per K-3 classroom & 25 per 4-12 classroom.");
-                } else if (infoType === 'enrolment') {
-                    showInfoDialog('Enrolment Information', 'Data as of Sept. 30, 2025');
-                } else if (infoType === 'enrolment_capacity') {
-                    showInfoDialog('Information', [
-                        'Data as of Sept. 30, 2025',
-                        "School's student capacity at 20 students per K-3 classroom & 25 per 4-12 classroom."
-                    ]);
-                }
-            });
-        });
     }
 
     /**
@@ -1040,71 +1021,6 @@ document.addEventListener('DOMContentLoaded', function() {
         cancelBtn.addEventListener('click', handleCancel);
         overlay.addEventListener('click', handleCancel);
         document.addEventListener('keydown', handleKeyDown);
-    }
-
-    /**
-     * Shows an info dialog with title and content
-     * @param {string} title - Dialog title
-     * @param {string|string[]} content - Dialog content (can be string or array of strings for multiple paragraphs)
-     */
-    function showInfoDialog(title, content) {
-        const overlay = document.getElementById('info-dialog-overlay');
-        const dialog = document.getElementById('info-dialog');
-        const titleElement = document.getElementById('info-dialog-title');
-        const bodyElement = document.getElementById('info-dialog-body');
-        const closeBtn = document.getElementById('info-dialog-close');
-        
-        // Validate required elements
-        if (!overlay || !dialog || !titleElement || !bodyElement || !closeBtn) {
-            console.error('showInfoDialog: Required dialog elements not found');
-            return;
-        }
-        
-        // Set title
-        titleElement.textContent = title;
-        
-        // Set body content
-        bodyElement.innerHTML = '';
-        if (Array.isArray(content)) {
-            content.forEach(text => {
-                const p = document.createElement('p');
-                p.className = 'info-dialog-text';
-                p.textContent = text;
-                bodyElement.appendChild(p);
-            });
-        } else {
-            const p = document.createElement('p');
-            p.className = 'info-dialog-text';
-            p.textContent = content;
-            bodyElement.appendChild(p);
-        }
-        
-        // Show dialog
-        overlay.classList.add('show');
-        
-        // Close handlers
-        const closeDialog = () => {
-            overlay.classList.remove('show');
-            closeBtn.removeEventListener('click', closeDialog);
-            overlay.removeEventListener('click', handleOverlayClick);
-            document.removeEventListener('keydown', handleEscKey);
-        };
-        
-        const handleOverlayClick = (e) => {
-            if (e.target === overlay) {
-                closeDialog();
-            }
-        };
-        
-        const handleEscKey = (e) => {
-            if (e.key === 'Escape') {
-                closeDialog();
-            }
-        };
-        
-        closeBtn.addEventListener('click', closeDialog);
-        overlay.addEventListener('click', handleOverlayClick);
-        document.addEventListener('keydown', handleEscKey);
     }
 
     // --- Event Listeners ---
