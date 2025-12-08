@@ -538,6 +538,133 @@ body {
 .data-card.tile-double-height { grid-row: span 2; }
 .data-card.tile-double-both { grid-column: span 2; grid-row: span 2; }
 
+/* --- Card Flip Functionality --- */
+.data-card[data-flippable="true"] {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.data-card[data-flippable="true"] .card-flip-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.data-card.flipped .card-flip-container {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-face-front {
+    z-index: 2;
+    transform: rotateY(0deg);
+}
+
+.card-face-back {
+    transform: rotateY(180deg);
+    background: var(--card-bg);
+}
+
+/* Disable hover effect when card is flipped */
+.data-card.flipped:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+    border-color: var(--border-color);
+}
+
+/* --- Card Back Face Styling --- */
+.card-back-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.card-back-title-wrapper {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.card-back-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+    filter: invert(47%) sepia(19%) saturate(1618%) hue-rotate(318deg) brightness(89%) contrast(83%);
+}
+
+.card-back-title {
+    font-family: var(--font-title);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.card-back-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all var(--transition-base);
+    margin: -0.25rem -0.25rem -0.25rem 0;
+    opacity: 0.5;
+}
+
+.card-back-close:hover {
+    background-color: var(--bg-color);
+    opacity: 0.8;
+}
+
+.card-back-close:focus {
+    outline: 2px solid var(--primary-red);
+    outline-offset: 2px;
+    opacity: 1;
+}
+
+.card-back-close-icon {
+    width: 16px;
+    height: 16px;
+    filter: invert(60%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+}
+
+.card-back-content {
+    padding: 1.5rem 1.25rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 0.9rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.card-back-content p {
+    margin: 0 0 0.75rem 0;
+    color: var(--text-light);
+}
+
+.card-back-content p:last-child {
+    margin-bottom: 0;
+}
+
 .card-header { 
     display: flex; 
     align-items: center; 
@@ -1235,126 +1362,6 @@ body {
 }
 
 /* --- Info Dialog --- */
-.info-dialog-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1001;
-    display: none;
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-}
-
-.info-dialog-overlay.show {
-    display: block;
-    animation: fadeIn 0.2s ease-out;
-}
-
-.info-dialog {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    box-shadow: var(--shadow-xl);
-    max-width: 500px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    z-index: 1002;
-    display: none;
-}
-
-.info-dialog.show {
-    display: block;
-    animation: dialogSlideIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes dialogSlideIn {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -48%);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-    }
-}
-
-.info-dialog-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.info-dialog-title {
-    font-family: var(--font-title);
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-color);
-    margin: 0;
-}
-
-.info-dialog-close {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    transition: all var(--transition-base);
-    margin: -0.25rem -0.25rem -0.25rem 0;
-    opacity: 0.5;
-}
-
-.info-dialog-close:hover {
-    background-color: var(--bg-color);
-    opacity: 0.8;
-}
-
-.info-dialog-close:focus {
-    outline: 2px solid var(--primary-red);
-    outline-offset: 2px;
-    opacity: 1;
-}
-
-.info-dialog-close-icon {
-    width: 16px;
-    height: 16px;
-    filter: invert(60%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
-}
-}
-
-.info-dialog-content {
-    padding: 1.25rem;
-    color: var(--text-color);
-    line-height: 1.6;
-    font-size: 0.9rem;
-}
-
-.info-dialog-content p {
-    margin: 0.75rem 1rem;
-    color: var(--text-light);
-}
-
-.info-dialog-content p:last-child {
-    margin-bottom: 0;
-}
-
 /* --- Info Icon Button --- */
 .info-icon-btn {
     position: absolute;

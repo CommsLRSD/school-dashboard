@@ -351,6 +351,44 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     /**
+     * Creates a flippable card with front and back faces
+     * @param {string} cardClasses - CSS classes for the card
+     * @param {string} frontContent - HTML content for the front face
+     * @param {string} backTitle - Title for the back face
+     * @param {string} backIcon - Icon path for the back face
+     * @param {string|Array} backContent - Content for the back face (string or array of paragraphs)
+     * @param {string} infoType - Type of info (for data attribute)
+     * @returns {string} HTML string for the flippable card
+     */
+    const createFlippableCard = (cardClasses, frontContent, backTitle, backIcon, backContent, infoType) => {
+        const backContentHTML = Array.isArray(backContent) 
+            ? backContent.map(p => `<p>${p}</p>`).join('') 
+            : `<p>${backContent}</p>`;
+        
+        return `<div class="data-card ${cardClasses}" data-flippable="true" data-info-type="${infoType}">
+            <div class="card-flip-container">
+                <div class="card-face card-face-front">
+                    ${frontContent}
+                </div>
+                <div class="card-face card-face-back">
+                    <div class="card-back-header">
+                        <div class="card-back-title-wrapper">
+                            <img src="${backIcon}" alt="" class="card-back-icon">
+                            <h3 class="card-back-title">${backTitle}</h3>
+                        </div>
+                        <button class="card-back-close" aria-label="Close information">
+                            <img src="public/icon/lightbox-close.svg" alt="" class="card-back-close-icon">
+                        </button>
+                    </div>
+                    <div class="card-back-content">
+                        ${backContentHTML}
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    };
+
+    /**
      * Creates a data card element based on school data and card type
      * @param {Object} school - School data object
      * @param {string} cardType - Type of card to create
@@ -407,9 +445,29 @@ document.addEventListener('DOMContentLoaded', function() {
             
             case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/additions.svg" alt="" class="card-header-icon"><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
 
-            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div><button class="info-icon-btn" data-info-type="capacity" aria-label="Show capacity information"><img src="public/icon/info.svg" alt=""></button></div></div>`;
+            case 'capacity': {
+                const frontContent = `<div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div><button class="info-icon-btn" data-info-type="capacity" aria-label="Show capacity information"><img src="public/icon/info.svg" alt=""></button></div>`;
+                return createFlippableCard(
+                    `stat-card ${sizeClass}`,
+                    frontContent,
+                    'Capacity Information',
+                    'public/icon/capacity.svg',
+                    CAPACITY_INFO_TEXT,
+                    'capacity'
+                );
+            }
             
-            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><button class="info-icon-btn" data-info-type="enrolment" aria-label="Show enrolment information"><img src="public/icon/info.svg" alt=""></button></div></div>`;
+            case 'enrolment': {
+                const frontContent = `<div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><button class="info-icon-btn" data-info-type="enrolment" aria-label="Show enrolment information"><img src="public/icon/info.svg" alt=""></button></div>`;
+                return createFlippableCard(
+                    `stat-card ${sizeClass}`,
+                    frontContent,
+                    'Enrolment Information',
+                    'public/icon/enrolment.svg',
+                    ENROLMENT_INFO_TEXT,
+                    'enrolment'
+                );
+            }
             
             case 'utilization': {
                 let warningIcon = '';
@@ -423,7 +481,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(school.enrolment.current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(school.enrolment.capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
 
-            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul><button class="info-icon-btn" data-info-type="enrolment-capacity" aria-label="Show enrolment and capacity information"><img src="public/icon/info.svg" alt=""></button></div></div>`;
+            case 'enrolment_capacity': {
+                const frontContent = `<div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul><button class="info-icon-btn" data-info-type="enrolment-capacity" aria-label="Show enrolment and capacity information"><img src="public/icon/info.svg" alt=""></button></div>`;
+                return createFlippableCard(
+                    `list-card ${sizeClass}`,
+                    frontContent,
+                    'Enrolment & Capacity Information',
+                    'public/icon/capacity.svg',
+                    [CAPACITY_INFO_TEXT, ENROLMENT_INFO_TEXT],
+                    'enrolment-capacity'
+                );
+            }
 
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><img src="public/icon/enrolment-charts.svg" alt="" class="card-header-icon"><h2 class="card-title">Historic Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
@@ -1028,62 +1096,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('keydown', handleKeyDown);
     }
 
-    /**
-     * Shows an information dialog with title and content
-     * @param {string} title - The dialog title
-     * @param {string|string[]} content - The content to display (string or array of paragraphs)
-     */
-    function showInfoDialog(title, content) {
-        const dialog = document.getElementById('info-dialog');
-        const overlay = document.getElementById('info-dialog-overlay');
-        const dialogTitle = document.getElementById('info-dialog-title');
-        const dialogContent = document.getElementById('info-dialog-content');
-        const closeBtn = document.getElementById('info-dialog-close');
-        
-        if (!dialog || !overlay || !dialogTitle || !dialogContent || !closeBtn) {
-            console.error('Info dialog elements not found');
-            return;
-        }
-        
-        // Set dialog content
-        dialogTitle.textContent = title;
-        
-        // Handle content as string or array of paragraphs
-        // Note: Content comes from constants defined in code, not user input
-        if (Array.isArray(content)) {
-            dialogContent.innerHTML = content.map(p => `<p>${p}</p>`).join('');
-        } else {
-            dialogContent.innerHTML = `<p>${content}</p>`;
-        }
-        
-        // Show dialog and overlay
-        overlay.classList.add('show');
-        dialog.classList.add('show');
-        
-        // Set focus to close button for accessibility
-        setTimeout(() => closeBtn.focus(), DIALOG_FOCUS_DELAY);
-        
-        // Close function
-        const closeDialog = () => {
-            dialog.classList.remove('show');
-            overlay.classList.remove('show');
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-        
-        // Handle keyboard events
-        const handleKeyDown = (e) => {
-            if (e.key === 'Escape') {
-                e.preventDefault();
-                closeDialog();
-            }
-        };
-        
-        // Event listeners
-        closeBtn.onclick = closeDialog;
-        overlay.onclick = closeDialog;
-        document.addEventListener('keydown', handleKeyDown);
-    }
-
     // --- Event Listeners ---
     function setupEventListeners() {
         navViewSelector.addEventListener('click', (e) => { 
@@ -1150,31 +1162,52 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // Info icon button event delegation
+        // Info icon button and card flip event delegation
         cardGrid.addEventListener('click', (e) => {
             const infoBtn = e.target.closest('.info-icon-btn');
+            const closeBtn = e.target.closest('.card-back-close');
+            
             if (infoBtn) {
                 e.preventDefault();
-                const infoType = infoBtn.getAttribute('data-info-type');
-                
-                if (infoType === 'capacity') {
-                    showInfoDialog(
-                        'Capacity Information',
-                        CAPACITY_INFO_TEXT
-                    );
-                } else if (infoType === 'enrolment') {
-                    showInfoDialog(
-                        'Enrolment Information',
-                        ENROLMENT_INFO_TEXT
-                    );
-                } else if (infoType === 'enrolment-capacity') {
-                    showInfoDialog(
-                        'Enrolment & Capacity Information',
-                        [
-                            CAPACITY_INFO_TEXT,
-                            ENROLMENT_INFO_TEXT
-                        ]
-                    );
+                e.stopPropagation();
+                // Find the parent flippable card
+                const card = infoBtn.closest('[data-flippable="true"]');
+                if (card) {
+                    card.classList.add('flipped');
+                    // Focus on the close button for accessibility
+                    setTimeout(() => {
+                        const closeButton = card.querySelector('.card-back-close');
+                        if (closeButton) closeButton.focus();
+                    }, DIALOG_FOCUS_DELAY);
+                }
+            } else if (closeBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                // Find the parent flippable card and unflip it
+                const card = closeBtn.closest('[data-flippable="true"]');
+                if (card) {
+                    card.classList.remove('flipped');
+                    // Focus back on the info button
+                    setTimeout(() => {
+                        const infoButton = card.querySelector('.info-icon-btn');
+                        if (infoButton) infoButton.focus();
+                    }, DIALOG_FOCUS_DELAY);
+                }
+            }
+        });
+        
+        // Handle keyboard events for card flipping
+        cardGrid.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const flippedCard = cardGrid.querySelector('[data-flippable="true"].flipped');
+                if (flippedCard) {
+                    e.preventDefault();
+                    flippedCard.classList.remove('flipped');
+                    // Focus back on the info button
+                    setTimeout(() => {
+                        const infoButton = flippedCard.querySelector('.info-icon-btn');
+                        if (infoButton) infoButton.focus();
+                    }, DIALOG_FOCUS_DELAY);
                 }
             }
         });
