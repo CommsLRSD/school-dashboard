@@ -458,15 +458,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             case 'enrolment': {
-                const frontContent = `<div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><button class="info-icon-btn" data-info-type="enrolment" aria-label="Show enrolment information"><img src="public/icon/info.svg" alt=""></button></div>`;
-                return createFlippableCard(
-                    `stat-card ${sizeClass}`,
-                    frontContent,
-                    'Enrolment Information',
-                    'public/icon/enrolment.svg',
-                    ENROLMENT_INFO_TEXT,
-                    'enrolment'
-                );
+                // Enrolment card does not flip - shows info text as a footnote
+                return `<div class="data-card stat-card ${sizeClass}">
+                    <div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment</h2></div>
+                    <div class="card-body">
+                        <div class="stat-value">${formatNumber(school.enrolment.current)}</div>
+                        <div class="stat-label">Current Enrolment</div>
+                        <div class="enrolment-footnote">${ENROLMENT_INFO_TEXT}</div>
+                    </div>
+                </div>`;
             }
             
             case 'utilization': {

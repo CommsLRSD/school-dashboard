@@ -620,19 +620,17 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.25rem;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
     transition: all var(--transition-base);
-    margin: -0.25rem -0.25rem -0.25rem 0;
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 .card-back-close:hover {
-    background-color: var(--bg-color);
-    opacity: 0.8;
+    opacity: 1;
+    transform: scale(1.1);
 }
 
 .card-back-close:focus {
@@ -642,9 +640,15 @@ body {
 }
 
 .card-back-close-icon {
-    width: 16px;
-    height: 16px;
-    filter: invert(60%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+    width: 1rem;
+    height: 1rem;
+    /* Light grey color (var(--text-lighter) = #adb5bd) applied via CSS filter */
+    filter: invert(76%) sepia(6%) saturate(273%) hue-rotate(169deg) brightness(92%) contrast(87%);
+}
+
+.card-back-close:hover .card-back-close-icon {
+    /* Red color (var(--primary-red) = #BE5247) applied via CSS filter on hover */
+    filter: invert(47%) sepia(19%) saturate(1618%) hue-rotate(318deg) brightness(89%) contrast(83%);
 }
 
 .card-back-content {
