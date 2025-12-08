@@ -780,7 +780,7 @@ body {
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
     opacity: 0.8;
-    transition: opacity var(--transition-normal);
+    transition: opacity var(--transition-base);
 }
 
 .photo-credit:hover {

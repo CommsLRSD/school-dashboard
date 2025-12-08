@@ -443,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Add photo credit for specific schools
                 const needsPhotoCredit = SCHOOLS_WITH_PHOTO_CREDIT.includes(school.schoolName);
                 const photoCredit = needsPhotoCredit 
-                    ? '<div class="photo-credit"><img src="public/icon/photo-credit.svg" alt="" class="photo-credit-icon"><span class="photo-credit-text">Winnipeg Architecture Foundation Collection</span></div>' 
+                    ? '<div class="photo-credit"><img src="public/icon/photo-credit.svg" alt="" aria-hidden="true" class="photo-credit-icon"><span class="photo-credit-text">Winnipeg Architecture Foundation Collection</span></div>' 
                     : '';
                 
                 return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${headerImage}" alt="${schoolName}"><h2 class="school-name-title">${schoolName}</h2>${photoCredit}</div></div>`;
