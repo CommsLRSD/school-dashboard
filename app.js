@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const BANNER_SCROLL_THRESHOLD = 100; // Show banner when scrolling more than 100px
     const BANNER_TOP_THRESHOLD = 200; // Keep banner visible when within 200px from top
     const SCHOOL_BUILDING_SPACE_STANDARDS_URL = 'https://media.lrsd.net/media/Default/medialib/school-building-space-standards_edited-may-2022.0ba97b51071.pdf';
+    const DIALOG_FOCUS_DELAY = 100; // Delay before focusing dialog close button (ms)
+    
+    // Info dialog content constants
+    const CAPACITY_INFO_TEXT = 'School\'s student capacity at 20 students per K-3 classroom & 25 per 4-12 classroom.';
+    const ENROLMENT_INFO_TEXT = 'Data as of Sept. 30, 2025';
     
     // --- Global Variables ---
     // Cache DOM elements for performance
@@ -402,9 +407,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/additions.svg" alt="" class="card-header-icon"><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
 
-            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div><div class="capacity-footnote">20 students per K-3 classroom/<br>25 students per 4-12 classroom</div></div></div>`;
+            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div><button class="info-icon-btn" data-info-type="capacity" aria-label="Show capacity information"><img src="public/icon/info.svg" alt=""></button></div></div>`;
             
-            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><div class="enrolment-footnote">Data as of Sept. 30, 2025</div></div></div>`;
+            case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><button class="info-icon-btn" data-info-type="enrolment" aria-label="Show enrolment information"><img src="public/icon/info.svg" alt=""></button></div></div>`;
             
             case 'utilization': {
                 let warningIcon = '';
@@ -418,7 +423,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(school.enrolment.current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(school.enrolment.capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
 
-            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul></div></div>`;
+            case 'enrolment_capacity': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul><button class="info-icon-btn" data-info-type="enrolment-capacity" aria-label="Show enrolment and capacity information"><img src="public/icon/info.svg" alt=""></button></div></div>`;
 
             case 'history': return `<div class="data-card chart-card ${sizeClass}" data-chart="history" data-school-id="${school.id}"><div class="card-header"><img src="public/icon/enrolment-charts.svg" alt="" class="card-header-icon"><h2 class="card-title">Historic Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
@@ -1023,6 +1028,62 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('keydown', handleKeyDown);
     }
 
+    /**
+     * Shows an information dialog with title and content
+     * @param {string} title - The dialog title
+     * @param {string|string[]} content - The content to display (string or array of paragraphs)
+     */
+    function showInfoDialog(title, content) {
+        const dialog = document.getElementById('info-dialog');
+        const overlay = document.getElementById('info-dialog-overlay');
+        const dialogTitle = document.getElementById('info-dialog-title');
+        const dialogContent = document.getElementById('info-dialog-content');
+        const closeBtn = document.getElementById('info-dialog-close');
+        
+        if (!dialog || !overlay || !dialogTitle || !dialogContent || !closeBtn) {
+            console.error('Info dialog elements not found');
+            return;
+        }
+        
+        // Set dialog content
+        dialogTitle.textContent = title;
+        
+        // Handle content as string or array of paragraphs
+        // Note: Content comes from constants defined in code, not user input
+        if (Array.isArray(content)) {
+            dialogContent.innerHTML = content.map(p => `<p>${p}</p>`).join('');
+        } else {
+            dialogContent.innerHTML = `<p>${content}</p>`;
+        }
+        
+        // Show dialog and overlay
+        overlay.classList.add('show');
+        dialog.classList.add('show');
+        
+        // Set focus to close button for accessibility
+        setTimeout(() => closeBtn.focus(), DIALOG_FOCUS_DELAY);
+        
+        // Close function
+        const closeDialog = () => {
+            dialog.classList.remove('show');
+            overlay.classList.remove('show');
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+        
+        // Handle keyboard events
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeDialog();
+            }
+        };
+        
+        // Event listeners
+        closeBtn.onclick = closeDialog;
+        overlay.onclick = closeDialog;
+        document.addEventListener('keydown', handleKeyDown);
+    }
+
     // --- Event Listeners ---
     function setupEventListeners() {
         navViewSelector.addEventListener('click', (e) => { 
@@ -1088,6 +1149,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
+        
+        // Info icon button event delegation
+        cardGrid.addEventListener('click', (e) => {
+            const infoBtn = e.target.closest('.info-icon-btn');
+            if (infoBtn) {
+                e.preventDefault();
+                const infoType = infoBtn.getAttribute('data-info-type');
+                
+                if (infoType === 'capacity') {
+                    showInfoDialog(
+                        'Capacity Information',
+                        CAPACITY_INFO_TEXT
+                    );
+                } else if (infoType === 'enrolment') {
+                    showInfoDialog(
+                        'Enrolment Information',
+                        ENROLMENT_INFO_TEXT
+                    );
+                } else if (infoType === 'enrolment-capacity') {
+                    showInfoDialog(
+                        'Enrolment & Capacity Information',
+                        [
+                            CAPACITY_INFO_TEXT,
+                            ENROLMENT_INFO_TEXT
+                        ]
+                    );
+                }
+            }
+        });
         
         /**
          * Toggles sidebar visibility for mobile view
