@@ -1311,28 +1311,32 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 6px;
+    border-radius: 4px;
     transition: all var(--transition-base);
-    margin: -0.5rem -0.5rem -0.5rem 0;
+    margin: -0.25rem -0.25rem -0.25rem 0;
+    opacity: 0.5;
 }
 
 .info-dialog-close:hover {
     background-color: var(--bg-color);
+    opacity: 0.8;
 }
 
 .info-dialog-close:focus {
     outline: 2px solid var(--primary-red);
     outline-offset: 2px;
+    opacity: 1;
 }
 
 .info-dialog-close-icon {
-    width: 20px;
-    height: 20px;
-    filter: invert(47%) sepia(19%) saturate(1618%) hue-rotate(318deg) brightness(89%) contrast(83%);
+    width: 16px;
+    height: 16px;
+    filter: invert(60%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+}
 }
 
 .info-dialog-content {
