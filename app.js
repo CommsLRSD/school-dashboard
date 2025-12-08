@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const BANNER_SCROLL_THRESHOLD = 100; // Show banner when scrolling more than 100px
     const BANNER_TOP_THRESHOLD = 200; // Keep banner visible when within 200px from top
     const SCHOOL_BUILDING_SPACE_STANDARDS_URL = 'https://media.lrsd.net/media/Default/medialib/school-building-space-standards_edited-may-2022.0ba97b51071.pdf';
+    const DIALOG_FOCUS_DELAY = 100; // Delay before focusing dialog close button (ms)
     
     // Info dialog content constants
     const CAPACITY_INFO_TEXT = 'School\'s student capacity at 20 students per K-3 classroom & 25 per 4-12 classroom.';
@@ -1048,6 +1049,7 @@ document.addEventListener('DOMContentLoaded', function() {
         dialogTitle.textContent = title;
         
         // Handle content as string or array of paragraphs
+        // Note: Content comes from constants defined in code, not user input
         if (Array.isArray(content)) {
             dialogContent.innerHTML = content.map(p => `<p>${p}</p>`).join('');
         } else {
@@ -1059,7 +1061,7 @@ document.addEventListener('DOMContentLoaded', function() {
         dialog.classList.add('show');
         
         // Set focus to close button for accessibility
-        setTimeout(() => closeBtn.focus(), 100);
+        setTimeout(() => closeBtn.focus(), DIALOG_FOCUS_DELAY);
         
         // Close function
         const closeDialog = () => {
