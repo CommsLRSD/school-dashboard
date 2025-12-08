@@ -16,6 +16,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const CAPACITY_INFO_TEXT = 'School\'s student capacity at 20 students per K-3 classroom & 25 per 4-12 classroom.';
     const ENROLMENT_INFO_TEXT = 'Data as of Sept. 30, 2025';
     
+    // Schools with photo credit from Winnipeg Architecture Foundation
+    const SCHOOLS_WITH_PHOTO_CREDIT = [
+        'Archwood School',
+        'Collège Béliveau',
+        'Collège Jeanne-Sauvé',
+        'Dakota Collegiate Institute',
+        'Darwin School',
+        'École Guyot',
+        'École Henri-Bergeron',
+        'École Howden',
+        'École Julie-Riel',
+        'École St. Germain',
+        'École Van Belleghem',
+        'École Varennes',
+        'General Vanier School',
+        'Shamrock School',
+        'St. George School',
+        'Victor H.L. Wyatt School',
+        'Victor Mager School',
+        'Windsor Park Collegiate',
+        'Windsor School'
+    ];
+    
     // --- Global Variables ---
     // Cache DOM elements for performance
     const cardGrid = document.getElementById('card-grid');
@@ -416,7 +439,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Sanitize data to prevent XSS
                 const headerImage = sanitizeHTML(school.headerImage || '');
                 const schoolName = sanitizeHTML(school.schoolName || '');
-                return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${headerImage}" alt="${schoolName}"><h2 class="school-name-title">${schoolName}</h2></div></div>`;
+                
+                // Add photo credit for specific schools
+                const needsPhotoCredit = SCHOOLS_WITH_PHOTO_CREDIT.includes(school.schoolName);
+                const photoCredit = needsPhotoCredit 
+                    ? '<div class="photo-credit"><img src="public/icon/photo-credit.svg" alt="" class="photo-credit-icon"><span class="photo-credit-text">Winnipeg Architecture Foundation Collection</span></div>' 
+                    : '';
+                
+                return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${headerImage}" alt="${schoolName}"><h2 class="school-name-title">${schoolName}</h2>${photoCredit}</div></div>`;
             
             case 'details': {
                 // Calculate age dynamically from Built year
