@@ -439,6 +439,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Sanitize data to prevent XSS
                 const headerImage = sanitizeHTML(school.headerImage || '');
                 const schoolName = sanitizeHTML(school.schoolName || '');
+                // Photo credit is a static string (not user input), so sanitization is not required
                 const photoCredit = SCHOOLS_WITH_PHOTO_CREDIT.includes(schoolName) 
                     ? '<div class="photo-credit">Photo: Winnipeg Architecture Foundation Collection</div>' 
                     : '';
