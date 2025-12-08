@@ -1075,6 +1075,9 @@ body {
 .list-card .card-body { 
     padding: 0.5rem 1.25rem;
     overflow-y: auto;
+    position: relative;
+    /* Add padding-bottom to accommodate info icon (24px icon + 1rem spacing + extra buffer) */
+    padding-bottom: 3rem;
 }
 
 .detail-list { 
@@ -1267,6 +1270,34 @@ body {
     
     .stat-value { 
         font-size: 2.5rem; 
+    }
+    
+    /* Ensure list-card has adequate minimum height on mobile to prevent content/icon overlap */
+    .list-card {
+        min-height: 280px;
+    }
+    
+    /* Add extra bottom padding for cards with info icons on mobile */
+    .list-card .card-body {
+        padding-bottom: 3.5rem;
+    }
+}
+
+/* Mobile landscape orientation - additional spacing adjustments */
+@media (max-width: 992px) and (max-height: 600px) and (orientation: landscape) {
+    /* Increase spacing between progress bar and info icon in landscape */
+    .list-card .card-body {
+        padding-bottom: 3.5rem;
+    }
+    
+    /* Ensure adequate minimum height in landscape */
+    .list-card {
+        min-height: 240px;
+    }
+    
+    /* Add margin to progress bar container for better separation from info icon */
+    .detail-item .progress-bar-container {
+        margin-bottom: 0.5rem;
     }
 }
 
