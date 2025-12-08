@@ -692,6 +692,17 @@ body {
     text-align: right;
 }
 
+/* Static footnote for projects_local - not sticky, flows with content */
+.tile-footnote-static {
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    font-size: 0.7rem;
+    color: var(--text-lighter);
+    font-weight: 400;
+    text-align: right;
+    border-top: 1px solid var(--border-color);
+}
+
 /* Footnote link styling */
 .footnote-link {
     color: var(--text-lighter);

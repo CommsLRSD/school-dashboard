@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/additions.svg" alt="" class="card-header-icon"><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
 
-            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div><div class="capacity-footnote">20 students per K-3 classroom/25 students per 4-12 classroom</div></div></div>`;
+            case 'capacity': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Capacity</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.capacity)}</div><div class="stat-label">Classroom Capacity</div><div class="capacity-footnote">20 students per K-3 classroom/<br>25 students per 4-12 classroom</div></div></div>`;
             
             case 'enrolment': return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment</h2></div><div class="card-body"><div class="stat-value">${formatNumber(school.enrolment.current)}</div><div class="stat-label">Current Enrolment</div><div class="enrolment-footnote">Data as of Sept. 30, 2025</div></div></div>`;
             
@@ -562,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Add footnotes for specific card types
                 let footnote = '';
                 if (cardType === 'projects_local') {
-                    footnote = '<div class="tile-footnote">Does not include routine upkeep and maintenance.</div>';
+                    footnote = '<div class="tile-footnote-static">Does not include routine upkeep and maintenance.</div>';
                 } else if (cardType === 'accessibility') {
                     footnote = `<div class="tile-footnote"><a href="${SCHOOL_BUILDING_SPACE_STANDARDS_URL}" target="_blank" rel="noopener noreferrer" class="footnote-link">See School Building Space Standards</a></div>`;
                 }
