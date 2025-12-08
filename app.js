@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const BANNER_AUTO_HIDE_DELAY = 3000; // Auto-hide banner after 3 seconds
     const BANNER_SCROLL_THRESHOLD = 100; // Show banner when scrolling more than 100px
     const BANNER_TOP_THRESHOLD = 200; // Keep banner visible when within 200px from top
+    const SCHOOL_BUILDING_SPACE_STANDARDS_URL = 'https://media.lrsd.net/media/Default/medialib/school-building-space-standards_edited-may-2022.0ba97b51071.pdf';
     
     // --- Global Variables ---
     // Cache DOM elements for performance
@@ -563,7 +564,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (cardType === 'projects_local') {
                     footnote = '<div class="tile-footnote">Does not include routine upkeep and maintenance.</div>';
                 } else if (cardType === 'accessibility') {
-                    footnote = '<div class="tile-footnote"><a href="https://media.lrsd.net/media/Default/medialib/school-building-space-standards_edited-may-2022.0ba97b51071.pdf" target="_blank" rel="noopener noreferrer" class="footnote-link">See School Building Building Space Standards</a></div>';
+                    footnote = `<div class="tile-footnote"><a href="${SCHOOL_BUILDING_SPACE_STANDARDS_URL}" target="_blank" rel="noopener noreferrer" class="footnote-link">See School Building Space Standards</a></div>`;
                 }
                 
                 return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="${icons[cardType]}" alt="" class="card-header-icon"><h2 class="card-title">${titles[cardType]}</h2></div><div class="card-body"><ul class="detail-list">${listItems || '<li class="detail-item">No data available.</li>'}</ul>${footnote}</div></div>`;

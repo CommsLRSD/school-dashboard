@@ -667,17 +667,8 @@ body {
     color: var(--text-light);
 }
 
-.enrolment-footnote {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    font-size: 0.7rem;
-    color: var(--text-lighter);
-    font-weight: 400;
-    text-align: right;
-}
-
-/* Capacity footnote - matches enrolment-footnote style */
+/* Base footnote style shared across all footnotes */
+.enrolment-footnote,
 .capacity-footnote {
     position: absolute;
     bottom: 1rem;
@@ -689,11 +680,12 @@ body {
 }
 
 /* Tile footnotes for list cards (projects_local, accessibility) */
+/* Use left and right positioning for proper width in list cards */
 .tile-footnote {
     position: absolute;
     bottom: 1rem;
-    right: 1rem;
     left: 1rem;
+    right: 1rem;
     font-size: 0.7rem;
     color: var(--text-lighter);
     font-weight: 400;
