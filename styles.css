@@ -1259,6 +1259,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--card-bg);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     box-shadow: var(--shadow-xl);
     max-width: 500px;
@@ -1294,13 +1295,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem;
+    padding: 1rem 1.25rem;
     border-bottom: 1px solid var(--border-color);
 }
 
 .info-dialog-title {
     font-family: var(--font-title);
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--text-color);
     margin: 0;
@@ -1315,7 +1316,8 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 6px;
-    transition: background-color var(--transition-base);
+    transition: all var(--transition-base);
+    margin: -0.5rem -0.5rem -0.5rem 0;
 }
 
 .info-dialog-close:hover {
@@ -1328,19 +1330,21 @@ body {
 }
 
 .info-dialog-close-icon {
-    width: 24px;
-    height: 24px;
-    filter: invert(35%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(94%) contrast(87%);
+    width: 20px;
+    height: 20px;
+    filter: invert(47%) sepia(19%) saturate(1618%) hue-rotate(318deg) brightness(89%) contrast(83%);
 }
 
 .info-dialog-content {
-    padding: 1.5rem;
+    padding: 1.25rem;
     color: var(--text-color);
     line-height: 1.6;
+    font-size: 0.9rem;
 }
 
 .info-dialog-content p {
-    margin: 0 0 1rem 0;
+    margin: 0 0 0.75rem 0;
+    color: var(--text-light);
 }
 
 .info-dialog-content p:last-child {
