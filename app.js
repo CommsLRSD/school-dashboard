@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const BANNER_TOP_THRESHOLD = 200; // Keep banner visible when within 200px from top
     const SCHOOL_BUILDING_SPACE_STANDARDS_URL = 'https://media.lrsd.net/media/Default/medialib/school-building-space-standards_edited-may-2022.0ba97b51071.pdf';
     
+    // Info dialog content constants
+    const CAPACITY_INFO_TEXT = 'School\'s student capacity at 20 students per K-3 classroom & 25 per 4-12 classroom.';
+    const ENROLMENT_INFO_TEXT = 'Data as of Sept. 30, 2025';
+    
     // --- Global Variables ---
     // Cache DOM elements for performance
     const cardGrid = document.getElementById('card-grid');
@@ -1154,19 +1158,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (infoType === 'capacity') {
                     showInfoDialog(
                         'Capacity Information',
-                        'School\'s student capacity at 20 students per K-3 classroom & 25 per 4-12 classroom.'
+                        CAPACITY_INFO_TEXT
                     );
                 } else if (infoType === 'enrolment') {
                     showInfoDialog(
                         'Enrolment Information',
-                        'Data as of Sept. 30, 2025'
+                        ENROLMENT_INFO_TEXT
                     );
                 } else if (infoType === 'enrolment-capacity') {
                     showInfoDialog(
                         'Enrolment & Capacity Information',
                         [
-                            'School\'s student capacity at 20 students per K-3 classroom & 25 per 4-12 classroom.',
-                            'Data as of Sept. 30, 2025'
+                            CAPACITY_INFO_TEXT,
+                            ENROLMENT_INFO_TEXT
                         ]
                     );
                 }
