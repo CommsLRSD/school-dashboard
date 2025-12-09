@@ -785,7 +785,8 @@ body {
     justify-content: center; 
     text-align: center;
     position: relative;
-    /* Add bottom padding for cards with info icons to prevent overlap */
+    /* Add bottom padding for cards with info icons to prevent overlap
+       3.5rem provides adequate space for stat-value, stat-label, and info icon */
     padding-bottom: 3.5rem;
 }
 
@@ -869,7 +870,8 @@ body {
 .utilization-card .card-body { 
     justify-content: center;
     align-items: center;
-    /* Add bottom padding to provide adequate space below progress bar */
+    /* Add bottom padding to provide adequate space below progress bar
+       2rem is sufficient for utilization cards (smaller vertical content than stat-cards) */
     padding-bottom: 2rem;
 }
 
@@ -883,12 +885,14 @@ body {
     border-radius: 0 0 12px 12px;
 }
 
-/* Ensure stat-card has sufficient minimum height */
+/* Ensure stat-card has sufficient minimum height
+   200px accommodates large stat-value (3rem font), stat-label, and info icon */
 .stat-card {
     min-height: 200px;
 }
 
-/* Ensure utilization-card has sufficient minimum height */
+/* Ensure utilization-card has sufficient minimum height  
+   180px accommodates percentage value and progress bar (less vertical content than stat-card) */
 .utilization-card {
     min-height: 180px;
 }
@@ -1303,7 +1307,8 @@ body {
         padding-bottom: 4rem;
     }
     
-    /* Ensure utilization-card has adequate bottom padding on mobile */
+    /* Ensure utilization-card has adequate bottom padding on mobile
+       2.5rem provides more spacing than desktop (2rem) for touch interfaces */
     .utilization-card .card-body {
         padding-bottom: 2.5rem;
     }
