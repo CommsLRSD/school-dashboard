@@ -1204,6 +1204,31 @@ body {
     opacity: 1; 
 }
 
+/* Desktop-specific improvements for list-card layout (1024px+ for true desktop) */
+@media (min-width: 1024px) {
+    /* Allow grid rows to expand to fit card content to prevent overlap */
+    .card-grid {
+        grid-auto-rows: auto;
+    }
+    
+    /* Reduce min-height to minimize whitespace while preventing scrolling */
+    .list-card {
+        min-height: 320px;
+    }
+    
+    /* Reduce padding to decrease spacing between content and info icon */
+    .list-card .card-body {
+        padding: 0.75rem 1.5rem;
+        padding-bottom: 2.5rem;
+        /* Keep overflow-y: auto (default) to prevent card overlap */
+    }
+    
+    /* Position info icon closer to bottom for tighter spacing */
+    .list-card .info-icon-btn {
+        bottom: 0.75rem;
+    }
+}
+
 @media (min-width: 993px) {
     .header-logo-desktop {
         display: none;
