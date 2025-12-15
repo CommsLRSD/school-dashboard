@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "12/03/2025",
+  "lastUpdated": "10/16/2025 17:22",
   "archwood": {
     "id": "archwood",
     "schoolName": "Archwood School",
@@ -18,10 +18,10 @@
           "2029_30"
         ],
         "values": [
-          186,
-          189,
-          195,
-          193
+          151,
+          144,
+          142,
+          136
         ]
       },
       "history": {
@@ -166,10 +166,10 @@
           "2029_30"
         ],
         "values": [
-          705,
-          760,
-          824,
-          866
+          708,
+          763,
+          828,
+          898
         ]
       },
       "history": {
@@ -313,10 +313,10 @@
           "2029_30"
         ],
         "values": [
-          917,
-          907,
-          885,
-          878
+          903,
+          910,
+          893,
+          906
         ]
       },
       "history": {
@@ -447,10 +447,10 @@
           "2029_30"
         ],
         "values": [
-          1620,
-          1658,
-          1684,
-          1661
+          1551,
+          1575,
+          1599,
+          1579
         ]
       },
       "history": {
@@ -588,10 +588,10 @@
           "2029_30"
         ],
         "values": [
-          231,
-          227,
-          214,
-          219
+          211,
+          207,
+          196,
+          200
         ]
       },
       "history": {
@@ -708,10 +708,10 @@
           "2029_30"
         ],
         "values": [
-          261,
-          258,
+          260,
+          263,
           252,
-          247
+          248
         ]
       },
       "history": {
@@ -836,10 +836,10 @@
           "2029_30"
         ],
         "values": [
-          339,
-          368,
-          356,
-          351
+          341,
+          376,
+          376,
+          369
         ]
       },
       "history": {
@@ -967,10 +967,10 @@
           "2029_30"
         ],
         "values": [
-          446,
-          450,
-          441,
-          443
+          423,
+          411,
+          393,
+          389
         ]
       },
       "history": {
@@ -1094,10 +1094,10 @@
           "2029_30"
         ],
         "values": [
-          292,
-          290,
-          337,
-          385
+          327,
+          311,
+          331,
+          336
         ]
       },
       "history": {
@@ -1218,10 +1218,10 @@
           "2029_30"
         ],
         "values": [
-          317,
-          314,
-          308,
-          298
+          298,
+          294,
+          284,
+          274
         ]
       },
       "history": {
@@ -1356,10 +1356,10 @@
           "2029_30"
         ],
         "values": [
-          349,
-          329,
-          316,
-          304
+          333,
+          305,
+          287,
+          270
         ]
       },
       "history": {
@@ -1476,10 +1476,10 @@
           "2029_30"
         ],
         "values": [
-          432,
-          439,
-          430,
-          425
+          419,
+          428,
+          420,
+          414
         ]
       },
       "history": {
@@ -1615,10 +1615,10 @@
           "2029_30"
         ],
         "values": [
-          264,
-          301,
-          350,
-          417
+          265,
+          267,
+          252,
+          239
         ]
       },
       "history": {
@@ -1744,10 +1744,10 @@
           "2029_30"
         ],
         "values": [
-          860,
-          934,
-          972,
-          1024
+          906,
+          980,
+          1044,
+          1107
         ]
       },
       "history": {
@@ -1841,10 +1841,10 @@
           "2029_30"
         ],
         "values": [
-          357,
-          315,
-          292,
-          279
+          366,
+          322,
+          288,
+          268
         ]
       },
       "history": {
@@ -1960,10 +1960,10 @@
           "2029_30"
         ],
         "values": [
-          340,
-          373,
-          398,
-          424
+          334,
+          350,
+          348,
+          348
         ]
       },
       "history": {
@@ -2036,7 +2036,6 @@
     "projects": {
       "provincial": {
         "requested": [
-          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
           "New Elementary School: Precinct K neighbourhood",
           "Universal washrooms",
           "Relocation of Modular Classrooms to Island Lakes Community School (summer 2025)",
@@ -2096,10 +2095,10 @@
           "2029_30"
         ],
         "values": [
-          399,
-          402,
-          389,
-          370
+          366,
+          375,
+          370,
+          359
         ]
       },
       "history": {
@@ -2238,10 +2237,10 @@
           "2029_30"
         ],
         "values": [
+          403,
+          419,
           402,
-          415,
-          406,
-          382
+          377
         ]
       },
       "history": {
@@ -2380,10 +2379,10 @@
           "2029_30"
         ],
         "values": [
-          223,
-          224,
-          214,
-          206
+          221,
+          219,
+          211,
+          200
         ]
       },
       "history": {
@@ -2508,10 +2507,10 @@
           "2029_30"
         ],
         "values": [
-          1055,
-          1051,
-          1091,
-          1136
+          1068,
+          1020,
+          1030,
+          1045
         ]
       },
       "history": {
@@ -2537,24 +2536,20 @@
     },
     "additions": [
       {
-        "year": "1956",
-        "size": ""
+        "year": "",
+        "size": "1965"
       },
       {
-        "year": "1965",
-        "size": ""
+        "year": "",
+        "size": "1972"
       },
       {
-        "year": "1972",
-        "size": ""
+        "year": "",
+        "size": "1975"
       },
       {
-        "year": "1975",
-        "size": ""
-      },
-      {
-        "year": "1997",
-        "size": "Rebuild"
+        "year": "",
+        "size": "1997|Rebuild"
       }
     ],
     "building": {
@@ -2647,10 +2642,10 @@
           "2029_30"
         ],
         "values": [
-          268,
-          269,
-          281,
-          279
+          286,
+          291,
+          295,
+          290
         ]
       },
       "history": {
@@ -2781,10 +2776,10 @@
           "2029_30"
         ],
         "values": [
-          373,
           361,
-          368,
-          377
+          336,
+          325,
+          323
         ]
       },
       "history": {
@@ -2903,10 +2898,10 @@
           "2029_30"
         ],
         "values": [
-          231,
-          237,
-          221,
-          217
+          213,
+          210,
+          203,
+          196
         ]
       },
       "history": {
@@ -3023,10 +3018,10 @@
           "2029_30"
         ],
         "values": [
-          433,
-          410,
-          394,
-          384
+          400,
+          379,
+          362,
+          350
         ]
       },
       "history": {
@@ -3161,10 +3156,10 @@
           "2029_30"
         ],
         "values": [
-          740,
-          743,
-          752,
-          764
+          757,
+          769,
+          781,
+          805
         ]
       },
       "history": {
@@ -3232,7 +3227,6 @@
     "projects": {
       "provincial": {
         "requested": [
-          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
           "New Elementary School: Precinct J neighbourhood",
           "New Elementary School: Precinct K neighbourhood",
           "New High School: Precinct K neighbourhood",
@@ -3288,10 +3282,10 @@
           "2029_30"
         ],
         "values": [
-          1051,
-          1149,
-          1227,
-          1251
+          1069,
+          1121,
+          1172,
+          1160
         ]
       },
       "history": {
@@ -3355,7 +3349,6 @@
     "projects": {
       "provincial": {
         "requested": [
-          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
           "New Elementary School: Precinct J neighbourhood",
           "New Elementary School: Precinct K neighbourhood",
           "New High School: Precinct K neighbourhood",
@@ -3420,10 +3413,10 @@
           "2029_30"
         ],
         "values": [
-          168,
-          172,
-          172,
-          172
+          179,
+          184,
+          180,
+          187
         ]
       },
       "history": {
@@ -3538,10 +3531,10 @@
           "2029_30"
         ],
         "values": [
-          149,
-          147,
-          148,
-          150
+          165,
+          163,
+          164,
+          166
         ]
       },
       "history": {
@@ -3659,10 +3652,10 @@
           "2029_30"
         ],
         "values": [
-          281,
-          333,
-          412,
-          520
+          259,
+          267,
+          267,
+          266
         ]
       },
       "history": {
@@ -3794,10 +3787,10 @@
           "2029_30"
         ],
         "values": [
-          183,
-          177,
-          180,
-          187
+          167,
+          165,
+          167,
+          163
         ]
       },
       "history": {
@@ -3912,10 +3905,10 @@
           "2029_30"
         ],
         "values": [
-          378,
-          416,
-          479,
-          527
+          411,
+          404,
+          425,
+          414
         ]
       },
       "history": {
@@ -4058,10 +4051,10 @@
           "2029_30"
         ],
         "values": [
-          243,
-          249,
-          231,
-          229
+          220,
+          213,
+          196,
+          196
         ]
       },
       "history": {
@@ -4122,7 +4115,6 @@
     "projects": {
       "provincial": {
         "requested": [
-          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
           "New Elementary School: Precinct J neighbourhood",
           "New Elementary School: Precinct K neighbourhood",
           "New High School: Precinct K neighbourhood",
@@ -4181,10 +4173,10 @@
           "2029_30"
         ],
         "values": [
-          181,
           184,
-          181,
-          183
+          194,
+          186,
+          190
         ]
       },
       "history": {
@@ -4317,10 +4309,10 @@
           "2029_30"
         ],
         "values": [
-          683,
-          697,
-          695,
-          694
+          638,
+          642,
+          627,
+          620
         ]
       },
       "history": {
@@ -4381,7 +4373,6 @@
       "provincial": {
         "requested": [
           "Number one priority: Addition and renovations to J.H. Bruns Collegiate to allow for transition from grade 8 to grade 9",
-          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
           "New Elementary School: Precinct J neighbourhood",
           "New Elementary School: Precinct K neighbourhood",
           "New High School: Precinct K neighbourhood"
@@ -4434,10 +4425,10 @@
           "2029_30"
         ],
         "values": [
-          377,
+          386,
+          378,
           369,
-          363,
-          366
+          359
         ]
       },
       "history": {
@@ -4558,10 +4549,10 @@
           "2029_30"
         ],
         "values": [
-          289,
-          362,
-          455,
-          540
+          332,
+          319,
+          316,
+          289
         ]
       },
       "history": {
@@ -4629,7 +4620,6 @@
     "projects": {
       "provincial": {
         "requested": [
-          "New Elementary School: Sage Creek Bonavista (Under construction, open fall 2025)",
           "New Elementary School: Precinct J neighbourhood",
           "New Elementary School: Precinct K neighbourhood",
           "New High School: Precinct K neighbourhood",
@@ -4693,10 +4683,10 @@
           "2029_30"
         ],
         "values": [
-          372,
+          369,
           377,
-          352,
-          351
+          369,
+          371
         ]
       },
       "history": {
@@ -4815,10 +4805,10 @@
           "2029_30"
         ],
         "values": [
-          315,
-          315,
-          310,
-          320
+          280,
+          280,
+          271,
+          276
         ]
       },
       "history": {
@@ -4931,10 +4921,10 @@
           "2029_30"
         ],
         "values": [
-          412,
-          398,
-          386,
-          373
+          388,
+          371,
+          349,
+          327
         ]
       },
       "history": {
@@ -5061,10 +5051,10 @@
           "2029_30"
         ],
         "values": [
-          532,
-          440,
-          446,
-          476
+          551,
+          449,
+          445,
+          452
         ]
       },
       "history": {
@@ -5186,10 +5176,10 @@
           "2029_30"
         ],
         "values": [
-          238,
-          253,
-          273,
-          291
+          239,
+          244,
+          248,
+          255
         ]
       },
       "history": {
@@ -5215,16 +5205,12 @@
     },
     "additions": [
       {
-        "year": "1957",
-        "size": ""
+        "year": "",
+        "size": "1961"
       },
       {
-        "year": "1961",
-        "size": ""
-      },
-      {
-        "year": "1964",
-        "size": ""
+        "year": "",
+        "size": "1964|"
       }
     ],
     "building": {
