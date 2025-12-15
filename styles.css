@@ -1090,12 +1090,18 @@ body {
 }
 
 /* List Card */
+/* Desktop: min-height ensures content fits without scrolling when info icon is present */
+.list-card {
+    min-height: 280px;
+}
+
 .list-card .card-body { 
     padding: 0.5rem 1.25rem;
     overflow-y: auto;
     position: relative;
-    /* Add padding-bottom to accommodate info icon (24px icon + 1rem spacing + extra buffer) */
-    padding-bottom: 3rem;
+    /* Desktop: Increased padding-bottom to prevent info icon overlap with progress bar */
+    /* Mobile overrides this with 4rem in responsive sections */
+    padding-bottom: 4rem;
 }
 
 .detail-list { 
