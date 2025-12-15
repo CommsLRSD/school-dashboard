@@ -1099,8 +1099,8 @@ body {
     padding: 0.5rem 1.25rem;
     overflow-y: auto;
     position: relative;
-    /* Desktop: Increased padding-bottom to prevent info icon overlap with progress bar */
-    /* Mobile overrides this with 4rem in responsive sections */
+    /* Increased from 3rem to 4rem to prevent info icon overlap with progress bar */
+    /* Mobile maintains this 4rem value (previously had same issue) */
     padding-bottom: 4rem;
 }
 
