@@ -1216,11 +1216,16 @@ body {
         min-height: 380px;
     }
     
-    /* Increase padding to ensure better spacing between content and info icon */
+    /* Reduce padding to decrease spacing between content and info icon */
     .list-card .card-body {
         padding: 0.75rem 1.5rem;
-        padding-bottom: 3.5rem;
+        padding-bottom: 2.5rem;
         /* Keep overflow-y: auto (default) to prevent card overlap */
+    }
+    
+    /* Position info icon closer to bottom for tighter spacing */
+    .list-card .info-icon-btn {
+        bottom: 0.75rem;
     }
 }
 
