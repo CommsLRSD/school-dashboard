@@ -173,12 +173,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             const { lastUpdated: timestamp, ...schools } = data;
             
-            // Validate timestamp format (MM/DD/YYYY or M/D/YYYY)
-            const timestampRegex = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+            // Validate and format timestamp (supports YYYY-MM-DD, MM/DD/YYYY, or M/D/YYYY)
+            const timestampRegex = /^(\d{4}-\d{2}-\d{2})|(\d{1,2}\/\d{1,2}\/\d{4})$/;
             if (timestamp && !timestampRegex.test(timestamp)) {
                 console.warn('Invalid timestamp format:', timestamp);
             }
-            lastUpdated = timestamp || '';
+            
+            // Extract date portion only (remove time if present)
+            let dateOnly = timestamp || '';
+            if (dateOnly && dateOnly.includes(' ')) {
+                dateOnly = dateOnly.split(' ')[0]; // Remove time portion
+            }
+            lastUpdated = dateOnly;
             schoolData = schools;
             
             // Validate that we have data
