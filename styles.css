@@ -1206,6 +1206,11 @@ body {
 
 /* Desktop-specific improvements for list-card layout (1024px+ for true desktop) */
 @media (min-width: 1024px) {
+    /* Allow grid rows to expand to fit card content to prevent overlap */
+    .card-grid {
+        grid-auto-rows: auto;
+    }
+    
     /* Increase min-height to eliminate scrolling for desktop, especially for combined cards with 3 items */
     .list-card {
         min-height: 380px;
