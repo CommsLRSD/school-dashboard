@@ -1211,9 +1211,9 @@ body {
         grid-auto-rows: auto;
     }
     
-    /* Increase min-height to eliminate scrolling for desktop, especially for combined cards with 3 items */
+    /* Reduce min-height to minimize whitespace while preventing scrolling */
     .list-card {
-        min-height: 380px;
+        min-height: 320px;
     }
     
     /* Reduce padding to decrease spacing between content and info icon */
