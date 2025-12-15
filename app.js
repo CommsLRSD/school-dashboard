@@ -526,7 +526,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             case 'catchment_map': {
                 // Generate map filename from school id using new naming convention
-                const mapFilename = `public/maps/${school.id}-map.jpg`;
+                // For J.H. Bruns Family of Schools, use standardized bruns-fos-map.svg
+                const mapFilename = school.familyOfSchools === 'J.H. BRUNS FOS' 
+                    ? 'public/maps/bruns-fos-map.svg' 
+                    : `public/maps/${school.id}-map.jpg`;
                 const schoolName = sanitizeHTML(school.schoolName || '');
                 const migration = school.catchment?.migration || 'N/A';
                 const description = school.catchment?.description || '';
