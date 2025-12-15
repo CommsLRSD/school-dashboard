@@ -526,9 +526,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             case 'catchment_map': {
                 // Generate map filename from school id using new naming convention
-                // For J.H. Bruns Family of Schools, use standardized bruns-fos-map.svg
+                // For J.H. Bruns and Béliveau Family of Schools, use standardized FOS maps
                 const mapFilename = school.familyOfSchools === 'J.H. BRUNS FOS' 
                     ? 'public/maps/bruns-fos-map.svg' 
+                    : school.familyOfSchools === 'BÉLIVEAU FOS'
+                    ? 'public/maps/beliveau-fos-map.svg'
                     : `public/maps/${school.id}-map.jpg`;
                 const schoolName = sanitizeHTML(school.schoolName || '');
                 const migration = school.catchment?.migration || 'N/A';

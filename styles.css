@@ -1343,6 +1343,11 @@ body {
     .utilization-card .card-body {
         padding-bottom: 2.5rem;
     }
+    
+    /* Remove scrolling from stats-combined-card on mobile as content fits without it */
+    .stats-combined-card .card-body {
+        overflow: visible;
+    }
 }
 
 /* Mobile landscape orientation - additional spacing adjustments */
@@ -1372,6 +1377,11 @@ body {
     /* Ensure utilization-card has adequate bottom padding in landscape */
     .utilization-card .card-body {
         padding-bottom: 2.5rem;
+    }
+    
+    /* Remove scrolling from stats-combined-card on mobile landscape as content fits without it */
+    .stats-combined-card .card-body {
+        overflow: visible;
     }
 }
 
