@@ -1437,7 +1437,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         function zoomIn() {
-            scale = Math.min(scale + 0.5, 5);
+            scale = Math.min(scale + 0.5, 10);
             updateTransform();
             if (scale > 1) {
                 lightboxImage.classList.add('zoomed');
@@ -1541,7 +1541,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const dy = e.touches[0].clientY - e.touches[1].clientY;
                 const distance = Math.sqrt(dx * dx + dy * dy);
                 const scaleChange = distance / initialDistance;
-                scale = Math.min(Math.max(initialScale * scaleChange, 0.5), 5);
+                scale = Math.min(Math.max(initialScale * scaleChange, 0.5), 10);
                 updateTransform();
                 
                 if (scale > 1) {
