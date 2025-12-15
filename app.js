@@ -526,12 +526,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             case 'catchment_map': {
                 // Generate map filename from school id using new naming convention
-                // For J.H. Bruns and Béliveau Family of Schools, use standardized FOS maps
-                const mapFilename = school.familyOfSchools === 'J.H. BRUNS FOS' 
-                    ? 'public/maps/bruns-fos-map.svg' 
-                    : school.familyOfSchools === 'BÉLIVEAU FOS'
-                    ? 'public/maps/beliveau-fos-map.svg'
-                    : `public/maps/${school.id}-map.jpg`;
+                // For Family of Schools with standardized FOS maps, use those; otherwise use individual school maps
+                const fosMapLookup = {
+                    'J.H. BRUNS FOS': 'public/maps/bruns-fos-map.svg',
+                    'BÉLIVEAU FOS': 'public/maps/beliveau-fos-map.svg',
+                    'WINDSOR PARK FOS': 'public/maps/wpc-fos-map.svg',
+                    'JEANNE-SAUVÉ FOS': 'public/maps/cjs-fos-map.svg',
+                    'DAKOTA FOS': 'public/maps/dakota-fos-map.svg',
+                    'GLENLAWN FOS': 'public/maps/glenlawn-fos-map.svg',
+                    'NELSON MCINTYRE FOS': 'public/maps/nms-fos-map.svg'
+                };
+                const mapFilename = fosMapLookup[school.familyOfSchools] || `public/maps/${school.id}-map.jpg`;
                 const schoolName = sanitizeHTML(school.schoolName || '');
                 const migration = school.catchment?.migration || 'N/A';
                 const description = school.catchment?.description || '';
