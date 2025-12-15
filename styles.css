@@ -1219,13 +1219,8 @@ body {
     /* Increase padding to ensure better spacing between content and info icon */
     .list-card .card-body {
         padding: 0.75rem 1.5rem;
-        padding-bottom: 5rem;
+        padding-bottom: 3.5rem;
         /* Keep overflow-y: auto (default) to prevent card overlap */
-    }
-    
-    /* Add extra spacing for progress bar to ensure it never overlaps with info icon */
-    .detail-item .progress-bar-container {
-        margin-bottom: 1rem;
     }
 }
 
