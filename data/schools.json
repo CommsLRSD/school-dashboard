@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-15",
+  "lastUpdated": "2026-01-09",
   "archwood": {
     "id": "archwood",
     "schoolName": "Archwood School",
@@ -18,7 +18,7 @@
           "2029_30"
         ],
         "values": [
-          151,
+          156,
           144,
           142,
           136
@@ -108,12 +108,8 @@
           "Remaining Burnham boiler replacement",
           "Roof replacement (Partial)"
         ],
-        "inProgress": [
-          "None"
-        ],
-        "completed": [
-          "None"
-        ]
+        "inProgress": [],
+        "completed": []
       },
       "local": {
         "requested": [
@@ -125,11 +121,14 @@
           "Classrooms renovation",
           "Library flooring",
           "Music room renovation",
-          "Room 10 renovation"
+          "Room 10 renovation",
+          "Kitchen redesign",
+          "Renovate Staff Room",
+          "Student and Staff Washroom Renovation",
+          "Repaint and new lighting in Front Foyer",
+          "Replace Rear Door and Frame"
         ],
-        "inProgress": [
-          "Fence installation"
-        ],
+        "inProgress": [],
         "completed": [
           "Community kitchen electrical upgrades",
           "Kitchen island addition",
@@ -139,7 +138,9 @@
           "Boys change room renewal",
           "Replace Public Address System",
           "Repair of cracks in Terrazo floor",
-          "Installed Portable Air Conditioning units"
+          "Installed Portable Air Conditioning units",
+          "Fence installation",
+          "Design Concept of all washrooms"
         ]
       }
     },
@@ -166,7 +167,7 @@
           "2029_30"
         ],
         "values": [
-          708,
+          699,
           763,
           828,
           898
@@ -245,21 +246,19 @@
     },
     "projects": {
       "provincial": {
-        "buildingMove": "French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd.",
-        "note": "Building Move: French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd.",
         "requested": [
           "New High School: Precinct K neighbourhood",
           "Addition with washrooms, fitness room, band/music rooms, administration office, entrance modifications, community room, site development",
           "Roof replacement (Partial)"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Lighting retrofits",
           "Universal washroom",
           "Foods and nutrition lab renovation"
-        ]
+        ],
+        "buildingMove": "French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd.",
+        "note": "Building Move: French Immersion program at 296 Speers Rd. to move to 1015 Cottonwood Rd."
       },
       "local": {
         "requested": [
@@ -275,11 +274,11 @@
           "Canteen shutter door lock relocation",
           "Parking lot and staircase repair",
           "Lockers",
-          "Lighting in science wing, library, and Grade 7/8 classrooms",
-          "Washrooms renovation"
+          "Washrooms renovation",
+          "Long Jump Pit and Track Extension"
         ],
         "inProgress": [
-          "None"
+          "Lighting in science wing, library, and Grade 7/8 classrooms"
         ],
         "completed": [
           "Removal of raised teachers desks",
@@ -313,7 +312,7 @@
           "2029_30"
         ],
         "values": [
-          903,
+          935,
           910,
           893,
           906
@@ -355,7 +354,7 @@
       }
     ],
     "building": {
-      "Air Conditioning": "description",
+      "Air Conditioning": "Full building",
       "Heating": "Natural Gas",
       "LED Lighting": "Main entry, office, fitness room, gym offices, classrooms (28)"
     },
@@ -393,9 +392,7 @@
           "Roof replacement (Partial)",
           "Additional Air Make Up unit to gym"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Replacement of Roof Top Unit",
           "Addition with 16 classrooms, music room, and universal washroom",
@@ -406,21 +403,26 @@
       },
       "local": {
         "requested": [
-          "Hallways and door trims repainting",
-          "Gym Bleachers",
+          "Renovate Room 104 to create Home Ecology Classroom",
+          "Replace Gym Floor",
+          "Replace Gym Bleachers",
+          "Repaint Gym",
           "School field redevelopment",
-          "Gymnasium floor refinishing",
           "Girls' washroom renovation",
           "Domestic piping replacement in crawlspace",
           "Lighting upgrade in all classrooms, hallways, and gymnasium",
-          "Elevator or lift for mezzanine access"
+          "Elevator or lift for mezzanine access and replace railing",
+          "Accessible door operators for washrooms and southeast parking lot door",
+          "Bike Cage",
+          "Renovate Boy's Change Room"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Exterior level landing for cafeteria doors",
-          "Library flooring replacement"
+          "Library flooring replacement",
+          "Hallways and door trims repainting",
+          "Design Concept plan for School Field Redevelopment",
+          "Gymnasium floor refinishing"
         ]
       }
     },
@@ -447,7 +449,7 @@
           "2029_30"
         ],
         "values": [
-          1551,
+          1532,
           1575,
           1599,
           1579
@@ -527,11 +529,10 @@
         "requested": [
           "New High School: Precinct K",
           "Universal washrooms to meet current accessibility standards*",
-          "Elevator upgrades to accommodate all accessibility needs**"
+          "Elevator upgrades to accommodate all accessibility needs**",
+          "Two modular classrooms"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Penthouse Air Handling Unit Upgraded"
         ]
@@ -540,7 +541,6 @@
         "requested": [
           "Washroom reconfigurations to gender-neutral",
           "Atrium",
-          "Modular classroom",
           "Accessible gymnasium door",
           "Kitchen",
           "Art room ceiling",
@@ -549,15 +549,13 @@
           "DDC system",
           "Automotive shop upgrade",
           "Locking hardware replacement",
-          "Electrical outlets",
+          "Electrical outlets in Electronics",
           "Door replacements",
           "Indigenous student spaces",
           "Individualized programming students spaces",
           "Guitar room soundproofing"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Flooring replacement",
           "Asphalt repair",
@@ -588,7 +586,7 @@
           "2029_30"
         ],
         "values": [
-          211,
+          203,
           207,
           196,
           200
@@ -660,12 +658,8 @@
           "New High School: Precinct K neighbourhood",
           "Roof replacement (Partial)"
         ],
-        "inProgress": [
-          "None"
-        ],
-        "completed": [
-          "None"
-        ]
+        "inProgress": [],
+        "completed": []
       },
       "local": {
         "requested": [
@@ -673,11 +667,10 @@
           "Flooring replacement",
           "Windows replacement",
           "Foods and nutrition lab renovation",
-          "Universal washrooms to meet current accessibility standards*"
+          "Universal washrooms to meet current accessibility standards*",
+          "Additional Parking spots"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Flooring removal & tile installation",
           "Lighting upgrade in Office",
@@ -708,7 +701,7 @@
           "2029_30"
         ],
         "values": [
-          260,
+          263,
           263,
           252,
           248
@@ -783,33 +776,26 @@
           "New High School: Precinct K neighbourhood",
           "Roof repairs (partial)"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Universal washroom added"
         ]
       },
       "local": {
         "requested": [
-          "Bottle filling station",
           "Lighting upgrade",
-          "Main office renovation",
+          "Upgrade staff work stations",
           "Staff room renovation",
-          "Boot racks removal",
-          "Lockers",
           "Flooring replacement",
-          "Washrooms partitions replacement",
-          "LRTA office reconfiguration into classroom"
+          "Washrooms partitions replacement"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Paving of parking lot",
           "Install Bottle Filling Station",
           "Removed boot racks and installed lockers in the north east and north west entrances",
-          "Renovated Principal's and Vice Principal's Office, Create Copier Room"
+          "Renovated Principal's and Vice Principal's Office, Create Copier Room",
+          "LRTA office reconfiguration into classroom"
         ]
       }
     },
@@ -913,29 +899,27 @@
     "projects": {
       "provincial": {
         "requested": [
-          "Roof replacement (Partial)"
+          "Roof replacement (Partial)",
+          "Boiler Replacement"
         ],
-        "inProgress": [
-          "None"
-        ],
-        "completed": [
-          "None"
-        ]
+        "inProgress": [],
+        "completed": []
       },
       "local": {
         "requested": [
           "Library flooring replacement",
-          "Asphalt existing gravel parking lot",
+          "Pave existing gravel parking lot",
           "Flooring replacement",
           "Washroom countertops replacement",
           "Library flooring replacement",
           "Ceiling tiles replacement",
           "Soundproofing in guitar room",
-          "Universal washrooms to meet current accessibility standards*"
+          "Universal washrooms to meet current accessibility standards*",
+          "Replace hallway lighting",
+          "Pave the hardsurface play area",
+          "Renovate Staff Washrooms"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Classroom window replacements (Rms. 11-20)",
           "Flooring removal & tile installation (Rm. 15)",
@@ -967,7 +951,7 @@
           "2029_30"
         ],
         "values": [
-          423,
+          428,
           411,
           393,
           389
@@ -1044,12 +1028,8 @@
         "requested": [
           "Roof replacement (Partial)"
         ],
-        "inProgress": [
-          "None"
-        ],
-        "completed": [
-          "None"
-        ]
+        "inProgress": [],
+        "completed": []
       },
       "local": {
         "requested": [
@@ -1057,16 +1037,15 @@
           "Gender-neutral washroom",
           "Library flooring",
           "Boys' washroom renovation",
-          "HVAC system"
+          "DDC system"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
+          "Replaced PA System",
           "Flooring replacement",
           "Acoustic material removal",
           "Door & frame replacement",
-          "Intercom system relocation",
+          "Video Intercom system relocation",
           "Electrical outlet installation"
         ]
       }
@@ -1094,7 +1073,7 @@
           "2029_30"
         ],
         "values": [
-          327,
+          329,
           311,
           331,
           336
@@ -1161,32 +1140,27 @@
           "New Elementary School: Waters Urban Village neighbourhood",
           "Roof replacement (Full)"
         ],
-        "inProgress": [
-          "None"
-        ],
-        "completed": [
-          "None"
-        ]
+        "inProgress": [],
+        "completed": []
       },
       "local": {
         "requested": [
-          "HVAC system",
+          "DDC system",
           "Main office renovations",
           "Staff room renovation",
           "Student washrooms renovations",
           "Phys-ed office shower",
           "Lighting and ceiling tiles upgrade",
           "Tectum installation in gymnasium",
-          "Flooring"
+          "Replace Flooring in Change Room",
+          "New curtain for Gym",
+          "Create Office in Student Services Room"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Privacy curtains (shower & changerooms)",
           "Window replacements",
           "Flooring removal",
-          "Lockers",
           "Entrance concrete landing replacement",
           "Replaced Public Address System",
           "Soundproofing of Music Room",
@@ -1218,7 +1192,7 @@
           "2029_30"
         ],
         "values": [
-          298,
+          307,
           294,
           284,
           274
@@ -1294,31 +1268,27 @@
     "projects": {
       "provincial": {
         "requested": [
-          "Modular Classrooms (2), no longer required",
-          "Permanent Classroom additions (4), no longer required",
           "Roof replacement (Partial)"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Lighting Retrofits"
         ]
       },
       "local": {
         "requested": [
+          "Redesign classroom 1, 2 and 3 to create two large Kindergarten classroom with washrooms",
           "Student washrooms renovation",
           "Flooring replacement",
           "Window replacement",
           "Doors and frames replacement",
           "Bulkhead construction",
           "Bottle filling station",
-          "HVAC system",
-          "Lighting upgrades"
+          "DDC system",
+          "Lighting upgrades",
+          "Repave hard surface play area"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Floor tile replacement",
           "Intercom system replacement",
@@ -1328,7 +1298,7 @@
           "Bottle filling station addition",
           "Old water fountains removal",
           "Student services office",
-          "Window replacemetn on the north side of the south hallway",
+          "Window replacement on the north side of the south hallway",
           "Installed Portable Air Conditioning units"
         ]
       }
@@ -1356,7 +1326,7 @@
           "2029_30"
         ],
         "values": [
-          333,
+          340,
           305,
           287,
           270
@@ -1424,29 +1394,23 @@
         "requested": [
           "Roof replacement (Partial)"
         ],
-        "inProgress": [
-          "None"
-        ],
-        "completed": [
-          "None"
-        ]
+        "inProgress": [],
+        "completed": []
       },
       "local": {
         "requested": [
           "Windows replacement",
           "Staff room renovation",
-          "Cabinet door installations",
+          "Full Height Cabinet installations in Room 9-12",
           "Flooring replacement",
           "Air Make Up unit",
           "Boiler replacement",
           "Washrooms renovation",
           "Outdoor storage",
           "Washer and dryer",
-          "Staff room renovation"
+          "Upgrade lighting"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Flooring replaced with tile",
           "Replaced flooring in Room 11"
@@ -1554,7 +1518,6 @@
           "Guidance office",
           "Conference room",
           "Canteen",
-          "Second air handling unit",
           "Relocation of school office and support space"
         ],
         "inProgress": [
@@ -1566,22 +1529,19 @@
       },
       "local": {
         "requested": [
-          "Ceiling tiles replacement",
-          "Asphalt play area resurfacing",
+          "Replace Ceiling tiles and lighting in hallways",
+          "Repave Hard surface play area",
           "Lane cutout for student drop-off and pick-up",
           "Hand washing sink",
-          "HVAC system",
-          "Main entrance and school office renovation",
-          "Flooring replacement"
+          "DDC system",
+          "Flooring replacement",
+          "Replace partitions in washrooms"
         ],
-        "inProgress": [
-          "None"
-        ],
+        "inProgress": [],
         "completed": [
           "Convert washroom to gender neutral",
           "Accessible entrance general renovations",
           "Cement step repair",
-          "Demising wall",
           "Bulletin boards",
           "Shelving",
           "Sink",
@@ -1615,7 +1575,7 @@
           "2029_30"
         ],
         "values": [
-          265,
+          270,
           267,
           252,
           239
@@ -1702,15 +1662,18 @@
         "requested": [
           "Windows replacement for entire school",
           "Lighting upgrades",
-          "HVAC system",
-          "Student washrooms renovation",
-          "Acoustic material replacement",
+          "DDC system",
+          "Student washrooms renovation on the third floor",
+          "Acoustic material replacement in Gym",
           "Door and frames replacement",
           "Storage room door",
           "Washroom walls refinishing",
-          "Doorway widening"
+          "Doorway widening of second floor washroom",
+          "Regrade and reseed the green space"
         ],
-        "inProgress": [],
+        "inProgress": [
+          "Installation of Air Conditioning"
+        ],
         "completed": [
           "Window safety bars",
           "Extend stairway walls for safety",
@@ -1744,7 +1707,7 @@
           "2029_30"
         ],
         "values": [
-          906,
+          912,
           980,
           1044,
           1107
@@ -1775,7 +1738,7 @@
     "building": {
       "Air Conditioning": "Full building",
       "Heating": "Natural gas",
-      "LED Lighting": "Hallways, band, office, library, Rooms 101-103, 142, 203, 204"
+      "LED Lighting": "Full Building"
     },
     "catchment": {
       "migration": "N/A",
@@ -1841,7 +1804,7 @@
           "2029_30"
         ],
         "values": [
-          366,
+          368,
           322,
           288,
           268
@@ -1910,7 +1873,6 @@
       "provincial": {
         "requested": [
           "New Elementary School: Precinct K neighbourhood",
-          "Failed boiler replacement",
           "Make-up air replacement (2)"
         ],
         "inProgress": [],
@@ -1921,9 +1883,17 @@
       },
       "local": {
         "requested": [
-          "Roof top unit replacement",
           "Staff room renovation",
-          "Partitions replacement in change room"
+          "Partitions replacement in change room",
+          "Video Intercom System",
+          "Two Basketball poles and hoops for outdoor play area",
+          "Accessible parking spot",
+          "Automatic shutoff faucets in washrooms",
+          "Automatic Door Operator for the main Entrance",
+          "Asphalt pathway from the staff parking lot to basketball court",
+          "Replace flooring in the School Office",
+          "Regrading of soccer field",
+          "Create trench for drainage on the North side of the building"
         ],
         "inProgress": [],
         "completed": [
@@ -1960,7 +1930,7 @@
           "2029_30"
         ],
         "values": [
-          334,
+          337,
           350,
           348,
           348
@@ -2038,17 +2008,16 @@
         "requested": [
           "New Elementary School: Precinct K neighbourhood",
           "Universal washrooms",
-          "Relocation of Modular Classrooms to Island Lakes Community School (summer 2025)",
           "Roof replacement (Partial)"
         ],
-        "inProgress": [],
-        "completed": [
-          "Lighting Retrofits"
-        ]
+        "inProgress": [
+          "Relocation of Modular Classrooms to Island Lakes Community School"
+        ],
+        "completed": []
       },
       "local": {
         "requested": [
-          "Skylights covers removal",
+          "Replace Lockers",
           "Lighting upgrade",
           "Operable windows",
           "Asphalt play area replacement",
@@ -2056,7 +2025,9 @@
           "Playground drainage",
           "Main office renovation",
           "Skylights replacement",
-          "HVAC system"
+          "DDC system",
+          "Replace flooring in Music Room",
+          "Replace door and frames in the hallway and Exit #3 and #4"
         ],
         "inProgress": [],
         "completed": [
@@ -2095,7 +2066,7 @@
           "2029_30"
         ],
         "values": [
-          366,
+          356,
           375,
           370,
           359
@@ -2189,18 +2160,18 @@
         "requested": [
           "Elevator",
           "Accessible washroom on each floor",
-          "HVAC system",
+          "DDC system",
           "Ceiling tiles replacement",
           "Make-up air unit",
           "Flooring",
           "Ceiling and lighting upgrade",
           "Washrooms renovation",
           "Exhaust fan replacement",
-          "Parking lot paving",
+          "Paving of Parking lot",
           "Flooring replacement",
           "Windows replacement",
           "Gym ceiling acoustic material removal",
-          "Gym mezzanine expansion"
+          "Install Air Conditioning"
         ],
         "inProgress": [
           "Asphalt repair"
@@ -2210,7 +2181,8 @@
           "Electrical plug installation (parking lot)",
           "Intercom system",
           "Automatic door operators",
-          "Ramp at library door"
+          "Ramp at library door",
+          "Gym mezzanine"
         ]
       }
     },
@@ -2333,14 +2305,14 @@
       },
       "local": {
         "requested": [
-          "School repainting",
-          "HVAC system",
+          "DDC system",
           "Windows replacement",
           "Washroom and laundry room renovation",
           "Ceiling tiles replacement",
           "Change room renovation",
           "Concrete accessible loading pad",
-          "Wall fracture"
+          "Ramp on east side of the building",
+          "Gender Neutral Washrooms"
         ],
         "inProgress": [],
         "completed": [
@@ -2352,7 +2324,8 @@
           "Canopy outside modular classrooms",
           "Concrete sidewalk in the bus loading zone",
           "Upgrade eye wash stations",
-          "Repair fracture in the wall between the existing and addition building"
+          "Repair fracture in the wall between the existing and addition building",
+          "School repainting"
         ]
       }
     },
@@ -2379,7 +2352,7 @@
           "2029_30"
         ],
         "values": [
-          221,
+          219,
           219,
           211,
           200
@@ -2471,16 +2444,20 @@
           "Flooring replacement",
           "Library shelves",
           "Demising wall removal",
-          "Library move to main floor",
           "Gender-neutral washrooms",
-          "HVAC system",
-          "Doors replacement"
+          "DDC system",
+          "Doors replacement",
+          "Repainting of the school",
+          "Concrete repair",
+          "New School Sign",
+          "Replace flooring in the Main Office"
         ],
         "inProgress": [],
         "completed": [
-          "Fix wheelchair accessible ramps",
+          "Repair wheelchair accessible ramps",
           "Vestibule renovations",
-          "Blacktop repair"
+          "Blacktop repair",
+          "Library move to main floor"
         ]
       }
     },
@@ -2507,7 +2484,7 @@
           "2029_30"
         ],
         "values": [
-          1068,
+          1056,
           1020,
           1030,
           1045
@@ -2549,7 +2526,7 @@
       },
       {
         "year": "",
-        "size": "1997|Rebuild"
+        "size": "1997"
       }
     ],
     "building": {
@@ -2598,15 +2575,19 @@
       "local": {
         "requested": [
           "Elevator installation",
-          "HVAC system",
+          "DDC system",
           "Metal shops renovation",
-          "Lighting and painting upgrade in automotive shop",
+          "Lighting and painting upgrade in automotive shop and Junior Woods",
           "Lighting, millwork, and painting upgrade in electronics",
           "Graphic arts renovation",
           "Lighting and stair treads",
           "Lockers replacement",
           "Gender-neutral washroom",
-          "Flooring replacement"
+          "Flooring replacement",
+          "Main Office Renovation",
+          "Replace Classroom doors",
+          "Replace flooring in computer labs",
+          "Create Gender Neutral Washroom in Gym Foyer"
         ],
         "inProgress": [],
         "completed": [
@@ -2642,7 +2623,7 @@
           "2029_30"
         ],
         "values": [
-          286,
+          276,
           291,
           295,
           290
@@ -2734,22 +2715,22 @@
           "Washroom renovations",
           "Windows replacement",
           "Exterior painting",
-          "Flooring replacement",
-          "Interlock with dust collector in maker studio",
+          "Flooring replacement in Basement Hallway",
           "School renumbering",
-          "HVAC system",
+          "DDC system",
           "Main office renovation",
           "Elevator",
           "Bell tower roof repair",
-          "Front entrance ramp"
+          "Front entrance ramp",
+          "Sink in Kindergarten Classroom"
         ],
-        "inProgress": [
-          "Wall refinishing and repainting"
-        ],
+        "inProgress": [],
         "completed": [
           "Chimney repair",
           "Pave parking lot with asphalt",
-          "Replaced windows in the west wing"
+          "Replaced windows in the west wing",
+          "Wall refinishing and repainting",
+          "Installed portable air conditioning units"
         ]
       }
     },
@@ -2758,13 +2739,13 @@
     "grades": "K-8",
     "program": "English Program"
   },
-  "hspaul": {
-    "id": "hspaul",
-    "schoolName": "H.S. Paul School",
+  "hastings": {
+    "id": "hastings",
+    "schoolName": "Hastings School",
     "schoolType": "School",
-    "headerImage": "public/hspaul.jpg",
-    "address": "160 Southglen Blvd.",
-    "phone": "(204) 254-7477",
+    "headerImage": "public/hastings.jpg",
+    "address": "50 Hastings Blvd.",
+    "phone": "(204) 253-1371",
     "enrolment": {
       "capacity": 425,
       "current": 364,
@@ -2776,7 +2757,7 @@
           "2029_30"
         ],
         "values": [
-          361,
+          353,
           336,
           325,
           323
@@ -2862,16 +2843,15 @@
           "Air conditioning installation",
           "Cabinets and countertops in canteen"
         ],
-        "inProgress": [
-          "Exterior wall repair"
-        ],
+        "inProgress": [],
         "completed": [
           "Portable A/C unit",
           "Coat hooks",
           "Lockable storage cabinet",
           "Boot racks",
           "Intercom call button relocation",
-          "Compressor replacement"
+          "Compressor replacement",
+          "Exterior wall repair"
         ]
       }
     },
@@ -2880,13 +2860,13 @@
     "grades": "K-8",
     "program": "English Program"
   },
-  "hastings": {
-    "id": "hastings",
-    "schoolName": "Hastings School",
+  "highbury": {
+    "id": "highbury",
+    "schoolName": "Highbury School",
     "schoolType": "School",
-    "headerImage": "public/hastings.jpg",
-    "address": "50 Hastings Blvd.",
-    "phone": "(204) 253-1371",
+    "headerImage": "public/highbury.jpg",
+    "address": "99 Highbury Rd.",
+    "phone": "(204) 254-5078",
     "enrolment": {
       "capacity": 280,
       "current": 207,
@@ -2898,7 +2878,7 @@
           "2029_30"
         ],
         "values": [
-          213,
+          212,
           210,
           203,
           196
@@ -2980,18 +2960,17 @@
           "Student washrooms renovation",
           "Gym air conditioning",
           "Main floor school office relocation",
-          "Windows replacement"
+          "Windows replacement",
+          "Replace cabinets in Room 4 & 5"
         ],
-        "inProgress": [
-          "Exterior windows",
-          "Wall repair",
-          "Loose wiring securing"
-        ],
+        "inProgress": [],
         "completed": [
           "Portable A/C unit",
           "Steps repair",
           "Replaced windows on the west side of the building",
-          "Installed Fence and added walkpath in the school bus loop"
+          "Installed Fence and added walkpath in the school bus loop",
+          "Exterior windows",
+          "Wall repair"
         ]
       }
     },
@@ -3000,13 +2979,13 @@
     "grades": "K-8",
     "program": "English Program"
   },
-  "highbury": {
-    "id": "highbury",
-    "schoolName": "Highbury School",
+  "hspaul": {
+    "id": "hspaul",
+    "schoolName": "H.S. Paul School",
     "schoolType": "School",
-    "headerImage": "public/highbury.jpg",
-    "address": "99 Highbury Rd.",
-    "phone": "(204) 254-5078",
+    "headerImage": "public/hspaul.jpg",
+    "address": "160 Southglen Blvd.",
+    "phone": "(204) 254-7477",
     "enrolment": {
       "capacity": 445,
       "current": 411,
@@ -3018,7 +2997,7 @@
           "2029_30"
         ],
         "values": [
-          400,
+          384,
           379,
           362,
           350
@@ -3116,13 +3095,16 @@
         "requested": [
           "Staff room renovation",
           "Meeting room window",
-          "Flooring replacement",
+          "Flooring replacement in Room 9, 10, 20, 21",
           "Skylight blind in multi-purpose room",
           "Outdoor storage",
           "School office flooring replacement",
           "Lockers",
           "Food and nutrition lab renovation",
-          "Metal roof and overhang repainting"
+          "Washroom Renovation",
+          "Replace flooring in the hallway outside Room 9&10",
+          "Replace flooring in Student Services",
+          "Remove cabinetry from the middle of the library"
         ],
         "inProgress": [],
         "completed": [
@@ -3156,7 +3138,7 @@
           "2029_30"
         ],
         "values": [
-          757,
+          714,
           769,
           781,
           805
@@ -3234,7 +3216,7 @@
           "Roof replacement (Partial)"
         ],
         "inProgress": [
-          "Relocation of Modular Classrooms to ILCS from École Van Belleghem (summer 2025)"
+          "Relocation of Modular Classrooms to ILCS from École Van Belleghem"
         ],
         "completed": [
           "Installation of Modular Classrooms (2)",
@@ -3250,12 +3232,15 @@
           "Main entrance benches",
           "Washroom countertop replacements",
           "Entrance flooring replacement",
-          "Staff room renovation"
+          "Staff room renovation",
+          "Pave rear entrance",
+          "Regrade and reseed the are near soccer goal posts"
         ],
         "inProgress": [],
         "completed": [
           "Shelving installation",
-          "Two classrooms added to library"
+          "Two classrooms added to library",
+          "Washrroom Renovations"
         ]
       }
     },
@@ -3282,7 +3267,7 @@
           "2029_30"
         ],
         "values": [
-          1069,
+          1042,
           1121,
           1172,
           1160
@@ -3370,15 +3355,15 @@
       },
       "local": {
         "requested": [
-          "HVAC system",
+          "DDC system",
           "Demising wall installation",
           "Kitchen renovation",
           "Windows replacement",
-          "Gym air conditioning"
+          "Gym air conditioning",
+          "Reconfigure prep rooms",
+          "install locks on the hallway doors outside the main office"
         ],
-        "inProgress": [
-          "Install 60 lockers"
-        ],
+        "inProgress": [],
         "completed": [
           "Locker replacement",
           "Cupboard removal",
@@ -3386,7 +3371,8 @@
           "Flooring installation",
           "Gym reconfiguration",
           "Foods and nutrition room refresh",
-          "Exterior foundation wall repair"
+          "Exterior foundation wall repair",
+          "Install 60 lockers"
         ]
       }
     },
@@ -3413,7 +3399,7 @@
           "2029_30"
         ],
         "values": [
-          179,
+          171,
           184,
           180,
           187
@@ -3491,20 +3477,21 @@
         "requested": [
           "Main office renovation",
           "Kitchenette",
-          "HVAC system",
+          "DDC system",
           "Flooring in maker studio",
           "Washrooms renovation",
-          "Library flooring replacement",
           "Ceiling tiles replacement",
           "Learning lab renovation",
-          "Parking lot paving"
+          "Parking lot paving",
+          "Replace Flooring in Room 3"
         ],
         "inProgress": [],
         "completed": [
           "Addition of parking lot",
           "Music room complete renovation",
           "Kitchen build",
-          "Conversion to classroom"
+          "Conversion to classroom",
+          "Library flooring replacement"
         ]
       }
     },
@@ -3618,10 +3605,12 @@
           "Gender-neutral washroom in Gym",
           "Workout room",
           "Elevator installation",
-          "HVAC system",
+          "DDC system",
           "Auto shop and plumbing shop exhaust system replacement",
           "Ceiling acoustical spray removal/replacement in Gym",
-          "Carpeting"
+          "Carpeting",
+          "Repair ramp outside the parking lot",
+          "Create Gender Neutral washroom in the basement, second floor and main floor"
         ],
         "inProgress": [
           "Add fob access (culinary arts changeroom)"
@@ -3652,7 +3641,7 @@
           "2029_30"
         ],
         "values": [
-          259,
+          254,
           267,
           267,
           266
@@ -3744,7 +3733,7 @@
         "requested": [
           "Doors and frames replacement",
           "School rekeying",
-          "HVAC system",
+          "DDC system",
           "Interior painting",
           "Staff room renovation",
           "Classrooms renovation",
@@ -3753,10 +3742,13 @@
           "Fence installation",
           "School bus loop",
           "Electrical rewiring",
-          "Washrooms renovation"
+          "Washrooms renovation",
+          "Renovate hallway walls",
+          "Replace flooring in the hallway close to Main Entrance"
         ],
         "inProgress": [
-          "Renovation of Washrooms"
+          "Renovation of Washrooms",
+          "Install window in the Principal's Office"
         ],
         "completed": [
           "Air conditioning (entire school)",
@@ -3787,7 +3779,7 @@
           "2029_30"
         ],
         "values": [
-          167,
+          171,
           165,
           167,
           163
@@ -3871,7 +3863,13 @@
           "Window replacement",
           "Parking lot paving",
           "Window installation",
-          "Soundproofing"
+          "Remove large round sinks in the hallway",
+          "Replace ceiling tiles and lighting in the classrooms, community kitchen and hallways",
+          "Replace PA System",
+          "Replace countertops in Room 15",
+          "Replace flooring in library, Kindergarten",
+          "Renovate Band Room",
+          "Renumbering of the school"
         ],
         "inProgress": [],
         "completed": [
@@ -3905,7 +3903,7 @@
           "2029_30"
         ],
         "values": [
-          411,
+          410,
           404,
           425,
           414
@@ -4001,18 +3999,19 @@
       "local": {
         "requested": [
           "Flooring replacement",
-          "Soundproofing",
+          "Soundproofing in Band Room",
           "Gender-neutral washrooms",
           "Lighting upgrade",
-          "HVAC system",
+          "DDC system",
           "Windows replacement",
           "Staff room renovation",
-          "Flagpole replacement",
           "Demising wall",
           "School sign replacement",
           "Bottle filling stations",
           "Floor cutting for volleyball standards",
-          "Weight room expansion"
+          "Weight room expansion",
+          "Kitchen Renovation",
+          "Fracture in wall between the main building and addition"
         ],
         "inProgress": [],
         "completed": [
@@ -4051,7 +4050,7 @@
           "2029_30"
         ],
         "values": [
-          220,
+          215,
           213,
           196,
           196
@@ -4133,7 +4132,7 @@
           "Partition replacement",
           "Washrooms renovation",
           "Change room renovation",
-          "HVAC system",
+          "DDC system",
           "School office renovation",
           "Exterior drainage installation",
           "Fob reader at rear entrance",
@@ -4146,7 +4145,7 @@
         "completed": [
           "Asphalt repair",
           "Replaced flooring for Library platform",
-          "Replaced counterops, sinks and urinals"
+          "Replaced counterops, sinks and urinals in Washrooms"
         ]
       }
     },
@@ -4173,7 +4172,7 @@
           "2029_30"
         ],
         "values": [
-          184,
+          185,
           194,
           186,
           190
@@ -4274,9 +4273,10 @@
           "Air conditioning",
           "Air Make Up unit",
           "Main office renovation",
-          "Staff room renovation",
           "Art lab renovation",
-          "Staff room refresh"
+          "Replace Lockers",
+          "Replace flooring in Room 11, Office, Library and Photocopier Space",
+          "Repair concrete"
         ],
         "inProgress": [],
         "completed": [
@@ -4309,7 +4309,7 @@
           "2029_30"
         ],
         "values": [
-          638,
+          640,
           642,
           627,
           620
@@ -4386,18 +4386,14 @@
           "Sump pump spout diversion",
           "Floor drain repair",
           "Concrete bollards removal",
-          "School grounds redevelopment",
-          "Commons area reconfiguration",
-          "Demising wall demolition"
+          "School grounds redevelopment"
         ],
         "inProgress": [],
         "completed": [
           "Lower washroom fixture height",
-          "Remove temporary partitions in commons area and makerspace areas",
+          "Remove temporary partitions in commons area",
           "Reinstall equipment in makerspace and teacher space in kitchen",
-          "Demising wall",
           "Additional access door",
-          "demolition of demising walls from the commons area",
           "Reconfigure Classroom 139 and 140 to Makers Studio and Classroom 141 to Home Ecology"
         ]
       }
@@ -4425,7 +4421,7 @@
           "2029_30"
         ],
         "values": [
-          386,
+          379,
           378,
           369,
           359
@@ -4549,7 +4545,7 @@
           "2029_30"
         ],
         "values": [
-          332,
+          323,
           319,
           316,
           289
@@ -4636,15 +4632,14 @@
       "local": {
         "requested": [
           "Gender-neutral washrooms",
-          "HVAC system",
+          "DDC system",
           "Parking reconfiguration and parent drop-off zone",
           "School office renovation",
           "Accordion wall removal and permanent wall construction",
           "Millwork and ceiling replacement",
           "Gym office spaces renovation",
           "Lockers replacement",
-          "Hallways painting",
-          "Berm removal on playground"
+          "Hallways painting"
         ],
         "inProgress": [],
         "completed": [
@@ -4683,7 +4678,7 @@
           "2029_30"
         ],
         "values": [
-          369,
+          354,
           377,
           369,
           371
@@ -4765,20 +4760,21 @@
           "Staff parking lot expansion",
           "Windows replacement",
           "Kindergarten Room renovation",
-          "Flooring replacement",
+          "Flooring replacement in classrooms",
           "Air conditioning",
           "Student drop-off and pick-up zone",
-          "Universal washroom",
-          "Elevator",
           "School office renovation",
-          "Staff room renovation"
+          "Staff room renovation",
+          "Install glass blocks in washrooms",
+          "Upgrade lighting and replace door and frame at the Entryway"
         ],
         "inProgress": [],
         "completed": [
           "Floor refinishing",
           "General renovations",
           "Cabinet installation",
-          "Installed Portable Air Conditioning units"
+          "Installed Portable Air Conditioning units",
+          "Installed glass blocks in the Stairwell"
         ]
       }
     },
@@ -4805,7 +4801,7 @@
           "2029_30"
         ],
         "values": [
-          280,
+          287,
           280,
           271,
           276
@@ -4877,7 +4873,6 @@
       },
       "local": {
         "requested": [
-          "Flooring replacement",
           "Staff room renovation",
           "School office renovation",
           "Basketball court renewal",
@@ -4887,7 +4882,14 @@
           "Wood shop renovation",
           "Metals shop renovation",
           "Graphic arts renovation",
-          "Countertop replacement in student services office"
+          "Countertop replacement in student services office",
+          "Locker replacement",
+          "Add school bus loop",
+          "Refresh Sensory space",
+          "Replace  second floor hallway flooring",
+          "Staff Washroom Renovation",
+          "REplace French doors with permanent wall",
+          "Reconfigure Student Services Office"
         ],
         "inProgress": [],
         "completed": [
@@ -4921,7 +4923,7 @@
           "2029_30"
         ],
         "values": [
-          388,
+          379,
           371,
           349,
           327
@@ -5010,13 +5012,9 @@
           "Ceiling and lights",
           "Universal washroom",
           "Millwork replacement in family centre",
-          "Classrooms renovation",
-          "Front entrance ramp"
+          "Classrooms renovation"
         ],
-        "inProgress": [
-          "Install ramp",
-          "Repair entrance sign and soffit framing"
-        ],
+        "inProgress": [],
         "completed": [
           "Cabinet removal",
           "Lockers for staff",
@@ -5024,7 +5022,9 @@
           "Room reconfiguration for washer & dryer",
           "Toilet & sink installation",
           "install Signboard hinge system",
-          "Installed Portable Air Conditioning units"
+          "Installed Portable Air Conditioning units",
+          "Install ramp",
+          "Repair entrance sign and soffit framing"
         ]
       }
     },
@@ -5033,13 +5033,13 @@
     "grades": "K-8",
     "program": "English Program"
   },
-  "windsorpark": {
-    "id": "windsorpark",
-    "schoolName": "Windsor Park Collegiate",
-    "schoolType": "Collegiate",
-    "headerImage": "public/windsorpark.jpg",
-    "address": "1015 Cottonwood Rd.",
-    "phone": "(204) 256-7316",
+  "windsor": {
+    "id": "windsor",
+    "schoolName": "Windsor School",
+    "schoolType": "School",
+    "headerImage": "public/windsorschool.jpg",
+    "address": "80 Cunnington Ave.",
+    "phone": "(204) 237-4057",
     "enrolment": {
       "capacity": 700,
       "current": 599,
@@ -5051,7 +5051,7 @@
           "2029_30"
         ],
         "values": [
-          551,
+          556,
           449,
           445,
           452
@@ -5143,7 +5143,9 @@
           "Gym floor refinishing",
           "Foods and nutrition labs renovation",
           "School rekeying",
-          "Windows replacement"
+          "Windows replacement",
+          "Replace soffit and fascia around Gym",
+          "Repair Main Entrance concrete"
         ],
         "inProgress": [
           "Science classroom"
@@ -5153,18 +5155,18 @@
         ]
       }
     },
-    "familyOfSchools": "WINDSOR PARK FOS",
-    "schoolLevel": "High School",
-    "grades": "9-12",
+    "familyOfSchools": "GLENLAWN FOS",
+    "schoolLevel": "Elementary School",
+    "grades": "K-8 (Includes Grades 7 & 8 students relocated from St. George School)",
     "program": "English Program"
   },
-  "windsor": {
-    "id": "windsor",
-    "schoolName": "Windsor School",
-    "schoolType": "School",
-    "headerImage": "public/windsorschool.jpg",
-    "address": "80 Cunnington Ave.",
-    "phone": "(204) 237-4057",
+  "windsorpark": {
+    "id": "windsorpark",
+    "schoolName": "Windsor Park Collegiate",
+    "schoolType": "Collegiate",
+    "headerImage": "public/windsorpark.jpg",
+    "address": "1015 Cottonwood Rd.",
+    "phone": "(204) 256-7316",
     "enrolment": {
       "capacity": 260,
       "current": 234,
@@ -5176,7 +5178,7 @@
           "2029_30"
         ],
         "values": [
-          239,
+          234,
           244,
           248,
           255
@@ -5210,7 +5212,7 @@
       },
       {
         "year": "",
-        "size": "1964|"
+        "size": "1964"
       }
     ],
     "building": {
@@ -5283,9 +5285,9 @@
         ]
       }
     },
-    "familyOfSchools": "GLENLAWN FOS",
-    "schoolLevel": "Elementary School",
-    "grades": "K-8 (Includes Grades 7 & 8 students relocated from St. George School)",
+    "familyOfSchools": "WINDSOR PARK FOS",
+    "schoolLevel": "High School",
+    "grades": "9-12",
     "program": "English Program"
   }
 }
