@@ -14,7 +14,7 @@ const urlsToCache = [
   `${APP_BASE_PATH}public/manifest.json`,
   `${APP_BASE_PATH}public/favicon.svg`,
   `${APP_BASE_PATH}public/apple-icon.png`,
-  `${APP_BASE_PATH}public/android-maskable-icon.png.png`,
+  `${APP_BASE_PATH}public/android-maskable-icon.png`,
   `${APP_BASE_PATH}public/android-icon.png`,
   `${APP_BASE_PATH}public/lrsd-logo.svg`,
   `${APP_BASE_PATH}public/dashboard-logo.svg`,
