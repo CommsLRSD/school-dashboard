@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Annual School Building Review Dashboard</title>
     
-    <!-- Base URL for GitHub Pages sub-path deployment (PWA routing) -->
-    <base href="/school-dashboard/">
+    <!-- Base URL kept relative so assets resolve from the current subfolder -->
+    <base href="./">
     
     <!-- Security Headers -->
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
@@ -187,12 +187,11 @@
     
     <!-- Service Worker Registration (PWA) -->
     <script>
-        // Register Service Worker for PWA offline support
-        // Using base-relative path for GitHub Pages sub-path deployment
+        // Register service worker using relative paths for subfolder deployment
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('public/service-worker.js', {
-                    scope: '/school-dashboard/'
+                navigator.serviceWorker.register('./public/service-worker.js', {
+                    scope: './'
                 })
                     .then((registration) => {
                         console.log('Service Worker registered successfully:', registration.scope);
