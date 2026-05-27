@@ -1557,6 +1557,103 @@
     "grades": "K-8",
     "program": "French Immersion"
   },
+    "ecolemazinagiizhik": {
+    "id": "ecolemazinagiizhik",
+    "schoolName": "École Mazina-Giizhik",
+    "schoolType": "École",
+    "headerImage": "public/mazinagiizhik.jpg",
+    "address": "355 Des Hivernants Blvd.",
+    "phone": "Board Office",
+    "enrolment": {
+      "capacity": 815,
+      "current": 816,
+      "projection": {
+        "labels": [
+          "2026_27",
+          "2027_28",
+          "2028_29",
+          "2029_30"
+        ],
+        "values": [
+          912,
+          980,
+          1044,
+          1107
+        ]
+      },
+      "history": {
+        "labels": [
+          "2021_22",
+          "2022_23",
+          "2023_24",
+          "2024_25"
+        ],
+        "values": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "details": {
+      "Built": 2025,
+      "Age": "0 years",
+      "Size": "103548 ft²",
+      "Modular": 0
+    },
+    "additions": [],
+    "building": {
+      "Air Conditioning": "Full building",
+      "Heating": "Natural gas",
+      "LED Lighting": "Full Building"
+    },
+    "catchment": {
+      "migration": "N/A",
+      "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+    },
+    "transportation": {
+      "Parking spots": "Not specified",
+      "Bus Loop": "YES"
+    },
+    "accessibility": {
+      "Girls' washrooms": 1,
+      "Boys' washrooms": 1,
+      "Gender neutral washrooms": 24,
+      "Universal Washroom": "YES",
+      "Elevator": "YES",
+      "Accessible parking stalls": 9,
+      "Accessible entrance": "YES",
+      "Automatic entrance door operators": "YES"
+    },
+    "playground": [
+      "2 Play areas",
+      "Basketball court",
+      "City Property: Pump Track",
+      "Soccer field"
+    ],
+    "childcare": {
+      "Infant (0-23 months)": 0,
+      "Pre-school (2-6 years)": 0,
+      "School-age (7+ years)": 0
+    },
+    "projects": {
+      "provincial": {
+        "requested": [],
+        "inProgress": [],
+        "completed": []
+      },
+      "local": {
+        "requested": [],
+        "inProgress": [],
+        "completed": []
+      }
+    },
+    "familyOfSchools": "BÉLIVEAU FOS",
+    "schoolLevel": "Elementary School",
+    "grades": "K-8",
+    "program": "French Immersion Program"
+  },
   "ecoleprovencher": {
     "id": "ecoleprovencher",
     "schoolName": "École Provencher",
@@ -1689,103 +1786,7 @@
     "grades": "K-4",
     "program": "French Immersion"
   },
-  "ecolesagecreekbonavista": {
-    "id": "ecolesagecreekbonavista",
-    "schoolName": "École Sage Creek Bonavista",
-    "schoolType": "École",
-    "headerImage": "public/sagecreekbonavista.png",
-    "address": "355 Des Hivernants Blvd.",
-    "phone": "Board Office",
-    "enrolment": {
-      "capacity": 815,
-      "current": 816,
-      "projection": {
-        "labels": [
-          "2026_27",
-          "2027_28",
-          "2028_29",
-          "2029_30"
-        ],
-        "values": [
-          912,
-          980,
-          1044,
-          1107
-        ]
-      },
-      "history": {
-        "labels": [
-          "2021_22",
-          "2022_23",
-          "2023_24",
-          "2024_25"
-        ],
-        "values": [
-          0,
-          0,
-          0,
-          0
-        ]
-      }
-    },
-    "details": {
-      "Built": 2025,
-      "Age": "0 years",
-      "Size": "103548 ft²",
-      "Modular": 0
-    },
-    "additions": [],
-    "building": {
-      "Air Conditioning": "Full building",
-      "Heating": "Natural gas",
-      "LED Lighting": "Full Building"
-    },
-    "catchment": {
-      "migration": "N/A",
-      "description": "Net annual movement in and out of catchment (5-yr. avg.)"
-    },
-    "transportation": {
-      "Parking spots": "Not specified",
-      "Bus Loop": "YES"
-    },
-    "accessibility": {
-      "Girls' washrooms": 1,
-      "Boys' washrooms": 1,
-      "Gender neutral washrooms": 24,
-      "Universal Washroom": "YES",
-      "Elevator": "YES",
-      "Accessible parking stalls": 9,
-      "Accessible entrance": "YES",
-      "Automatic entrance door operators": "YES"
-    },
-    "playground": [
-      "2 Play areas",
-      "Basketball court",
-      "City Property: Pump Track",
-      "Soccer field"
-    ],
-    "childcare": {
-      "Infant (0-23 months)": 0,
-      "Pre-school (2-6 years)": 0,
-      "School-age (7+ years)": 0
-    },
-    "projects": {
-      "provincial": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
-      },
-      "local": {
-        "requested": [],
-        "inProgress": [],
-        "completed": []
-      }
-    },
-    "familyOfSchools": "BÉLIVEAU FOS",
-    "schoolLevel": "Elementary School",
-    "grades": "K-8",
-    "program": "French Immersion Program"
-  },
+
   "ecolestgermain": {
     "id": "ecolestgermain",
     "schoolName": "École St. Germain",
