@@ -5037,8 +5037,138 @@
   "windsor": {
     "id": "windsor",
     "schoolName": "Windsor School",
-    "schoolType": "School",
+    "schoolType": "Collegiate",
     "headerImage": "public/windsorschool.jpg",
+    "address": "1015 Cottonwood Rd.",
+    "phone": "(204) 256-7316",
+    "enrolment": {
+      "capacity": 260,
+      "current": 234,
+      "projection": {
+        "labels": [
+          "2026_27",
+          "2027_28",
+          "2028_29",
+          "2029_30"
+        ],
+        "values": [
+          234,
+          244,
+          248,
+          255
+        ]
+      },
+      "history": {
+        "labels": [
+          "2021_22",
+          "2022_23",
+          "2023_24",
+          "2024_25"
+        ],
+        "values": [
+          134,
+          138,
+          140,
+          234
+        ]
+      }
+    },
+    "details": {
+      "Built": 1922,
+      "Age": "66 years",
+      "Size": "36576 ft²",
+      "Modular": 1
+    },
+    "additions": [
+      {
+        "year": "",
+        "size": "1961"
+      },
+      {
+        "year": "",
+        "size": "1964"
+      }
+    ],
+    "building": {
+      "Air Conditioning": "Everywhere except gym, tautum room",
+      "Heating": "Natural gas",
+      "LED Lighting": "Gym, office, conference room, hallway, hallway, art room"
+    },
+    "catchment": {
+      "migration": "-1.10%",
+      "description": "Net annual movement in and out of catchment (5-yr. avg.)"
+    },
+    "transportation": {
+      "Parking spots": "19",
+      "Bus Loop": "Required"
+    },
+    "accessibility": {
+      "Girls' washrooms": 5,
+      "Boys' washrooms": 5,
+      "Gender neutral washrooms": 2,
+      "Universal Washroom": "Required",
+      "Elevator": "n/a",
+      "Accessible parking stalls": 1,
+      "Accessible entrance": "YES",
+      "Automatic entrance door operators": "YES"
+    },
+    "playground": [
+      "Basketball courts",
+      "Play structures",
+      "Tetherball post",
+      "Basketball action play",
+      "City Property: Soccer field"
+    ],
+    "childcare": {
+      "Infant (0-23 months)": 0,
+      "Pre-school (2-6 years)": 0,
+      "School-age (7+ years)": 15
+    },
+    "projects": {
+      "provincial": {
+        "requested": [
+          "New High School: Precinct K neighbourhood",
+          "New building envelope",
+          "New windows",
+          "Structural reinforcement",
+          "Roof replacement (Partial)"
+        ],
+        "inProgress": [],
+        "completed": [
+          "Boiler replacement",
+          "Direct Digital Control for HVAC system installation"
+        ]
+      },
+      "local": {
+        "requested": [
+          "Sidelights in classrooms",
+          "Front entrance ramp",
+          "Universal washroom",
+          "Classroom reconfiguration into movement room",
+          "Sink",
+          "Washrooms renovation",
+          "Staff washroom renovation",
+          "Window in main office"
+        ],
+        "inProgress": [],
+        "completed": [
+          "Parking lot paving",
+          "General renovations",
+          "Door replacement",
+          "Replaced Hallway Entrance Flooring"
+        ]
+      }
+    },
+    "familyOfSchools": "WINDSOR PARK FOS",
+    "schoolLevel": "High School",
+    "grades": "9-12",
+    "program": "English Program"
+  },
+  "windsorpark": {
+    "id": "windsorpark",
+    "schoolName": "Windsor Park Collegiate",
+    "schoolType": "School",
+    "headerImage": "public/windsorpark.jpg",
     "address": "80 Cunnington Ave.",
     "phone": "(204) 237-4057",
     "enrolment": {
@@ -5159,136 +5289,6 @@
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
     "grades": "K-8 (Includes Grades 7 & 8 students relocated from St. George School)",
-    "program": "English Program"
-  },
-  "windsorpark": {
-    "id": "windsorpark",
-    "schoolName": "Windsor Park Collegiate",
-    "schoolType": "Collegiate",
-    "headerImage": "public/windsorpark.jpg",
-    "address": "1015 Cottonwood Rd.",
-    "phone": "(204) 256-7316",
-    "enrolment": {
-      "capacity": 260,
-      "current": 234,
-      "projection": {
-        "labels": [
-          "2026_27",
-          "2027_28",
-          "2028_29",
-          "2029_30"
-        ],
-        "values": [
-          234,
-          244,
-          248,
-          255
-        ]
-      },
-      "history": {
-        "labels": [
-          "2021_22",
-          "2022_23",
-          "2023_24",
-          "2024_25"
-        ],
-        "values": [
-          134,
-          138,
-          140,
-          234
-        ]
-      }
-    },
-    "details": {
-      "Built": 1960,
-      "Age": "66 years",
-      "Size": "36576 ft²",
-      "Modular": 1
-    },
-    "additions": [
-      {
-        "year": "",
-        "size": "1961"
-      },
-      {
-        "year": "",
-        "size": "1964"
-      }
-    ],
-    "building": {
-      "Air Conditioning": "Everywhere except gym, tautum room",
-      "Heating": "Natural gas",
-      "LED Lighting": "Gym, office, conference room, hallway, hallway, art room"
-    },
-    "catchment": {
-      "migration": "-1.10%",
-      "description": "Net annual movement in and out of catchment (5-yr. avg.)"
-    },
-    "transportation": {
-      "Parking spots": "19",
-      "Bus Loop": "Required"
-    },
-    "accessibility": {
-      "Girls' washrooms": 5,
-      "Boys' washrooms": 5,
-      "Gender neutral washrooms": 2,
-      "Universal Washroom": "Required",
-      "Elevator": "n/a",
-      "Accessible parking stalls": 1,
-      "Accessible entrance": "YES",
-      "Automatic entrance door operators": "YES"
-    },
-    "playground": [
-      "Basketball courts",
-      "Play structures",
-      "Tetherball post",
-      "Basketball action play",
-      "City Property: Soccer field"
-    ],
-    "childcare": {
-      "Infant (0-23 months)": 0,
-      "Pre-school (2-6 years)": 0,
-      "School-age (7+ years)": 15
-    },
-    "projects": {
-      "provincial": {
-        "requested": [
-          "New High School: Precinct K neighbourhood",
-          "New building envelope",
-          "New windows",
-          "Structural reinforcement",
-          "Roof replacement (Partial)"
-        ],
-        "inProgress": [],
-        "completed": [
-          "Boiler replacement",
-          "Direct Digital Control for HVAC system installation"
-        ]
-      },
-      "local": {
-        "requested": [
-          "Sidelights in classrooms",
-          "Front entrance ramp",
-          "Universal washroom",
-          "Classroom reconfiguration into movement room",
-          "Sink",
-          "Washrooms renovation",
-          "Staff washroom renovation",
-          "Window in main office"
-        ],
-        "inProgress": [],
-        "completed": [
-          "Parking lot paving",
-          "General renovations",
-          "Door replacement",
-          "Replaced Hallway Entrance Flooring"
-        ]
-      }
-    },
-    "familyOfSchools": "WINDSOR PARK FOS",
-    "schoolLevel": "High School",
-    "grades": "9-12",
     "program": "English Program"
   }
 }
