@@ -885,7 +885,6 @@
     "playground": [
       "Basketball court",
       "Four-square court",
-      "Volleyball court",
       "Cement pad w/ hopscotch/wall ball",
       "City Property: 2 Tether ball poles",
       "2 Baseball diamonds",
@@ -911,7 +910,6 @@
           "Pave existing gravel parking lot",
           "Flooring replacement",
           "Washroom countertops replacement",
-          "Library flooring replacement",
           "Ceiling tiles replacement",
           "Soundproofing in guitar room",
           "Universal washrooms to meet current accessibility standards*",
@@ -1037,7 +1035,8 @@
           "Gender-neutral washroom",
           "Library flooring",
           "Boys' washroom renovation",
-          "DDC system"
+          "DDC system",
+          "Universal washroom renovations planned for south side of school (summer 2026)"
         ],
         "inProgress": [],
         "completed": [
@@ -1254,10 +1253,9 @@
       "Rain garden",
       "Play structure",
       "Climb & spin structure",
-      "Tether Poles",
       "Swing sets",
       "Climbing & hanging structures",
-      "City Property: Soccer fields",
+      "City Property: Soccer fields, Swing sets",
       "Play structures"
     ],
     "childcare": {
@@ -1305,7 +1303,7 @@
     },
     "familyOfSchools": "BÉLIVEAU FOS",
     "schoolLevel": "Elementary School",
-    "grades": "K-8 (K-6 in 2025)",
+    "grades": "K-6",
     "program": "French Immersion"
   },
   "ecolejulieriel": {
@@ -1487,14 +1485,15 @@
       "Bus Loop": "YES"
     },
     "accessibility": {
-      "Girls' washrooms": 5,
-      "Boys' washrooms": 4,
+      "Girls' washrooms": 3,
+      "Boys' washrooms": 3,
       "Gender neutral washrooms": 1,
-      "Universal Washroom": "YES",
+      "Universal Washroom": "1 (8 stalls) + 2 single-user",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
-      "Automatic entrance door operators": "Required"
+      "Automatic entrance door operators": "Required",
+      "Staff washrooms (single-user)": 3
     },
     "playground": [
       "2 Baseball diamonds",
@@ -1537,7 +1536,9 @@
           "Flooring replacement",
           "Replace partitions in washrooms"
         ],
-        "inProgress": [],
+        "inProgress": [
+          "SST space alarm deficiency identified in WPSH reports; work order issued"
+        ],
         "completed": [
           "Convert washroom to gender neutral",
           "Accessible entrance general renovations",
@@ -1557,7 +1558,7 @@
     "grades": "K-8",
     "program": "French Immersion"
   },
-    "ecolemazinagiizhik": {
+  "ecolemazinagiizhik": {
     "id": "ecolemazinagiizhik",
     "schoolName": "École Mazina-Giizhik",
     "schoolType": "École",
@@ -1786,7 +1787,6 @@
     "grades": "K-4",
     "program": "French Immersion"
   },
-
   "ecolestgermain": {
     "id": "ecolestgermain",
     "schoolName": "École St. Germain",
@@ -1830,7 +1830,7 @@
       "Built": 1987,
       "Age": "37 years",
       "Size": "43258 ft²",
-      "Modular": 2
+      "Modular": 0
     },
     "additions": [],
     "building": {
@@ -1849,10 +1849,10 @@
     "accessibility": {
       "Girls' washrooms": 2,
       "Boys' washrooms": 2,
-      "Gender neutral washrooms": 0,
+      "Gender neutral washrooms": 2,
       "Universal Washroom": "1",
       "Elevator": "n/a",
-      "Accessible parking stalls": 0,
+      "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
       "Automatic entrance door operators": "NO"
     },
@@ -1868,7 +1868,7 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 32,
-      "School-age (7+ years)": 33
+      "School-age (7+ years)": 51
     },
     "projects": {
       "provincial": {
@@ -1888,13 +1888,12 @@
           "Partitions replacement in change room",
           "Video Intercom System",
           "Two Basketball poles and hoops for outdoor play area",
-          "Accessible parking spot",
           "Automatic shutoff faucets in washrooms",
-          "Automatic Door Operator for the main Entrance",
-          "Asphalt pathway from the staff parking lot to basketball court",
+          "Automatic door operators at front and rear entrances",
           "Replace flooring in the School Office",
           "Regrading of soccer field",
-          "Create trench for drainage on the North side of the building"
+          "Create trench for drainage on the North side of the building",
+          "3' fence along north side of staff parking lot to reduce snow drifting and improve stall access"
         ],
         "inProgress": [],
         "completed": [
@@ -1904,7 +1903,8 @@
           "Cubbies for students",
           "White board relocation",
           "Concrete play area repair",
-          "Install Bottle Filling Station"
+          "Install Bottle Filling Station",
+          "Asphalt pathway from parking lot to basketball court"
         ]
       }
     },
@@ -2507,8 +2507,8 @@
       }
     },
     "details": {
-      "Built": 1949,
-      "Age": "75 years",
+      "Built": 1924,
+      "Age": "102 years",
       "Size": "140850 ft²",
       "Modular": 0
     },
@@ -2548,7 +2548,7 @@
       "Boys' washrooms": 5,
       "Gender neutral washrooms": 9,
       "Universal Washroom": "1",
-      "Elevator": "Partial",
+      "Elevator": "Full",
       "Accessible parking stalls": 5,
       "Accessible entrance": "YES",
       "Automatic entrance door operators": "YES"
@@ -4453,7 +4453,7 @@
     "building": {
       "Air Conditioning": "Full building",
       "Heating": "Natural gas, electric, geothermal",
-      "LED Lighting": "None"
+      "LED Lighting": "Select rooms (installed to support student medical needs)"
     },
     "catchment": {
       "migration": "1.00%",
@@ -4466,7 +4466,7 @@
     "accessibility": {
       "Girls' washrooms": 3,
       "Boys' washrooms": 3,
-      "Gender neutral washrooms": 0,
+      "Gender neutral washrooms": 1,
       "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 2,
@@ -4649,7 +4649,6 @@
           "Universal washroom update",
           "Ceiling track installation, Door & frame replacement",
           "Plumbing improvements",
-          "Room 13 converted to kindergarten classroom",
           "Lockers (75)",
           "Remove Berm",
           "Install Bottle Filling Station"
@@ -4708,7 +4707,7 @@
     },
     "additions": [],
     "building": {
-      "Air Conditioning": "None",
+      "Air Conditioning": "Partial (portable classroom units only)",
       "Heating": "Natural gas",
       "LED Lighting": "Classrooms (3)"
     },
@@ -5169,7 +5168,7 @@
     "schoolName": "Windsor Park Collegiate",
     "schoolType": "School",
     "headerImage": "public/windsorpark.jpg",
-    "address": "80 Cunnington Ave.",
+    "address": "1015 Cottonwood Rd.",
     "phone": "(204) 237-4057",
     "enrolment": {
       "capacity": 700,
@@ -5220,7 +5219,7 @@
       }
     ],
     "building": {
-      "Air Conditioning": "Everywhere except gym 1",
+      "Air Conditioning": "Main office, staff room, textiles room, library",
       "Heating": "Natural gas",
       "LED Lighting": "Entire school"
     },
