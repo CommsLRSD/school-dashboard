@@ -801,7 +801,7 @@
     },
     "familyOfSchools": "GLENLAWN FOS",
     "schoolLevel": "Elementary School",
-    "grades": "K-7 (K-8 in 2025)",
+    "grades": "K-8",
     "program": "English Program"
   },
   "ecolegeorgemcdowell": {
@@ -2723,7 +2723,8 @@
           "Elevator",
           "Bell tower roof repair",
           "Front entrance ramp",
-          "Sink in Kindergarten Classroom"
+          "Sink in Kindergarten Classroom",
+          "Whole-school air conditioning (postponed from summer 2026)"
         ],
         "inProgress": [],
         "completed": [
@@ -3164,7 +3165,7 @@
       "Built": 2001,
       "Age": "23 years",
       "Size": "59927 ft²",
-      "Modular": 2
+      "Modular": 6
     },
     "additions": [
       {
@@ -3186,12 +3187,12 @@
       "Bus Loop": "YES"
     },
     "accessibility": {
-      "Girls' washrooms": 3,
-      "Boys' washrooms": 3,
-      "Gender neutral washrooms": 7,
+      "Girls' washrooms": 4,
+      "Boys' washrooms": 4,
+      "Gender neutral washrooms": 5,
       "Universal Washroom": "YES",
       "Elevator": "n/a",
-      "Accessible parking stalls": 2,
+      "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
       "Automatic entrance door operators": "YES"
     },
@@ -3216,12 +3217,11 @@
           "Additional Air Make Up unit for gym",
           "Roof replacement (Partial)"
         ],
-        "inProgress": [
-          "Relocation of Modular Classrooms to ILCS from École Van Belleghem"
-        ],
+        "inProgress": [],
         "completed": [
           "Installation of Modular Classrooms (2)",
-          "Relocation of Modular Classrooms (2) from St. Germain"
+          "Relocation of Modular Classrooms (2) from St. Germain",
+          "Relocation of Modular Classrooms to ILCS from École Van Belleghem"
         ]
       },
       "local": {
@@ -4100,7 +4100,8 @@
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
-      "Automatic entrance door operators": "YES"
+      "Automatic entrance door operators": "YES",
+      "Gender neutral washrooms (staff room)": 2
     },
     "playground": [
       "Basketball courts",
@@ -4110,7 +4111,7 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 20,
-      "School-age (7+ years)": 15
+      "School-age (7+ years)": 30
     },
     "projects": {
       "provincial": {
@@ -4137,8 +4138,6 @@
           "School office renovation",
           "Exterior drainage installation",
           "Fob reader at rear entrance",
-          "Fracture repair in front wall",
-          "Electrical outlets in modular classrooms",
           "Stage area renovation in Gym",
           "Supply air and exhaust"
         ],
@@ -4146,7 +4145,8 @@
         "completed": [
           "Asphalt repair",
           "Replaced flooring for Library platform",
-          "Replaced counterops, sinks and urinals in Washrooms"
+          "Replaced counterops, sinks and urinals in Washrooms",
+          "Fracture repair in front wall"
         ]
       }
     },
@@ -4401,7 +4401,7 @@
     },
     "familyOfSchools": "J.H. BRUNS FOS",
     "schoolLevel": "Elementary School",
-    "grades": "K-8 (transitioning to English K-8 only in 2025/26)",
+    "grades": "K-8",
     "program": "English Program"
   },
   "samuelburland": {
