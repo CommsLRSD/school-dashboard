@@ -2507,8 +2507,8 @@
       }
     },
     "details": {
-      "Built": 1924,
-      "Age": "102 years",
+      "Built": 1949,
+      "Age": "75 years",
       "Size": "140850 ft²",
       "Modular": 0
     },
@@ -2781,9 +2781,9 @@
       }
     },
     "details": {
-      "Built": 1989,
-      "Age": "35 years",
-      "Size": "46558 ft²",
+      "Built": 1960,
+      "Age": "64 years",
+      "Size": "36100 ft²",
       "Modular": 2
     },
     "additions": [
@@ -2902,9 +2902,9 @@
       }
     },
     "details": {
-      "Built": 1960,
-      "Age": "64 years",
-      "Size": "36100 ft²",
+      "Built": 1991,
+      "Age": "33 years",
+      "Size": "65496 ft²",
       "Modular": 0
     },
     "additions": [],
@@ -3021,9 +3021,9 @@
       }
     },
     "details": {
-      "Built": 1991,
-      "Age": "33 years",
-      "Size": "65496 ft²",
+      "Built": 1989,
+      "Age": "35 years",
+      "Size": "46558 ft²",
       "Modular": 0
     },
     "additions": [
@@ -5038,8 +5038,8 @@
     "schoolName": "Windsor School",
     "schoolType": "Collegiate",
     "headerImage": "public/windsorschool.jpg",
-    "address": "1015 Cottonwood Rd.",
-    "phone": "(204) 256-7316",
+    "address": "80 Cunnington Ave.",
+    "phone": "(204) 237-4057",
     "enrolment": {
       "capacity": 260,
       "current": 234,
@@ -5074,7 +5074,7 @@
     },
     "details": {
       "Built": 1922,
-      "Age": "66 years",
+      "Age": "102 years",
       "Size": "36576 ft²",
       "Modular": 1
     },
@@ -5169,7 +5169,7 @@
     "schoolType": "School",
     "headerImage": "public/windsorpark.jpg",
     "address": "1015 Cottonwood Rd.",
-    "phone": "(204) 237-4057",
+    "phone": "(204) 256-7316",
     "enrolment": {
       "capacity": 700,
       "current": 599,
