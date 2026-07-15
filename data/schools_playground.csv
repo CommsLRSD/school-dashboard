@@ -1,208 +1,42 @@
-school_id,feature
-archwood,Basketball Court
-archwood,Basketball Action Play
-archwood,Steel Play structure
-archwood,Wooden Play structure
-archwood,Climbing dome
-archwood,Shade structure
-archwood,Soccer nets
-archwood,Baseball Diamond
-beliveau,Basketball Court
-beliveau,Rubberized Track
-cjs,Garden Area
-cjs,Circle of Courage
-cjs,Outdoor classroom
-dakota,Football Field
-dakota,Bleachers & Press Box
-dakota,Tennis Courts
-dakota,Basketball Court
-dakota,Cricket Cage
-dakota,Patio
-dakota,Film Tower
-dakota,Indigenous garden and classroom
-darwin,2 Basketball Courts
-darwin,Volleyball Court
-darwin,2 Four-Square Courts
-darwin,2 Baseball Diamonds
-darwin,Soccer Field
-darwin,Free Play Area
-darwin,Play structure
-darwin,Outdoor learning area
-drdwpenner,Soccer field
-drdwpenner,Baseball diamond
-drdwpenner,Basketball court
-drdwpenner,City Property: Play structures
-drdwpenner,Zip line
-drdwpenner,General play areas
-ecolegeorgemcdowell,Basketball court
-ecolegeorgemcdowell,Four-square court
-ecolegeorgemcdowell,Cement pad w/ hopscotch/wall ball
-ecolegeorgemcdowell,City Property: 2 Tether ball poles
-ecolegeorgemcdowell,2 Baseball diamonds
-ecolegeorgemcdowell,Play structure
-ecoleguyot,2 Play structures
-ecoleguyot,Soccer nets
-ecoleguyot,Basketball court
-ecoleguyot,Rock climbing platform
-ecoleguyot,Swing sets
-ecolehenribergeron,Basketball court
-ecolehenribergeron,Tether ball pole
-ecolehenribergeron,Play structure
-ecolehowden,Basketball court
-ecolehowden,Basketball action play
-ecolehowden,Rain garden
-ecolehowden,Play structure
-ecolehowden,Climb & spin structure
-ecolehowden,Swing sets
-ecolehowden,Climbing & hanging structures
-ecolehowden,"City Property: Soccer fields, Swing sets"
-ecolehowden,Play structures
-ecolejulieriel,Swing set
-ecolejulieriel,Play structure
-ecolejulieriel,Climbing orb
-ecolejulieriel,Basketball nets
-ecolejulieriel,City Property: Soccer field
-ecolemarieannegaboury,2 Baseball diamonds
-ecolemarieannegaboury,Running track
-ecolemarieannegaboury,High jump pole
-ecolemarieannegaboury,Soccer nets
-ecolemarieannegaboury,4 Tether poles
-ecolemarieannegaboury,TRC Garden
-ecolemazinagiizhik,2 Play areas
-ecolemazinagiizhik,Basketball court
-ecolemazinagiizhik,City Property: Pump Track
-ecolemazinagiizhik,Soccer field
-ecoleprovencher,Shade area
-ecoleprovencher,2 Play structures
-ecoleprovencher,Swing set
-ecoleprovencher,Zipline swing
-ecoleprovencher,Basketball action play
-ecoleprovencher,Basketball court
-ecolestgermain,Basketball court
-ecolestgermain,Basketball action play
-ecolestgermain,Four-square court
-ecolestgermain,Play structures
-ecolestgermain,Balance steppers
-ecolestgermain,Picnic area
-ecolestgermain,"City Property: Baseball diamonds, Soccer field, Swing sets, Sharing circle"
-ecolevanbelleghem,Basketball action play system
-ecolevanbelleghem,Basketball Court
-ecolevanbelleghem,Nature playground
-ecolevanbelleghem,Tree climbing system
-ecolevanbelleghem,Zipline
-ecolevanbelleghem,Honeycomb structure
-ecolevanbelleghem,Play structures
-ecolevanbelleghem,Swings
-ecolevanbelleghem,Bike cage
-ecolevanbelleghem,"City Property: Baseball field, Soccer nets"
-ecolevarennes,Sandbox
-ecolevarennes,Tire Swings
-ecolevarennes,Soccer nets
-ecolevarennes,Baseball diamond
-ecolevarennes,Slide
-ecolevarennes,Play structure
-ecolevarennes,Basketball
-ecolevarennes,Basketball action play
-ecolevarennes,Sharing circle
-frontenac,Play structures
-frontenac,Soccer area
-frontenac,Basketball court
-frontenac,Gaga Ball pit
-frontenac,Tetherball
-generalvanier,Gaga Ball pit
-generalvanier,Swing sets
-generalvanier,Play structures
-generalvanier,Basketball court
-generalvanier,Climbing bars
-generalvanier,Glider and Merry-go-round
-generalvanier,"City Property: Swing set, Wading pool, Soccer fields"
+school_id,features
+archwood,Basketball Court | Basketball Action Play | Steel Play structure | Wooden Play structure | Climbing dome | Shade structure | Soccer nets | Baseball Diamond
+beliveau,Basketball Court | Rubberized Track
+cjs,Garden Area | Circle of Courage | Outdoor classroom
+dakota,Football Field | Bleachers & Press Box | Tennis Courts | Basketball Court | Cricket Cage | Patio | Film Tower | Indigenous garden and classroom
+darwin,2 Basketball Courts | Volleyball Court | 2 Four-Square Courts | 2 Baseball Diamonds | Soccer Field | Free Play Area | Play structure | Outdoor learning area
+drdwpenner,Soccer field | Baseball diamond | Basketball court | City Property: Play structures | Zip line | General play areas
+ecolegeorgemcdowell,Basketball court | Four-square court | Cement pad w/ hopscotch/wall ball | City Property: 2 Tether ball poles | 2 Baseball diamonds | Play structure
+ecoleguyot,2 Play structures | Soccer nets | Basketball court | Rock climbing platform | Swing sets
+ecolehenribergeron,Basketball court | Tether ball pole | Play structure
+ecolehowden,"Basketball court | Basketball action play | Rain garden | Play structure | Climb & spin structure | Swing sets | Climbing & hanging structures | City Property: Soccer fields, Swing sets | Play structures"
+ecolejulieriel,Swing set | Play structure | Climbing orb | Basketball nets | City Property: Soccer field
+ecolemarieannegaboury,2 Baseball diamonds | Running track | High jump pole | Soccer nets | 4 Tether poles | TRC Garden
+ecolemazinagiizhik,2 Play areas | Basketball court | City Property: Pump Track | Soccer field
+ecoleprovencher,Shade area | 2 Play structures | Swing set | Zipline swing | Basketball action play | Basketball court
+ecolestgermain,"Basketball court | Basketball action play | Four-square court | Play structures | Balance steppers | Picnic area | City Property: Baseball diamonds, Soccer field, Swing sets, Sharing circle"
+ecolevanbelleghem,"Basketball action play system | Basketball Court | Nature playground | Tree climbing system | Zipline | Honeycomb structure | Play structures | Swings | Bike cage | City Property: Baseball field, Soccer nets"
+ecolevarennes,Sandbox | Tire Swings | Soccer nets | Baseball diamond | Slide | Play structure | Basketball | Basketball action play | Sharing circle
+frontenac,Play structures | Soccer area | Basketball court | Gaga Ball pit | Tetherball
+generalvanier,"Gaga Ball pit | Swing sets | Play structures | Basketball court | Climbing bars | Glider and Merry-go-round | City Property: Swing set, Wading pool, Soccer fields"
 glenlawn,"City Property: Long jump track with sandpit, Volleyball court, Soccer fields, Basketball court, Shade structure"
-glenwood,Play structures
-glenwood,Basketball action play
-glenwood,Basketball court
-glenwood,City Property: Baseball diamonds
-hastings,Play structures
-hastings,Swing sets
-hastings,Basketball court
-hastings,Basketball action play system
-hastings,Baseball diamond
-hastings,Soccer nets
-highbury,Basketball court
-highbury,Play structure
-highbury,Soccer field
-highbury,Gravel track
-highbury,Baseball diamond
-highbury,Indigenous garden
-highbury,Tether ball
+glenwood,Play structures | Basketball action play | Basketball court | City Property: Baseball diamonds
+hastings,Play structures | Swing sets | Basketball court | Basketball action play system | Baseball diamond | Soccer nets
+highbury,Basketball court | Play structure | Soccer field | Gravel track | Baseball diamond | Indigenous garden | Tether ball
 hspaul,"City Property: Play structures, Soccer field, Basketball court, Baseball diamond"
-islandlakes,Play structures
-islandlakes,Swing set
-islandlakes,Soccer nets
-islandlakes,Basketball action play
-islandlakes,"City Property: Basketball court, Baseball diamond, Tennis court"
+islandlakes,"Play structures | Swing set | Soccer nets | Basketball action play | City Property: Basketball court, Baseball diamond, Tennis court"
 jhbruns,"City Property: Play structure, Wading pool, Baseball diamonds, Southdale C."
-lavallee,Daycare play structure
-lavallee,Basketball court
-lavallee,Play structure
-lavallee,Tether ball area
-lavallee,City Property: Soccer field
-louisrielartstech,Cement patio
-louisrielartstech,Tennis courts
-marion,Swing set
-marion,Baseball diamond
-marion,Play courts
-marion,Basketball court
-marion,Basketball nets
-marion,Play structures
-minnetonka,Basketball court
-minnetonka,Play structure
-minnetonka,Swing sets
-minnetonka,Soccer nets
-minnetonka,Basketball action play
-nelsonmcintyre,Basketball court
-nelsonmcintyre,Track & football
-niakwaplace,Basketball courts
-niakwaplace,Play structures
-niakwaplace,Soccer field
-nordale,Basketball courts
-nordale,Tetherball court
-nordale,Four-square court
-nordale,Climbing wall
-nordale,Play structure
-nordale,Nature playground
-nordale,Soccer field
-nordale,City Property: Soccer field
-sagecreek,2 Play structures
-sagecreek,"City Property: Play structure, Basketball court, Tennis court"
-samuelburland,Basketball court
-samuelburland,Play structure
-samuelburland,City Property: Baseball diamond
-samuelburland,Play structures
-shamrock,5 Play structures
-shamrock,2 Swing sets
-shamrock,2 Basketball courts
-shamrock,Shade structure
-shamrock,City Property: Soccer field
-stgeorge,Play structures
-stgeorge,Basketball net
-stgeorge,Basketball court
-stgeorge,City Property: Play structure
-stgeorge,Soccer field
-stgeorge,St. George Park
-victorhlwyatt,Soccer field
-victorhlwyatt,Basketball hardtop
-victorhlwyatt,Baseball diamond
-victormager,Soccer fields
-victormager,Swing sets
-victormager,Play structures
-victormager,Basketball court
-victormager,Running track
-windsor,Basketball courts
-windsor,Play structures
-windsor,Tetherball post
-windsor,Basketball action play
-windsor,City Property: Soccer field
-windsorpark,Basketball court
-windsorpark,Tennis courts
-windsorpark,City Property: Baseball diamond
-windsorpark,Soccer field
+lavallee,Daycare play structure | Basketball court | Play structure | Tether ball area | City Property: Soccer field
+louisrielartstech,Cement patio | Tennis courts
+marion,Swing set | Baseball diamond | Play courts | Basketball court | Basketball nets | Play structures
+minnetonka,Basketball court | Play structure | Swing sets | Soccer nets | Basketball action play
+nelsonmcintyre,Basketball court | Track & football
+niakwaplace,Basketball courts | Play structures | Soccer field
+nordale,Basketball courts | Tetherball court | Four-square court | Climbing wall | Play structure | Nature playground | Soccer field | City Property: Soccer field
+sagecreek,"2 Play structures | City Property: Play structure, Basketball court, Tennis court"
+samuelburland,Basketball court | Play structure | City Property: Baseball diamond | Play structures
+shamrock,5 Play structures | 2 Swing sets | 2 Basketball courts | Shade structure | City Property: Soccer field
+stgeorge,Play structures | Basketball net | Basketball court | City Property: Play structure | Soccer field | St. George Park
+victorhlwyatt,Soccer field | Basketball hardtop | Baseball diamond
+victormager,Soccer fields | Swing sets | Play structures | Basketball court | Running track
+windsor,Basketball courts | Play structures | Tetherball post | Basketball action play | City Property: Soccer field
+windsorpark,Basketball court | Tennis courts | City Property: Baseball diamond | Soccer field
