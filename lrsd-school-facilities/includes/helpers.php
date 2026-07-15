@@ -51,8 +51,9 @@ function lrsd_sf_normalize_school_data($raw_data) {
  */
 function lrsd_sf_get_school_dataset() {
     $dataset = [
-        'lastUpdated'  => get_option('lrsd_schools_last_updated', ''),
-        'fosMapLookup' => lrsd_sf_get_fos_catchment_map(),
+        'lastUpdated'       => get_option('lrsd_schools_last_updated', ''),
+        'fosMapLookup'      => lrsd_sf_get_fos_catchment_map(),
+        'globalCustomCards' => lrsd_sf_get_global_custom_cards(),
     ];
 
     $posts = get_posts([
@@ -273,6 +274,24 @@ function lrsd_sf_get_fos_catchment_map() {
 }
 
 /**
+ * Returns global custom card templates (shared across all schools).
+ */
+function lrsd_sf_get_global_custom_cards() {
+    $cards = get_option('lrsd_sf_global_custom_cards', []);
+    return is_array($cards) ? array_values($cards) : [];
+}
+
+/**
+ * Returns available display types for custom cards.
+ */
+function lrsd_sf_get_custom_card_display_types() {
+    return [
+        'list' => __('Key–Value List', 'lrsd-school-facilities'),
+        'stat' => __('Stats / Highlights', 'lrsd-school-facilities'),
+    ];
+}
+
+/**
  * Returns the list of all standard card type IDs with human-readable labels.
  */
 function lrsd_sf_get_all_card_types() {
@@ -336,4 +355,60 @@ function lrsd_sf_ajax_add_custom_option() {
     }
 
     wp_send_json_success(['option_val' => $option_val]);
+}
+
+/**
+ * admin-post: Save global custom card templates from the Card Editor page.
+ */
+function lrsd_sf_handle_save_global_cards() {
+    check_admin_referer('lrsd_sf_save_global_cards_action', 'lrsd_sf_save_global_cards_nonce');
+
+    if (!current_user_can('manage_options')) {
+        wp_die(esc_html__('You do not have permission to perform this action.', 'lrsd-school-facilities'));
+    }
+
+    $raw = isset($_POST['lrsd_sf_global_cards_json'])
+        ? trim(wp_unslash($_POST['lrsd_sf_global_cards_json']))
+        : '';
+
+    $cards = [];
+    if ($raw !== '') {
+        $decoded = json_decode($raw, true);
+        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+            foreach ($decoded as $card) {
+                if (!is_array($card)) {
+                    continue;
+                }
+                $s_card = [
+                    'id'       => sanitize_key($card['id'] ?? ('custom_' . wp_generate_password(6, false))),
+                    'title'    => sanitize_text_field($card['title'] ?? ''),
+                    'icon'     => sanitize_text_field($card['icon'] ?? ''),
+                    'category' => sanitize_text_field($card['category'] ?? ''),
+                    'cardType' => in_array($card['cardType'] ?? 'list', ['list', 'stat'], true) ? $card['cardType'] : 'list',
+                    'items'    => [],
+                    'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
+                ];
+                if (is_array($card['items'] ?? null)) {
+                    foreach ($card['items'] as $item) {
+                        if (!is_array($item)) {
+                            continue;
+                        }
+                        $s_card['items'][] = [
+                            'label' => sanitize_text_field($item['label'] ?? ''),
+                        ];
+                    }
+                }
+                if ($s_card['id'] !== '') {
+                    $cards[] = $s_card;
+                }
+            }
+        }
+    }
+
+    update_option('lrsd_sf_global_custom_cards', $cards);
+    lrsd_sf_flush_dataset_cache();
+    lrsd_sf_set_admin_notice(__('Global card templates saved.', 'lrsd-school-facilities'), 'success');
+
+    wp_safe_redirect(add_query_arg(['page' => 'lrsd-school-facilities-cards'], admin_url('admin.php')));
+    exit;
 }

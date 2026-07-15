@@ -167,11 +167,21 @@
 
     // ── Custom Cards Repeater ─────────────────────────────────────────────────
 
-    function buildCardHtml(id, title, icon, category, notes, items) {
+    function buildDisplayTypeOptions(selected) {
+        var types = (lrsdSfAdmin && lrsdSfAdmin.displayTypes) ? lrsdSfAdmin.displayTypes : { list: 'Key\u2013Value List', stat: 'Stats / Highlights' };
+        var html = '';
+        $.each(types, function (key, label) {
+            html += '<option value="' + esc(key) + '"' + (key === selected ? ' selected' : '') + '>' + esc(label) + '</option>';
+        });
+        return html;
+    }
+
+    function buildCardHtml(id, title, icon, category, cardType, notes, items) {
         id       = id       || uniqueId();
         title    = title    || '';
         icon     = icon     || '';
         category = category || '';
+        cardType = cardType || 'list';
         notes    = notes    || '';
         items    = items    || [];
 
@@ -190,6 +200,11 @@
             '<table class="form-table" role="presentation"><tbody>' +
                 '<tr><th>Title</th><td>' +
                     '<input type="text" class="regular-text lrsd-sf-card-title" value="' + esc(title) + '" data-field="title" />' +
+                '</td></tr>' +
+                '<tr><th>Display Type</th><td>' +
+                    '<select class="lrsd-sf-card-cardtype" data-field="cardType">' +
+                        buildDisplayTypeOptions(cardType) +
+                    '</select>' +
                 '</td></tr>' +
                 '<tr><th>Icon</th><td>' +
                     '<div class="lrsd-sf-media-wrap">' +
@@ -294,12 +309,166 @@
         serializeCardOrder();
     }
 
+    // ── Global Card Values (school editor) ────────────────────────────────────
+
+    function serializeGlobalCardValues() {
+        if (!$('#lrsd_sf_custom_card_values_json').length) {
+            return;
+        }
+        var values = {};
+        $('.lrsd-sf-global-card-data').each(function () {
+            var cardId = $(this).data('card-id');
+            if (!cardId) return;
+            var items = [];
+            $(this).find('.lrsd-sf-gcv-item-value').each(function () {
+                items.push({
+                    label: $(this).data('label') || '',
+                    value: $(this).val() || '',
+                });
+            });
+            values[cardId] = {
+                items: items,
+                notes: $(this).find('.lrsd-sf-gcv-notes').val() || '',
+            };
+        });
+        $('#lrsd_sf_custom_card_values_json').val(JSON.stringify(values));
+    }
+
+    // ── Card Editor Page (global card templates) ──────────────────────────────
+
+    function buildLabelRowHtml(label) {
+        return '<div class="lrsd-sf-label-row">' +
+            '<input type="text" class="regular-text lrsd-sf-label-text" value="' + esc(label) + '" placeholder="' + esc(i18n.labelPlaceholder || 'Label / subcategory name') + '" />' +
+            '<button type="button" class="button lrsd-sf-remove-label">\u2715</button>' +
+        '</div>';
+    }
+
+    function buildGlobalCardHtml(id, title, icon, category, cardType, notes) {
+        id       = id       || uniqueId();
+        title    = title    || '';
+        icon     = icon     || '';
+        category = category || '';
+        cardType = cardType || 'list';
+        notes    = notes    || '';
+
+        var iconFieldId = 'lrsd-gct-icon-' + id;
+
+        return '<div class="lrsd-sf-global-card-template" data-card-id="' + id + '">' +
+            '<div class="lrsd-sf-custom-card-header">' +
+                '<span class="lrsd-sf-card-drag dashicons dashicons-move" title="Drag to reorder"></span>' +
+                '<strong class="lrsd-sf-card-name">' + (title || (i18n.untitledCard || '(Untitled Card)')) + '</strong>' +
+                '<span class="lrsd-sf-global-badge">' + esc(i18n.allSchoolsLabel || 'All Schools') + '</span>' +
+                '<button type="button" class="button lrsd-sf-remove-global-card" title="Remove template">\u2715</button>' +
+            '</div>' +
+            '<table class="form-table" role="presentation"><tbody>' +
+                '<tr><th>Card Title</th><td>' +
+                    '<input type="text" class="regular-text lrsd-sf-gct-title" value="' + esc(title) + '" data-field="title" />' +
+                '</td></tr>' +
+                '<tr><th>Display Type</th><td>' +
+                    '<select class="lrsd-sf-gct-cardtype" data-field="cardType">' +
+                        buildDisplayTypeOptions(cardType) +
+                    '</select>' +
+                '</td></tr>' +
+                '<tr><th>Icon</th><td>' +
+                    '<div class="lrsd-sf-media-wrap">' +
+                        '<input type="text" id="' + iconFieldId + '" class="regular-text lrsd-sf-media-input lrsd-sf-gct-icon" value="' + esc(icon) + '" data-field="icon" />' +
+                        '<button type="button" class="button lrsd-sf-media-btn" data-target="' + iconFieldId + '">Choose Media</button>' +
+                    '</div>' +
+                '</td></tr>' +
+                '<tr><th>Category Label</th><td>' +
+                    '<input type="text" class="regular-text lrsd-sf-gct-category" value="' + esc(category) + '" data-field="category" />' +
+                '</td></tr>' +
+                '<tr><th>Subcategory Names</th><td>' +
+                    '<p class="description" style="margin-bottom:8px;">These are the row labels. Each school fills in its own values.</p>' +
+                    '<div class="lrsd-sf-label-list"></div>' +
+                    '<button type="button" class="button lrsd-sf-add-label">' + esc(i18n.addSubcategory || '+ Add Subcategory') + '</button>' +
+                '</td></tr>' +
+                '<tr><th>Card Notes (optional)</th><td>' +
+                    '<textarea class="large-text lrsd-sf-gct-notes" rows="2" data-field="notes">' + esc(notes) + '</textarea>' +
+                '</td></tr>' +
+            '</tbody></table>' +
+        '</div>';
+    }
+
+    function initCardEditorPage() {
+        if (!$('#lrsd-sf-global-cards').length) {
+            return;
+        }
+
+        // Add new global card
+        $('#lrsd-sf-add-global-card').on('click', function () {
+            var id   = uniqueId();
+            var html = buildGlobalCardHtml(id);
+            $('#lrsd-sf-global-cards').append(html);
+        });
+
+        // Remove global card template
+        $(document).on('click', '.lrsd-sf-remove-global-card', function () {
+            $(this).closest('.lrsd-sf-global-card-template').remove();
+        });
+
+        // Update card name in header as user types title
+        $(document).on('input', '.lrsd-sf-gct-title', function () {
+            var $card = $(this).closest('.lrsd-sf-global-card-template');
+            var title = $(this).val() || (i18n.untitledCard || '(Untitled Card)');
+            $card.find('.lrsd-sf-card-name').text(title);
+        });
+
+        // Add label row
+        $(document).on('click', '.lrsd-sf-add-label', function () {
+            $(this).siblings('.lrsd-sf-label-list').append(buildLabelRowHtml(''));
+        });
+
+        // Remove label row
+        $(document).on('click', '.lrsd-sf-remove-label', function () {
+            $(this).closest('.lrsd-sf-label-row').remove();
+        });
+
+        // Make global cards sortable (reorder)
+        $('#lrsd-sf-global-cards').sortable({
+            handle: '.lrsd-sf-card-drag',
+            cursor: 'grab',
+            tolerance: 'pointer',
+        });
+
+        // Serialize on submit
+        $('#lrsd-sf-card-editor-form').on('submit', function () {
+            serializeGlobalCards();
+        });
+    }
+
+    function serializeGlobalCards() {
+        var cards = [];
+        $('#lrsd-sf-global-cards .lrsd-sf-global-card-template').each(function () {
+            var $card = $(this);
+            var id    = $card.data('card-id') || uniqueId();
+            var items = [];
+            $card.find('.lrsd-sf-label-row .lrsd-sf-label-text').each(function () {
+                var label = $(this).val() || '';
+                if (label) {
+                    items.push({ label: label });
+                }
+            });
+            cards.push({
+                id:       id,
+                title:    $card.find('.lrsd-sf-gct-title').val() || '',
+                icon:     $card.find('.lrsd-sf-gct-icon').val() || '',
+                category: $card.find('.lrsd-sf-gct-category').val() || '',
+                cardType: $card.find('.lrsd-sf-gct-cardtype').val() || 'list',
+                items:    items,
+                notes:    $card.find('.lrsd-sf-gct-notes').val() || '',
+            });
+        });
+        $('#lrsd_sf_global_cards_json').val(JSON.stringify(cards));
+    }
+
     // ── Pre-submit Serialization ───────────────────────────────────────────────
 
     function initPreSubmit() {
         $('form#post').on('submit', function () {
             serializeCustomCards();
             serializeCardOrder();
+            serializeGlobalCardValues();
         });
     }
 
@@ -321,6 +490,7 @@
                 title:    $card.find('.lrsd-sf-card-title').val() || '',
                 icon:     $card.find('.lrsd-sf-card-icon').val() || '',
                 category: $card.find('.lrsd-sf-card-category').val() || '',
+                cardType: $card.find('.lrsd-sf-card-cardtype').val() || 'list',
                 notes:    $card.find('.lrsd-sf-card-notes').val() || '',
                 items:    items,
             });
@@ -348,6 +518,7 @@
         initCustomCards();
         initPreSubmit();
         initBulkUpdate();
+        initCardEditorPage();
     });
 
 })(jQuery);

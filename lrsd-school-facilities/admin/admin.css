@@ -177,13 +177,15 @@
 }
 
 /* ── Custom Cards ─────────────────────────────────────────────────────────── */
-#lrsd-sf-custom-cards {
+#lrsd-sf-custom-cards,
+#lrsd-sf-global-cards {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.lrsd-sf-custom-card {
+.lrsd-sf-custom-card,
+.lrsd-sf-global-card-template {
     border: 1px solid #c3c4c7;
     border-radius: 6px;
     background: #fafafa;
@@ -216,7 +218,22 @@
     font-size: 13px;
 }
 
-.lrsd-sf-remove-card {
+/* "All Schools" badge on global cards */
+.lrsd-sf-global-badge {
+    display: inline-flex;
+    align-items: center;
+    background: #2271b1;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.lrsd-sf-remove-card,
+.lrsd-sf-remove-global-card {
     margin-left: auto;
     color: #b32d2e !important;
     border-color: #b32d2e !important;
@@ -226,12 +243,14 @@
     line-height: 1.6 !important;
 }
 
-.lrsd-sf-custom-card .form-table {
+.lrsd-sf-custom-card .form-table,
+.lrsd-sf-global-card-template .form-table {
     margin: 8px 0 0 !important;
     padding: 0 12px 12px;
 }
 
-.lrsd-sf-custom-card .form-table th {
+.lrsd-sf-custom-card .form-table th,
+.lrsd-sf-global-card-template .form-table th {
     width: 160px;
 }
 
@@ -261,6 +280,69 @@
     line-height: 26px !important;
     color: #b32d2e !important;
     font-size: 12px !important;
+}
+
+/* Label list (Card Editor subcategory names) */
+.lrsd-sf-label-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.lrsd-sf-label-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.lrsd-sf-label-text {
+    max-width: 340px;
+}
+
+.lrsd-sf-remove-label {
+    padding: 0 6px !important;
+    height: 28px !important;
+    line-height: 26px !important;
+    color: #b32d2e !important;
+    font-size: 12px !important;
+}
+
+/* Global Cards — School Data section */
+.lrsd-sf-global-card-data {
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    background: #fff;
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+
+.lrsd-sf-gcv-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 10px 14px;
+    background: #f0f6fc;
+    border-bottom: 1px solid #dcdcde;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.lrsd-sf-global-card-data .form-table {
+    margin: 0 !important;
+    padding: 0 14px 12px;
+}
+
+.lrsd-sf-global-card-data .form-table th {
+    width: 200px;
+    padding: 6px 10px 6px 0;
+    font-weight: 500;
+}
+
+.lrsd-sf-global-card-data .form-table td {
+    padding: 4px 0;
 }
 
 /* ── Card Order Sortable ─────────────────────────────────────────────────── */
@@ -306,6 +388,18 @@
     color: #a7aaad;
     font-size: 18px !important;
     flex-shrink: 0;
+}
+
+/* "Global" badge in card order list */
+.lrsd-sf-order-global-badge {
+    margin-left: auto;
+    background: #2271b1;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
 }
 
 /* ── Bulk Update Page ─────────────────────────────────────────────────────── */

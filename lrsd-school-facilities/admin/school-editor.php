@@ -166,23 +166,31 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
     $custom_cards = lrsd_sf_get_nested_value($school_data, ['customCards'], []);
     if (!is_array($custom_cards)) { $custom_cards = []; }
 
-    // Card order: saved order + any new standard cards + any custom card IDs
-    $saved_order   = lrsd_sf_get_nested_value($school_data, ['cardOrder'], []);
-    $default_order = array_keys($all_card_types);
-    $custom_ids    = array_column($custom_cards, 'id');
+    // Global custom cards (templates shared across all schools)
+    $global_cards       = lrsd_sf_get_global_custom_cards();
+    $global_card_ids    = array_column($global_cards, 'id');
+    $custom_card_values = lrsd_sf_get_nested_value($school_data, ['customCardValues'], []);
+    if (!is_array($custom_card_values)) { $custom_card_values = []; }
+    $display_types = lrsd_sf_get_custom_card_display_types();
+
+    // Card order: saved order + any new standard cards + any custom card IDs (school + global)
+    $saved_order    = lrsd_sf_get_nested_value($school_data, ['cardOrder'], []);
+    $default_order  = array_keys($all_card_types);
+    $custom_ids     = array_column($custom_cards, 'id');
+    $all_custom_ids = array_merge($custom_ids, $global_card_ids);
 
     if (!is_array($saved_order) || empty($saved_order)) {
-        $card_order = array_merge($default_order, $custom_ids);
+        $card_order = array_merge($default_order, $all_custom_ids);
     } else {
         // Merge: keep saved order, append any new standard cards or custom cards not yet present
         $card_order = $saved_order;
-        foreach (array_merge($default_order, $custom_ids) as $ct) {
+        foreach (array_merge($default_order, $all_custom_ids) as $ct) {
             if (!in_array($ct, $card_order, true)) {
                 $card_order[] = $ct;
             }
         }
         // Remove IDs that no longer exist (e.g. deleted custom card)
-        $valid_ids = array_merge($default_order, $custom_ids);
+        $valid_ids = array_merge($default_order, $all_custom_ids);
         $card_order = array_values(array_filter($card_order, static function ($card_id) use ($valid_ids) {
             return in_array($card_id, $valid_ids, true);
         }));
@@ -343,14 +351,18 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         <?php lrsd_sf_render_section_footer(); ?>
 
         <!-- ── Custom Cards ────────────────────────────────────── -->
-        <?php lrsd_sf_render_section_header('lrsd-sec-custom-cards', __('Custom Cards', 'lrsd-school-facilities')); ?>
-        <p class="description" style="margin:8px 0 12px;"><?php esc_html_e('Add extra info cards that appear on the school dashboard. Each card can have a title, icon, category label, key–value items, and optional notes.', 'lrsd-school-facilities'); ?></p>
+        <?php lrsd_sf_render_section_header('lrsd-sec-custom-cards', __('Custom Cards (This School)', 'lrsd-school-facilities')); ?>
+        <p class="description" style="margin:8px 0 4px;"><?php esc_html_e('Add extra info cards that appear only on this school\'s dashboard. To add a card that appears on all schools, use the', 'lrsd-school-facilities'); ?>
+            <a href="<?php echo esc_url(add_query_arg('page', 'lrsd-school-facilities-cards', admin_url('admin.php'))); ?>"><?php esc_html_e('Card Editor', 'lrsd-school-facilities'); ?></a>.
+        </p>
+        <p class="description" style="margin:0 0 12px;"><?php esc_html_e('Each card can have a title, display type, icon, category label, key–value items, and optional notes.', 'lrsd-school-facilities'); ?></p>
         <div id="lrsd-sf-custom-cards">
         <?php foreach ($custom_cards as $i => $card) :
-            $card_id    = esc_attr($card['id']    ?? 'custom_' . $i);
-            $card_title = esc_attr($card['title'] ?? '');
-            $card_icon  = esc_attr($card['icon']  ?? '');
+            $card_id    = esc_attr($card['id']       ?? 'custom_' . $i);
+            $card_title = esc_attr($card['title']    ?? '');
+            $card_icon  = esc_attr($card['icon']     ?? '');
             $card_cat   = esc_attr($card['category'] ?? '');
+            $card_type  = $card['cardType'] ?? 'list';
             $card_notes = esc_textarea($card['notes'] ?? '');
             $card_items = is_array($card['items'] ?? null) ? $card['items'] : [];
         ?>
@@ -358,12 +370,22 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                 <div class="lrsd-sf-custom-card-header">
                     <span class="lrsd-sf-card-drag dashicons dashicons-move" title="<?php esc_attr_e('Drag to reorder', 'lrsd-school-facilities'); ?>"></span>
                     <strong class="lrsd-sf-card-name"><?php echo esc_html($card['title'] ?? __('(Untitled Card)', 'lrsd-school-facilities')); ?></strong>
-                    <button type="button" class="button lrsd-sf-remove-card" title="<?php esc_attr_e('Remove card', 'lrsd-school-facilities'); ?>">✕</button>
+                    <button type="button" class="button lrsd-sf-remove-card" title="<?php esc_attr_e('Remove card', 'lrsd-school-facilities'); ?>">&#x2715;</button>
                 </div>
                 <table class="form-table" role="presentation"><tbody>
                     <tr>
                         <th><label><?php esc_html_e('Card Title', 'lrsd-school-facilities'); ?></label></th>
                         <td><input type="text" class="regular-text lrsd-sf-card-title" value="<?php echo $card_title; ?>" data-field="title" /></td>
+                    </tr>
+                    <tr>
+                        <th><label><?php esc_html_e('Display Type', 'lrsd-school-facilities'); ?></label></th>
+                        <td>
+                            <select class="lrsd-sf-card-cardtype" data-field="cardType">
+                                <?php foreach ($display_types as $type_key => $type_label) : ?>
+                                    <option value="<?php echo esc_attr($type_key); ?>"<?php selected($card_type, $type_key); ?>><?php echo esc_html($type_label); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <th><label><?php esc_html_e('Icon', 'lrsd-school-facilities'); ?></label></th>
@@ -386,7 +408,7 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                                 <div class="lrsd-sf-item-row">
                                     <input type="text" class="lrsd-sf-item-label" value="<?php echo esc_attr($item['label'] ?? ''); ?>" placeholder="<?php esc_attr_e('Label', 'lrsd-school-facilities'); ?>" />
                                     <input type="text" class="lrsd-sf-item-value" value="<?php echo esc_attr($item['value'] ?? ''); ?>" placeholder="<?php esc_attr_e('Value', 'lrsd-school-facilities'); ?>" />
-                                    <button type="button" class="button lrsd-sf-remove-item">✕</button>
+                                    <button type="button" class="button lrsd-sf-remove-item">&#x2715;</button>
                                 </div>
                             <?php endforeach; ?>
                             </div>
@@ -407,15 +429,76 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         <input type="hidden" id="lrsd_sf_custom_cards_json" name="lrsd_sf_custom_cards_json" value="<?php echo esc_attr(wp_json_encode($custom_cards, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)); ?>" />
         <?php lrsd_sf_render_section_footer(); ?>
 
+        <!-- ── Global Cards — School Data ──────────────────────── -->
+        <?php if (!empty($global_cards)) : ?>
+        <?php lrsd_sf_render_section_header('lrsd-sec-global-cards', __('Global Cards — School Data', 'lrsd-school-facilities')); ?>
+        <p class="description" style="margin:8px 0 12px;">
+            <?php
+            printf(
+                /* translators: %s: link to Card Editor */
+                esc_html__('These cards appear on all schools. Card titles and subcategory names are managed in the %s. Enter this school\'s values for each row below.', 'lrsd-school-facilities'),
+                '<a href="' . esc_url(add_query_arg('page', 'lrsd-school-facilities-cards', admin_url('admin.php'))) . '">' . esc_html__('Card Editor', 'lrsd-school-facilities') . '</a>'
+            );
+            ?>
+        </p>
+        <?php foreach ($global_cards as $gc) :
+            $gc_id    = $gc['id']    ?? '';
+            $gc_title = $gc['title'] ?? __('(Untitled Card)', 'lrsd-school-facilities');
+            $gc_items = is_array($gc['items'] ?? null) ? $gc['items'] : [];
+
+            // Per-school values for this card
+            $school_gc_data  = $custom_card_values[$gc_id] ?? [];
+            $school_gc_items = is_array($school_gc_data['items'] ?? null) ? $school_gc_data['items'] : [];
+            $school_gc_notes = $school_gc_data['notes'] ?? '';
+
+            // Build label→value map from stored school data
+            $val_map = [];
+            foreach ($school_gc_items as $sgi) {
+                $val_map[$sgi['label'] ?? ''] = $sgi['value'] ?? '';
+            }
+        ?>
+            <div class="lrsd-sf-global-card-data" data-card-id="<?php echo esc_attr($gc_id); ?>">
+                <h4 class="lrsd-sf-gcv-title">
+                    <span class="lrsd-sf-global-badge"><?php esc_html_e('All Schools', 'lrsd-school-facilities'); ?></span>
+                    <?php echo esc_html($gc_title); ?>
+                </h4>
+                <table class="form-table" role="presentation"><tbody>
+                <?php foreach ($gc_items as $tmpl_item) :
+                    $label = $tmpl_item['label'] ?? '';
+                    $value = $val_map[$label]    ?? '';
+                ?>
+                    <tr>
+                        <th><?php echo esc_html($label); ?></th>
+                        <td><input type="text" class="regular-text lrsd-sf-gcv-item-value"
+                                   data-label="<?php echo esc_attr($label); ?>"
+                                   value="<?php echo esc_attr($value); ?>"
+                                   placeholder="<?php esc_attr_e('Value for this school', 'lrsd-school-facilities'); ?>" /></td>
+                    </tr>
+                <?php endforeach; ?>
+                    <tr>
+                        <th><?php esc_html_e('Notes (optional)', 'lrsd-school-facilities'); ?></th>
+                        <td><textarea class="large-text lrsd-sf-gcv-notes" rows="2"
+                                      placeholder="<?php esc_attr_e('Optional note for this school only', 'lrsd-school-facilities'); ?>"><?php echo esc_textarea($school_gc_notes); ?></textarea></td>
+                    </tr>
+                </tbody></table>
+            </div><!-- /.lrsd-sf-global-card-data -->
+        <?php endforeach; ?>
+        <input type="hidden" id="lrsd_sf_custom_card_values_json" name="lrsd_sf_custom_card_values_json" value="<?php echo esc_attr(wp_json_encode($custom_card_values, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)); ?>" />
+        <?php lrsd_sf_render_section_footer(); ?>
+        <?php endif; ?>
+
         <!-- ── Card Display Order ───────────────────────────────── -->
         <?php lrsd_sf_render_section_header('lrsd-sec-card-order', __('Card Display Order', 'lrsd-school-facilities')); ?>
         <p class="description" style="margin:8px 0 12px;"><?php esc_html_e('Drag to reorder how cards appear on the school dashboard.', 'lrsd-school-facilities'); ?></p>
         <ul id="lrsd-sf-card-order">
         <?php
-        // Build label map (standard + custom)
+        // Build label map (standard + per-school custom + global custom)
         $card_labels = $all_card_types;
         foreach ($custom_cards as $cc) {
-            $card_labels[$cc['id'] ?? ''] = esc_html($cc['title'] ?? __('Custom Card', 'lrsd-school-facilities'));
+            $card_labels[$cc['id'] ?? ''] = $cc['title'] ?? __('Custom Card', 'lrsd-school-facilities');
+        }
+        foreach ($global_cards as $gc) {
+            $card_labels[$gc['id'] ?? ''] = $gc['title'] ?? __('Global Card', 'lrsd-school-facilities');
         }
         foreach ($card_order as $ct) :
             if (!isset($card_labels[$ct])) continue;
@@ -423,6 +506,9 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
             <li class="lrsd-sf-order-item" data-card-id="<?php echo esc_attr($ct); ?>">
                 <span class="dashicons dashicons-menu" title="<?php esc_attr_e('Drag to reorder', 'lrsd-school-facilities'); ?>"></span>
                 <span class="lrsd-sf-order-label"><?php echo esc_html($card_labels[$ct]); ?></span>
+                <?php if (in_array($ct, $global_card_ids, true)) : ?>
+                    <span class="lrsd-sf-order-global-badge"><?php esc_html_e('Global', 'lrsd-school-facilities'); ?></span>
+                <?php endif; ?>
             </li>
         <?php endforeach; ?>
         </ul>
@@ -535,6 +621,7 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
                     'title'    => sanitize_text_field($card['title'] ?? ''),
                     'icon'     => sanitize_text_field($card['icon'] ?? ''),
                     'category' => sanitize_text_field($card['category'] ?? ''),
+                    'cardType' => in_array($card['cardType'] ?? 'list', ['list', 'stat'], true) ? $card['cardType'] : 'list',
                     'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
                     'items'    => [],
                 ];
@@ -562,6 +649,40 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
         $card_order = json_decode($card_order_raw, true);
         if (json_last_error() === JSON_ERROR_NONE && is_array($card_order)) {
             $school_data['cardOrder'] = array_values(array_map('sanitize_key', $card_order));
+        }
+    }
+
+    // ── Global card values (per-school data for global card templates) ─────────
+    $gcv_raw = isset($_POST['lrsd_sf_custom_card_values_json'])
+        ? trim(wp_unslash($_POST['lrsd_sf_custom_card_values_json']))
+        : '';
+
+    if ($gcv_raw !== '') {
+        $gcv_decoded = json_decode($gcv_raw, true);
+        if (json_last_error() === JSON_ERROR_NONE && is_array($gcv_decoded)) {
+            $sanitized_gcv = [];
+            foreach ($gcv_decoded as $gc_id => $gc_data) {
+                if (!is_array($gc_data)) {
+                    continue;
+                }
+                $s_gc = [
+                    'notes' => sanitize_textarea_field($gc_data['notes'] ?? ''),
+                    'items' => [],
+                ];
+                if (is_array($gc_data['items'] ?? null)) {
+                    foreach ($gc_data['items'] as $item) {
+                        if (!is_array($item)) {
+                            continue;
+                        }
+                        $s_gc['items'][] = [
+                            'label' => sanitize_text_field($item['label'] ?? ''),
+                            'value' => sanitize_text_field($item['value'] ?? ''),
+                        ];
+                    }
+                }
+                $sanitized_gcv[sanitize_key((string)$gc_id)] = $s_gc;
+            }
+            $school_data['customCardValues'] = $sanitized_gcv;
         }
     }
 

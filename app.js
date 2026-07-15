@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let schoolData = {};
     let fosMapLookupData = {}; // Populated from dataset.fosMapLookup (can include custom FOS entries)
+    let globalCustomCards = []; // Global card templates shared across all schools
     let lastUpdated = ''; // Global timestamp for data updates
     let chartInstances = {};
     let currentViewMode = 'school';
@@ -172,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Parse JSON data and extract global timestamp
             const data = await response.json();
-            const { lastUpdated: timestamp, ...schools } = data;
+            const { lastUpdated: timestamp, fosMapLookup, globalCustomCards: gcCards, ...schools } = data;
             
             // Validate and format timestamp (supports YYYY-MM-DD, MM/DD/YYYY, or M/D/YYYY)
             const timestampRegex = /^(\d{4}-\d{2}-\d{2})|(\d{1,2}\/\d{1,2}\/\d{4})$/;
@@ -187,7 +188,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             lastUpdated = dateOnly;
             schoolData = schools;
-            fosMapLookupData = (typeof schools.fosMapLookup === 'object' && schools.fosMapLookup) ? schools.fosMapLookup : {};
+            fosMapLookupData = (typeof fosMapLookup === 'object' && fosMapLookup) ? fosMapLookup : {};
+            globalCustomCards = Array.isArray(gcCards) ? gcCards : [];
             
             // Validate that we have data
             const schoolIds = Object.keys(schoolData);
@@ -420,6 +422,44 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     /**
+     * Renders a custom card (school-specific or global) as HTML.
+     * @param {Object} template - Card template (has title, icon, category, cardType, items, notes)
+     * @param {Object|null} schoolValues - Per-school overrides for global cards: {items:[{label,value}], notes}
+     * @param {string} sizeClass - Tile size CSS class
+     */
+    const renderCustomCardHtml = (template, schoolValues, sizeClass) => {
+        const iconSrc  = template.icon || 'public/icon/details.svg';
+        const title    = sanitizeHTML(template.title || 'Custom Card');
+        const cardType = template.cardType || 'list';
+
+        // Build item list: if schoolValues provided (global card), merge labels with school values
+        let items = Array.isArray(template.items) ? template.items : [];
+        if (schoolValues && Array.isArray(schoolValues.items) && schoolValues.items.length > 0) {
+            // Global card: use template labels, school values
+            const valMap = {};
+            schoolValues.items.forEach(si => { valMap[si.label || ''] = si.value || ''; });
+            items = items.map(ti => ({ label: ti.label || '', value: valMap[ti.label || ''] || '' }));
+        }
+
+        // Notes: school override takes precedence for global cards; template notes for school cards
+        const notesText = (schoolValues && schoolValues.notes) ? schoolValues.notes : (template.notes || '');
+        const notesHtml = notesText ? `<div class="tile-footnote-static">${sanitizeHTML(notesText)}</div>` : '';
+
+        if (cardType === 'stat') {
+            const statItems = items.map(it =>
+                `<div class="stat-item"><div class="stat-item-label">${sanitizeHTML(it.label || '')}</div><div class="stat-item-value">${sanitizeHTML(it.value || '\u2014')}</div></div>`
+            ).join('') || `<div class="stat-item"><div class="stat-item-value">\u2014</div></div>`;
+            return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="${iconSrc}" alt="" class="card-header-icon"><h2 class="card-title">${title}</h2></div><div class="card-body"><div class="stats-grid">${statItems}</div>${notesHtml}</div></div>`;
+        }
+
+        // Default: list card
+        const listItems = items.map(it =>
+            `<li class="detail-item"><span class="detail-label">${sanitizeHTML(it.label || '')}</span><span class="detail-value">${sanitizeHTML(it.value || '')}</span></li>`
+        ).join('') || '<li class="detail-item">No data available.</li>';
+        return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="${iconSrc}" alt="" class="card-header-icon"><h2 class="card-title">${title}</h2></div><div class="card-body"><ul class="detail-list">${listItems}</ul>${notesHtml}</div></div>`;
+    };
+
+    /**
      * Creates a data card element based on school data and card type
      * @param {Object} school - School data object
      * @param {string} cardType - Type of card to create
@@ -569,17 +609,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
             default: { // For all other simple list cards and custom cards
                 // ── Custom cards (id starts with "custom_") ────────────────
-                if (cardType.startsWith('custom_') && Array.isArray(school.customCards)) {
-                    const customCard = school.customCards.find(c => c.id === cardType);
-                    if (!customCard) return '';
-                    const iconSrc = customCard.icon || 'public/icon/details.svg';
-                    const title   = sanitizeHTML(customCard.title || 'Custom Card');
-                    const items   = Array.isArray(customCard.items) ? customCard.items : [];
-                    const notes   = customCard.notes ? `<div class="tile-footnote-static">${sanitizeHTML(customCard.notes)}</div>` : '';
-                    const listItems = items.map(it =>
-                        `<li class="detail-item"><span class="detail-label">${sanitizeHTML(it.label || '')}</span><span class="detail-value">${sanitizeHTML(it.value || '')}</span></li>`
-                    ).join('') || '<li class="detail-item">No data available.</li>';
-                    return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="${iconSrc}" alt="" class="card-header-icon"><h2 class="card-title">${title}</h2></div><div class="card-body"><ul class="detail-list">${listItems}</ul>${notes}</div></div>`;
+                if (cardType.startsWith('custom_')) {
+                    // First check school-specific cards
+                    if (Array.isArray(school.customCards)) {
+                        const customCard = school.customCards.find(c => c.id === cardType);
+                        if (customCard) {
+                            return renderCustomCardHtml(customCard, null, sizeClass);
+                        }
+                    }
+                    // Then check global card templates
+                    const globalTemplate = globalCustomCards.find(c => c.id === cardType);
+                    if (globalTemplate) {
+                        const schoolValues = (school.customCardValues && school.customCardValues[cardType]) || {};
+                        return renderCustomCardHtml(globalTemplate, schoolValues, sizeClass);
+                    }
+                    return '';
                 }
 
                 const icons = { 
@@ -1002,18 +1046,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (currentViewMode === 'school') {
             const school = schoolData[selectedSchoolId];
-            // Respect per-school cardOrder if present; include custom cards
+            // Respect per-school cardOrder if present; include school-specific and global custom cards
             const defaultCardTypes = ['school_header', 'details', 'additions', 'enrolment', 'capacity', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'catchment_map', 'projects_provincial', 'projects_local'];
-            const customCardIds = Array.isArray(school.customCards) ? school.customCards.map(c => c.id) : [];
+            const schoolCardIds = Array.isArray(school.customCards) ? school.customCards.map(c => c.id) : [];
+            const globalCardIds = globalCustomCards.map(c => c.id);
+            const allCustomCardIds = [...schoolCardIds, ...globalCardIds];
             let cardTypes;
             if (Array.isArray(school.cardOrder) && school.cardOrder.length > 0) {
                 // Use saved order; append any types not yet in the saved order
-                const allKnown = [...defaultCardTypes, ...customCardIds];
+                const allKnown = [...defaultCardTypes, ...allCustomCardIds];
                 const ordered = school.cardOrder.filter(t => allKnown.includes(t));
                 const extras  = allKnown.filter(t => !ordered.includes(t));
                 cardTypes = [...ordered, ...extras];
             } else {
-                cardTypes = [...defaultCardTypes, ...customCardIds];
+                cardTypes = [...defaultCardTypes, ...allCustomCardIds];
             }
             cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
             

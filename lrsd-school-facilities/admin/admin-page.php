@@ -24,6 +24,15 @@ function lrsd_sf_register_admin_pages() {
 
     add_submenu_page(
         'lrsd-school-facilities',
+        __('Card Editor', 'lrsd-school-facilities'),
+        __('Card Editor', 'lrsd-school-facilities'),
+        'manage_options',
+        'lrsd-school-facilities-cards',
+        'lrsd_sf_render_card_editor_page'
+    );
+
+    add_submenu_page(
+        'lrsd-school-facilities',
         __('Bulk Update', 'lrsd-school-facilities'),
         __('Bulk Update', 'lrsd-school-facilities'),
         'manage_options',
@@ -69,6 +78,7 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
         'ajaxUrl'          => admin_url('admin-ajax.php'),
         'customOptionNonce'=> wp_create_nonce('lrsd_sf_custom_option_nonce'),
         'isFosKey'         => 'familyOfSchools',
+        'displayTypes'     => lrsd_sf_get_custom_card_display_types(),
         'i18n'             => [
             'chooseMedia'       => __('Choose or Upload Media', 'lrsd-school-facilities'),
             'useMedia'          => __('Use this file', 'lrsd-school-facilities'),
@@ -78,11 +88,14 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
             'error'             => __('An error occurred. Please try again.', 'lrsd-school-facilities'),
             'confirmBulk'       => __('Save changes to all schools in this category?', 'lrsd-school-facilities'),
             'untitledCard'      => __('(Untitled Card)', 'lrsd-school-facilities'),
+            'allSchoolsLabel'   => __('All Schools', 'lrsd-school-facilities'),
+            'addSubcategory'    => __('+ Add Subcategory', 'lrsd-school-facilities'),
+            'labelPlaceholder'  => __('Label / subcategory name', 'lrsd-school-facilities'),
         ],
     ]);
 
-    // Enqueue WP media only on the school editor screen, not on the bulk update page
-    if (get_post_type() === 'lr_school') {
+    // Enqueue WP media only on the school editor screen and card editor page, not on the bulk update page
+    if (get_post_type() === 'lr_school' || strpos((string)$hook_suffix, 'lrsd-school-facilities-cards') !== false) {
         wp_enqueue_media();
     }
 }
