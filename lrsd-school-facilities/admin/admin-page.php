@@ -180,8 +180,8 @@ function lrsd_sf_render_bulk_update_page() {
     }
 
     $field_map   = lrsd_sf_get_simple_field_map();
-    $cat_fields  = array_filter($field_map, static function ($f) use ($category) {
-        return ($f['section'] ?? '') === $category;
+    $cat_fields  = array_filter($field_map, static function ($field) use ($category) {
+        return ($field['section'] ?? '') === $category;
     });
 
     $is_playground = $category === 'playground';

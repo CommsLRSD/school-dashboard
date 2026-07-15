@@ -183,8 +183,8 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         }
         // Remove IDs that no longer exist (e.g. deleted custom card)
         $valid_ids = array_merge($default_order, $custom_ids);
-        $card_order = array_values(array_filter($card_order, static function ($id) use ($valid_ids) {
-            return in_array($id, $valid_ids, true);
+        $card_order = array_values(array_filter($card_order, static function ($card_id) use ($valid_ids) {
+            return in_array($card_id, $valid_ids, true);
         }));
     }
 
@@ -514,7 +514,7 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
             continue;
         }
         $lines = explode("\n", sanitize_textarea_field((string)$posted_projects[$project_key]));
-        $lines = array_values(array_filter(array_map('trim', $lines), static function ($l) { return $l !== ''; }));
+        $lines = array_values(array_filter(array_map('trim', $lines), static function ($line) { return $line !== ''; }));
         lrsd_sf_set_nested_value($school_data, $path, $lines);
     }
 

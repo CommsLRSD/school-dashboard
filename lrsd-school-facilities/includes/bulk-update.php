@@ -28,8 +28,8 @@ function lrsd_sf_handle_bulk_update() {
 
     $field_map = lrsd_sf_get_simple_field_map();
     // Only process fields belonging to the submitted category
-    $cat_fields = array_filter($field_map, static function ($f) use ($category) {
-        return ($f['section'] ?? '') === $category;
+    $cat_fields = array_filter($field_map, static function ($field) use ($category) {
+        return ($field['section'] ?? '') === $category;
     });
 
     $playground_categories = ['playground'];
@@ -73,7 +73,7 @@ function lrsd_sf_handle_bulk_update() {
         // Playground (special textarea handling)
         if (in_array($category, $playground_categories, true) && isset($field_values['playground_lines'])) {
             $lines = explode("\n", sanitize_textarea_field((string)$field_values['playground_lines']));
-            $lines = array_values(array_filter(array_map('trim', $lines), static function ($l) { return $l !== ''; }));
+            $lines = array_values(array_filter(array_map('trim', $lines), static function ($line) { return $line !== ''; }));
             lrsd_sf_set_nested_value($school_data, ['playground'], $lines);
         }
 
@@ -83,7 +83,7 @@ function lrsd_sf_handle_bulk_update() {
                 continue;
             }
             $lines = explode("\n", sanitize_textarea_field((string)$field_values[$pk]));
-            $lines = array_values(array_filter(array_map('trim', $lines), static function ($l) { return $l !== ''; }));
+            $lines = array_values(array_filter(array_map('trim', $lines), static function ($line) { return $line !== ''; }));
             lrsd_sf_set_nested_value($school_data, $path, $lines);
         }
 
