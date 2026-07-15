@@ -57,17 +57,16 @@ function lrsd_sf_render_import_export_page() {
         wp_die(esc_html__('You do not have permission to access this page.', 'lrsd-school-facilities'));
     }
 
-    $notice_type = isset($_GET['lrsd_sf_notice']) ? sanitize_key(wp_unslash($_GET['lrsd_sf_notice'])) : '';
-    $message     = isset($_GET['lrsd_sf_message']) ? sanitize_text_field(wp_unslash($_GET['lrsd_sf_message'])) : '';
+    $notice = lrsd_sf_get_admin_notice();
     $school_count = wp_count_posts('lr_school');
     $published_count = isset($school_count->publish) ? (int) $school_count->publish : 0;
     ?>
     <div class="wrap lrsd-sf-wrap">
         <h1><?php esc_html_e('LRSD School Facilities', 'lrsd-school-facilities'); ?></h1>
 
-        <?php if ($notice_type && $message) : ?>
-            <div class="notice notice-<?php echo esc_attr($notice_type === 'success' ? 'success' : 'error'); ?> is-dismissible">
-                <p><?php echo esc_html($message); ?></p>
+        <?php if (!empty($notice['message'])) : ?>
+            <div class="notice notice-<?php echo esc_attr(($notice['type'] ?? 'success') === 'success' ? 'success' : 'error'); ?> is-dismissible">
+                <p><?php echo wp_kses_post($notice['message']); ?></p>
             </div>
         <?php endif; ?>
 

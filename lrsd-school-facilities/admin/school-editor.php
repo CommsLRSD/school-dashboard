@@ -185,7 +185,7 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
         update_post_meta($post_id, 'lrsd_school_id', $school_id);
     }
 
-    update_post_meta($post_id, 'lrsd_school_data', wp_slash(wp_json_encode($school_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)));
+    update_post_meta($post_id, 'lrsd_school_data', lrsd_sf_encode_school_data($school_data));
 
     $new_title = isset($school_data['schoolName']) ? sanitize_text_field((string) $school_data['schoolName']) : '';
     if ($new_title !== '' && $new_title !== $post->post_title) {

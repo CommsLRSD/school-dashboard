@@ -82,14 +82,14 @@ function lrsd_sf_handle_import() {
             $result          = wp_update_post($post_data, true);
             if (!is_wp_error($result)) {
                 update_post_meta($existing_post_id, 'lrsd_school_id', $school_id);
-                update_post_meta($existing_post_id, 'lrsd_school_data', wp_slash(wp_json_encode($school, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)));
+                update_post_meta($existing_post_id, 'lrsd_school_data', lrsd_sf_encode_school_data($school));
                 $updated++;
             }
         } else {
             $result = wp_insert_post($post_data, true);
             if (!is_wp_error($result) && $result > 0) {
                 update_post_meta($result, 'lrsd_school_id', $school_id);
-                update_post_meta($result, 'lrsd_school_data', wp_slash(wp_json_encode($school, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)));
+                update_post_meta($result, 'lrsd_school_data', lrsd_sf_encode_school_data($school));
                 $created++;
             }
         }
@@ -112,10 +112,9 @@ function lrsd_sf_handle_import() {
 }
 
 function lrsd_sf_redirect_import_result($status, $message) {
+    lrsd_sf_set_admin_notice(wp_strip_all_tags((string) $message), $status);
     $redirect_url = add_query_arg([
-        'page'             => 'lrsd-school-facilities',
-        'lrsd_sf_notice'   => sanitize_key($status),
-        'lrsd_sf_message'  => wp_strip_all_tags((string) $message),
+        'page' => 'lrsd-school-facilities',
     ], admin_url('admin.php'));
 
     wp_safe_redirect($redirect_url);
