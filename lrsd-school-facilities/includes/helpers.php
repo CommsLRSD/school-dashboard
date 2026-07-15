@@ -135,50 +135,6 @@ function lrsd_sf_set_editor_notice($message, $type = 'success') {
         return;
     }
 
-    /**
-     * Set notice transient for the import/export admin page.
-     */
-    function lrsd_sf_set_admin_notice($message, $type = 'success') {
-        $user_id = get_current_user_id();
-        if (!$user_id) {
-            return;
-        }
-
-        set_transient(
-            'lrsd_sf_admin_notice_' . $user_id,
-            [
-                'message' => wp_kses_post($message),
-                'type'    => sanitize_key($type),
-            ],
-            MINUTE_IN_SECONDS
-        );
-    }
-
-    /**
-     * Read and clear the current user's admin notice.
-     */
-    function lrsd_sf_get_admin_notice() {
-        $user_id = get_current_user_id();
-        if (!$user_id) {
-            return null;
-        }
-
-        $key    = 'lrsd_sf_admin_notice_' . $user_id;
-        $notice = get_transient($key);
-        if ($notice) {
-            delete_transient($key);
-        }
-
-        return $notice ?: null;
-    }
-
-    /**
-     * Encode school data for storage in post meta.
-     */
-    function lrsd_sf_encode_school_data(array $school_data) {
-        return wp_slash(wp_json_encode($school_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-    }
-
     set_transient(
         'lrsd_sf_editor_notice_' . $user_id,
         [
@@ -187,4 +143,48 @@ function lrsd_sf_set_editor_notice($message, $type = 'success') {
         ],
         MINUTE_IN_SECONDS
     );
+}
+
+/**
+ * Set notice transient for the import/export admin page.
+ */
+function lrsd_sf_set_admin_notice($message, $type = 'success') {
+    $user_id = get_current_user_id();
+    if (!$user_id) {
+        return;
+    }
+
+    set_transient(
+        'lrsd_sf_admin_notice_' . $user_id,
+        [
+            'message' => wp_kses_post($message),
+            'type'    => sanitize_key($type),
+        ],
+        MINUTE_IN_SECONDS
+    );
+}
+
+/**
+ * Read and clear the current user's admin notice.
+ */
+function lrsd_sf_get_admin_notice() {
+    $user_id = get_current_user_id();
+    if (!$user_id) {
+        return null;
+    }
+
+    $key    = 'lrsd_sf_admin_notice_' . $user_id;
+    $notice = get_transient($key);
+    if ($notice) {
+        delete_transient($key);
+    }
+
+    return $notice ?: null;
+}
+
+/**
+ * Encode school data for storage in post meta.
+ */
+function lrsd_sf_encode_school_data(array $school_data) {
+    return wp_slash(wp_json_encode($school_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 }
