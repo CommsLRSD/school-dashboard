@@ -101,16 +101,29 @@ function lrsd_sf_get_nested_value($data, array $path, $default = '') {
  * Set nested value in an array path.
  */
 function lrsd_sf_set_nested_value(array &$data, array $path, $value) {
-    $current = &$data;
+    if (empty($path)) {
+        return false;
+    }
 
-    foreach ($path as $segment) {
-        if (!isset($current[$segment]) || !is_array($current[$segment])) {
-            $current[$segment] = [];
+    $current    = &$data;
+    $last_index = count($path) - 1;
+
+    foreach ($path as $index => $segment) {
+        if ($index === $last_index) {
+            $current[$segment] = $value;
+            return true;
         }
+
+        if (!isset($current[$segment])) {
+            $current[$segment] = [];
+        } elseif (!is_array($current[$segment])) {
+            return false;
+        }
+
         $current = &$current[$segment];
     }
 
-    $current = $value;
+    return false;
 }
 
 /**

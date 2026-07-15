@@ -58,7 +58,7 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
             <?php foreach ($project_paths as $project_key => $path) : ?>
                 <?php $project_lines = implode("\n", (array) lrsd_sf_get_nested_value($school_data, $path, [])); ?>
                 <tr>
-                    <th scope="row"><label for="<?php echo esc_attr($project_key); ?>"><?php echo esc_html(str_replace('_', ' ', ucfirst($project_key))); ?></label></th>
+                    <th scope="row"><label for="<?php echo esc_attr($project_key); ?>"><?php echo esc_html(ucwords(str_replace('_', ' ', $project_key))); ?></label></th>
                     <td><textarea id="<?php echo esc_attr($project_key); ?>" name="lrsd_sf_projects[<?php echo esc_attr($project_key); ?>]" rows="4" class="large-text code"><?php echo esc_textarea($project_lines); ?></textarea></td>
                 </tr>
             <?php endforeach; ?>
