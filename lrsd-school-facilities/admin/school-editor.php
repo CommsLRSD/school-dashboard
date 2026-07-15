@@ -198,6 +198,7 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
     }
 
     update_option('lrsd_schools_last_updated', wp_date('Y-m-d'));
+    lrsd_sf_flush_dataset_cache();
     lrsd_sf_set_editor_notice(__('School record saved successfully.', 'lrsd-school-facilities'), 'success');
 }
 

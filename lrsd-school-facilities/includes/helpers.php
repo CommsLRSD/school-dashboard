@@ -188,3 +188,10 @@ function lrsd_sf_get_admin_notice() {
 function lrsd_sf_encode_school_data(array $school_data) {
     return wp_slash(wp_json_encode($school_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 }
+
+/**
+ * Clear cached dataset used by REST responses.
+ */
+function lrsd_sf_flush_dataset_cache() {
+    delete_transient('lrsd_sf_rest_dataset');
+}

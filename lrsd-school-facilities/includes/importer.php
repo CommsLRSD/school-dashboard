@@ -100,6 +100,7 @@ function lrsd_sf_handle_import() {
     }
 
     update_option('lrsd_schools_last_updated', $last_updated);
+    lrsd_sf_flush_dataset_cache();
 
     $message = sprintf(
         /* translators: 1: created count, 2: updated count */

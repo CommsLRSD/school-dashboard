@@ -11,5 +11,15 @@ function lrsd_sf_register_rest_routes() {
 }
 
 function lrsd_sf_rest_get_schools(WP_REST_Request $request) {
-    return rest_ensure_response(lrsd_sf_get_school_dataset());
+    $cached = get_transient('lrsd_sf_rest_dataset');
+    $data   = is_array($cached) ? $cached : lrsd_sf_get_school_dataset();
+
+    if (!is_array($cached)) {
+        set_transient('lrsd_sf_rest_dataset', $data, 5 * MINUTE_IN_SECONDS);
+    }
+
+    $response = rest_ensure_response($data);
+    $response->header('Cache-Control', 'public, max-age=300');
+
+    return $response;
 }
