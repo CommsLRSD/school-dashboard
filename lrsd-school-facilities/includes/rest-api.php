@@ -10,7 +10,6 @@ function lrsd_sf_register_rest_routes() {
     ]);
 }
 
-function lrsd_sf_rest_get_schools(WP_REST_Request $request) {
-    unset($request);
+function lrsd_sf_rest_get_schools(WP_REST_Request $_request) {
     return rest_ensure_response(lrsd_sf_get_school_dataset());
 }
