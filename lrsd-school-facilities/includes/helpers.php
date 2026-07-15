@@ -16,8 +16,12 @@ function lrsd_sf_find_school_post_by_id($school_id) {
         'post_status'    => 'any',
         'posts_per_page' => 1,
         'fields'         => 'ids',
-        'meta_key'       => 'lrsd_school_id',
-        'meta_value'     => $school_id,
+        'meta_query'     => [
+            [
+                'key'   => 'lrsd_school_id',
+                'value' => $school_id,
+            ],
+        ],
         'no_found_rows'  => true,
     ]);
 
