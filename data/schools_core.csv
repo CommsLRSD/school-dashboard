@@ -1,0 +1,42 @@
+school_id,schoolName,schoolType,headerImage,address,phone,familyOfSchools,schoolLevel,grades,program,meta_user,meta_updated
+archwood,Archwood School,School,public/archwood.jpg,800 Archibald St.,(204) 233-7983,NELSON MCINTYRE FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+beliveau,Collège Béliveau,Collège,public/beliveau.jpg,296 Speers Rd.,(204) 255-3205,BÉLIVEAU FOS,High School,'7-12,French Immersion,CommsLRSD,10/16/2025 17:22
+cjs,Collège Jeanne-Sauvé,Collège,public/cjs.jpg,1128 Dakota St.,(204) 257-0124,JEANNE-SAUVÉ FOS,High School,'9-12,French Immersion,CommsLRSD,10/16/2025 17:22
+dakota,Dakota Collegiate,School,public/dakota.jpg,661 Dakota St.,(204) 256-4366,DAKOTA FOS,High School,'9-12,English Program,CommsLRSD,10/16/2025 17:22
+darwin,Darwin School,School,public/darwin.jpg,175 Darwin St.,(204) 257-2904,DAKOTA FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+drdwpenner,Dr. D.W. Penner School,School,public/penner.jpg,121 Hazelwood Cres.,(204) 256-1135,GLENLAWN FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+ecolegeorgemcdowell,École George-McDowell,École,public/georgemcdowell.jpg,366 Paddington Rd.,(204) 253-1492,JEANNE-SAUVÉ FOS,Elementary School,'6-8,French Immersion,CommsLRSD,10/16/2025 17:22
+ecoleguyot,École Guyot,École,public/guyot.jpg,400 Willowlake Cres.,(204) 257-2540,BÉLIVEAU FOS,Elementary School,K-8,French Immersion,CommsLRSD,10/16/2025 17:22
+ecolehenribergeron,École Henri-Bergeron,École,public/henribergeron.jpg,363 Enfield Cres.,(204) 233-7079,BÉLIVEAU FOS,Elementary School,French Immersion 5-8; Middle Immersion 4-6,French Immersion & Middle Immersion,CommsLRSD,10/16/2025 17:22
+ecolehowden,École Howden,École,public/howden.jpg,150 Howden Rd.,(204) 257-0656,BÉLIVEAU FOS,Elementary School,K-6,French Immersion,CommsLRSD,10/16/2025 17:22
+ecolejulieriel,École Julie-Riel,École,public/julieriel.jpeg,316 Ashworth St.,(204) 253-2363,JEANNE-SAUVÉ FOS,Elementary School,French Immersion K-5; Middle Immersion 4-6,French Immersion & Middle Immersion,CommsLRSD,10/16/2025 17:22
+ecolemarieannegaboury,École Marie-Anne-Gaboury,École,public/marieannegaboury.jpg,95 Pulberry St.,(204) 253-9704,JEANNE-SAUVÉ FOS,Elementary School,K-8,French Immersion,CommsLRSD,10/16/2025 17:22
+ecoleprovencher,École Provencher,École,public/provencher.jpg,320 ave de la Cathedrale,(204) 233-0222,BÉLIVEAU FOS,Elementary School,K-4,French Immersion,CommsLRSD,10/16/2025 17:22
+ecolemazinagiizhik,École Mazina-Giizhik,École,public/mazinagiizhik.jpg,355 Des Hivernants Blvd.,Board Office,BÉLIVEAU FOS,Elementary School,K-8,French Immersion Program,CommsLRSD,10/16/2025 17:22
+ecolestgermain,École St. Germain,École,public/stgermain.jpg,77 John Forsyth Rd.,(204) 254-0120,JEANNE-SAUVÉ FOS,Elementary School,K-5,French Immersion,CommsLRSD,10/16/2025 17:22
+ecolevanbelleghem,École Van Belleghem,École,public/vanbelleghem.jpg,10 Vermillion Rd.,(204) 255-1134,BÉLIVEAU FOS,Elementary School,K-8,French Immersion,CommsLRSD,10/16/2025 17:22
+ecolevarennes,École Varennes,École,public/varennes.png,22 Varennes Ave.,(204) 253-1375,JEANNE-SAUVÉ FOS,Elementary School,K-6 (Grades 7 & 8 moved to École Henri Bergeron in 2025-26),French Immersion,CommsLRSD,10/16/2025 17:22
+frontenac,Frontenac School,School,public/frontenac.jpg,866 Autumnwood Dr.,(204) 257-0609,WINDSOR PARK FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+generalvanier,General Vanier School,School,public/generalvanier.jpg,18 Lomond Blvd.,(204) 255-1400,WINDSOR PARK FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+glenlawn,Glenlawn Collegiate,Collegiate,public/glenlawn.jpg,770 St. Mary's Rd.,(204) 233-3986,GLENLAWN FOS,High School,'9-12,English Program,CommsLRSD,10/16/2025 17:22
+glenwood,Glenwood School,School,public/glenwood.jpg,51 Blenheim Ave.,(204) 233-3619,GLENLAWN FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+hastings,Hastings School,School,public/hastings.jpg,50 Hastings Blvd.,(204) 253-1371,DAKOTA FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+highbury,Highbury School,School,public/highbury.jpg,99 Highbury Rd.,(204) 254-5078,DAKOTA FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+hspaul,H.S. Paul School,School,public/hspaul.jpg,160 Southglen Blvd.,(204) 254-7477,DAKOTA FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+islandlakes,Island Lakes Community School,School,public/islandlakes.jpg,445 Island Shore Blvd.,(204) 254-6247,J.H. BRUNS FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+jhbruns,J.H. Bruns Collegiate,Collegiate,public/jhbruns.jpg,250 Lakewood Blvd.,(204) 257-2928,J.H. BRUNS FOS,High School,'9-12,English Program,CommsLRSD,10/16/2025 17:22
+lavallee,Lavallee School,School,public/lavallee.jpg,505 St. Anne's Rd.,(204) 257-1388,DAKOTA FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+louisrielartstech,Louis Riel Arts & Technology Centre,Centre,public/lratc.jpg,5 deBourmont Ave.,(204) 237-8951,Other,High School,"Grade 11, 12, post-secondary",Technical Vocational,CommsLRSD,10/16/2025 17:22
+marion,Marion School,School,public/marion.jpg,619 Des Meurons St.,(204) 233-2893,NELSON MCINTYRE FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+minnetonka,Minnetonka School,School,public/minnetonka.jpg,200 Minnetonka St.,(204) 257-8114,GLENLAWN FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+nelsonmcintyre,Nelson McIntyre Collegiate,Collegiate,public/nelsonmacintyre.jpg,188 St. Mary's Rd.,(204) 237-0219,NELSON MCINTYRE FOS,High School,'9-12,English Program,CommsLRSD,10/16/2025 17:22
+niakwaplace,Niakwa Place School,School,public/niakwa.jpg,200 Pebblebeach Rd.,(204) 257-0640,J.H. BRUNS FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+nordale,Nordale School,School,public/nordaleschool.jpeg,99 Birchdale Ave.,(204) 237-0202,NELSON MCINTYRE FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+sagecreek,Sage Creek School,School,public/sagecreek.jpg,315 Sage Creek Blvd.,(204) 253-8199,J.H. BRUNS FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+samuelburland,Samuel Burland School,School,public/samuelburland.jpg,192 Burland Ave.,(204) 254-0124,GLENLAWN FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+shamrock,Shamrock School,School,public/shamrock.png,831 Beaverhill Blvd.,(204) 257-0637,J.H. BRUNS FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+stgeorge,St. George School,School,public/stgeorge.jpg,151 St. George Rd.,(204) 253-2646,GLENLAWN FOS,Elementary School,K-6 (Grades 7 & 8 moved to Windsor School in 2024-25),English Program,CommsLRSD,10/16/2025 17:22
+victorhlwyatt,Victor H.L. Wyatt School,School,public/victorwyatt.jpg,485 Meadowood Dr.,(204) 255-7880,DAKOTA FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+victormager,Victor Mager School,School,public/victormager.jpg,81 Beliveau Rd.,(204) 253-9873,DAKOTA FOS,Elementary School,K-8,English Program,CommsLRSD,10/16/2025 17:22
+windsor,Windsor School,School,public/windsorschool.jpg,80 Cunnington Ave.,(204) 237-4057,GLENLAWN FOS,Elementary School,K-8 (Includes Grades 7 & 8 students relocated from St. George School),English Program,CommsLRSD,10/16/2025 17:22
+windsorpark,Windsor Park Collegiate,Collegiate,public/windsorpark.jpg,1015 Cottonwood Rd.,(204) 256-7316,WINDSOR PARK FOS,High School,'9-12,English Program,CommsLRSD,10/16/2025 17:22

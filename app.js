@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Calculate age dynamically from Built year
                 const currentYear = new Date().getFullYear();
                 const builtYear = school.details.Built;
-                const calculatedAge = builtYear ? `${currentYear - builtYear} years` : school.details.Age;
+                const calculatedAge = builtYear ? `${currentYear - builtYear} years` : 'Unknown';
                 
                 // Use separate grades and program fields from school data
                 const grades = school.grades || '';
