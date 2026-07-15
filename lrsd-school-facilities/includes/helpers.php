@@ -1,0 +1,129 @@
+<?php
+
+defined('ABSPATH') || exit;
+
+/**
+ * Find a school post ID by stable school ID.
+ */
+function lrsd_sf_find_school_post_by_id($school_id) {
+    $school_id = sanitize_text_field((string) $school_id);
+    if ($school_id === '') {
+        return 0;
+    }
+
+    $posts = get_posts([
+        'post_type'      => 'lr_school',
+        'post_status'    => 'any',
+        'posts_per_page' => 1,
+        'fields'         => 'ids',
+        'meta_key'       => 'lrsd_school_id',
+        'meta_value'     => $school_id,
+        'no_found_rows'  => true,
+    ]);
+
+    return empty($posts) ? 0 : (int) $posts[0];
+}
+
+/**
+ * Normalize stored school data into an array.
+ */
+function lrsd_sf_normalize_school_data($raw_data) {
+    if (is_array($raw_data)) {
+        return $raw_data;
+    }
+
+    if (is_string($raw_data) && $raw_data !== '') {
+        $decoded = json_decode($raw_data, true);
+        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+            return $decoded;
+        }
+    }
+
+    return [];
+}
+
+/**
+ * Build dataset in the same JSON shape as the original static file.
+ */
+function lrsd_sf_get_school_dataset() {
+    $dataset = [
+        'lastUpdated' => get_option('lrsd_schools_last_updated', ''),
+    ];
+
+    $posts = get_posts([
+        'post_type'      => 'lr_school',
+        'post_status'    => ['publish', 'draft', 'private'],
+        'posts_per_page' => -1,
+        'orderby'        => 'title',
+        'order'          => 'ASC',
+        'no_found_rows'  => true,
+    ]);
+
+    foreach ($posts as $post) {
+        $school_id = get_post_meta($post->ID, 'lrsd_school_id', true);
+        $school_id = sanitize_text_field((string) $school_id);
+        if ($school_id === '') {
+            continue;
+        }
+
+        $school_data = lrsd_sf_normalize_school_data(get_post_meta($post->ID, 'lrsd_school_data', true));
+        if (empty($school_data) || !is_array($school_data)) {
+            continue;
+        }
+
+        $dataset[$school_id] = $school_data;
+    }
+
+    return $dataset;
+}
+
+/**
+ * Get nested value from an array path.
+ */
+function lrsd_sf_get_nested_value($data, array $path, $default = '') {
+    $current = $data;
+
+    foreach ($path as $segment) {
+        if (!is_array($current) || !array_key_exists($segment, $current)) {
+            return $default;
+        }
+        $current = $current[$segment];
+    }
+
+    return $current;
+}
+
+/**
+ * Set nested value in an array path.
+ */
+function lrsd_sf_set_nested_value(array &$data, array $path, $value) {
+    $current = &$data;
+
+    foreach ($path as $segment) {
+        if (!isset($current[$segment]) || !is_array($current[$segment])) {
+            $current[$segment] = [];
+        }
+        $current = &$current[$segment];
+    }
+
+    $current = $value;
+}
+
+/**
+ * Set notice transient for the current user.
+ */
+function lrsd_sf_set_editor_notice($message, $type = 'success') {
+    $user_id = get_current_user_id();
+    if (!$user_id) {
+        return;
+    }
+
+    set_transient(
+        'lrsd_sf_editor_notice_' . $user_id,
+        [
+            'message' => wp_kses_post($message),
+            'type'    => sanitize_key($type),
+        ],
+        MINUTE_IN_SECONDS
+    );
+}

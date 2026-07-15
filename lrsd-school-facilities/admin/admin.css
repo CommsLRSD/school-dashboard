@@ -1,0 +1,18 @@
+.lrsd-sf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.lrsd-sf-card {
+    border: 1px solid #dcdcde;
+    background: #fff;
+    padding: 16px;
+    border-radius: 6px;
+}
+
+.lrsd-sf-editor-table input.regular-text {
+    width: 100%;
+    max-width: 420px;
+}

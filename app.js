@@ -163,8 +163,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 Chart.register(ChartDataLabels);
             }
             
-            // Fetch school data with proper error handling
-            const response = await fetch('data/schools.json'); 
+            // School data now comes from the LRSD School Facilities WordPress plugin REST endpoint.
+            const response = await fetch('/wp-json/lrsd/v1/schools'); 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
