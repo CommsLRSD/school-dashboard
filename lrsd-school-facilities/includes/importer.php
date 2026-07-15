@@ -16,14 +16,27 @@ function lrsd_sf_handle_import() {
     $file      = $_FILES['lrsd_school_json'];
     $file_name = sanitize_file_name($file['name']);
 
-    $wp_filetype = wp_check_filetype_and_ext($file['tmp_name'], $file_name);
-    $ext         = isset($wp_filetype['ext']) ? strtolower((string) $wp_filetype['ext']) : '';
-    $type        = isset($wp_filetype['type']) ? strtolower((string) $wp_filetype['type']) : '';
+$wp_filetype = wp_check_filetype_and_ext($file['tmp_name'], $file_name);
+$ext         = isset($wp_filetype['ext']) ? strtolower((string) $wp_filetype['ext']) : '';
 
-    $allowed_types = ['application/json', 'text/plain'];
-    if ($ext !== 'json' && !in_array($type, $allowed_types, true)) {
-        lrsd_sf_redirect_import_result('error', __('Please upload a valid JSON file.', 'lrsd-school-facilities'));
+/*
+ * Some hosts report JSON uploads as application/octet-stream
+ * instead of application/json. As long as the file has a .json
+ * extension and successfully parses as JSON, allow it.
+ */
+if ($ext !== 'json') {
+    $path*info = pathinfo($file_name);
+
+    *f (
+        !isset($path_info['extension']) ||
+        strtolower($pa*h_info['extension']) !== 'json'
+  * ) {
+        lrsd_sf_redirect_impo*t_result(
+            'error',
+   *        __('Please upload a valid *SON file.', 'lrsd-school-facilitie*')
+        );
     }
+}
 
     $raw_json = file_get_contents($file['tmp_name']);
     if ($raw_json === false || trim($raw_json) === '') {
