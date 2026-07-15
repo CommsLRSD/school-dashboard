@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const stickyBannerText = stickyBanner?.querySelector('.sticky-category-text');
 
     let schoolData = {};
+    let fosMapLookupData = {}; // Populated from dataset.fosMapLookup (can include custom FOS entries)
     let lastUpdated = ''; // Global timestamp for data updates
     let chartInstances = {};
     let currentViewMode = 'school';
@@ -186,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             lastUpdated = dateOnly;
             schoolData = schools;
+            fosMapLookupData = (typeof schools.fosMapLookup === 'object' && schools.fosMapLookup) ? schools.fosMapLookup : {};
             
             // Validate that we have data
             const schoolIds = Object.keys(schoolData);
@@ -531,9 +533,8 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'projection': return `<div class="data-card chart-card ${sizeClass}" data-chart="projection" data-school-id="${school.id}"><div class="card-header"><img src="public/icon/enrolment-charts.svg" alt="" class="card-header-icon"><h2 class="card-title">Projected Enrolment</h2></div><div class="card-body"><div class="chart-container"><canvas></canvas></div></div></div>`;
 
             case 'catchment_map': {
-                // Generate map filename from school id using new naming convention
-                // For Family of Schools with standardized FOS maps, use those; otherwise use individual school maps
-                const fosMapLookup = {
+                // Use dynamic fosMapLookup from dataset (supports custom FOS entries added via plugin)
+                const fosMapLookup = Object.assign({
                     'J.H. BRUNS FOS': 'public/maps/bruns-fos-map.svg',
                     'BÉLIVEAU FOS': 'public/maps/beliveau-fos-map.svg',
                     'WINDSOR PARK FOS': 'public/maps/wpc-fos-map.svg',
@@ -541,7 +542,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     'DAKOTA FOS': 'public/maps/dakota-fos-map.svg',
                     'GLENLAWN FOS': 'public/maps/glenlawn-fos-map.svg',
                     'NELSON MCINTYRE FOS': 'public/maps/nms-fos-map.svg'
-                };
+                }, fosMapLookupData);
                 const mapFilename = fosMapLookup[school.familyOfSchools] || `public/maps/${school.id}-map.jpg`;
                 const schoolName = sanitizeHTML(school.schoolName || '');
                 const migration = school.catchment?.migration || 'N/A';
@@ -566,7 +567,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>`;
             }
 
-            default: { // For all other simple list cards
+            default: { // For all other simple list cards and custom cards
+                // ── Custom cards (id starts with "custom_") ────────────────
+                if (cardType.startsWith('custom_') && Array.isArray(school.customCards)) {
+                    const customCard = school.customCards.find(c => c.id === cardType);
+                    if (!customCard) return '';
+                    const iconSrc = customCard.icon || 'public/icon/details.svg';
+                    const title   = sanitizeHTML(customCard.title || 'Custom Card');
+                    const items   = Array.isArray(customCard.items) ? customCard.items : [];
+                    const notes   = customCard.notes ? `<div class="tile-footnote-static">${sanitizeHTML(customCard.notes)}</div>` : '';
+                    const listItems = items.map(it =>
+                        `<li class="detail-item"><span class="detail-label">${sanitizeHTML(it.label || '')}</span><span class="detail-value">${sanitizeHTML(it.value || '')}</span></li>`
+                    ).join('') || '<li class="detail-item">No data available.</li>';
+                    return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="${iconSrc}" alt="" class="card-header-icon"><h2 class="card-title">${title}</h2></div><div class="card-body"><ul class="detail-list">${listItems}</ul>${notes}</div></div>`;
+                }
+
                 const icons = { 
                     building_systems: 'public/icon/building-systems.svg', 
                     accessibility: 'public/icon/accessibility.svg', 
@@ -987,7 +1002,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (currentViewMode === 'school') {
             const school = schoolData[selectedSchoolId];
-            const cardTypes = ['school_header', 'details', 'additions', 'enrolment', 'capacity', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'catchment_map', 'projects_provincial', 'projects_local'];
+            // Respect per-school cardOrder if present; include custom cards
+            const defaultCardTypes = ['school_header', 'details', 'additions', 'enrolment', 'capacity', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'catchment_map', 'projects_provincial', 'projects_local'];
+            const customCardIds = Array.isArray(school.customCards) ? school.customCards.map(c => c.id) : [];
+            let cardTypes;
+            if (Array.isArray(school.cardOrder) && school.cardOrder.length > 0) {
+                // Use saved order; append any types not yet in the saved order
+                const allKnown = [...defaultCardTypes, ...customCardIds];
+                const ordered = school.cardOrder.filter(t => allKnown.includes(t));
+                const extras  = allKnown.filter(t => !ordered.includes(t));
+                cardTypes = [...ordered, ...extras];
+            } else {
+                cardTypes = [...defaultCardTypes, ...customCardIds];
+            }
             cardGrid.innerHTML = cardTypes.map(type => createCard(school, type)).join('');
             
             // Add staggered animation delays and navigation icons
