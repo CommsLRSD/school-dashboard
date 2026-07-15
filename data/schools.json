@@ -2749,8 +2749,8 @@
     "address": "50 Hastings Blvd.",
     "phone": "(204) 253-1371",
     "enrolment": {
-      "capacity": 425,
-      "current": 364,
+      "capacity": 280,
+      "current": 207,
       "projection": {
         "labels": [
           "2026_27",
@@ -2759,10 +2759,10 @@
           "2029_30"
         ],
         "values": [
-          353,
-          336,
-          325,
-          323
+          212,
+          210,
+          203,
+          196
         ]
       },
       "history": {
@@ -2773,10 +2773,10 @@
           "2024_25"
         ],
         "values": [
-          394,
-          413,
-          398,
-          383
+          198,
+          216,
+          235,
+          234
         ]
       }
     },
@@ -2784,14 +2784,9 @@
       "Built": 1960,
       "Age": "66 years",
       "Size": "36100 ft²",
-      "Modular": 2
+      "Modular": 0
     },
-    "additions": [
-      {
-        "year": "1991",
-        "size": "1,502 ft² (2 modular classrooms uninhabitable)"
-      }
-    ],
+    "additions": [],
     "building": {
       "Air Conditioning": "Back hallway, main building (needs repairs)",
       "Heating": "Natural gas, electric, geothermal",
@@ -2802,15 +2797,15 @@
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": "42",
+      "Parking spots": "Not specified",
       "Bus Loop": "YES"
     },
     "accessibility": {
-      "Girls' washrooms": 2,
-      "Boys' washrooms": 2,
-      "Gender neutral washrooms": 1,
+      "Girls' washrooms": 1,
+      "Boys' washrooms": 1,
+      "Gender neutral washrooms": 2,
       "Universal Washroom": "YES",
-      "Elevator": "n/a",
+      "Elevator": "YES",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
       "Automatic entrance door operators": "YES"
@@ -2824,9 +2819,9 @@
       "Soccer nets"
     ],
     "childcare": {
-      "Infant (0-23 months)": 8,
-      "Pre-school (2-6 years)": 40,
-      "School-age (7+ years)": 72
+      "Infant (0-23 months)": 0,
+      "Pre-school (2-6 years)": 18,
+      "School-age (7+ years)": 32
     },
     "projects": {
       "provincial": {
@@ -2870,8 +2865,8 @@
     "address": "99 Highbury Rd.",
     "phone": "(204) 254-5078",
     "enrolment": {
-      "capacity": 280,
-      "current": 207,
+      "capacity": 445,
+      "current": 411,
       "projection": {
         "labels": [
           "2026_27",
@@ -2880,10 +2875,10 @@
           "2029_30"
         ],
         "values": [
-          212,
-          210,
-          203,
-          196
+          384,
+          379,
+          362,
+          350
         ]
       },
       "history": {
@@ -2894,10 +2889,10 @@
           "2024_25"
         ],
         "values": [
-          198,
-          216,
-          235,
-          234
+          409,
+          407,
+          438,
+          450
         ]
       }
     },
@@ -2907,7 +2902,28 @@
       "Size": "65496 ft²",
       "Modular": 0
     },
-    "additions": [],
+    "additions": [
+      {
+        "year": "1992",
+        "size": "13,185 ft²"
+      },
+      {
+        "year": "1997",
+        "size": "4,844 ft²"
+      },
+      {
+        "year": "2001",
+        "size": "4,456 ft²"
+      },
+      {
+        "year": "2005",
+        "size": "1,000 ft²"
+      },
+      {
+        "year": "2014",
+        "size": "4,843 ft²"
+      }
+    ],
     "building": {
       "Air Conditioning": "Everywhere except gym",
       "Heating": "Natural gas",
@@ -2918,15 +2934,15 @@
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": "Not specified",
+      "Parking spots": "41",
       "Bus Loop": "YES"
     },
     "accessibility": {
-      "Girls' washrooms": 1,
-      "Boys' washrooms": 1,
+      "Girls' washrooms": 4,
+      "Boys' washrooms": 4,
       "Gender neutral washrooms": 2,
       "Universal Washroom": "YES",
-      "Elevator": "YES",
+      "Elevator": "n/a",
       "Accessible parking stalls": 1,
       "Accessible entrance": "YES",
       "Automatic entrance door operators": "YES"
@@ -2941,9 +2957,9 @@
       "Tether ball"
     ],
     "childcare": {
-      "Infant (0-23 months)": 0,
-      "Pre-school (2-6 years)": 18,
-      "School-age (7+ years)": 32
+      "Infant (0-23 months)": 16,
+      "Pre-school (2-6 years)": 56,
+      "School-age (7+ years)": 62
     },
     "projects": {
       "provincial": {
@@ -2989,8 +3005,8 @@
     "address": "160 Southglen Blvd.",
     "phone": "(204) 254-7477",
     "enrolment": {
-      "capacity": 445,
-      "current": 411,
+      "capacity": 425,
+      "current": 364,
       "projection": {
         "labels": [
           "2026_27",
@@ -2999,10 +3015,10 @@
           "2029_30"
         ],
         "values": [
-          384,
-          379,
-          362,
-          350
+          353,
+          336,
+          325,
+          323
         ]
       },
       "history": {
@@ -3013,10 +3029,10 @@
           "2024_25"
         ],
         "values": [
-          409,
-          407,
-          438,
-          450
+          394,
+          413,
+          398,
+          383
         ]
       }
     },
@@ -3024,28 +3040,12 @@
       "Built": 1989,
       "Age": "37 years",
       "Size": "46558 ft²",
-      "Modular": 0
+      "Modular": 2
     },
     "additions": [
       {
-        "year": "1992",
-        "size": "13,185 ft²"
-      },
-      {
-        "year": "1997",
-        "size": "4,844 ft²"
-      },
-      {
-        "year": "2001",
-        "size": "4,456 ft²"
-      },
-      {
-        "year": "2005",
-        "size": "1,000 ft²"
-      },
-      {
-        "year": "2014",
-        "size": "4,843 ft²"
+        "year": "1991",
+        "size": "1,502 ft² (2 modular classrooms uninhabitable)"
       }
     ],
     "building": {
@@ -3058,13 +3058,13 @@
       "description": "Net annual movement in and out of catchment (5-yr. avg.)"
     },
     "transportation": {
-      "Parking spots": "41",
+      "Parking spots": "42",
       "Bus Loop": "YES"
     },
     "accessibility": {
-      "Girls' washrooms": 4,
-      "Boys' washrooms": 4,
-      "Gender neutral washrooms": 2,
+      "Girls' washrooms": 2,
+      "Boys' washrooms": 2,
+      "Gender neutral washrooms": 1,
       "Universal Washroom": "YES",
       "Elevator": "n/a",
       "Accessible parking stalls": 1,
@@ -3075,9 +3075,9 @@
       "City Property: Play structures, Soccer field, Basketball court, Baseball diamond"
     ],
     "childcare": {
-      "Infant (0-23 months)": 16,
-      "Pre-school (2-6 years)": 56,
-      "School-age (7+ years)": 62
+      "Infant (0-23 months)": 8,
+      "Pre-school (2-6 years)": 40,
+      "School-age (7+ years)": 72
     },
     "projects": {
       "provincial": {
