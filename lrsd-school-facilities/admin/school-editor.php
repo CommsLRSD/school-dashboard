@@ -58,7 +58,7 @@ function lrsd_sf_get_simple_field_map() {
 // ─── Render Helpers ───────────────────────────────────────────────────────────
 
 function lrsd_sf_render_section_header($id, $label, $open = true) {
-    $aria = $open ? 'false' : 'true';
+    $aria = $open ? 'true' : 'false';
     ?>
     <div class="lrsd-sf-section-header" data-target="<?php echo esc_attr($id); ?>" aria-expanded="<?php echo esc_attr($aria); ?>">
         <span class="lrsd-sf-section-label"><?php echo esc_html($label); ?></span>
@@ -422,7 +422,7 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         ?>
             <li class="lrsd-sf-order-item" data-card-id="<?php echo esc_attr($ct); ?>">
                 <span class="dashicons dashicons-menu" title="<?php esc_attr_e('Drag to reorder', 'lrsd-school-facilities'); ?>"></span>
-                <?php echo esc_html($card_labels[$ct]); ?>
+                <span class="lrsd-sf-order-label"><?php echo esc_html($card_labels[$ct]); ?></span>
             </li>
         <?php endforeach; ?>
         </ul>

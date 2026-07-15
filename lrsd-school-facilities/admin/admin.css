@@ -87,7 +87,7 @@
     left: 3px;
 }
 
-/* Vertical bar — hidden when open (aria-expanded="false" = open) */
+/* Vertical bar — visible when collapsed (aria-expanded="false"), hidden when open (aria-expanded="true") */
 .lrsd-sf-section-toggle::after {
     width: 2px;
     height: 12px;
@@ -95,13 +95,13 @@
     left: 8px;
 }
 
-/* When collapsed (aria-expanded="true"), show the + icon */
-.lrsd-sf-section-header[aria-expanded="true"] .lrsd-sf-section-toggle::after {
+/* When collapsed (aria-expanded="false"), show the + icon (vertical bar visible) */
+.lrsd-sf-section-header[aria-expanded="false"] .lrsd-sf-section-toggle::after {
     transform: scaleY(1);
 }
 
-/* When open (aria-expanded="false"), hide the vertical bar */
-.lrsd-sf-section-header[aria-expanded="false"] .lrsd-sf-section-toggle::after {
+/* When open/expanded (aria-expanded="true"), hide the vertical bar → shows − */
+.lrsd-sf-section-header[aria-expanded="true"] .lrsd-sf-section-toggle::after {
     transform: scaleY(0);
 }
 

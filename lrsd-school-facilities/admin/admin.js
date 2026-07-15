@@ -21,10 +21,10 @@
 
             if (isOpen) {
                 $body.removeClass('is-open').slideUp(180);
-                $header.attr('aria-expanded', 'true'); // "true" = collapsed
+                $header.attr('aria-expanded', 'false');
             } else {
                 $body.addClass('is-open').slideDown(180);
-                $header.attr('aria-expanded', 'false'); // "false" = open
+                $header.attr('aria-expanded', 'true');
             }
         });
 
@@ -108,19 +108,26 @@
                 },
                 function (response) {
                     if (response.success) {
-                        // Add option to all selects with this option key on the page
-                        $('select[data-option-key="' + optKey + '"], #' + targetSelectId).each(function () {
-                            var $sel = $(this);
-                            // Check if already present
-                            if ($sel.find('option[value="' + CSS.escape(newVal) + '"]').length === 0) {
-                                $sel.append($('<option>').val(newVal).text(newVal));
+                        var addedVal = response.data.option_val;
+                        // Helper: check if option value already exists in a select
+                        function optionExists($sel, val) {
+                            var found = false;
+                            $sel.find('option').each(function () {
+                                if ($(this).val() === val) { found = true; }
+                            });
+                            return found;
+                        }
+                        // Add option to all selects sharing this option key on the page
+                        $('select[data-option-key="' + optKey + '"]').each(function () {
+                            if (!optionExists($(this), addedVal)) {
+                                $(this).append($('<option>').val(addedVal).text(addedVal));
                             }
                         });
-                        // Also add it to the current target and select it
-                        if ($select.find('option[value="' + CSS.escape(newVal) + '"]').length === 0) {
-                            $select.append($('<option>').val(newVal).text(newVal));
+                        // Ensure it is in the target select and select it
+                        if (!optionExists($select, addedVal)) {
+                            $select.append($('<option>').val(addedVal).text(addedVal));
                         }
-                        $select.val(newVal);
+                        $select.val(addedVal);
                     } else {
                         alert(i18n.error || 'An error occurred. Please try again.');
                     }
@@ -255,7 +262,7 @@
 
             // Update label in card order list
             var cardId = $card.data('card-id');
-            $('#lrsd-sf-card-order .lrsd-sf-order-item[data-card-id="' + cardId + '"]').contents().last()[0].nodeValue = ' ' + title;
+            $('#lrsd-sf-card-order .lrsd-sf-order-item[data-card-id="' + cardId + '"] .lrsd-sf-order-label').text(title);
         });
 
         // Make custom cards sortable
@@ -274,7 +281,8 @@
         if (!existing.length) {
             $list.append(
                 '<li class="lrsd-sf-order-item" data-card-id="' + cardId + '">' +
-                    '<span class="dashicons dashicons-menu"></span> ' + esc(label) +
+                    '<span class="dashicons dashicons-menu"></span>' +
+                    '<span class="lrsd-sf-order-label">' + esc(label) + '</span>' +
                 '</li>'
             );
         }
