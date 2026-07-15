@@ -1,0 +1,42 @@
+school_id,built,size,modular,air_conditioning,heating,led_lighting,catchment_migration,catchment_description,parking_spots,bus_loop
+archwood,1952,28513 ft²,0,"Main office, gym",Natural gas,Gym,-0.80%,Net annual movement in and out of catchment (5-yr. avg.),Not specified,NO
+beliveau,1956,86387 ft²,0,Full building,Natural gas,"Gym, classrooms (3), main office, commons",3.60%,Net annual movement in and out of catchment (5-yr. avg.),64,Inaccessible
+cjs,1989,91566 ft²,0,Full building,Natural Gas,"Main entry, office, fitness room, gym offices, classrooms (28)",0.20%,Net annual movement in and out of catchment (5-yr. avg.),129,YES
+dakota,1962,127040 ft²,2,"Everywhere except gym, autoshop",Natural gas,Theatre,0.30%,Net annual movement in and out of catchment (5-yr. avg.),177,Required
+darwin,1973,54149 ft²,0,"Everywhere except gym, woodshop, graphic arts",Natural gas,None,-0.10%,Net annual movement in and out of catchment (5-yr. avg.),32,Required
+drdwpenner,1975,39542 ft²,0,Everywhere except gym,Electric,"Gym, Hygiene room",0.30%,Net annual movement in and out of catchment (5-yr. avg.),30,Required
+ecolegeorgemcdowell,1983,46289 ft²,0,Everywhere except gym,Natural gas,Multipurpose Room,1.20%,Net annual movement in and out of catchment (5-yr. avg.),30,Required
+ecoleguyot,1974,43253 ft²,0,Everywhere except gym,"Natural gas, electric","Classrooms (2), Guitar",2.00%,Net annual movement in and out of catchment (5-yr. avg.),39,YES
+ecolehenribergeron,1962,40350 ft²,0,Full building,Natural gas,Boys and girls washrooms,0.10%,Net annual movement in and out of catchment (5-yr. avg.),Not specified,Required
+ecolehowden,1964,34087 ft²,2,"Main office, portables","Natural gas, electric","Gym, Classroom",0.00%,Net annual movement in and out of catchment (5-yr. avg.),33,YES
+ecolejulieriel,1995,45249 ft²,0,Full building,Natural gas,"Gym, hallway",1.30%,Net annual movement in and out of catchment (5-yr. avg.),33,YES
+ecolemarieannegaboury,1957,53300 ft²,0,Full building,Natural gas,None,0.70%,Net annual movement in and out of catchment (5-yr. avg.),40,YES
+ecoleprovencher,1924,71776 ft²,0,Full building,Natural gas,"Childcare areas, meeting room 1, custodial room, washrooms (5), classrooms (9), second floor hallway, family centre room",0.10%,Net annual movement in and out of catchment (5-yr. avg.),32,Required
+ecolemazinagiizhik,2025,103548 ft²,0,Full building,Natural gas,Full Building,N/A,Net annual movement in and out of catchment (5-yr. avg.),Not specified,YES
+ecolestgermain,1987,43258 ft²,0,Full building,"Natural gas, electric, geothermal","Gym, mini-gym",1.10%,Net annual movement in and out of catchment (5-yr. avg.),Not specified,YES
+ecolevanbelleghem,1967,37212 ft²,2,"Office, multipurpose room, band room, staff room","Natural gas, electric","Kindergarten, library, music, MPR, classrooms (18)",7.80%,Net annual movement in and out of catchment (5-yr. avg.),20,YES
+ecolevarennes,1951,38400 ft²,0,"Room 2 (music), room 20",Natural gas,Classrooms (3),-1.60%,Net annual movement in and out of catchment (5-yr. avg.),38,Required
+frontenac,1956,56965 ft²,2,Full building,Natural gas,"Staff room 34, room 28",-1.00%,Net annual movement in and out of catchment (5-yr. avg.),55,Required
+generalvanier,1961,50644 ft²,0,Full building,Natural gas,Room 6,2.00%,Net annual movement in and out of catchment (5-yr. avg.),39,YES
+glenlawn,1949,140850 ft²,0,"Everywhere except senior woodshop, autoshop",Natural gas,None,-0.10%,Net annual movement in and out of catchment (5-yr. avg.),110,Required
+glenwood,1910,63094 ft²,0,"Main office, staff room",Natural gas,"Gym, office, storage, classrooms (4)",-0.20%,Net annual movement in and out of catchment (5-yr. avg.),32,Required
+hastings,1960,36100 ft²,0,"Back hallway, main building (needs repairs)","Natural gas, electric, geothermal",Room 6,0.30%,Net annual movement in and out of catchment (5-yr. avg.),Not specified,YES
+highbury,1991,65496 ft²,0,Everywhere except gym,Natural gas,"Gym, hallways, main entry, offices, storage, movement room, staff washrooms, custodial room, elevator",-0.20%,Net annual movement in and out of catchment (5-yr. avg.),41,YES
+hspaul,1989,46558 ft²,2,Full building,Natural gas,"Gym, multipurpose room stage, office, hygiene room",1.50%,Net annual movement in and out of catchment (5-yr. avg.),42,YES
+islandlakes,2001,59927 ft²,6,Full building,"Natural gas, electric",Classrooms (3),9.00%,Net annual movement in and out of catchment (5-yr. avg.),36,YES
+jhbruns,1972,89638 ft²,1,"Everywhere except gym, autoshop","Natural gas, electric",Hallway,5.90%,Net annual movement in and out of catchment (5-yr. avg.),51,YES
+lavallee,1973,74214 ft²,0,Everywhere except gym,Natural gas,None,0.70%,Net annual movement in and out of catchment (5-yr. avg.),101,Required
+louisrielartstech,1970,76050 ft²,0,"Everywhere except gym, autoshop",Natural gas,"Pastry lab, classrooms (2)",N/A,Net annual movement in and out of catchment (5-yr. avg.),66,N/A
+marion,1950,40861 ft²,0,"Office, staff room, all classrooms",Natural gas,None,0.90%,Net annual movement in and out of catchment (5-yr. avg.),37,Required
+minnetonka,1959,41010 ft²,0,Everywhere except original building (west side),Natural gas,"Gym, hallways, boys' & girls' washrooms, classrooms (7)",1.30%,Net annual movement in and out of catchment (5-yr. avg.),56,YES
+nelsonmcintyre,1955,59927 ft²,0,"Everywhere except band room, woodshop, power mechanics",Natural gas,"Boiler room, office, storage, classrooms (3)",0.00%,Net annual movement in and out of catchment (5-yr. avg.),62,Required
+niakwaplace,1974,32230 ft²,1,"Everywhere except gym, multipurpose room",Natural gas,Entire school,2.70%,Net annual movement in and out of catchment (5-yr. avg.),40,Required
+nordale,1948,36954 ft²,0,"Main office, library",Natural gas,"Staff washroom, fan room",-1.00%,Net annual movement in and out of catchment (5-yr. avg.),32,Required
+sagecreek,2017,76940 ft²,0,Full building,"Geothermal, electric","Hallways, band, office, library, classrooms (6)",6.60%,Net annual movement in and out of catchment (5-yr. avg.),48,YES
+samuelburland,1987,44208 ft²,0,Full building,"Natural gas, electric, geothermal",Select rooms (installed to support student medical needs),1.00%,Net annual movement in and out of catchment (5-yr. avg.),38,YES
+shamrock,1974,78185 ft²,0,"Everywhere except gym, stage",Natural gas,"Multipurpose room, music",4.40%,Net annual movement in and out of catchment (5-yr. avg.),51,YES
+stgeorge,1954,47767 ft²,0,Partial (portable classroom units only),Natural gas,Classrooms (3),-2.30%,Net annual movement in and out of catchment (5-yr. avg.),22,YES
+victorhlwyatt,1979,63900 ft²,0,"Everywhere except gym, autoshop, woods and graphic arts",Natural gas,None,2.10%,Net annual movement in and out of catchment (5-yr. avg.),52,Required
+victormager,1959,43879 ft²,0,"Everywhere except gym, Boys & Girls Club, original building classrooms (south)",Natural gas,None,-4.40%,Net annual movement in and out of catchment (5-yr. avg.),50,Required
+windsor,1922,36576 ft²,1,"Main office, staff room, textiles room, library",Natural gas,"Gym, office, conference room, hallway, hallway, art room",-1.10%,Net annual movement in and out of catchment (5-yr. avg.),19,Required
+windsorpark,1959,105000 ft²,0,Everywhere except gym 1,Natural gas,Entire school,0.20%,Net annual movement in and out of catchment (5-yr. avg.),100,Required
