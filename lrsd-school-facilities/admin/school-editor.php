@@ -88,6 +88,59 @@ function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options)
                 if ($value !== '' && !in_array((string)$value, $opts, true)) {
                     $opts[] = (string)$value;
                 }
+
+                /**
+                 * Convert enrolment series data to newline rows in "label|value" format.
+                 */
+                function lrsd_sf_format_enrolment_series_lines($series) {
+                    $labels = is_array($series['labels'] ?? null) ? array_values($series['labels']) : [];
+                    $values = is_array($series['values'] ?? null) ? array_values($series['values']) : [];
+                    $count  = max(count($labels), count($values));
+                    $lines  = [];
+
+                    for ($index = 0; $index < $count; $index++) {
+                        $label = isset($labels[$index]) ? trim((string) $labels[$index]) : '';
+                        $value = isset($values[$index]) && is_numeric($values[$index]) ? (int) $values[$index] : 0;
+                        if ($label === '' && $value === 0) {
+                            continue;
+                        }
+                        $lines[] = $label . '|' . $value;
+                    }
+
+                    return implode("\n", $lines);
+                }
+
+                /**
+                 * Parse newline rows in "label|value" format into enrolment series arrays.
+                 */
+                function lrsd_sf_parse_enrolment_series_lines($raw_text) {
+                    $lines  = explode("\n", (string) $raw_text);
+                    $labels = [];
+                    $values = [];
+
+                    foreach ($lines as $line) {
+                        $line = trim((string) $line);
+                        if ($line === '') {
+                            continue;
+                        }
+
+                        $parts = explode('|', $line, 2);
+                        $label = sanitize_text_field(trim($parts[0] ?? ''));
+                        $value = isset($parts[1]) && is_numeric(trim($parts[1])) ? (int) trim($parts[1]) : 0;
+
+                        if ($label === '' && $value === 0) {
+                            continue;
+                        }
+
+                        $labels[] = $label;
+                        $values[] = $value;
+                    }
+
+                    return [
+                        'labels' => $labels,
+                        'values' => $values,
+                    ];
+                }
                 $nonce_val = wp_create_nonce('lrsd_sf_custom_option_nonce');
                 ?>
                 <div class="lrsd-sf-select-wrap">
@@ -172,6 +225,8 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
     $custom_card_values = lrsd_sf_get_nested_value($school_data, ['customCardValues'], []);
     if (!is_array($custom_card_values)) { $custom_card_values = []; }
     $display_types = lrsd_sf_get_custom_card_display_types();
+    $history_lines = lrsd_sf_format_enrolment_series_lines(lrsd_sf_get_nested_value($school_data, ['enrolment', 'history'], []));
+    $projection_lines = lrsd_sf_format_enrolment_series_lines(lrsd_sf_get_nested_value($school_data, ['enrolment', 'projection'], []));
 
     // Card order: saved order + any new standard cards + any custom card IDs (school + global)
     $saved_order    = lrsd_sf_get_nested_value($school_data, ['cardOrder'], []);
@@ -239,6 +294,20 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
             lrsd_sf_render_field_row($fk, $field, $val, $dropdown_options);
         }
         ?>
+            <tr>
+                <th scope="row"><label for="lrsd_sf_enrolment_history"><?php esc_html_e('Historic Enrolment (Year|Value)', 'lrsd-school-facilities'); ?></label></th>
+                <td>
+                    <textarea id="lrsd_sf_enrolment_history" name="lrsd_sf_enrolment_history" rows="5" class="large-text code"><?php echo esc_textarea($history_lines); ?></textarea>
+                    <p class="description"><?php esc_html_e('One data point per line in this format: 2025_26|184', 'lrsd-school-facilities'); ?></p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="lrsd_sf_enrolment_projection"><?php esc_html_e('Projected Enrolment (Year|Value)', 'lrsd-school-facilities'); ?></label></th>
+                <td>
+                    <textarea id="lrsd_sf_enrolment_projection" name="lrsd_sf_enrolment_projection" rows="5" class="large-text code"><?php echo esc_textarea($projection_lines); ?></textarea>
+                    <p class="description"><?php esc_html_e('One data point per line in this format: 2029_30|142', 'lrsd-school-facilities'); ?></p>
+                </td>
+            </tr>
         </tbody></table>
         <?php lrsd_sf_render_section_footer(); ?>
 
@@ -602,6 +671,21 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
         $lines = explode("\n", sanitize_textarea_field((string)$posted_projects[$project_key]));
         $lines = array_values(array_filter(array_map('trim', $lines), static function ($line) { return $line !== ''; }));
         lrsd_sf_set_nested_value($school_data, $path, $lines);
+    }
+
+    // ── Enrolment history/projection series ──────────────────────────────────
+    if (isset($_POST['lrsd_sf_enrolment_history'])) {
+        $history_series = lrsd_sf_parse_enrolment_series_lines(
+            sanitize_textarea_field(wp_unslash($_POST['lrsd_sf_enrolment_history']))
+        );
+        lrsd_sf_set_nested_value($school_data, ['enrolment', 'history'], $history_series);
+    }
+
+    if (isset($_POST['lrsd_sf_enrolment_projection'])) {
+        $projection_series = lrsd_sf_parse_enrolment_series_lines(
+            sanitize_textarea_field(wp_unslash($_POST['lrsd_sf_enrolment_projection']))
+        );
+        lrsd_sf_set_nested_value($school_data, ['enrolment', 'projection'], $projection_series);
     }
 
     // ── Custom cards ─────────────────────────────────────────────────────────
