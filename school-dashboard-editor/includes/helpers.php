@@ -64,10 +64,11 @@ function lrsd_sf_normalize_school_data($raw_data) {
  * Build dataset in the same JSON shape as the original static file.
  */
 function lrsd_sf_get_school_dataset() {
+    $global_custom_cards = lrsd_sf_get_global_custom_cards();
     $dataset = [
         'lastUpdated'       => get_option('lrsd_schools_last_updated', ''),
         'fosMapLookup'      => lrsd_sf_get_fos_catchment_map(),
-        'globalCustomCards' => lrsd_sf_get_global_custom_cards(),
+        'globalCustomCards' => $global_custom_cards,
     ];
 
     $posts = get_posts([
@@ -97,7 +98,7 @@ function lrsd_sf_get_school_dataset() {
             continue;
         }
 
-        $dataset[$school_id] = $school_data;
+        $dataset[$school_id] = lrsd_sf_normalize_school_dashboard_data($school_data, $global_custom_cards);
     }
 
     return $dataset;
@@ -313,6 +314,196 @@ function lrsd_sf_get_custom_card_display_types() {
 }
 
 /**
+ * Sanitize a custom card display type.
+ */
+function lrsd_sf_sanitize_custom_card_type($card_type) {
+    return in_array($card_type, ['list', 'stat'], true) ? $card_type : 'list';
+}
+
+/**
+ * Returns the standard dashboard card order used by the frontend.
+ *
+ * Keep this list in sync with DEFAULT_SCHOOL_CARD_TYPES in /app.js so the
+ * editor, importer/exporter, and public dashboard all render cards the same way.
+ */
+function lrsd_sf_get_default_dashboard_card_order() {
+    return [
+        'school_header',
+        'details',
+        'additions',
+        'enrolment',
+        'capacity',
+        'utilization',
+        'projection',
+        'history',
+        'building_systems',
+        'accessibility',
+        'playground',
+        'transportation',
+        'childcare',
+        'catchment_map',
+        'projects_provincial',
+        'projects_local',
+    ];
+}
+
+/**
+ * Legacy card-order IDs that should expand to the current dashboard cards.
+ */
+function lrsd_sf_get_legacy_card_order_map() {
+    return [
+        'enrolment_capacity' => ['enrolment', 'capacity', 'utilization'],
+    ];
+}
+
+/**
+ * Normalize a school card order array.
+ *
+ * Converts legacy combined cards to the current separate dashboard cards,
+ * removes deleted custom cards, and appends any missing standard/custom cards.
+ */
+function lrsd_sf_normalize_card_order($card_order, array $school_custom_ids = [], array $global_card_ids = []) {
+    $default_order  = lrsd_sf_get_default_dashboard_card_order();
+    $valid_ids      = array_merge($default_order, $school_custom_ids, $global_card_ids);
+    $legacy_map     = lrsd_sf_get_legacy_card_order_map();
+    $normalized     = [];
+    $source_order   = is_array($card_order) ? $card_order : [];
+
+    foreach ($source_order as $card_id) {
+        $card_id = sanitize_key((string) $card_id);
+        if ($card_id === '') {
+            continue;
+        }
+
+        $mapped_ids = $legacy_map[$card_id] ?? [$card_id];
+        foreach ($mapped_ids as $mapped_id) {
+            if (in_array($mapped_id, $valid_ids, true) && !in_array($mapped_id, $normalized, true)) {
+                $normalized[] = $mapped_id;
+            }
+        }
+    }
+
+    foreach ($valid_ids as $card_id) {
+        if (!in_array($card_id, $normalized, true)) {
+            $normalized[] = $card_id;
+        }
+    }
+
+    return $normalized;
+}
+
+/**
+ * Normalize custom card values to only include existing global cards.
+ */
+function lrsd_sf_normalize_custom_card_values($raw_values, array $global_card_ids = []) {
+    if (!is_array($raw_values) || empty($global_card_ids)) {
+        return [];
+    }
+
+    $normalized = [];
+
+    foreach ($raw_values as $card_id => $card_data) {
+        $card_id = sanitize_key((string) $card_id);
+        if ($card_id === '' || !in_array($card_id, $global_card_ids, true) || !is_array($card_data)) {
+            continue;
+        }
+
+        $items = [];
+        if (is_array($card_data['items'] ?? null)) {
+            foreach ($card_data['items'] as $item) {
+                if (!is_array($item)) {
+                    continue;
+                }
+
+                $items[] = [
+                    'label' => sanitize_text_field($item['label'] ?? ''),
+                    'value' => sanitize_text_field($item['value'] ?? ''),
+                ];
+            }
+        }
+
+        $normalized[$card_id] = [
+            'notes' => sanitize_textarea_field($card_data['notes'] ?? ''),
+            'items' => $items,
+        ];
+    }
+
+    return $normalized;
+}
+
+/**
+ * Normalize stored school dashboard metadata for export/rendering.
+ */
+function lrsd_sf_normalize_school_dashboard_data(array $school_data, array $global_custom_cards = []) {
+    $has_card_order = isset($school_data['cardOrder']) && is_array($school_data['cardOrder']);
+    $custom_cards = [];
+    if (is_array($school_data['customCards'] ?? null)) {
+        foreach ($school_data['customCards'] as $card) {
+            if (!is_array($card)) {
+                continue;
+            }
+
+            $card_id = sanitize_key($card['id'] ?? '');
+            if ($card_id === '') {
+                continue;
+            }
+
+            $items = [];
+            if (is_array($card['items'] ?? null)) {
+                foreach ($card['items'] as $item) {
+                    if (!is_array($item)) {
+                        continue;
+                    }
+
+                    $items[] = [
+                        'label' => sanitize_text_field($item['label'] ?? ''),
+                        'value' => sanitize_text_field($item['value'] ?? ''),
+                    ];
+                }
+            }
+
+            $custom_cards[] = [
+                'id'       => $card_id,
+                'title'    => sanitize_text_field($card['title'] ?? ''),
+                'icon'     => sanitize_text_field($card['icon'] ?? ''),
+                'category' => sanitize_text_field($card['category'] ?? ''),
+                'cardType' => lrsd_sf_sanitize_custom_card_type($card['cardType'] ?? 'list'),
+                'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
+                'items'    => $items,
+            ];
+        }
+    }
+
+    $school_custom_ids = array_column($custom_cards, 'id');
+    $global_card_ids   = array_column($global_custom_cards, 'id');
+
+    if ($has_card_order) {
+        $school_data['cardOrder'] = lrsd_sf_normalize_card_order(
+            $school_data['cardOrder'],
+            $school_custom_ids,
+            $global_card_ids
+        );
+    } else {
+        unset($school_data['cardOrder']);
+    }
+
+    if (!empty($custom_cards)) {
+        $school_data['customCards'] = $custom_cards;
+    } else {
+        unset($school_data['customCards']);
+    }
+
+    $custom_card_values = lrsd_sf_normalize_custom_card_values($school_data['customCardValues'] ?? [], $global_card_ids);
+    if (!empty($custom_card_values)) {
+        $school_data['customCardValues'] = $custom_card_values;
+    } else {
+        unset($school_data['customCardValues']);
+    }
+
+    return $school_data;
+}
+
+/**
  * Returns the list of all standard card type IDs with human-readable labels.
  */
 function lrsd_sf_get_all_card_types() {
@@ -320,7 +511,9 @@ function lrsd_sf_get_all_card_types() {
         'school_header'       => __('Header / School Photo', 'lrsd-school-facilities'),
         'details'             => __('Details', 'lrsd-school-facilities'),
         'additions'           => __('Additions', 'lrsd-school-facilities'),
-        'enrolment_capacity'  => __('Enrolment & Capacity', 'lrsd-school-facilities'),
+        'enrolment'           => __('Enrolment', 'lrsd-school-facilities'),
+        'capacity'            => __('Capacity', 'lrsd-school-facilities'),
+        'utilization'         => __('Utilization', 'lrsd-school-facilities'),
         'history'             => __('Historic Enrolment', 'lrsd-school-facilities'),
         'projection'          => __('Projected Enrolment', 'lrsd-school-facilities'),
         'building_systems'    => __('Building Systems', 'lrsd-school-facilities'),
@@ -405,7 +598,7 @@ function lrsd_sf_handle_save_global_cards() {
                     'title'    => sanitize_text_field($card['title'] ?? ''),
                     'icon'     => sanitize_text_field($card['icon'] ?? ''),
                     'category' => sanitize_text_field($card['category'] ?? ''),
-                    'cardType' => in_array($card['cardType'] ?? 'list', ['list', 'stat'], true) ? $card['cardType'] : 'list',
+                    'cardType' => lrsd_sf_sanitize_custom_card_type($card['cardType'] ?? 'list'),
                     'items'    => [],
                     'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
                 ];
