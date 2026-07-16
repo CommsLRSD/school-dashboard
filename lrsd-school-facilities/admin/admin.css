@@ -493,3 +493,191 @@
         flex-direction: column;
     }
 }
+
+/* ── Advanced JSON Editor Page ───────────────────────────────────────────── */
+.lrsd-sf-adv-wrap {
+    max-width: 1200px;
+}
+
+.lrsd-sf-adv-editor-card,
+.lrsd-sf-adv-history-card {
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+/* ── Toolbar ──────────────────────────────────────────────── */
+.lrsd-sf-adv-editor-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #f6f7f7;
+    border-bottom: 1px solid #dcdcde;
+    gap: 10px;
+}
+
+.lrsd-sf-adv-toolbar-title {
+    font-weight: 600;
+    font-size: 13px;
+    color: #1d2327;
+}
+
+.lrsd-sf-adv-toolbar-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* ── Status bar ───────────────────────────────────────────── */
+.lrsd-sf-adv-status {
+    display: none;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+}
+
+.lrsd-sf-adv-status--success {
+    background: #edfaef;
+    border-color: #68de7c;
+    color: #1a7e2e;
+}
+
+.lrsd-sf-adv-status--error {
+    background: #fcf0f0;
+    border-color: #f86368;
+    color: #8a2424;
+}
+
+.lrsd-sf-adv-status--info {
+    background: #f0f6fc;
+    border-color: #72aee6;
+    color: #1d4b78;
+}
+
+/* ── JSON textarea ────────────────────────────────────────── */
+.lrsd-sf-adv-json-editor {
+    display: block;
+    width: 100%;
+    min-height: 540px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 12.5px;
+    line-height: 1.6;
+    padding: 16px;
+    border: none;
+    border-bottom: 1px solid #dcdcde;
+    resize: vertical;
+    box-sizing: border-box;
+    color: #1d2327;
+    background: #fafafa;
+    outline: none;
+    tab-size: 2;
+    transition: background 0.15s;
+}
+
+.lrsd-sf-adv-json-editor:focus {
+    background: #fff;
+    box-shadow: inset 0 0 0 2px #2271b1;
+}
+
+/* ── Save bar ─────────────────────────────────────────────── */
+.lrsd-sf-adv-save-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: #f6f7f7;
+    flex-wrap: wrap;
+}
+
+.lrsd-sf-adv-save-bar .description {
+    color: #646970;
+    font-size: 12px;
+}
+
+/* ── History card ─────────────────────────────────────────── */
+.lrsd-sf-adv-history-card {
+    padding: 20px 20px 16px;
+}
+
+.lrsd-sf-adv-history-heading {
+    margin-top: 0;
+    font-size: 15px;
+    color: #1d2327;
+    border-bottom: 1px solid #dcdcde;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.lrsd-sf-adv-history-table {
+    margin-top: 4px !important;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.lrsd-sf-adv-history-table th,
+.lrsd-sf-adv-history-table td {
+    padding: 8px 12px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.lrsd-sf-adv-history-table th {
+    font-weight: 600;
+    background: #f6f7f7;
+    white-space: nowrap;
+}
+
+.lrsd-sf-adv-ver-num {
+    width: 32px;
+    color: #646970;
+    text-align: center;
+}
+
+.lrsd-sf-adv-ver-date {
+    white-space: nowrap;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 12px;
+}
+
+.lrsd-sf-adv-ver-label {
+    color: #1d2327;
+}
+
+.lrsd-sf-adv-ver-count {
+    text-align: right;
+    color: #646970;
+    font-size: 12px;
+}
+
+.lrsd-sf-adv-no-history {
+    color: #646970;
+    font-style: italic;
+    padding: 8px 0;
+}
+
+.lrsd-sf-adv-restore-note {
+    margin-top: 12px;
+    padding: 9px 14px;
+    background: #f0f6fc;
+    border-left: 4px solid #2271b1;
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+    color: #1d4b78;
+}
+
+@media (max-width: 782px) {
+    .lrsd-sf-adv-editor-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .lrsd-sf-adv-save-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
