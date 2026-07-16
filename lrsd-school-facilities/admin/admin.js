@@ -191,12 +191,16 @@
             return buildItemRowHtml(item.label || '', item.value || '');
         }).join('');
 
+        var previewHtml = buildCardPreviewHtml(title, cardType, items);
+
         return '<div class="lrsd-sf-custom-card" data-card-id="' + id + '">' +
             '<div class="lrsd-sf-custom-card-header">' +
                 '<span class="lrsd-sf-card-drag dashicons dashicons-move" title="Drag to reorder"></span>' +
                 '<strong class="lrsd-sf-card-name">' + (title || (i18n.untitledCard || '(Untitled Card)')) + '</strong>' +
+                '<button type="button" class="button lrsd-sf-toggle-preview" title="Toggle card preview">Show Preview</button>' +
                 '<button type="button" class="button lrsd-sf-remove-card" title="Remove card">\u2715</button>' +
             '</div>' +
+            '<div class="lrsd-sf-card-preview-wrap" style="display:none;">' + previewHtml + '</div>' +
             '<table class="form-table" role="presentation"><tbody>' +
                 '<tr><th>Title</th><td>' +
                     '<input type="text" class="regular-text lrsd-sf-card-title" value="' + esc(title) + '" data-field="title" />' +
@@ -242,13 +246,198 @@
             .replace(/>/g, '&gt;');
     }
 
+    // ── Card Templates ─────────────────────────────────────────────────────────
+
+    var cardTemplates = [
+        {
+            id:       'tpl_accessibility',
+            label:    'Accessibility',
+            usedBy:   'Same format as: Accessibility',
+            cardType: 'list',
+            icon:     '',
+            items:    ["Girls' Washrooms", "Boys' Washrooms", "Gender neutral washrooms",
+                       "Universal Washroom", "Elevator", "Accessible parking stalls",
+                       "Accessible entrance", "Automatic entrance door operators"],
+        },
+        {
+            id:       'tpl_transportation',
+            label:    'Transportation',
+            usedBy:   'Same format as: Transportation',
+            cardType: 'list',
+            icon:     '',
+            items:    ['Bus Loop', 'Parking spots'],
+        },
+        {
+            id:       'tpl_building_systems',
+            label:    'Building Systems',
+            usedBy:   'Same format as: Building Systems, Building Details, Childcare',
+            cardType: 'list',
+            icon:     '',
+            items:    ['Air Conditioning', 'Heating', 'LED Lighting'],
+        },
+        {
+            id:       'tpl_key_value',
+            label:    'Generic Key-Value List',
+            usedBy:   'Same format as: Building Details, Childcare — blank list, add your own rows',
+            cardType: 'list',
+            icon:     '',
+            items:    [],
+        },
+        {
+            id:       'tpl_stats',
+            label:    'Stats / Highlights',
+            usedBy:   'Same format as: Enrolment & Capacity — displays values prominently',
+            cardType: 'stat',
+            icon:     '',
+            items:    ['Value 1', 'Value 2', 'Value 3'],
+        },
+        {
+            id:       'tpl_playground',
+            label:    'Playground Features',
+            usedBy:   'Same format as: Playground — simple list with no values',
+            cardType: 'list',
+            icon:     '',
+            items:    [],
+        },
+    ];
+
+    // Build the template picker overlay HTML
+    function buildTemplatePickerHtml(context) {
+        var rows = cardTemplates.map(function (tpl) {
+            var typeLabel = tpl.cardType === 'stat' ? 'Stats / Highlights' : 'Key–Value List';
+            var typeBadge = '<span class="lrsd-sf-tpl-badge lrsd-sf-tpl-badge--' + tpl.cardType + '">' + esc(typeLabel) + '</span>';
+            return '<div class="lrsd-sf-tpl-option" data-tpl-id="' + esc(tpl.id) + '" data-context="' + esc(context) + '" role="button" tabindex="0">' +
+                '<div class="lrsd-sf-tpl-name">' + esc(tpl.label) + ' ' + typeBadge + '</div>' +
+                '<div class="lrsd-sf-tpl-used-by">' + esc(tpl.usedBy) + '</div>' +
+                (tpl.items.length ? '<div class="lrsd-sf-tpl-items-preview">' + esc(tpl.items.slice(0, 4).join(' · ') + (tpl.items.length > 4 ? ' …' : '')) + '</div>' : '') +
+            '</div>';
+        }).join('');
+
+        return '<div class="lrsd-sf-tpl-picker" data-context="' + esc(context) + '">' +
+            '<div class="lrsd-sf-tpl-picker-header">' +
+                '<strong>Choose a card format to duplicate</strong>' +
+                '<button type="button" class="button lrsd-sf-tpl-cancel">&times; Cancel</button>' +
+            '</div>' +
+            '<div class="lrsd-sf-tpl-options">' + rows + '</div>' +
+        '</div>';
+    }
+
+    // Build a card preview panel reflecting current card state
+    function buildCardPreviewHtml(title, cardType, items) {
+        var titleHtml = esc(title || '(Untitled Card)');
+        var bodyHtml  = '';
+
+        if (cardType === 'stat') {
+            var statItems = items.filter(function (it) { return it.label || it.value; });
+            if (statItems.length === 0) {
+                bodyHtml = '<p class="lrsd-sf-preview-empty">No items yet — add items above to see a preview.</p>';
+            } else {
+                var statCells = statItems.map(function (it) {
+                    return '<div class="lrsd-sf-preview-stat">' +
+                        '<span class="lrsd-sf-preview-stat-value">' + esc(it.value || '—') + '</span>' +
+                        '<span class="lrsd-sf-preview-stat-label">' + esc(it.label || '') + '</span>' +
+                    '</div>';
+                }).join('');
+                bodyHtml = '<div class="lrsd-sf-preview-stats">' + statCells + '</div>';
+            }
+        } else {
+            var listItems = items.filter(function (it) { return it.label || it.value; });
+            if (listItems.length === 0) {
+                bodyHtml = '<p class="lrsd-sf-preview-empty">No items yet — add items above to see a preview.</p>';
+            } else {
+                var listRows = listItems.map(function (it) {
+                    return '<div class="lrsd-sf-preview-row">' +
+                        '<span class="lrsd-sf-preview-label">' + esc(it.label || '') + '</span>' +
+                        '<span class="lrsd-sf-preview-value">' + esc(it.value || '—') + '</span>' +
+                    '</div>';
+                }).join('');
+                bodyHtml = '<div class="lrsd-sf-preview-list">' + listRows + '</div>';
+            }
+        }
+
+        return '<div class="lrsd-sf-card-preview">' +
+            '<div class="lrsd-sf-preview-header"><span class="lrsd-sf-preview-title">' + titleHtml + '</span></div>' +
+            '<div class="lrsd-sf-preview-body">' + bodyHtml + '</div>' +
+        '</div>';
+    }
+
+    // Collect current items from a card element
+    function getCardItems($card) {
+        var items = [];
+        $card.find('.lrsd-sf-item-row').each(function () {
+            items.push({
+                label: $(this).find('.lrsd-sf-item-label').val() || '',
+                value: $(this).find('.lrsd-sf-item-value').val() || '',
+            });
+        });
+        return items;
+    }
+
+    // Refresh the preview panel inside a card
+    function refreshCardPreview($card) {
+        var $preview = $card.find('.lrsd-sf-card-preview-wrap');
+        if (!$preview.length) return;
+        var title    = $card.find('.lrsd-sf-card-title').val() || '';
+        var cardType = $card.find('.lrsd-sf-card-cardtype').val() || 'list';
+        var items    = getCardItems($card);
+        $preview.html(buildCardPreviewHtml(title, cardType, items));
+    }
+
     function initCustomCards() {
-        // Add card
-        $('#lrsd-sf-add-card').on('click', function () {
-            var id  = uniqueId();
-            var html = buildCardHtml(id);
-            $('#lrsd-sf-custom-cards').append(html);
-            addCardToOrder(id, i18n.untitledCard || '(Untitled Card)');
+        // Duplicate from template — school editor
+        $(document).on('click', '#lrsd-sf-add-card', function () {
+            var $container = $('#lrsd-sf-custom-cards');
+            // Remove any open picker first
+            $container.find('.lrsd-sf-tpl-picker').remove();
+            var pickerHtml = buildTemplatePickerHtml('school');
+            $container.before(pickerHtml);
+        });
+
+        // Duplicate from template — card editor page (global cards)
+        $(document).on('click', '#lrsd-sf-add-global-card', function () {
+            var $container = $('#lrsd-sf-global-cards');
+            $container.find('.lrsd-sf-tpl-picker').remove();
+            var pickerHtml = buildTemplatePickerHtml('global');
+            $container.before(pickerHtml);
+        });
+
+        // Cancel picker
+        $(document).on('click', '.lrsd-sf-tpl-cancel', function () {
+            $(this).closest('.lrsd-sf-tpl-picker').remove();
+        });
+
+        // Select template
+        $(document).on('click keypress', '.lrsd-sf-tpl-option', function (e) {
+            if (e.type === 'keypress' && e.which !== 13) return;
+            var tplId   = $(this).data('tpl-id');
+            var context = $(this).data('context');
+            var tpl     = null;
+            for (var t = 0; t < cardTemplates.length; t++) {
+                if (cardTemplates[t].id === tplId) { tpl = cardTemplates[t]; break; }
+            }
+            if (!tpl) return;
+
+            $(this).closest('.lrsd-sf-tpl-picker').remove();
+
+            var id    = uniqueId();
+            var items = tpl.items.map(function (lbl) { return { label: lbl, value: '' }; });
+
+            if (context === 'global') {
+                // Global card editor page — labels only
+                var html = buildGlobalCardHtml(id, tpl.label, tpl.icon, '', tpl.cardType, '');
+                $('#lrsd-sf-global-cards').append(html);
+                // Pre-fill label rows
+                var $card = $('#lrsd-sf-global-cards').find('[data-card-id="' + id + '"]');
+                var $labelList = $card.find('.lrsd-sf-label-list');
+                tpl.items.forEach(function (lbl) {
+                    $labelList.append(buildLabelRowHtml(lbl));
+                });
+            } else {
+                // School editor custom cards — label + value
+                var html = buildCardHtml(id, tpl.label, tpl.icon, '', tpl.cardType, '', items);
+                $('#lrsd-sf-custom-cards').append(html);
+                addCardToOrder(id, tpl.label || (i18n.untitledCard || '(Untitled Card)'));
+            }
         });
 
         // Remove card
@@ -262,6 +451,7 @@
         // Remove item
         $(document).on('click', '.lrsd-sf-remove-item', function () {
             $(this).closest('.lrsd-sf-item-row').remove();
+            refreshCardPreview($(this).closest('.lrsd-sf-custom-card'));
         });
 
         // Add item row
@@ -278,6 +468,31 @@
             // Update label in card order list
             var cardId = $card.data('card-id');
             $('#lrsd-sf-card-order .lrsd-sf-order-item[data-card-id="' + cardId + '"] .lrsd-sf-order-label').text(title);
+
+            refreshCardPreview($card);
+        });
+
+        // Refresh preview on item changes
+        $(document).on('input', '.lrsd-sf-item-label, .lrsd-sf-item-value', function () {
+            refreshCardPreview($(this).closest('.lrsd-sf-custom-card'));
+        });
+
+        $(document).on('change', '.lrsd-sf-card-cardtype', function () {
+            refreshCardPreview($(this).closest('.lrsd-sf-custom-card'));
+        });
+
+        // Toggle card preview
+        $(document).on('click', '.lrsd-sf-toggle-preview', function () {
+            var $card    = $(this).closest('.lrsd-sf-custom-card');
+            var $preview = $card.find('.lrsd-sf-card-preview-wrap');
+            if ($preview.is(':visible')) {
+                $preview.slideUp(150);
+                $(this).text('Show Preview');
+            } else {
+                refreshCardPreview($card);
+                $preview.slideDown(150);
+                $(this).text('Hide Preview');
+            }
         });
 
         // Make custom cards sortable
@@ -394,13 +609,6 @@
         if (!$('#lrsd-sf-global-cards').length) {
             return;
         }
-
-        // Add new global card
-        $('#lrsd-sf-add-global-card').on('click', function () {
-            var id   = uniqueId();
-            var html = buildGlobalCardHtml(id);
-            $('#lrsd-sf-global-cards').append(html);
-        });
 
         // Remove global card template
         $(document).on('click', '.lrsd-sf-remove-global-card', function () {

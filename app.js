@@ -235,8 +235,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Normalize search term for accent-insensitive and case-insensitive search
         const normalizedSearch = normalizeString(safeSearchTerm);
         
-        // Filter and map school data to HTML with proper sanitization
+        // Filter and map school data to HTML with proper sanitization, sorted A-Z by school name
         const schoolLinksHTML = Object.keys(schoolData)
+            .sort((a, b) => {
+                const nameA = (schoolData[a]?.schoolName || '').toLowerCase();
+                const nameB = (schoolData[b]?.schoolName || '').toLowerCase();
+                return nameA.localeCompare(nameB);
+            })
             .reduce((acc, schoolId) => {
                 const schoolName = schoolData[schoolId]?.schoolName || '';
                 if (!schoolName.trim()) return acc; // Skip schools with blank names
@@ -582,7 +587,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, fosMapLookupData);
                 const mapFilename = fosMapLookup[school.familyOfSchools] || `public/maps/${school.id}-map.jpg`;
                 const schoolName = sanitizeHTML(school.schoolName || '');
-                const migration = school.catchment?.migration || 'N/A';
+                const migrationRaw = school.catchment?.migration;
+                const migration = (migrationRaw !== undefined && migrationRaw !== null && migrationRaw !== '')
+                    ? (String(migrationRaw).endsWith('%') ? String(migrationRaw) : String(migrationRaw) + '%')
+                    : 'N/A';
                 const description = school.catchment?.description || '';
                 
                 return `<div class="data-card catchment-map-card ${sizeClass}">

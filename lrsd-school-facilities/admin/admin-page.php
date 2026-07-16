@@ -13,6 +13,27 @@ function lrsd_sf_register_admin_pages() {
         58
     );
 
+    // ── Top two items: Update by School & Update by Category ──────────────────
+
+    add_submenu_page(
+        'lrsd-school-facilities',
+        __('Update by School', 'lrsd-school-facilities'),
+        __('Update by School', 'lrsd-school-facilities'),
+        'edit_posts',
+        'edit.php?post_type=lr_school'
+    );
+
+    add_submenu_page(
+        'lrsd-school-facilities',
+        __('Update by Category', 'lrsd-school-facilities'),
+        __('Update by Category', 'lrsd-school-facilities'),
+        'manage_options',
+        'lrsd-school-facilities-bulk',
+        'lrsd_sf_render_bulk_update_page'
+    );
+
+    // ── Remaining items ───────────────────────────────────────────────────────
+
     add_submenu_page(
         'lrsd-school-facilities',
         __('Import / Export', 'lrsd-school-facilities'),
@@ -33,28 +54,11 @@ function lrsd_sf_register_admin_pages() {
 
     add_submenu_page(
         'lrsd-school-facilities',
-        __('Bulk Update', 'lrsd-school-facilities'),
-        __('Bulk Update', 'lrsd-school-facilities'),
-        'manage_options',
-        'lrsd-school-facilities-bulk',
-        'lrsd_sf_render_bulk_update_page'
-    );
-
-    add_submenu_page(
-        'lrsd-school-facilities',
         __('Advanced JSON Editor', 'lrsd-school-facilities'),
         __('Advanced JSON Editor', 'lrsd-school-facilities'),
         'manage_options',
         'lrsd-school-facilities-advanced',
         'lrsd_sf_render_advanced_editor_page'
-    );
-
-    add_submenu_page(
-        'lrsd-school-facilities',
-        __('All Schools', 'lrsd-school-facilities'),
-        __('All Schools', 'lrsd-school-facilities'),
-        'edit_posts',
-        'edit.php?post_type=lr_school'
     );
 }
 
@@ -97,7 +101,7 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
             'error'             => __('An error occurred. Please try again.', 'lrsd-school-facilities'),
             'confirmBulk'       => __('Save changes to all schools in this category?', 'lrsd-school-facilities'),
             'untitledCard'      => __('(Untitled Card)', 'lrsd-school-facilities'),
-            'allSchoolsLabel'   => __('All Schools', 'lrsd-school-facilities'),
+            'allSchoolsLabel'   => __('Update by School', 'lrsd-school-facilities'),
             'addSubcategory'    => __('+ Add Subcategory', 'lrsd-school-facilities'),
             'labelPlaceholder'  => __('Label / subcategory name', 'lrsd-school-facilities'),
         ],
@@ -221,7 +225,7 @@ function lrsd_sf_render_bulk_update_page() {
 
     ?>
     <div class="wrap lrsd-sf-wrap">
-        <h1><?php esc_html_e('Bulk Update Schools', 'lrsd-school-facilities'); ?></h1>
+        <h1><?php esc_html_e('Update by Category', 'lrsd-school-facilities'); ?></h1>
 
         <?php if (!empty($notice['message'])) : ?>
             <div class="notice notice-<?php echo esc_attr(($notice['type'] ?? 'success') === 'success' ? 'success' : 'error'); ?> is-dismissible">
@@ -292,19 +296,30 @@ function lrsd_sf_render_bulk_update_page() {
                                 $val  = lrsd_sf_get_nested_value($sdata, $field['path'], '');
                                 $name = 'lrsd_bulk_schools[' . esc_attr($row_id) . '][' . esc_attr($fk) . ']';
                             ?>
-                                <td>
+                                 <td>
                                 <?php if ($field['type'] === 'int') : ?>
                                     <input type="number" class="small-text" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr((string)(int)$val); ?>" />
                                 <?php elseif ($field['type'] === 'select') :
                                     $opts = (lrsd_sf_get_dropdown_options())[$field['options_key']] ?? [];
                                     if ($val !== '' && !in_array((string)$val, $opts, true)) { $opts[] = (string)$val; }
+                                    $bulk_select_id = 'bulk-' . esc_attr($row_id) . '-' . esc_attr($fk);
                                 ?>
-                                    <select name="<?php echo esc_attr($name); ?>">
-                                        <option value=""><?php esc_html_e('— Select —', 'lrsd-school-facilities'); ?></option>
-                                        <?php foreach ($opts as $opt) : ?>
-                                            <option value="<?php echo esc_attr($opt); ?>"<?php selected((string)$val, $opt); ?>><?php echo esc_html($opt); ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
+                                    <div class="lrsd-sf-select-wrap">
+                                        <select id="<?php echo $bulk_select_id; ?>"
+                                                name="<?php echo esc_attr($name); ?>"
+                                                data-option-key="<?php echo esc_attr($field['options_key']); ?>">
+                                            <option value=""><?php esc_html_e('— Select —', 'lrsd-school-facilities'); ?></option>
+                                            <?php foreach ($opts as $opt) : ?>
+                                                <option value="<?php echo esc_attr($opt); ?>"<?php selected((string)$val, $opt); ?>><?php echo esc_html($opt); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <button type="button" class="button lrsd-sf-add-option-btn"
+                                            data-option-key="<?php echo esc_attr($field['options_key']); ?>"
+                                            data-target-select="<?php echo $bulk_select_id; ?>"
+                                            title="<?php esc_attr_e('Add a custom option to this dropdown', 'lrsd-school-facilities'); ?>">
+                                            <?php esc_html_e('+ Custom', 'lrsd-school-facilities'); ?>
+                                        </button>
+                                    </div>
                                 <?php else : ?>
                                     <input type="text" class="regular-text" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr((string)$val); ?>" />
                                 <?php endif; ?>
