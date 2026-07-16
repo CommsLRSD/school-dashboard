@@ -310,13 +310,13 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                 <td>
                     <div class="lrsd-sf-kv-list">
                         <table class="lrsd-sf-kv-table" role="presentation">
-                            <thead><tr><th><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th><?php esc_html_e('Value', 'lrsd-school-facilities'); ?></th><th></th></tr></thead>
-                            <tbody class="lrsd-sf-kv-rows" data-empty-label="<?php esc_attr_e('Year', 'lrsd-school-facilities'); ?>">
+                            <thead><tr><th scope="col"><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th scope="col"><?php esc_html_e('Value', 'lrsd-school-facilities'); ?></th><th scope="col"></th></tr></thead>
+                            <tbody class="lrsd-sf-kv-rows">
                             <?php foreach ($history_points as $point) : ?>
                                 <tr class="lrsd-sf-kv-row">
-                                    <td><input type="text" class="regular-text" name="lrsd_sf_enrolment_history_labels[]" value="<?php echo esc_attr((string)($point['label'] ?? '')); ?>" /></td>
-                                    <td><input type="number" class="small-text" name="lrsd_sf_enrolment_history_values[]" value="<?php echo esc_attr((string)($point['value'] ?? '')); ?>" /></td>
-                                    <td><button type="button" class="button lrsd-sf-remove-kv-row">&#x2715;</button></td>
+                                    <td><input type="text" class="regular-text" name="lrsd_sf_enrolment_history_labels[]" aria-label="<?php esc_attr_e('Historic enrolment year', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['label'] ?? '')); ?>" /></td>
+                                    <td><input type="number" class="small-text" name="lrsd_sf_enrolment_history_values[]" aria-label="<?php esc_attr_e('Historic enrolment value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['value'] ?? '')); ?>" /></td>
+                                    <td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="<?php esc_attr_e('Remove historic enrolment row', 'lrsd-school-facilities'); ?>">&#x2715;</button></td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
@@ -330,13 +330,13 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                 <td>
                     <div class="lrsd-sf-kv-list">
                         <table class="lrsd-sf-kv-table" role="presentation">
-                            <thead><tr><th><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th><?php esc_html_e('Value', 'lrsd-school-facilities'); ?></th><th></th></tr></thead>
-                            <tbody class="lrsd-sf-kv-rows" data-empty-label="<?php esc_attr_e('Year', 'lrsd-school-facilities'); ?>">
+                            <thead><tr><th scope="col"><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th scope="col"><?php esc_html_e('Value', 'lrsd-school-facilities'); ?></th><th scope="col"></th></tr></thead>
+                            <tbody class="lrsd-sf-kv-rows">
                             <?php foreach ($projection_points as $point) : ?>
                                 <tr class="lrsd-sf-kv-row">
-                                    <td><input type="text" class="regular-text" name="lrsd_sf_enrolment_projection_labels[]" value="<?php echo esc_attr((string)($point['label'] ?? '')); ?>" /></td>
-                                    <td><input type="number" class="small-text" name="lrsd_sf_enrolment_projection_values[]" value="<?php echo esc_attr((string)($point['value'] ?? '')); ?>" /></td>
-                                    <td><button type="button" class="button lrsd-sf-remove-kv-row">&#x2715;</button></td>
+                                    <td><input type="text" class="regular-text" name="lrsd_sf_enrolment_projection_labels[]" aria-label="<?php esc_attr_e('Projected enrolment year', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['label'] ?? '')); ?>" /></td>
+                                    <td><input type="number" class="small-text" name="lrsd_sf_enrolment_projection_values[]" aria-label="<?php esc_attr_e('Projected enrolment value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['value'] ?? '')); ?>" /></td>
+                                    <td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="<?php esc_attr_e('Remove projected enrolment row', 'lrsd-school-facilities'); ?>">&#x2715;</button></td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
@@ -369,13 +369,13 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                 <td>
                     <div class="lrsd-sf-kv-list">
                         <table class="lrsd-sf-kv-table" role="presentation">
-                            <thead><tr><th><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th><?php esc_html_e('Size', 'lrsd-school-facilities'); ?></th><th></th></tr></thead>
+                            <thead><tr><th scope="col"><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th scope="col"><?php esc_html_e('Size', 'lrsd-school-facilities'); ?></th><th scope="col"></th></tr></thead>
                             <tbody class="lrsd-sf-kv-rows">
                             <?php foreach ($additions as $addition) : ?>
                                 <tr class="lrsd-sf-kv-row">
-                                    <td><input type="text" class="regular-text" name="lrsd_sf_additions_year[]" value="<?php echo esc_attr((string)($addition['year'] ?? '')); ?>" /></td>
-                                    <td><input type="text" class="regular-text" name="lrsd_sf_additions_size[]" value="<?php echo esc_attr((string)($addition['size'] ?? '')); ?>" /></td>
-                                    <td><button type="button" class="button lrsd-sf-remove-kv-row">&#x2715;</button></td>
+                                    <td><input type="text" class="regular-text" name="lrsd_sf_additions_year[]" aria-label="<?php esc_attr_e('Addition year', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($addition['year'] ?? '')); ?>" /></td>
+                                    <td><input type="text" class="regular-text" name="lrsd_sf_additions_size[]" aria-label="<?php esc_attr_e('Addition size', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($addition['size'] ?? '')); ?>" /></td>
+                                    <td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="<?php esc_attr_e('Remove addition row', 'lrsd-school-facilities'); ?>">&#x2715;</button></td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>

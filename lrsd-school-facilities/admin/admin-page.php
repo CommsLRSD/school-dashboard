@@ -104,6 +104,11 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
             'allSchoolsLabel'   => __('Update by School', 'lrsd-school-facilities'),
             'addSubcategory'    => __('+ Add Subcategory', 'lrsd-school-facilities'),
             'labelPlaceholder'  => __('Label / subcategory name', 'lrsd-school-facilities'),
+            'kvLabel'           => __('Label', 'lrsd-school-facilities'),
+            'kvYear'            => __('Year', 'lrsd-school-facilities'),
+            'kvValue'           => __('Value', 'lrsd-school-facilities'),
+            'kvTextValue'       => __('Text value', 'lrsd-school-facilities'),
+            'removeRow'         => __('Remove row', 'lrsd-school-facilities'),
         ],
     ]);
 
@@ -313,13 +318,13 @@ function lrsd_sf_render_bulk_update_page() {
                             <td>
                                 <div class="lrsd-sf-kv-list">
                                     <table class="lrsd-sf-kv-table" role="presentation">
-                                        <thead><tr><th><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th><?php esc_html_e('Value', 'lrsd-school-facilities'); ?></th><th></th></tr></thead>
+                                        <thead><tr><th scope="col"><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th scope="col"><?php esc_html_e('Value', 'lrsd-school-facilities'); ?></th><th scope="col"></th></tr></thead>
                                         <tbody class="lrsd-sf-kv-rows">
                                         <?php foreach ($points as $point) : ?>
                                             <tr class="lrsd-sf-kv-row">
-                                                <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][enrolment_labels][]" value="<?php echo esc_attr((string)($point['label'] ?? '')); ?>" /></td>
-                                                <td><input type="number" class="small-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][enrolment_values][]" value="<?php echo esc_attr((string)($point['value'] ?? '')); ?>" /></td>
-                                                <td><button type="button" class="button lrsd-sf-remove-kv-row">&#x2715;</button></td>
+                                                <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][enrolment_labels][]" aria-label="<?php esc_attr_e('Enrolment year', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['label'] ?? '')); ?>" /></td>
+                                                <td><input type="number" class="small-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][enrolment_values][]" aria-label="<?php esc_attr_e('Enrolment value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['value'] ?? '')); ?>" /></td>
+                                                <td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="<?php esc_attr_e('Remove enrolment row', 'lrsd-school-facilities'); ?>">&#x2715;</button></td>
                                             </tr>
                                         <?php endforeach; ?>
                                         </tbody>
@@ -336,13 +341,13 @@ function lrsd_sf_render_bulk_update_page() {
                             <td>
                                 <div class="lrsd-sf-kv-list">
                                     <table class="lrsd-sf-kv-table" role="presentation">
-                                        <thead><tr><th><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th><?php esc_html_e('Size', 'lrsd-school-facilities'); ?></th><th></th></tr></thead>
+                                        <thead><tr><th scope="col"><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th scope="col"><?php esc_html_e('Size', 'lrsd-school-facilities'); ?></th><th scope="col"></th></tr></thead>
                                         <tbody class="lrsd-sf-kv-rows">
                                         <?php foreach ($additions as $addition) : ?>
                                             <tr class="lrsd-sf-kv-row">
-                                                <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][additions_year][]" value="<?php echo esc_attr((string)($addition['year'] ?? '')); ?>" /></td>
-                                                <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][additions_size][]" value="<?php echo esc_attr((string)($addition['size'] ?? '')); ?>" /></td>
-                                                <td><button type="button" class="button lrsd-sf-remove-kv-row">&#x2715;</button></td>
+                                                <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][additions_year][]" aria-label="<?php esc_attr_e('Addition year', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($addition['year'] ?? '')); ?>" /></td>
+                                                <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][additions_size][]" aria-label="<?php esc_attr_e('Addition size', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($addition['size'] ?? '')); ?>" /></td>
+                                                <td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="<?php esc_attr_e('Remove addition row', 'lrsd-school-facilities'); ?>">&#x2715;</button></td>
                                             </tr>
                                         <?php endforeach; ?>
                                         </tbody>
@@ -356,10 +361,10 @@ function lrsd_sf_render_bulk_update_page() {
                                 $childcare = [];
                             }
                         ?>
-                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][Infant (0-23 months)]" value="<?php echo esc_attr((string)($childcare['Infant (0-23 months)'] ?? '')); ?>" /></td>
-                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][Pre-school (2-6 years)]" value="<?php echo esc_attr((string)($childcare['Pre-school (2-6 years)'] ?? '')); ?>" /></td>
-                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][School-age (7+ years)]" value="<?php echo esc_attr((string)($childcare['School-age (7+ years)'] ?? '')); ?>" /></td>
-                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][BLAST]" value="<?php echo esc_attr((string)($childcare['BLAST'] ?? '')); ?>" /></td>
+                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][Infant (0-23 months)]" aria-label="<?php esc_attr_e('Infant childcare value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($childcare['Infant (0-23 months)'] ?? '')); ?>" /></td>
+                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][Pre-school (2-6 years)]" aria-label="<?php esc_attr_e('Pre-school childcare value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($childcare['Pre-school (2-6 years)'] ?? '')); ?>" /></td>
+                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][School-age (7+ years)]" aria-label="<?php esc_attr_e('School-age childcare value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($childcare['School-age (7+ years)'] ?? '')); ?>" /></td>
+                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][BLAST]" aria-label="<?php esc_attr_e('BLAST childcare value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($childcare['BLAST'] ?? '')); ?>" /></td>
                         <?php else : ?>
                             <?php foreach ($cat_fields as $fk => $field) :
                                 $val  = lrsd_sf_get_nested_value($sdata, $field['path'], '');
