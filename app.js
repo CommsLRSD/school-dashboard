@@ -238,8 +238,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Filter and map school data to HTML with proper sanitization
         const schoolLinksHTML = Object.keys(schoolData)
             .filter(schoolId => {
-                if (!safeSearchTerm) return true;
                 const schoolName = schoolData[schoolId]?.schoolName || '';
+                if (!schoolName.trim()) return false; // Skip schools with blank names
+                if (!safeSearchTerm) return true;
                 return normalizeString(schoolName).includes(normalizedSearch);
             })
             .map(schoolId => {
@@ -317,10 +318,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const combinedFilter = document.getElementById('combined-filter');
         if (combinedFilter) {
-            // Find the last option (which should be the "— Family of Schools —" separator)
-            const currentOptions = combinedFilter.innerHTML;
-            // Insert FOS options after the separator
-            combinedFilter.innerHTML = currentOptions + fosOptions;
+            // Append FOS options after the "All Schools" default option
+            combinedFilter.innerHTML += fosOptions;
         }
 
         // Add category links after the existing filter buttons

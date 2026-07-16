@@ -77,6 +77,12 @@ function lrsd_sf_get_school_dataset() {
             continue;
         }
 
+        // Skip schools with a blank school name to prevent empty sidebar entries.
+        $school_name = trim((string) ($school_data['schoolName'] ?? ''));
+        if ($school_name === '') {
+            continue;
+        }
+
         $dataset[$school_id] = $school_data;
     }
 
