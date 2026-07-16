@@ -237,17 +237,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Filter and map school data to HTML with proper sanitization
         const schoolLinksHTML = Object.keys(schoolData)
-            .filter(schoolId => {
+            .reduce((acc, schoolId) => {
                 const schoolName = schoolData[schoolId]?.schoolName || '';
-                if (!schoolName.trim()) return false; // Skip schools with blank names
-                if (!safeSearchTerm) return true;
-                return normalizeString(schoolName).includes(normalizedSearch);
-            })
-            .map(schoolId => {
-                const schoolName = sanitizeHTML(schoolData[schoolId]?.schoolName || '');
-                const schoolIdSafe = sanitizeHTML(schoolId);
-                return `<a href="#" class="nav-list-item" data-type="school" data-id="${schoolIdSafe}">${schoolName}</a>`;
-            })
+                if (!schoolName.trim()) return acc; // Skip schools with blank names
+                if (safeSearchTerm && !normalizeString(schoolName).includes(normalizedSearch)) return acc;
+                const safeName = sanitizeHTML(schoolName);
+                const safeId = sanitizeHTML(schoolId);
+                acc.push(`<a href="#" class="nav-list-item" data-type="school" data-id="${safeId}">${safeName}</a>`);
+                return acc;
+            }, [])
             .join('');
         
         // Find existing search controls or create placeholder
