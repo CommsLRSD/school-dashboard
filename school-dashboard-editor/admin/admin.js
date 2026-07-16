@@ -10,6 +10,21 @@
         return 'custom_' + Math.random().toString(36).substr(2, 8);
     }
 
+    /**
+     * Clear any inline `height` styles jQuery UI sortable may have set on card
+     * elements, then refresh the sortable so newly added/removed cards are
+     * included correctly.
+     *
+     * @param {jQuery} $container - The sortable container (e.g. #lrsd-sf-custom-cards)
+     * @param {string} childSelector - Selector for sortable children to reset
+     */
+    function clearSortableHeights($container, childSelector) {
+        $container.find(childSelector).css('height', '');
+        if ($container.data('ui-sortable')) {
+            $container.sortable('refresh');
+        }
+    }
+
     // ── Section Accordion ──────────────────────────────────────────────────────
 
     function initSections() {
@@ -438,9 +453,7 @@
                 $('#lrsd-sf-custom-cards').append(html);
                 addCardToOrder(id, tpl.label || (i18n.untitledCard || '(Untitled Card)'));
                 // Refresh sortable so the new card participates in drag-to-reorder
-                if ($('#lrsd-sf-custom-cards').data('ui-sortable')) {
-                    $('#lrsd-sf-custom-cards').sortable('refresh');
-                }
+                clearSortableHeights($('#lrsd-sf-custom-cards'), '.lrsd-sf-custom-card');
             }
         });
 
@@ -451,10 +464,7 @@
             $card.remove();
             removeCardFromOrder(cardId);
             // Clear any inline heights jQuery UI sortable may have set on remaining cards
-            $('#lrsd-sf-custom-cards .lrsd-sf-custom-card').css('height', '');
-            if ($('#lrsd-sf-custom-cards').data('ui-sortable')) {
-                $('#lrsd-sf-custom-cards').sortable('refresh');
-            }
+            clearSortableHeights($('#lrsd-sf-custom-cards'), '.lrsd-sf-custom-card');
         });
 
         // Remove item
@@ -511,7 +521,7 @@
             tolerance: 'pointer',
             stop: function () {
                 // Clear any inline heights sortable may have set
-                $('#lrsd-sf-custom-cards .lrsd-sf-custom-card').css('height', '');
+                clearSortableHeights($('#lrsd-sf-custom-cards'), '.lrsd-sf-custom-card');
             },
         });
     }
@@ -680,7 +690,7 @@
             tolerance: 'pointer',
             stop: function () {
                 // Clear any inline heights sortable may have set
-                $('#lrsd-sf-global-cards .lrsd-sf-global-card-template').css('height', '');
+                clearSortableHeights($('#lrsd-sf-global-cards'), '.lrsd-sf-global-card-template');
             },
         });
 
