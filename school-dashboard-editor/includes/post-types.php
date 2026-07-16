@@ -87,7 +87,7 @@ function lrsd_sf_default_school_admin_sort($query) {
         ],
         [
             'key'     => 'lrsd_school_id',
-            'value'   => array_merge(lrsd_sf_get_reserved_dataset_keys(), ['fosMAPLookup']),
+            'value'   => lrsd_sf_get_reserved_dataset_keys(),
             'compare' => 'NOT IN',
         ],
     ];

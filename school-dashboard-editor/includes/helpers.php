@@ -11,6 +11,10 @@ function lrsd_sf_get_reserved_dataset_keys() {
 
 /**
  * Normalize dataset keys for case-insensitive reserved-key checks.
+ *
+ * Reserved dataset keys are synthetic metadata buckets, not user-created school
+ * IDs. Normalizing to lowercase alphanumerics is safe here because we only use
+ * this helper to match that tiny fixed reserved-key list.
  */
 function lrsd_sf_normalize_dataset_key($key) {
     return strtolower(preg_replace('/[^a-z0-9]/i', '', (string) $key));

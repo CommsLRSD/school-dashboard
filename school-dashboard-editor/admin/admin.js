@@ -226,7 +226,7 @@
         var options = item.options;
         if (!Array.isArray(options)) {
             if (typeof options === 'string' && options.trim()) {
-                options = options.split(/\r?\n/).map(function (opt) { return opt.trim(); }).filter(Boolean);
+                options = options.split(/\r\n|\r|\n/).map(function (opt) { return opt.trim(); }).filter(Boolean);
             } else {
                 options = [];
             }
@@ -520,7 +520,7 @@
 
         $card.find('.lrsd-sf-item-row').each(function () {
             var $row = $(this);
-            var options = ($row.find('.lrsd-sf-item-options').val() || '').split(/\r?\n/).map(function (opt) { return opt.trim(); }).filter(Boolean);
+            var options = ($row.find('.lrsd-sf-item-options').val() || '').split(/\r\n|\r|\n/).map(function (opt) { return opt.trim(); }).filter(Boolean);
             card.items.push(normalizeItem({
                 label: $row.find('.lrsd-sf-item-label').val() || '',
                 value: $row.find('.lrsd-sf-item-value').val() || '',
@@ -568,10 +568,10 @@
         if (!$container.length) {
             return;
         }
-        var html = (cards || []).map(function (card) {
-            return buildEditableCardHtml(normalizeCard(card), context, false);
-        }).join('');
-        $container.html(html);
+        $container.empty();
+        (cards || []).forEach(function (card) {
+            $container.append($(buildEditableCardHtml(normalizeCard(card), context, false)));
+        });
     }
 
     function readTemplateById(tplId) {

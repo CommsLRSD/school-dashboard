@@ -490,7 +490,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             items = items.map(ti => ({
                 label: ti.label || '',
-                value: Object.prototype.hasOwnProperty.call(valMap, ti.label || '') ? valMap[ti.label || ''] : (ti.value || ''),
+                value: ((ti.label || '') in valMap) ? valMap[ti.label || ''] : (ti.value || ''),
                 valueType: ti.valueType || 'text',
                 options: ti.options || [],
             }));
@@ -510,8 +510,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const imageUrl = sanitizeHTML((schoolValues && schoolValues.imageUrl) || template.imageUrl || '');
             const overlayText = sanitizeHTML((schoolValues && schoolValues.imageOverlayText) || template.imageOverlayText || '');
             const imageLink = sanitizeHTML((schoolValues && schoolValues.imageLink) || template.imageLink || '');
+            const imageAlt = overlayText || title;
             const imageBody = imageUrl
-                ? `<img src="${imageUrl}" alt="${title}" class="custom-image-card-image">`
+                ? `<img src="${imageUrl}" alt="${imageAlt}" class="custom-image-card-image">`
                 : `<div class="custom-image-card-placeholder">No image added.</div>`;
             const imageContent = `<div class="card-header"><img src="${iconSrc}" alt="" class="card-header-icon"><h2 class="card-title">${title}</h2></div><div class="card-body"><div class="custom-image-card-frame ${template.imageSize === 'wide' ? 'custom-image-card-frame--wide' : ''}">${imageLink ? `<a href="${imageLink}" class="custom-image-card-link">` : ''}${imageBody}${overlayText ? `<div class="custom-image-card-overlay">${overlayText}</div>` : ''}${imageLink ? '</a>' : ''}</div>${noteButton}${notesInlineHtml}</div>`;
             const imageClass = `list-card custom-image-card ${sizeClass} ${template.imageSize === 'wide' ? 'tile-double-width' : ''}`.trim();
