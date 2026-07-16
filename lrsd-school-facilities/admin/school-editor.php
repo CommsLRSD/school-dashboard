@@ -300,14 +300,14 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                 <th scope="row"><label for="lrsd_sf_enrolment_history"><?php esc_html_e('Historic Enrolment (Year|Value)', 'lrsd-school-facilities'); ?></label></th>
                 <td>
                     <textarea id="lrsd_sf_enrolment_history" name="lrsd_sf_enrolment_history" rows="5" class="large-text code"><?php echo esc_textarea($history_lines); ?></textarea>
-                    <p class="description"><?php esc_html_e('One data point per line in this format: 2025_26|184. The year label can be any text.', 'lrsd-school-facilities'); ?></p>
+                    <p class="description"><?php esc_html_e('One data point per line using label|value (example: 2025_26|184). You may use any label text.', 'lrsd-school-facilities'); ?></p>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="lrsd_sf_enrolment_projection"><?php esc_html_e('Projected Enrolment (Year|Value)', 'lrsd-school-facilities'); ?></label></th>
                 <td>
                     <textarea id="lrsd_sf_enrolment_projection" name="lrsd_sf_enrolment_projection" rows="5" class="large-text code"><?php echo esc_textarea($projection_lines); ?></textarea>
-                    <p class="description"><?php esc_html_e('One data point per line in this format: 2029_30|142. The year label can be any text.', 'lrsd-school-facilities'); ?></p>
+                    <p class="description"><?php esc_html_e('One data point per line using label|value (example: 2029_30|142). You may use any label text.', 'lrsd-school-facilities'); ?></p>
                 </td>
             </tr>
         </tbody></table>
