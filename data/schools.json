@@ -22,14 +22,12 @@
             "current": 165,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    151,
                     144,
                     142,
                     136,
@@ -81,11 +79,12 @@
         },
         "catchment": {
             "migration": "-1.3",
-            "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)"
+            "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)",
+            "map": ""
         },
         "transportation": {
             "Parking spots": "Not specified",
-            "Bus Loop": "NO"
+            "Bus Loop": "Joint use agreement with neighbouring facility"
         },
         "accessibility": {
             "Girls' washrooms": 3,
@@ -108,9 +107,9 @@
             "Baseball Diamond"
         ],
         "childcare": {
-            "Infant (0-23 months)": 0,
-            "Pre-school (2-6 years)": 0,
-            "School-age (7+ years)": 24,
+            "Infant (0-23 months)": "0",
+            "Pre-school (2-6 years)": "0",
+            "School-age (7+ years)": "24",
             "BLAST": ""
         },
         "projects": {
@@ -159,7 +158,24 @@
         "familyOfSchools": "NELSON MCINTYRE FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "customCards": [],
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment_capacity",
+            "history",
+            "projection",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "beliveau": {
         "id": "beliveau",
@@ -173,14 +189,12 @@
             "current": 673,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    724,
                     795,
                     868,
                     947,
@@ -236,7 +250,7 @@
         },
         "transportation": {
             "Parking spots": "64",
-            "Bus Loop": "Inaccessible"
+            "Bus Loop": "Required"
         },
         "accessibility": {
             "Girls' washrooms": 6,
@@ -320,14 +334,12 @@
             "current": 848,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    903,
                     914,
                     901,
                     920,
@@ -459,14 +471,12 @@
             "current": 1522,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    1542,
                     1563,
                     1609,
                     1604,
@@ -598,14 +608,12 @@
             "current": 229,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    211,
                     207,
                     196,
                     200,
@@ -715,14 +723,12 @@
             "current": 254,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    260,
                     263,
                     252,
                     248,
@@ -838,14 +844,12 @@
             "current": 403,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    403,
                     419,
                     402,
                     377,
@@ -983,14 +987,12 @@
             "current": 220,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    221,
                     219,
                     211,
                     200,
@@ -1117,14 +1119,12 @@
             "current": 1007,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    1078,
                     1042,
                     1053,
                     1069,
@@ -1258,14 +1258,12 @@
             "current": 288,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    286,
                     291,
                     295,
                     290,
@@ -1395,14 +1393,12 @@
             "current": 368,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    361,
                     367,
                     381,
                     418,
@@ -1435,12 +1431,11 @@
                 "size": "1,502 ft² (2 modular classrooms uninhabitable)"
             }
         ],
-  "building": {
+        "building": {
             "Air Conditioning": "Back hallway, main building (needs repairs)",
             "Heating": "Natural gas, electric, geothermal",
             "LED Lighting": "Room 6"
         },
-
         "catchment": {
             "migration": "-0.1",
             "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)"
@@ -1473,7 +1468,7 @@
             "School-age (7+ years)": 72,
             "BLAST": ""
         },
-    "projects": {
+        "projects": {
             "provincial": {
                 "requested": [
                     "New High School: Precinct K neighbourhood",
@@ -1519,14 +1514,12 @@
             "current": 207,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    213,
                     210,
                     203,
                     196,
@@ -1559,7 +1552,6 @@
             "Heating": "Natural gas",
             "LED Lighting": "Gym, hallways, main entry, offices, storage, movement room, staff washrooms, custodial room, elevator"
         },
-
         "catchment": {
             "migration": "0.3",
             "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)"
@@ -1596,7 +1588,7 @@
             "School-age (7+ years)": 32,
             "BLAST": ""
         },
-  "projects": {
+        "projects": {
             "provincial": {
                 "requested": [
                     "New High School: Precinct K neighbourhood",
@@ -1644,14 +1636,12 @@
             "current": 411,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    400,
                     404,
                     415,
                     438,
@@ -1700,7 +1690,7 @@
                 "size": "4,843 ft²"
             }
         ],
-   "building": {
+        "building": {
             "Air Conditioning": "Full building",
             "Heating": "Natural gas",
             "LED Lighting": "Gym, multipurpose room stage, office, hygiene room"
@@ -1732,7 +1722,7 @@
             "School-age (7+ years)": 62,
             "BLAST": ""
         },
-       "projects": {
+        "projects": {
             "provincial": {
                 "requested": [
                     "New High School: Precinct K neighbourhood",
@@ -1787,14 +1777,12 @@
             "current": 710,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    714,
                     687,
                     660,
                     653,
@@ -1917,14 +1905,12 @@
             "current": 985,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    1057,
                     1130,
                     1198,
                     1204,
@@ -2051,14 +2037,12 @@
             "current": 176,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    179,
                     184,
                     180,
                     187,
@@ -2097,7 +2081,7 @@
         },
         "transportation": {
             "Parking spots": "101",
-            "Bus Loop": "Required"
+            "Bus Loop": "YES"
         },
         "accessibility": {
             "Girls' washrooms": 4,
@@ -2172,14 +2156,12 @@
             "current": 149,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    165,
                     163,
                     164,
                     166,
@@ -2223,7 +2205,7 @@
         },
         "transportation": {
             "Parking spots": "66",
-            "Bus Loop": "N/A"
+            "Bus Loop": "YES"
         },
         "accessibility": {
             "Girls' washrooms": 2,
@@ -2297,14 +2279,12 @@
             "current": 259,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    259,
                     309,
                     365,
                     439,
@@ -2437,14 +2417,12 @@
             "current": 172,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    167,
                     165,
                     167,
                     163,
@@ -2471,7 +2449,16 @@
             "Size": "41010 ft²",
             "Modular": 0
         },
-        "additions": [],
+        "additions": [
+            {
+                "year": "1957",
+                "size": "11,524 ft²"
+            },
+            {
+                "year": "1970",
+                "size": "29,486 ft²"
+            }
+        ],
         "building": {
             "Air Conditioning": "Everywhere except original building (west side)",
             "Heating": "Natural gas",
@@ -2563,14 +2550,12 @@
             "current": 402,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    411,
                     410,
                     443,
                     450,
@@ -2712,14 +2697,12 @@
             "current": 213,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    220,
                     213,
                     196,
                     196,
@@ -2836,14 +2819,12 @@
             "current": 179,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    184,
                     194,
                     186,
                     190,
@@ -2975,14 +2956,12 @@
             "current": 651,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    642,
                     650,
                     643,
                     637,
@@ -3089,14 +3068,12 @@
             "current": 399,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    386,
                     378,
                     369,
                     359,
@@ -3215,14 +3192,12 @@
             "current": 344,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    343,
                     377,
                     430,
                     456,
@@ -3349,14 +3324,12 @@
             "current": 350,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    369,
                     377,
                     369,
                     371,
@@ -3383,7 +3356,20 @@
             "Size": "47767 ft²",
             "Modular": 0
         },
-        "additions": [],
+        "additions": [
+            {
+                "year": "1955",
+                "size": "9,587 ft²"
+            },
+            {
+                "year": "1961",
+                "size": "7,505 ft²"
+            },
+            {
+                "year": "1980",
+                "size": "8,477 ft²"
+            }
+        ],
         "building": {
             "Air Conditioning": "Partial (portable classroom units only)",
             "Heating": "Natural gas",
@@ -3395,7 +3381,7 @@
         },
         "transportation": {
             "Parking spots": "22",
-            "Bus Loop": "YES"
+            "Bus Loop": "Required"
         },
         "accessibility": {
             "Girls' washrooms": 3,
@@ -3474,14 +3460,12 @@
             "current": 286,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    302,
                     298,
                     290,
                     293,
@@ -3598,14 +3582,12 @@
             "current": 380,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    388,
                     371,
                     349,
                     327,
@@ -3728,14 +3710,12 @@
             "current": 603,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    575,
                     481,
                     499,
                     527,
@@ -3857,14 +3837,12 @@
             "current": 236,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    239,
                     244,
                     248,
                     255,
@@ -3993,14 +3971,12 @@
             "current": 365,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    341,
                     381,
                     389,
                     388,
@@ -4122,14 +4098,12 @@
             "current": 425,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    433,
                     421,
                     397,
                     391,
@@ -4247,14 +4221,12 @@
             "current": 310,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    327,
                     318,
                     345,
                     365,
@@ -4293,7 +4265,7 @@
         },
         "transportation": {
             "Parking spots": "Not specified",
-            "Bus Loop": "Required"
+            "Bus Loop": "Joint use agreement with neighbouring facility"
         },
         "accessibility": {
             "Girls' washrooms": 2,
@@ -4368,14 +4340,12 @@
             "current": 307,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    316,
                     309,
                     296,
                     287,
@@ -4419,7 +4389,7 @@
         },
         "transportation": {
             "Parking spots": "33",
-            "Bus Loop": "YES"
+            "Bus Loop": "Joint use agreement with neighbouring facility"
         },
         "accessibility": {
             "Girls' washrooms": 1,
@@ -4503,14 +4473,12 @@
             "current": 349,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    333,
                     315,
                     309,
                     307,
@@ -4619,14 +4587,12 @@
             "current": 420,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    419,
                     428,
                     420,
                     414,
@@ -4759,14 +4725,12 @@
             "current": 816,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    912,
                     945,
                     962,
                     979,
@@ -4852,14 +4816,12 @@
             "current": 292,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    265,
                     292,
                     309,
                     338,
@@ -4986,14 +4948,12 @@
             "current": 379,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    366,
                     335,
                     314,
                     307,
@@ -5114,14 +5074,12 @@
             "current": 319,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    347,
                     396,
                     428,
                     469,
@@ -5252,14 +5210,12 @@
             "current": 353,
             "projection": {
                 "labels": [
-                    "2026_27",
                     "2027_28",
                     "2028_29",
                     "2029_30",
                     "2030_31"
                 ],
                 "values": [
-                    427,
                     437,
                     439,
                     439,
@@ -5311,7 +5267,7 @@
         },
         "transportation": {
             "Parking spots": "38",
-            "Bus Loop": "Required"
+            "Bus Loop": "YES"
         },
         "accessibility": {
             "Girls' washrooms": 2,
