@@ -89,58 +89,6 @@ function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options)
                     $opts[] = (string)$value;
                 }
 
-                /**
-                 * Convert enrolment series data to newline rows in "label|value" format.
-                 */
-                function lrsd_sf_format_enrolment_series_lines($series) {
-                    $labels = is_array($series['labels'] ?? null) ? array_values($series['labels']) : [];
-                    $values = is_array($series['values'] ?? null) ? array_values($series['values']) : [];
-                    $count  = max(count($labels), count($values));
-                    $lines  = [];
-
-                    for ($index = 0; $index < $count; $index++) {
-                        $label = isset($labels[$index]) ? trim((string) $labels[$index]) : '';
-                        $value = isset($values[$index]) && is_numeric($values[$index]) ? (int) $values[$index] : 0;
-                        if ($label === '' && $value === 0) {
-                            continue;
-                        }
-                        $lines[] = $label . '|' . $value;
-                    }
-
-                    return implode("\n", $lines);
-                }
-
-                /**
-                 * Parse newline rows in "label|value" format into enrolment series arrays.
-                 */
-                function lrsd_sf_parse_enrolment_series_lines($raw_text) {
-                    $lines  = explode("\n", (string) $raw_text);
-                    $labels = [];
-                    $values = [];
-
-                    foreach ($lines as $line) {
-                        $line = trim((string) $line);
-                        if ($line === '') {
-                            continue;
-                        }
-
-                        $parts = explode('|', $line, 2);
-                        $label = sanitize_text_field(trim($parts[0] ?? ''));
-                        $value = isset($parts[1]) && is_numeric(trim($parts[1])) ? (int) trim($parts[1]) : 0;
-
-                        if ($label === '' && $value === 0) {
-                            continue;
-                        }
-
-                        $labels[] = $label;
-                        $values[] = $value;
-                    }
-
-                    return [
-                        'labels' => $labels,
-                        'values' => $values,
-                    ];
-                }
                 $nonce_val = wp_create_nonce('lrsd_sf_custom_option_nonce');
                 ?>
                 <div class="lrsd-sf-select-wrap">
@@ -192,6 +140,59 @@ function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options)
         </td>
     </tr>
     <?php
+}
+
+/**
+ * Convert enrolment series data to newline rows in "label|value" format.
+ */
+function lrsd_sf_format_enrolment_series_lines($series) {
+    $labels = is_array($series['labels'] ?? null) ? array_values($series['labels']) : [];
+    $values = is_array($series['values'] ?? null) ? array_values($series['values']) : [];
+    $count  = max(count($labels), count($values));
+    $lines  = [];
+
+    for ($index = 0; $index < $count; $index++) {
+        $label = isset($labels[$index]) ? trim((string) $labels[$index]) : '';
+        $value = isset($values[$index]) && is_numeric($values[$index]) ? (int) $values[$index] : 0;
+        if ($label === '' && $value === 0) {
+            continue;
+        }
+        $lines[] = $label . '|' . $value;
+    }
+
+    return implode("\n", $lines);
+}
+
+/**
+ * Parse newline rows in "label|value" format into enrolment series arrays.
+ */
+function lrsd_sf_parse_enrolment_series_lines($raw_text) {
+    $lines  = explode("\n", (string) $raw_text);
+    $labels = [];
+    $values = [];
+
+    foreach ($lines as $line) {
+        $line = trim((string) $line);
+        if ($line === '') {
+            continue;
+        }
+
+        $parts = explode('|', $line, 2);
+        $label = sanitize_text_field(trim($parts[0] ?? ''));
+        $value = isset($parts[1]) && is_numeric(trim($parts[1])) ? (int) trim($parts[1]) : 0;
+
+        if ($label === '' && $value === 0) {
+            continue;
+        }
+
+        $labels[] = $label;
+        $values[] = $value;
+    }
+
+    return [
+        'labels' => $labels,
+        'values' => $values,
+    ];
 }
 
 // ─── Meta Box Render ──────────────────────────────────────────────────────────
