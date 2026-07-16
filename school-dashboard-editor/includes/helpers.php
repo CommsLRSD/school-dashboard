@@ -10,10 +10,64 @@ function lrsd_sf_get_reserved_dataset_keys() {
 }
 
 /**
+ * Normalize dataset keys for case-insensitive reserved-key checks.
+ */
+function lrsd_sf_normalize_dataset_key($key) {
+    return strtolower(preg_replace('/[^a-z0-9]/i', '', (string) $key));
+}
+
+/**
  * True when a key is one of the reserved non-school dataset keys.
  */
 function lrsd_sf_is_reserved_dataset_key($key) {
-    return in_array((string) $key, lrsd_sf_get_reserved_dataset_keys(), true);
+    static $reserved = null;
+
+    if ($reserved === null) {
+        $reserved = array_map('lrsd_sf_normalize_dataset_key', lrsd_sf_get_reserved_dataset_keys());
+    }
+
+    return in_array(lrsd_sf_normalize_dataset_key($key), $reserved, true);
+}
+
+/**
+ * Determine whether a post should be treated as an editable school record.
+ */
+function lrsd_sf_is_valid_school_post($post) {
+    if (!$post instanceof WP_Post || $post->post_type !== 'lr_school') {
+        return false;
+    }
+
+    $school_id = get_post_meta($post->ID, 'lrsd_school_id', true);
+    if ($school_id !== '' && lrsd_sf_is_reserved_dataset_key($school_id)) {
+        return false;
+    }
+
+    if ($school_id === '' && lrsd_sf_is_reserved_dataset_key($post->post_title)) {
+        return false;
+    }
+
+    $school_data = lrsd_sf_normalize_school_data(get_post_meta($post->ID, 'lrsd_school_data', true));
+    $school_name = trim((string) ($school_data['schoolName'] ?? $post->post_title));
+
+    return $school_name !== '';
+}
+
+/**
+ * Fetch school posts suitable for the Update by School admin page.
+ *
+ * @return WP_Post[]
+ */
+function lrsd_sf_get_editable_school_posts() {
+    $posts = get_posts([
+        'post_type'      => 'lr_school',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'orderby'        => 'title',
+        'order'          => 'ASC',
+        'no_found_rows'  => true,
+    ]);
+
+    return array_values(array_filter($posts, 'lrsd_sf_is_valid_school_post'));
 }
 
 /**
@@ -308,8 +362,11 @@ function lrsd_sf_get_global_custom_cards() {
  */
 function lrsd_sf_get_custom_card_display_types() {
     return [
-        'list' => __('Key–Value List', 'lrsd-school-facilities'),
-        'stat' => __('Stats / Highlights', 'lrsd-school-facilities'),
+        'details_list' => __('Label and Value List', 'lrsd-school-facilities'),
+        'simple_list'  => __('Simple List', 'lrsd-school-facilities'),
+        'highlight'    => __('Large Number', 'lrsd-school-facilities'),
+        'image'        => __('Image Card', 'lrsd-school-facilities'),
+        'stat'         => __('Highlights Grid', 'lrsd-school-facilities'),
     ];
 }
 
@@ -317,7 +374,164 @@ function lrsd_sf_get_custom_card_display_types() {
  * Sanitize a custom card display type.
  */
 function lrsd_sf_sanitize_custom_card_type($card_type) {
-    return in_array($card_type, ['list', 'stat'], true) ? $card_type : 'list';
+    $card_type = sanitize_key((string) $card_type);
+    $aliases = [
+        'list'        => 'details_list',
+        'two_column'  => 'details_list',
+        'single_list' => 'simple_list',
+        'one_column'  => 'simple_list',
+        'number'      => 'highlight',
+    ];
+
+    if (isset($aliases[$card_type])) {
+        $card_type = $aliases[$card_type];
+    }
+
+    $types = lrsd_sf_get_custom_card_display_types();
+    return isset($types[$card_type]) ? $card_type : 'details_list';
+}
+
+/**
+ * Returns note display modes for custom cards.
+ */
+function lrsd_sf_get_custom_card_note_modes() {
+    return [
+        'inline' => __('Show note below the card', 'lrsd-school-facilities'),
+        'flip'   => __('Show note on the back of the card', 'lrsd-school-facilities'),
+    ];
+}
+
+/**
+ * Sanitize a custom card note mode.
+ */
+function lrsd_sf_sanitize_custom_card_note_mode($note_mode) {
+    $note_mode = sanitize_key((string) $note_mode);
+    return in_array($note_mode, ['inline', 'flip'], true) ? $note_mode : 'inline';
+}
+
+/**
+ * Returns supported value input types for editable custom-card rows.
+ */
+function lrsd_sf_get_custom_card_value_types() {
+    return [
+        'text'   => __('Plain text', 'lrsd-school-facilities'),
+        'number' => __('Number', 'lrsd-school-facilities'),
+        'select' => __('Custom dropdown', 'lrsd-school-facilities'),
+    ];
+}
+
+/**
+ * Sanitize a custom card value input type.
+ */
+function lrsd_sf_sanitize_custom_card_value_type($value_type) {
+    $value_type = sanitize_key((string) $value_type);
+    return in_array($value_type, ['text', 'number', 'select'], true) ? $value_type : 'text';
+}
+
+/**
+ * Returns image size options for image custom cards.
+ */
+function lrsd_sf_get_custom_card_image_sizes() {
+    return [
+        'standard' => __('Standard', 'lrsd-school-facilities'),
+        'wide'     => __('Wider', 'lrsd-school-facilities'),
+    ];
+}
+
+/**
+ * Sanitize a custom card image size.
+ */
+function lrsd_sf_sanitize_custom_card_image_size($image_size) {
+    $image_size = sanitize_key((string) $image_size);
+    return in_array($image_size, ['standard', 'wide'], true) ? $image_size : 'standard';
+}
+
+/**
+ * Sanitize one editable row within a custom card.
+ */
+function lrsd_sf_sanitize_custom_card_item($item) {
+    if (!is_array($item)) {
+        return null;
+    }
+
+    $options = [];
+    if (is_array($item['options'] ?? null)) {
+        foreach ($item['options'] as $option) {
+            $option = sanitize_text_field($option);
+            if ($option !== '' && !in_array($option, $options, true)) {
+                $options[] = $option;
+            }
+        }
+    } elseif (is_string($item['options'] ?? null)) {
+        foreach (preg_split('/\r\n|\r|\n/', (string) $item['options']) as $option) {
+            $option = sanitize_text_field(trim($option));
+            if ($option !== '' && !in_array($option, $options, true)) {
+                $options[] = $option;
+            }
+        }
+    }
+
+    return [
+        'label'     => sanitize_text_field($item['label'] ?? ''),
+        'value'     => sanitize_text_field($item['value'] ?? ''),
+        'valueType' => lrsd_sf_sanitize_custom_card_value_type($item['valueType'] ?? 'text'),
+        'options'   => $options,
+    ];
+}
+
+/**
+ * Sanitize a stored custom card definition.
+ */
+function lrsd_sf_sanitize_custom_card_definition($card) {
+    if (!is_array($card)) {
+        return null;
+    }
+
+    $sanitized = [
+        'id'               => sanitize_key($card['id'] ?? ('custom_' . wp_generate_password(6, false))),
+        'title'            => sanitize_text_field($card['title'] ?? ''),
+        'icon'             => esc_url_raw($card['icon'] ?? ''),
+        'category'         => sanitize_text_field($card['category'] ?? ''),
+        'cardType'         => lrsd_sf_sanitize_custom_card_type($card['cardType'] ?? 'details_list'),
+        'notes'            => sanitize_textarea_field($card['notes'] ?? ''),
+        'noteMode'         => lrsd_sf_sanitize_custom_card_note_mode($card['noteMode'] ?? 'inline'),
+        'noteTitle'        => sanitize_text_field($card['noteTitle'] ?? ''),
+        'imageUrl'         => esc_url_raw($card['imageUrl'] ?? ''),
+        'imageSize'        => lrsd_sf_sanitize_custom_card_image_size($card['imageSize'] ?? 'standard'),
+        'imageOverlayText' => sanitize_text_field($card['imageOverlayText'] ?? ''),
+        'imageLink'        => esc_url_raw($card['imageLink'] ?? ''),
+        'items'            => [],
+    ];
+
+    if (is_array($card['items'] ?? null)) {
+        foreach ($card['items'] as $item) {
+            $sanitized_item = lrsd_sf_sanitize_custom_card_item($item);
+            if ($sanitized_item === null) {
+                continue;
+            }
+
+            if (
+                $sanitized_item['label'] === '' &&
+                $sanitized_item['value'] === '' &&
+                empty($sanitized_item['options'])
+            ) {
+                continue;
+            }
+
+            $sanitized['items'][] = $sanitized_item;
+        }
+    }
+
+    if ($sanitized['cardType'] === 'highlight' && empty($sanitized['items'])) {
+        $sanitized['items'][] = [
+            'label'     => '',
+            'value'     => '',
+            'valueType' => 'text',
+            'options'   => [],
+        ];
+    }
+
+    return $sanitized['id'] === '' ? null : $sanitized;
 }
 
 /**
@@ -411,20 +625,21 @@ function lrsd_sf_normalize_custom_card_values($raw_values, array $global_card_id
         $items = [];
         if (is_array($card_data['items'] ?? null)) {
             foreach ($card_data['items'] as $item) {
-                if (!is_array($item)) {
+                $sanitized_item = lrsd_sf_sanitize_custom_card_item($item);
+                if ($sanitized_item === null) {
                     continue;
                 }
 
-                $items[] = [
-                    'label' => sanitize_text_field($item['label'] ?? ''),
-                    'value' => sanitize_text_field($item['value'] ?? ''),
-                ];
+                $items[] = $sanitized_item;
             }
         }
 
         $normalized[$card_id] = [
-            'notes' => sanitize_textarea_field($card_data['notes'] ?? ''),
-            'items' => $items,
+            'notes'            => sanitize_textarea_field($card_data['notes'] ?? ''),
+            'imageUrl'         => esc_url_raw($card_data['imageUrl'] ?? ''),
+            'imageOverlayText' => sanitize_text_field($card_data['imageOverlayText'] ?? ''),
+            'imageLink'        => esc_url_raw($card_data['imageLink'] ?? ''),
+            'items'            => $items,
         ];
     }
 
@@ -439,38 +654,10 @@ function lrsd_sf_normalize_school_dashboard_data(array $school_data, array $glob
     $custom_cards = [];
     if (is_array($school_data['customCards'] ?? null)) {
         foreach ($school_data['customCards'] as $card) {
-            if (!is_array($card)) {
-                continue;
+            $sanitized_card = lrsd_sf_sanitize_custom_card_definition($card);
+            if ($sanitized_card !== null) {
+                $custom_cards[] = $sanitized_card;
             }
-
-            $card_id = sanitize_key($card['id'] ?? '');
-            if ($card_id === '') {
-                continue;
-            }
-
-            $items = [];
-            if (is_array($card['items'] ?? null)) {
-                foreach ($card['items'] as $item) {
-                    if (!is_array($item)) {
-                        continue;
-                    }
-
-                    $items[] = [
-                        'label' => sanitize_text_field($item['label'] ?? ''),
-                        'value' => sanitize_text_field($item['value'] ?? ''),
-                    ];
-                }
-            }
-
-            $custom_cards[] = [
-                'id'       => $card_id,
-                'title'    => sanitize_text_field($card['title'] ?? ''),
-                'icon'     => sanitize_text_field($card['icon'] ?? ''),
-                'category' => sanitize_text_field($card['category'] ?? ''),
-                'cardType' => lrsd_sf_sanitize_custom_card_type($card['cardType'] ?? 'list'),
-                'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
-                'items'    => $items,
-            ];
         }
     }
 
@@ -590,30 +777,9 @@ function lrsd_sf_handle_save_global_cards() {
         $decoded = json_decode($raw, true);
         if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
             foreach ($decoded as $card) {
-                if (!is_array($card)) {
-                    continue;
-                }
-                $s_card = [
-                    'id'       => sanitize_key($card['id'] ?? ('custom_' . wp_generate_password(6, false))),
-                    'title'    => sanitize_text_field($card['title'] ?? ''),
-                    'icon'     => sanitize_text_field($card['icon'] ?? ''),
-                    'category' => sanitize_text_field($card['category'] ?? ''),
-                    'cardType' => lrsd_sf_sanitize_custom_card_type($card['cardType'] ?? 'list'),
-                    'items'    => [],
-                    'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
-                ];
-                if (is_array($card['items'] ?? null)) {
-                    foreach ($card['items'] as $item) {
-                        if (!is_array($item)) {
-                            continue;
-                        }
-                        $s_card['items'][] = [
-                            'label' => sanitize_text_field($item['label'] ?? ''),
-                        ];
-                    }
-                }
-                if ($s_card['id'] !== '') {
-                    $cards[] = $s_card;
+                $sanitized_card = lrsd_sf_sanitize_custom_card_definition($card);
+                if ($sanitized_card !== null) {
+                    $cards[] = $sanitized_card;
                 }
             }
         }

@@ -87,13 +87,30 @@ function lrsd_sf_default_school_admin_sort($query) {
         ],
         [
             'key'     => 'lrsd_school_id',
-            'value'   => lrsd_sf_get_reserved_dataset_keys(),
+            'value'   => array_merge(lrsd_sf_get_reserved_dataset_keys(), ['fosMAPLookup']),
             'compare' => 'NOT IN',
         ],
     ];
     $query->set('meta_query', $meta_query);
 }
 add_action('pre_get_posts', 'lrsd_sf_default_school_admin_sort');
+
+/**
+ * Remove non-school dataset records from the native school list table.
+ */
+function lrsd_sf_filter_school_admin_posts($posts, $query) {
+    if (!is_admin() || !$query->is_main_query()) {
+        return $posts;
+    }
+
+    global $pagenow;
+    if ($pagenow !== 'edit.php' || $query->get('post_type') !== 'lr_school') {
+        return $posts;
+    }
+
+    return array_values(array_filter($posts, 'lrsd_sf_is_valid_school_post'));
+}
+add_filter('the_posts', 'lrsd_sf_filter_school_admin_posts', 10, 2);
 
 /**
  * Remove bulk actions from Update by School list table.

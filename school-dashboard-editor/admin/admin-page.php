@@ -93,6 +93,9 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
         'customOptionNonce'=> wp_create_nonce('lrsd_sf_custom_option_nonce'),
         'isFosKey'         => 'familyOfSchools',
         'displayTypes'     => lrsd_sf_get_custom_card_display_types(),
+        'noteModes'        => lrsd_sf_get_custom_card_note_modes(),
+        'valueTypes'       => lrsd_sf_get_custom_card_value_types(),
+        'imageSizes'       => lrsd_sf_get_custom_card_image_sizes(),
         'i18n'             => [
             'chooseMedia'       => __('Choose or Upload Media', 'lrsd-school-facilities'),
             'useMedia'          => __('Use this file', 'lrsd-school-facilities'),
@@ -110,6 +113,15 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
             'kvValue'           => __('Value', 'lrsd-school-facilities'),
             'kvTextValue'       => __('Text value', 'lrsd-school-facilities'),
             'removeRow'         => __('Remove row', 'lrsd-school-facilities'),
+            'placeholderValue'  => __('Placeholder value', 'lrsd-school-facilities'),
+            'schoolValue'       => __('Value for this school', 'lrsd-school-facilities'),
+            'dropdownOptions'   => __('Dropdown options (one per line)', 'lrsd-school-facilities'),
+            'noteTitle'         => __('Note title', 'lrsd-school-facilities'),
+            'imageUrl'          => __('Image file', 'lrsd-school-facilities'),
+            'imageOverlayText'  => __('Overlay text', 'lrsd-school-facilities'),
+            'imageLink'         => __('Click-through link', 'lrsd-school-facilities'),
+            'showPreview'       => __('Show Preview', 'lrsd-school-facilities'),
+            'hidePreview'       => __('Hide Preview', 'lrsd-school-facilities'),
         ],
     ]);
 
@@ -193,14 +205,7 @@ function lrsd_sf_render_school_list_page() {
         wp_die(esc_html__('You do not have permission to access this page.', 'lrsd-school-facilities'));
     }
 
-    $posts = get_posts([
-        'post_type'      => 'lr_school',
-        'post_status'    => 'publish',
-        'posts_per_page' => -1,
-        'orderby'        => 'title',
-        'order'          => 'ASC',
-        'no_found_rows'  => true,
-    ]);
+    $posts = lrsd_sf_get_editable_school_posts();
     ?>
     <div class="wrap lrsd-sf-wrap">
         <h1><?php esc_html_e('Update by School', 'lrsd-school-facilities'); ?></h1>
@@ -225,23 +230,38 @@ function lrsd_sf_render_school_list_page() {
             </span>
         </div>
 
-        <div class="lrsd-sf-school-grid" id="lrsd-sf-school-grid">
-            <?php foreach ($posts as $school_post) :
-                $school_level = get_post_meta($school_post->ID, 'lrsd_school_data', true);
-                $sdata = lrsd_sf_normalize_school_data($school_level);
-                $school_type = $sdata['schoolType'] ?? '';
-                $edit_url = get_edit_post_link($school_post->ID);
-            ?>
-            <a href="<?php echo esc_url($edit_url); ?>"
-               class="lrsd-sf-school-card"
-               data-school-name="<?php echo esc_attr(strtolower($school_post->post_title)); ?>">
-                <div class="lrsd-sf-school-card-name"><?php echo esc_html($school_post->post_title); ?></div>
-                <?php if ($school_type) : ?>
-                    <div class="lrsd-sf-school-card-type"><?php echo esc_html($school_type); ?></div>
-                <?php endif; ?>
-                <div class="lrsd-sf-school-card-edit"><?php esc_html_e('Edit School →', 'lrsd-school-facilities'); ?></div>
-            </a>
-            <?php endforeach; ?>
+        <div class="lrsd-sf-school-table-wrap">
+            <table class="widefat striped lrsd-sf-school-table" id="lrsd-sf-school-table">
+                <thead>
+                    <tr>
+                        <th><?php esc_html_e('School', 'lrsd-school-facilities'); ?></th>
+                        <th><?php esc_html_e('Type', 'lrsd-school-facilities'); ?></th>
+                        <th><?php esc_html_e('Level', 'lrsd-school-facilities'); ?></th>
+                        <th><?php esc_html_e('Family of Schools', 'lrsd-school-facilities'); ?></th>
+                        <th><?php esc_html_e('Action', 'lrsd-school-facilities'); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($posts as $school_post) :
+                    $school_level = get_post_meta($school_post->ID, 'lrsd_school_data', true);
+                    $sdata = lrsd_sf_normalize_school_data($school_level);
+                    $school_name = trim((string) ($sdata['schoolName'] ?? $school_post->post_title));
+                    $school_type = $sdata['schoolType'] ?? '';
+                    $school_level_label = $sdata['schoolLevel'] ?? '';
+                    $family_of_schools = $sdata['familyOfSchools'] ?? '';
+                    $edit_url = get_edit_post_link($school_post->ID);
+                    $search_index = strtolower(implode(' ', [$school_name, $school_type, $school_level_label, $family_of_schools]));
+                ?>
+                    <tr class="lrsd-sf-school-row" data-school-search="<?php echo esc_attr($search_index); ?>">
+                        <td><strong><?php echo esc_html($school_name); ?></strong></td>
+                        <td><?php echo esc_html($school_type ?: '—'); ?></td>
+                        <td><?php echo esc_html($school_level_label ?: '—'); ?></td>
+                        <td><?php echo esc_html($family_of_schools ?: '—'); ?></td>
+                        <td><a class="button button-secondary" href="<?php echo esc_url($edit_url); ?>"><?php esc_html_e('Edit School', 'lrsd-school-facilities'); ?></a></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
 
         <p id="lrsd-sf-school-no-results" class="lrsd-sf-school-no-results" style="display:none;">
@@ -251,25 +271,26 @@ function lrsd_sf_render_school_list_page() {
         <script>
         (function() {
             var searchInput = document.getElementById('lrsd-sf-school-search');
-            var grid        = document.getElementById('lrsd-sf-school-grid');
+            var table       = document.getElementById('lrsd-sf-school-table');
             var noResults   = document.getElementById('lrsd-sf-school-no-results');
             var countEl     = document.getElementById('lrsd-sf-school-count');
             var totalCount  = <?php echo (int) count($posts); ?>;
 
-            if (!searchInput || !grid) return;
+            if (!searchInput || !table) return;
 
             searchInput.addEventListener('input', function() {
                 var query   = this.value.toLowerCase().trim();
-                var cards   = grid.querySelectorAll('.lrsd-sf-school-card');
+                var rows    = table.querySelectorAll('.lrsd-sf-school-row');
                 var visible = 0;
 
-                cards.forEach(function(card) {
-                    var name = card.getAttribute('data-school-name') || '';
-                    var show = !query || name.indexOf(query) !== -1;
-                    card.style.display = show ? '' : 'none';
+                rows.forEach(function(row) {
+                    var value = row.getAttribute('data-school-search') || '';
+                    var show = !query || value.indexOf(query) !== -1;
+                    row.style.display = show ? '' : 'none';
                     if (show) visible++;
                 });
 
+                table.style.display = visible === 0 ? 'none' : '';
                 noResults.style.display = (visible === 0) ? '' : 'none';
 
                 if (query) {
