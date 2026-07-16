@@ -237,16 +237,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Filter and map school data to HTML with proper sanitization
         const schoolLinksHTML = Object.keys(schoolData)
-            .filter(schoolId => {
-                if (!safeSearchTerm) return true;
+            .reduce((acc, schoolId) => {
                 const schoolName = schoolData[schoolId]?.schoolName || '';
-                return normalizeString(schoolName).includes(normalizedSearch);
-            })
-            .map(schoolId => {
-                const schoolName = sanitizeHTML(schoolData[schoolId]?.schoolName || '');
-                const schoolIdSafe = sanitizeHTML(schoolId);
-                return `<a href="#" class="nav-list-item" data-type="school" data-id="${schoolIdSafe}">${schoolName}</a>`;
-            })
+                if (!schoolName.trim()) return acc; // Skip schools with blank names
+                if (safeSearchTerm && !normalizeString(schoolName).includes(normalizedSearch)) return acc;
+                const safeName = sanitizeHTML(schoolName);
+                const safeId = sanitizeHTML(schoolId);
+                acc.push(`<a href="#" class="nav-list-item" data-type="school" data-id="${safeId}">${safeName}</a>`);
+                return acc;
+            }, [])
             .join('');
         
         // Find existing search controls or create placeholder
@@ -317,10 +316,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const combinedFilter = document.getElementById('combined-filter');
         if (combinedFilter) {
-            // Find the last option (which should be the "— Family of Schools —" separator)
-            const currentOptions = combinedFilter.innerHTML;
-            // Insert FOS options after the separator
-            combinedFilter.innerHTML = currentOptions + fosOptions;
+            // Append FOS options after the "All Schools" default option
+            combinedFilter.innerHTML += fosOptions;
         }
 
         // Add category links after the existing filter buttons
