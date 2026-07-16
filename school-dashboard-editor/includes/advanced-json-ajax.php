@@ -35,6 +35,37 @@ function lrsd_sf_import_dataset(array $decoded) {
     $errors  = 0;
 
     $skip_keys = ['lastUpdated', 'fosMapLookup', 'globalCustomCards'];
+    $global_custom_cards = [];
+
+    if (isset($decoded['globalCustomCards']) && is_array($decoded['globalCustomCards'])) {
+        foreach ($decoded['globalCustomCards'] as $card) {
+            if (!is_array($card)) {
+                continue;
+            }
+            $s_card = [
+                'id'       => sanitize_key($card['id'] ?? ('custom_' . wp_generate_password(6, false))),
+                'title'    => sanitize_text_field($card['title'] ?? ''),
+                'icon'     => sanitize_text_field($card['icon'] ?? ''),
+                'category' => sanitize_text_field($card['category'] ?? ''),
+                'cardType' => in_array($card['cardType'] ?? 'list', ['list', 'stat'], true) ? $card['cardType'] : 'list',
+                'items'    => [],
+                'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
+            ];
+            if (is_array($card['items'] ?? null)) {
+                foreach ($card['items'] as $item) {
+                    if (!is_array($item)) {
+                        continue;
+                    }
+                    $s_card['items'][] = [
+                        'label' => sanitize_text_field($item['label'] ?? ''),
+                    ];
+                }
+            }
+            if ($s_card['id'] !== '') {
+                $global_custom_cards[] = $s_card;
+            }
+        }
+    }
 
     foreach ($decoded as $key => $school) {
         if (in_array($key, $skip_keys, true)) {
@@ -56,6 +87,7 @@ function lrsd_sf_import_dataset(array $decoded) {
         }
 
         $school['id'] = $school_id;
+        $school       = lrsd_sf_normalize_school_dashboard_data($school, $global_custom_cards);
 
         $school_name = isset($school['schoolName']) && is_scalar($school['schoolName'])
             ? sanitize_text_field((string)$school['schoolName'])
@@ -107,36 +139,8 @@ function lrsd_sf_import_dataset(array $decoded) {
     }
 
     // Update global custom cards
-    if (isset($decoded['globalCustomCards']) && is_array($decoded['globalCustomCards'])) {
-        $cards = [];
-        foreach ($decoded['globalCustomCards'] as $card) {
-            if (!is_array($card)) {
-                continue;
-            }
-            $s_card = [
-                'id'       => sanitize_key($card['id'] ?? ('custom_' . wp_generate_password(6, false))),
-                'title'    => sanitize_text_field($card['title'] ?? ''),
-                'icon'     => sanitize_text_field($card['icon'] ?? ''),
-                'category' => sanitize_text_field($card['category'] ?? ''),
-                'cardType' => in_array($card['cardType'] ?? 'list', ['list', 'stat'], true) ? $card['cardType'] : 'list',
-                'items'    => [],
-                'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
-            ];
-            if (is_array($card['items'] ?? null)) {
-                foreach ($card['items'] as $item) {
-                    if (!is_array($item)) {
-                        continue;
-                    }
-                    $s_card['items'][] = [
-                        'label' => sanitize_text_field($item['label'] ?? ''),
-                    ];
-                }
-            }
-            if ($s_card['id'] !== '') {
-                $cards[] = $s_card;
-            }
-        }
-        update_option('lrsd_sf_global_custom_cards', $cards);
+    if (!empty($global_custom_cards) || isset($decoded['globalCustomCards'])) {
+        update_option('lrsd_sf_global_custom_cards', $global_custom_cards);
     }
 
     if ($last_updated === '') {

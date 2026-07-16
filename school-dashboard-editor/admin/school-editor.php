@@ -239,28 +239,10 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         $childcare = [];
     }
 
-    // Card order: saved order + any new standard cards + any custom card IDs (school + global)
-    $saved_order    = lrsd_sf_get_nested_value($school_data, ['cardOrder'], []);
-    $default_order  = array_keys($all_card_types);
-    $custom_ids     = array_column($custom_cards, 'id');
-    $all_custom_ids = array_merge($custom_ids, $global_card_ids);
-
-    if (!is_array($saved_order) || empty($saved_order)) {
-        $card_order = array_merge($default_order, $all_custom_ids);
-    } else {
-        // Merge: keep saved order, append any new standard cards or custom cards not yet present
-        $card_order = $saved_order;
-        foreach (array_merge($default_order, $all_custom_ids) as $ct) {
-            if (!in_array($ct, $card_order, true)) {
-                $card_order[] = $ct;
-            }
-        }
-        // Remove IDs that no longer exist (e.g. deleted custom card)
-        $valid_ids = array_merge($default_order, $all_custom_ids);
-        $card_order = array_values(array_filter($card_order, static function ($card_id) use ($valid_ids) {
-            return in_array($card_id, $valid_ids, true);
-        }));
-    }
+    // Card order: current frontend order + custom cards, with legacy cleanup.
+    $saved_order = lrsd_sf_get_nested_value($school_data, ['cardOrder'], []);
+    $custom_ids  = array_column($custom_cards, 'id');
+    $card_order  = lrsd_sf_normalize_card_order($saved_order, $custom_ids, $global_card_ids);
 
     $last_updated = get_option('lrsd_schools_last_updated', '');
 
@@ -706,6 +688,9 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
         return;
     }
 
+    $global_custom_cards    = lrsd_sf_get_global_custom_cards();
+    $global_custom_card_ids = array_column($global_custom_cards, 'id');
+
     // ── Snapshot current state into version history BEFORE applying changes ─────
     $school_name_label = isset($_POST['lrsd_sf_fields']['schoolName'])
         ? sanitize_text_field(wp_unslash($_POST['lrsd_sf_fields']['schoolName']))
@@ -863,7 +848,11 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
                 }
                 $sanitized_cards[] = $s_card;
             }
-            $school_data['customCards'] = $sanitized_cards;
+            if (!empty($sanitized_cards)) {
+                $school_data['customCards'] = $sanitized_cards;
+            } else {
+                unset($school_data['customCards']);
+            }
         }
     }
 
@@ -875,7 +864,8 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
     if ($card_order_raw !== '') {
         $card_order = json_decode($card_order_raw, true);
         if (json_last_error() === JSON_ERROR_NONE && is_array($card_order)) {
-            $school_data['cardOrder'] = array_values(array_map('sanitize_key', $card_order));
+            $school_custom_ids = array_column(lrsd_sf_get_nested_value($school_data, ['customCards'], []), 'id');
+            $school_data['cardOrder'] = lrsd_sf_normalize_card_order($card_order, $school_custom_ids, $global_custom_card_ids);
         }
     }
 
@@ -909,9 +899,15 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
                 }
                 $sanitized_gcv[sanitize_key((string)$gc_id)] = $s_gc;
             }
-            $school_data['customCardValues'] = $sanitized_gcv;
+            if (!empty($sanitized_gcv)) {
+                $school_data['customCardValues'] = $sanitized_gcv;
+            } else {
+                unset($school_data['customCardValues']);
+            }
         }
     }
+
+    $school_data = lrsd_sf_normalize_school_dashboard_data($school_data, $global_custom_cards);
 
     // ── School ID ─────────────────────────────────────────────────────────────
     $school_id = isset($school_data['id']) ? sanitize_text_field((string)$school_data['id']) : '';
