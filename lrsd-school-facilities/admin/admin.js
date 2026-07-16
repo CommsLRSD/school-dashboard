@@ -716,6 +716,31 @@
         });
     }
 
+    function initKeyValueRows() {
+        $(document).on('click', '.lrsd-sf-add-kv-row', function () {
+            var $btn = $(this);
+            var labelName = $btn.data('label-name') || '';
+            var valueName = $btn.data('value-name') || '';
+            var valueType = $btn.data('value-type') === 'number' ? 'number' : 'text';
+            if (!labelName || !valueName) {
+                return;
+            }
+
+            var rowHtml =
+                '<tr class="lrsd-sf-kv-row">' +
+                    '<td><input type="text" class="regular-text" name="' + labelName + '" value="" /></td>' +
+                    '<td><input type="' + valueType + '" class="' + (valueType === 'number' ? 'small-text' : 'regular-text') + '" name="' + valueName + '" value="" /></td>' +
+                    '<td><button type="button" class="button lrsd-sf-remove-kv-row">&#x2715;</button></td>' +
+                '</tr>';
+
+            $btn.siblings('.lrsd-sf-kv-table').find('.lrsd-sf-kv-rows').append(rowHtml);
+        });
+
+        $(document).on('click', '.lrsd-sf-remove-kv-row', function () {
+            $(this).closest('.lrsd-sf-kv-row').remove();
+        });
+    }
+
     // ── Advanced JSON Editor ───────────────────────────────────────────────────
 
     function initAdvancedEditor() {
@@ -928,6 +953,7 @@
         initCustomCards();
         initPreSubmit();
         initBulkUpdate();
+        initKeyValueRows();
         initCardEditorPage();
         initAdvancedEditor();
     });

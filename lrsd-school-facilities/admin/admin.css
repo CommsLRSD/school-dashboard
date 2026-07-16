@@ -137,6 +137,30 @@
     max-width: 380px;
 }
 
+.lrsd-sf-kv-list {
+    max-width: 760px;
+}
+
+.lrsd-sf-kv-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 8px;
+}
+
+.lrsd-sf-kv-table th,
+.lrsd-sf-kv-table td {
+    padding: 4px 6px 4px 0;
+    vertical-align: middle;
+}
+
+.lrsd-sf-kv-table th {
+    font-weight: 600;
+}
+
+.lrsd-sf-kv-table .regular-text {
+    max-width: 100%;
+}
+
 /* ── Select / Dropdown ────────────────────────────────────────────────────── */
 .lrsd-sf-select-wrap {
     display: flex;
