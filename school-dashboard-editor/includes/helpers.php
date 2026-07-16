@@ -314,6 +314,13 @@ function lrsd_sf_get_custom_card_display_types() {
 }
 
 /**
+ * Sanitize a custom card display type.
+ */
+function lrsd_sf_sanitize_custom_card_type($card_type) {
+    return in_array($card_type, ['list', 'stat'], true) ? $card_type : 'list';
+}
+
+/**
  * Returns the standard dashboard card order used by the frontend.
  */
 function lrsd_sf_get_default_dashboard_card_order() {
@@ -448,7 +455,7 @@ function lrsd_sf_normalize_school_dashboard_data(array $school_data, array $glob
                 'title'    => sanitize_text_field($card['title'] ?? ''),
                 'icon'     => sanitize_text_field($card['icon'] ?? ''),
                 'category' => sanitize_text_field($card['category'] ?? ''),
-                'cardType' => in_array($card['cardType'] ?? 'list', ['list', 'stat'], true) ? $card['cardType'] : 'list',
+                'cardType' => lrsd_sf_sanitize_custom_card_type($card['cardType'] ?? 'list'),
                 'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
                 'items'    => $items,
             ];
@@ -579,7 +586,7 @@ function lrsd_sf_handle_save_global_cards() {
                     'title'    => sanitize_text_field($card['title'] ?? ''),
                     'icon'     => sanitize_text_field($card['icon'] ?? ''),
                     'category' => sanitize_text_field($card['category'] ?? ''),
-                    'cardType' => in_array($card['cardType'] ?? 'list', ['list', 'stat'], true) ? $card['cardType'] : 'list',
+                    'cardType' => lrsd_sf_sanitize_custom_card_type($card['cardType'] ?? 'list'),
                     'items'    => [],
                     'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
                 ];

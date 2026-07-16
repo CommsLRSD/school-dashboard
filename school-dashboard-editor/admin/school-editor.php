@@ -833,7 +833,7 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
                     'title'    => sanitize_text_field($card['title'] ?? ''),
                     'icon'     => sanitize_text_field($card['icon'] ?? ''),
                     'category' => sanitize_text_field($card['category'] ?? ''),
-                    'cardType' => in_array($card['cardType'] ?? 'list', ['list', 'stat'], true) ? $card['cardType'] : 'list',
+                    'cardType' => lrsd_sf_sanitize_custom_card_type($card['cardType'] ?? 'list'),
                     'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
                     'items'    => [],
                 ];

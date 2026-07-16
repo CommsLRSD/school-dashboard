@@ -47,7 +47,7 @@ function lrsd_sf_import_dataset(array $decoded) {
                 'title'    => sanitize_text_field($card['title'] ?? ''),
                 'icon'     => sanitize_text_field($card['icon'] ?? ''),
                 'category' => sanitize_text_field($card['category'] ?? ''),
-                'cardType' => in_array($card['cardType'] ?? 'list', ['list', 'stat'], true) ? $card['cardType'] : 'list',
+                'cardType' => lrsd_sf_sanitize_custom_card_type($card['cardType'] ?? 'list'),
                 'items'    => [],
                 'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
             ];
@@ -139,7 +139,7 @@ function lrsd_sf_import_dataset(array $decoded) {
     }
 
     // Update global custom cards
-    if (!empty($global_custom_cards) || isset($decoded['globalCustomCards'])) {
+    if (isset($decoded['globalCustomCards'])) {
         update_option('lrsd_sf_global_custom_cards', $global_custom_cards);
     }
 
