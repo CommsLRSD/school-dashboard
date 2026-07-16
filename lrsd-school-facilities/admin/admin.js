@@ -408,7 +408,7 @@
 
         // Select template
         $(document).on('click keypress', '.lrsd-sf-tpl-option', function (e) {
-            if (e.type === 'keypress' && e.which !== 13) return;
+            if (e.type === 'keypress' && e.which !== 13 && e.which !== 32) return;
             var tplId   = $(this).data('tpl-id');
             var context = $(this).data('context');
             var tpl     = null;

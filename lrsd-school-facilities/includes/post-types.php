@@ -36,18 +36,20 @@ function lrsd_sf_register_post_type() {
  * Ensure the correct parent menu and submenu are highlighted when editing
  * a school post (lr_school), since the post type is not auto-added to the menu.
  */
-add_filter('parent_file', static function ($parent_file) {
+function lrsd_sf_parent_menu_highlight($parent_file) {
     global $post_type;
     if ($post_type === 'lr_school') {
         return 'lrsd-school-facilities';
     }
     return $parent_file;
-});
+}
+add_filter('parent_file', 'lrsd_sf_parent_menu_highlight');
 
-add_filter('submenu_file', static function ($submenu_file) {
+function lrsd_sf_submenu_highlight($submenu_file) {
     global $post_type;
     if ($post_type === 'lr_school') {
         return 'edit.php?post_type=lr_school';
     }
     return $submenu_file;
-});
+}
+add_filter('submenu_file', 'lrsd_sf_submenu_highlight');

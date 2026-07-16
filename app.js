@@ -136,6 +136,18 @@ document.addEventListener('DOMContentLoaded', function() {
         return label;
     };
 
+    /**
+     * Formats a catchment migration value, always appending '%' if the value
+     * is present and does not already end with '%'.
+     * @param {*} raw - Raw migration value from school data
+     * @returns {string} Formatted value or 'N/A'
+     */
+    const formatMigrationValue = (raw) => {
+        if (raw === undefined || raw === null || raw === '') return 'N/A';
+        const str = String(raw);
+        return str.endsWith('%') ? str : str + '%';
+    };
+
 
 
     const categories = {
@@ -588,9 +600,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const mapFilename = fosMapLookup[school.familyOfSchools] || `public/maps/${school.id}-map.jpg`;
                 const schoolName = sanitizeHTML(school.schoolName || '');
                 const migrationRaw = school.catchment?.migration;
-                const migration = (migrationRaw !== undefined && migrationRaw !== null && migrationRaw !== '')
-                    ? (String(migrationRaw).endsWith('%') ? String(migrationRaw) : String(migrationRaw) + '%')
-                    : 'N/A';
+                const migration = formatMigrationValue(migrationRaw);
                 const description = school.catchment?.description || '';
                 
                 return `<div class="data-card catchment-map-card ${sizeClass}">
