@@ -1435,11 +1435,12 @@
                 "size": "1,502 ft² (2 modular classrooms uninhabitable)"
             }
         ],
-        "building": {
-            "Air Conditioning": "Full building",
-            "Heating": "Natural gas",
-            "LED Lighting": "Gym, multipurpose room stage, office, hygiene room"
+  "building": {
+            "Air Conditioning": "Back hallway, main building (needs repairs)",
+            "Heating": "Natural gas, electric, geothermal",
+            "LED Lighting": "Room 6"
         },
+
         "catchment": {
             "migration": "-0.1",
             "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)"
@@ -1459,7 +1460,12 @@
             "Automatic entrance door operators": "YES"
         },
         "playground": [
-            "City Property: Play structures, Soccer field, Basketball court, Baseball diamond"
+            "Play structures",
+            "Swing sets",
+            "Basketball court",
+            "Basketball action play system",
+            "Baseball diamond",
+            "Soccer nets"
         ],
         "childcare": {
             "Infant (0-23 months)": 8,
@@ -1467,41 +1473,32 @@
             "School-age (7+ years)": 72,
             "BLAST": ""
         },
-        "projects": {
+    "projects": {
             "provincial": {
                 "requested": [
                     "New High School: Precinct K neighbourhood",
-                    "New Elementary School: Precinct K neighbourhood",
-                    "Universal washroom",
+                    "Boiler replacement",
                     "Roof replacement (Partial)"
                 ],
                 "inProgress": [],
                 "completed": [
-                    "Make Up Air replacement (2)",
-                    "Compressor replacement"
+                    "Rooftop unit and Make-up Air replacement"
                 ]
             },
             "local": {
                 "requested": [
-                    "Staff room renovation",
-                    "Meeting room window",
-                    "Flooring replacement in Room 9, 10, 20, 21",
-                    "Skylight blind in multi-purpose room",
-                    "Outdoor storage",
-                    "School office flooring replacement",
-                    "Lockers",
-                    "Food and nutrition lab renovation",
-                    "Washroom Renovation",
-                    "Replace flooring in the hallway outside Room 9&10",
-                    "Replace flooring in Student Services",
-                    "Remove cabinetry from the middle of the library"
+                    "Air conditioning installation",
+                    "Cabinets and countertops in canteen"
                 ],
                 "inProgress": [],
                 "completed": [
-                    "Dust collector layout reconfiguration and added electrical to accommodate the relocated equipment",
-                    "Painting of all classrooms",
-                    "Interlock for dust collector installation",
-                    "Repainting of the metal roof and metal overhang at the doorway"
+                    "Portable A/C unit",
+                    "Coat hooks",
+                    "Lockable storage cabinet",
+                    "Boot racks",
+                    "Intercom call button relocation",
+                    "Compressor replacement",
+                    "Exterior wall repair"
                 ]
             }
         },
@@ -1558,10 +1555,11 @@
         },
         "additions": [],
         "building": {
-            "Air Conditioning": "Back hallway, main building (needs repairs)",
-            "Heating": "Natural gas, electric, geothermal",
-            "LED Lighting": "Room 6"
+            "Air Conditioning": "Everywhere except gym",
+            "Heating": "Natural gas",
+            "LED Lighting": "Gym, hallways, main entry, offices, storage, movement room, staff washrooms, custodial room, elevator"
         },
+
         "catchment": {
             "migration": "0.3",
             "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)"
@@ -1581,12 +1579,16 @@
             "Automatic entrance door operators": "YES"
         },
         "playground": [
-            "Play structures",
-            "Swing sets",
-            "Basketball court",
-            "Basketball action play system",
-            "Baseball diamond",
-            "Soccer nets"
+            "Tether Ball Poles",
+            "Soccer Field",
+            "Soccer Nets",
+            "Playstructure(s)",
+            "Basketball Court",
+            "Baseball Diamond",
+            "Indigenous Garden",
+            "Running Track",
+            "High Jump Pole",
+            "TRC Garden"
         ],
         "childcare": {
             "Infant (0-23 months)": 0,
@@ -1594,32 +1596,34 @@
             "School-age (7+ years)": 32,
             "BLAST": ""
         },
-        "projects": {
+  "projects": {
             "provincial": {
                 "requested": [
                     "New High School: Precinct K neighbourhood",
-                    "Boiler replacement",
-                    "Roof replacement (Partial)"
+                    "Boiler replacement"
                 ],
                 "inProgress": [],
                 "completed": [
-                    "Rooftop unit and Make-up Air replacement"
+                    "Elevator",
+                    "Universal washroom"
                 ]
             },
             "local": {
                 "requested": [
-                    "Air conditioning installation",
-                    "Cabinets and countertops in canteen"
+                    "Student washrooms renovation",
+                    "Gym air conditioning",
+                    "Main floor school office relocation",
+                    "Windows replacement",
+                    "Replace cabinets in Room 4 & 5"
                 ],
                 "inProgress": [],
                 "completed": [
                     "Portable A/C unit",
-                    "Coat hooks",
-                    "Lockable storage cabinet",
-                    "Boot racks",
-                    "Intercom call button relocation",
-                    "Compressor replacement",
-                    "Exterior wall repair"
+                    "Steps repair",
+                    "Replaced windows on the west side of the building",
+                    "Installed Fence and added walkpath in the school bus loop",
+                    "Exterior windows",
+                    "Wall repair"
                 ]
             }
         },
@@ -1696,10 +1700,10 @@
                 "size": "4,843 ft²"
             }
         ],
-        "building": {
-            "Air Conditioning": "Everywhere except gym",
+   "building": {
+            "Air Conditioning": "Full building",
             "Heating": "Natural gas",
-            "LED Lighting": "Gym, hallways, main entry, offices, storage, movement room, staff washrooms, custodial room, elevator"
+            "LED Lighting": "Gym, multipurpose room stage, office, hygiene room"
         },
         "catchment": {
             "migration": "1.0",
@@ -1720,13 +1724,7 @@
             "Automatic entrance door operators": "YES"
         },
         "playground": [
-            "Basketball court",
-            "Play structure",
-            "Soccer field",
-            "Gravel track",
-            "Baseball diamond",
-            "Indigenous garden",
-            "Tether ball"
+            "City Property: Play structures, Soccer field, Basketball court, Baseball diamond"
         ],
         "childcare": {
             "Infant (0-23 months)": 16,
@@ -1734,34 +1732,41 @@
             "School-age (7+ years)": 62,
             "BLAST": ""
         },
-        "projects": {
+       "projects": {
             "provincial": {
                 "requested": [
                     "New High School: Precinct K neighbourhood",
-                    "Boiler replacement"
+                    "New Elementary School: Precinct K neighbourhood",
+                    "Universal washroom",
+                    "Roof replacement (Partial)"
                 ],
                 "inProgress": [],
                 "completed": [
-                    "Elevator",
-                    "Universal washroom"
+                    "Make Up Air replacement (2)",
+                    "Compressor replacement"
                 ]
             },
             "local": {
                 "requested": [
-                    "Student washrooms renovation",
-                    "Gym air conditioning",
-                    "Main floor school office relocation",
-                    "Windows replacement",
-                    "Replace cabinets in Room 4 & 5"
+                    "Staff room renovation",
+                    "Meeting room window",
+                    "Flooring replacement in Room 9, 10, 20, 21",
+                    "Skylight blind in multi-purpose room",
+                    "Outdoor storage",
+                    "School office flooring replacement",
+                    "Lockers",
+                    "Food and nutrition lab renovation",
+                    "Washroom Renovation",
+                    "Replace flooring in the hallway outside Room 9&10",
+                    "Replace flooring in Student Services",
+                    "Remove cabinetry from the middle of the library"
                 ],
                 "inProgress": [],
                 "completed": [
-                    "Portable A/C unit",
-                    "Steps repair",
-                    "Replaced windows on the west side of the building",
-                    "Installed Fence and added walkpath in the school bus loop",
-                    "Exterior windows",
-                    "Wall repair"
+                    "Dust collector layout reconfiguration and added electrical to accommodate the relocated equipment",
+                    "Painting of all classrooms",
+                    "Interlock for dust collector installation",
+                    "Repainting of the metal roof and metal overhang at the doorway"
                 ]
             }
         },
