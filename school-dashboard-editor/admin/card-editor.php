@@ -49,8 +49,10 @@ function lrsd_sf_render_card_editor_page() {
                         <span class="lrsd-sf-card-drag dashicons dashicons-move" title="<?php esc_attr_e('Drag to reorder', 'lrsd-school-facilities'); ?>"></span>
                         <strong class="lrsd-sf-card-name"><?php echo esc_html($card['title'] ?? __('(Untitled Card)', 'lrsd-school-facilities')); ?></strong>
                         <span class="lrsd-sf-global-badge"><?php esc_html_e('All Schools', 'lrsd-school-facilities'); ?></span>
+                        <button type="button" class="button lrsd-sf-toggle-global-preview" title="<?php esc_attr_e('Toggle card preview', 'lrsd-school-facilities'); ?>"><?php esc_html_e('Show Preview', 'lrsd-school-facilities'); ?></button>
                         <button type="button" class="button lrsd-sf-remove-global-card" title="<?php esc_attr_e('Remove template', 'lrsd-school-facilities'); ?>">&#x2715;</button>
                     </div>
+                    <div class="lrsd-sf-card-preview-wrap lrsd-sf-global-preview-wrap" style="display:none;"></div>
                     <table class="form-table" role="presentation"><tbody>
                         <tr>
                             <th><label><?php esc_html_e('Card Title', 'lrsd-school-facilities'); ?></label></th>

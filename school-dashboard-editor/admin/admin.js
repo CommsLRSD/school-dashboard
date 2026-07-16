@@ -437,6 +437,10 @@
                 var html = buildCardHtml(id, tpl.label, tpl.icon, '', tpl.cardType, '', items);
                 $('#lrsd-sf-custom-cards').append(html);
                 addCardToOrder(id, tpl.label || (i18n.untitledCard || '(Untitled Card)'));
+                // Refresh sortable so the new card participates in drag-to-reorder
+                if ($('#lrsd-sf-custom-cards').data('ui-sortable')) {
+                    $('#lrsd-sf-custom-cards').sortable('refresh');
+                }
             }
         });
 
@@ -446,6 +450,11 @@
             var cardId = $card.data('card-id');
             $card.remove();
             removeCardFromOrder(cardId);
+            // Clear any inline heights jQuery UI sortable may have set on remaining cards
+            $('#lrsd-sf-custom-cards .lrsd-sf-custom-card').css('height', '');
+            if ($('#lrsd-sf-custom-cards').data('ui-sortable')) {
+                $('#lrsd-sf-custom-cards').sortable('refresh');
+            }
         });
 
         // Remove item
@@ -500,6 +509,10 @@
             handle: '.lrsd-sf-card-drag',
             cursor: 'grab',
             tolerance: 'pointer',
+            stop: function () {
+                // Clear any inline heights sortable may have set
+                $('#lrsd-sf-custom-cards .lrsd-sf-custom-card').css('height', '');
+            },
         });
     }
 
@@ -573,8 +586,10 @@
                 '<span class="lrsd-sf-card-drag dashicons dashicons-move" title="Drag to reorder"></span>' +
                 '<strong class="lrsd-sf-card-name">' + (title || (i18n.untitledCard || '(Untitled Card)')) + '</strong>' +
                 '<span class="lrsd-sf-global-badge">' + esc(i18n.allSchoolsLabel || 'All Schools') + '</span>' +
+                '<button type="button" class="button lrsd-sf-toggle-global-preview" title="Toggle card preview">Show Preview</button>' +
                 '<button type="button" class="button lrsd-sf-remove-global-card" title="Remove template">\u2715</button>' +
             '</div>' +
+            '<div class="lrsd-sf-card-preview-wrap lrsd-sf-global-preview-wrap" style="display:none;"></div>' +
             '<table class="form-table" role="presentation"><tbody>' +
                 '<tr><th>Card Title</th><td>' +
                     '<input type="text" class="regular-text lrsd-sf-gct-title" value="' + esc(title) + '" data-field="title" />' +
@@ -620,6 +635,16 @@
             var $card = $(this).closest('.lrsd-sf-global-card-template');
             var title = $(this).val() || (i18n.untitledCard || '(Untitled Card)');
             $card.find('.lrsd-sf-card-name').text(title);
+            refreshGlobalCardPreview($card);
+        });
+
+        // Refresh preview when display type or labels change
+        $(document).on('change', '.lrsd-sf-gct-cardtype', function () {
+            refreshGlobalCardPreview($(this).closest('.lrsd-sf-global-card-template'));
+        });
+
+        $(document).on('input', '.lrsd-sf-label-text', function () {
+            refreshGlobalCardPreview($(this).closest('.lrsd-sf-global-card-template'));
         });
 
         // Add label row
@@ -629,7 +654,23 @@
 
         // Remove label row
         $(document).on('click', '.lrsd-sf-remove-label', function () {
+            var $card = $(this).closest('.lrsd-sf-global-card-template');
             $(this).closest('.lrsd-sf-label-row').remove();
+            refreshGlobalCardPreview($card);
+        });
+
+        // Toggle card preview for global cards
+        $(document).on('click', '.lrsd-sf-toggle-global-preview', function () {
+            var $card    = $(this).closest('.lrsd-sf-global-card-template');
+            var $preview = $card.find('.lrsd-sf-global-preview-wrap');
+            if ($preview.is(':visible')) {
+                $preview.slideUp(150);
+                $(this).text('Show Preview');
+            } else {
+                refreshGlobalCardPreview($card);
+                $preview.slideDown(150);
+                $(this).text('Hide Preview');
+            }
         });
 
         // Make global cards sortable (reorder)
@@ -637,12 +678,32 @@
             handle: '.lrsd-sf-card-drag',
             cursor: 'grab',
             tolerance: 'pointer',
+            stop: function () {
+                // Clear any inline heights sortable may have set
+                $('#lrsd-sf-global-cards .lrsd-sf-global-card-template').css('height', '');
+            },
         });
 
         // Serialize on submit
         $('#lrsd-sf-card-editor-form').on('submit', function () {
             serializeGlobalCards();
         });
+    }
+
+    // Build a preview for global card templates (labels only — no per-school values)
+    function refreshGlobalCardPreview($card) {
+        var $preview = $card.find('.lrsd-sf-global-preview-wrap');
+        if (!$preview.length) return;
+        var title    = $card.find('.lrsd-sf-gct-title').val() || '';
+        var cardType = $card.find('.lrsd-sf-gct-cardtype').val() || 'list';
+        var items    = [];
+        $card.find('.lrsd-sf-label-text').each(function () {
+            var label = $(this).val() || '';
+            if (label) {
+                items.push({ label: label, value: '—' });
+            }
+        });
+        $preview.html(buildCardPreviewHtml(title, cardType, items));
     }
 
     function serializeGlobalCards() {
