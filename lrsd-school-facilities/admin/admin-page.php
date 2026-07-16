@@ -42,6 +42,15 @@ function lrsd_sf_register_admin_pages() {
 
     add_submenu_page(
         'lrsd-school-facilities',
+        __('Advanced JSON Editor', 'lrsd-school-facilities'),
+        __('Advanced JSON Editor', 'lrsd-school-facilities'),
+        'manage_options',
+        'lrsd-school-facilities-advanced',
+        'lrsd_sf_render_advanced_editor_page'
+    );
+
+    add_submenu_page(
+        'lrsd-school-facilities',
         __('All Schools', 'lrsd-school-facilities'),
         __('All Schools', 'lrsd-school-facilities'),
         'edit_posts',

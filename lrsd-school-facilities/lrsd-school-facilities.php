@@ -19,9 +19,11 @@ require_once LRSD_SF_PLUGIN_DIR . 'includes/importer.php';
 require_once LRSD_SF_PLUGIN_DIR . 'includes/exporter.php';
 require_once LRSD_SF_PLUGIN_DIR . 'includes/rest-api.php';
 require_once LRSD_SF_PLUGIN_DIR . 'includes/bulk-update.php';
+require_once LRSD_SF_PLUGIN_DIR . 'includes/advanced-json-ajax.php';
 require_once LRSD_SF_PLUGIN_DIR . 'admin/admin-page.php';
 require_once LRSD_SF_PLUGIN_DIR . 'admin/school-editor.php';
 require_once LRSD_SF_PLUGIN_DIR . 'admin/card-editor.php';
+require_once LRSD_SF_PLUGIN_DIR . 'admin/advanced-editor.php';
 
 add_action('init', 'lrsd_sf_register_post_type');
 add_action('rest_api_init', 'lrsd_sf_register_rest_routes');
