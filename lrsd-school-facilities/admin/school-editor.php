@@ -52,6 +52,7 @@ function lrsd_sf_get_simple_field_map() {
         'accessibility_door_operators'      => ['label' => 'Auto Entrance Door Ops',    'path' => ['accessibility', 'Automatic entrance door operators'], 'type' => 'text',   'section' => 'accessibility'],
         // ── Catchment
         'catchment_migration' => ['label' => 'Catchment Migration', 'path' => ['catchment', 'migration'], 'type' => 'text', 'section' => 'catchment'],
+        'catchment_map'       => ['label' => 'Catchment Map',       'path' => ['catchment', 'map'],       'type' => 'media', 'section' => 'catchment'],
     ];
 }
 
@@ -143,13 +144,13 @@ function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options)
 }
 
 /**
- * Convert enrolment series data to newline rows in "label|value" format.
+ * Normalize enrolment series into editable year/value rows.
  */
-function lrsd_sf_format_enrolment_series_lines($series) {
+function lrsd_sf_normalize_enrolment_series_points($series) {
     $labels = is_array($series['labels'] ?? null) ? array_values($series['labels']) : [];
     $values = is_array($series['values'] ?? null) ? array_values($series['values']) : [];
     $count  = max(count($labels), count($values));
-    $lines  = [];
+    $points = [];
 
     for ($index = 0; $index < $count; $index++) {
         $label = isset($labels[$index]) ? trim((string) $labels[$index]) : '';
@@ -157,37 +158,34 @@ function lrsd_sf_format_enrolment_series_lines($series) {
         if ($label === '') {
             continue;
         }
-        $lines[] = $label . '|' . $value;
+        $points[] = ['label' => $label, 'value' => $value];
     }
 
-    return implode("\n", $lines);
+    if (empty($points)) {
+        $points[] = ['label' => '', 'value' => ''];
+    }
+
+    return $points;
 }
 
 /**
- * Parse newline rows in "label|value" format into enrolment series arrays.
+ * Parse posted year/value rows into enrolment series arrays.
  */
-function lrsd_sf_parse_enrolment_series_lines($raw_text) {
-    $lines  = explode("\n", (string) $raw_text);
-    $labels = [];
-    $values = [];
+function lrsd_sf_parse_posted_enrolment_series_points($labels_raw, $values_raw) {
+    $labels_raw = is_array($labels_raw) ? $labels_raw : [];
+    $values_raw = is_array($values_raw) ? $values_raw : [];
+    $count      = max(count($labels_raw), count($values_raw));
+    $labels     = [];
+    $values     = [];
 
-    foreach ($lines as $line) {
-        $line = trim((string) $line);
-        if ($line === '') {
-            continue;
-        }
-
-        $parts = explode('|', $line, 2);
-        $label = sanitize_text_field(trim($parts[0] ?? ''));
-        $value_text = isset($parts[1]) ? trim($parts[1]) : '';
-        $value = is_numeric($value_text) ? (int) $value_text : 0;
-
+    for ($index = 0; $index < $count; $index++) {
+        $label = sanitize_text_field(trim((string)($labels_raw[$index] ?? '')));
+        $value_text = trim((string)($values_raw[$index] ?? ''));
         if ($label === '') {
             continue;
         }
-
         $labels[] = $label;
-        $values[] = $value;
+        $values[] = is_numeric($value_text) ? (int)$value_text : 0;
     }
 
     return [
@@ -227,8 +225,19 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
     $custom_card_values = lrsd_sf_get_nested_value($school_data, ['customCardValues'], []);
     if (!is_array($custom_card_values)) { $custom_card_values = []; }
     $display_types = lrsd_sf_get_custom_card_display_types();
-    $history_lines = lrsd_sf_format_enrolment_series_lines(lrsd_sf_get_nested_value($school_data, ['enrolment', 'history'], []));
-    $projection_lines = lrsd_sf_format_enrolment_series_lines(lrsd_sf_get_nested_value($school_data, ['enrolment', 'projection'], []));
+    $history_points    = lrsd_sf_normalize_enrolment_series_points(lrsd_sf_get_nested_value($school_data, ['enrolment', 'history'], []));
+    $projection_points = lrsd_sf_normalize_enrolment_series_points(lrsd_sf_get_nested_value($school_data, ['enrolment', 'projection'], []));
+    $additions         = lrsd_sf_get_nested_value($school_data, ['additions'], []);
+    if (!is_array($additions)) {
+        $additions = [];
+    }
+    if (empty($additions)) {
+        $additions[] = ['year' => '', 'size' => ''];
+    }
+    $childcare = lrsd_sf_get_nested_value($school_data, ['childcare'], []);
+    if (!is_array($childcare)) {
+        $childcare = [];
+    }
 
     // Card order: saved order + any new standard cards + any custom card IDs (school + global)
     $saved_order    = lrsd_sf_get_nested_value($school_data, ['cardOrder'], []);
@@ -297,17 +306,43 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         }
         ?>
             <tr>
-                <th scope="row"><label for="lrsd_sf_enrolment_history"><?php esc_html_e('Historic Enrolment (Year|Value)', 'lrsd-school-facilities'); ?></label></th>
+                <th scope="row"><?php esc_html_e('Historic Enrolment', 'lrsd-school-facilities'); ?></th>
                 <td>
-                    <textarea id="lrsd_sf_enrolment_history" name="lrsd_sf_enrolment_history" rows="5" class="large-text code"><?php echo esc_textarea($history_lines); ?></textarea>
-                    <p class="description"><?php esc_html_e('One data point per line using label|value (example: 2025_26|184). Recommended label format is YYYY_YY, but any label text is allowed.', 'lrsd-school-facilities'); ?></p>
+                    <div class="lrsd-sf-kv-list">
+                        <table class="lrsd-sf-kv-table" role="presentation">
+                            <thead><tr><th scope="col"><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th scope="col"><?php esc_html_e('Value', 'lrsd-school-facilities'); ?></th><th scope="col"></th></tr></thead>
+                            <tbody class="lrsd-sf-kv-rows">
+                            <?php foreach ($history_points as $point) : ?>
+                                <tr class="lrsd-sf-kv-row">
+                                    <td><input type="text" class="regular-text" name="lrsd_sf_enrolment_history_labels[]" aria-label="<?php esc_attr_e('Historic enrolment year', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['label'] ?? '')); ?>" /></td>
+                                    <td><input type="number" class="small-text" name="lrsd_sf_enrolment_history_values[]" aria-label="<?php esc_attr_e('Historic enrolment value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['value'] ?? '')); ?>" /></td>
+                                    <td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="<?php esc_attr_e('Remove historic enrolment row', 'lrsd-school-facilities'); ?>">&#x2715;</button></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <button type="button" class="button lrsd-sf-add-kv-row" data-label-name="lrsd_sf_enrolment_history_labels[]" data-value-name="lrsd_sf_enrolment_history_values[]" data-value-type="number"><?php esc_html_e('+ Add Data Point', 'lrsd-school-facilities'); ?></button>
+                    </div>
                 </td>
             </tr>
             <tr>
-                <th scope="row"><label for="lrsd_sf_enrolment_projection"><?php esc_html_e('Projected Enrolment (Year|Value)', 'lrsd-school-facilities'); ?></label></th>
+                <th scope="row"><?php esc_html_e('Projected Enrolment', 'lrsd-school-facilities'); ?></th>
                 <td>
-                    <textarea id="lrsd_sf_enrolment_projection" name="lrsd_sf_enrolment_projection" rows="5" class="large-text code"><?php echo esc_textarea($projection_lines); ?></textarea>
-                    <p class="description"><?php esc_html_e('One data point per line using label|value (example: 2029_30|142). Recommended label format is YYYY_YY, but any label text is allowed.', 'lrsd-school-facilities'); ?></p>
+                    <div class="lrsd-sf-kv-list">
+                        <table class="lrsd-sf-kv-table" role="presentation">
+                            <thead><tr><th scope="col"><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th scope="col"><?php esc_html_e('Value', 'lrsd-school-facilities'); ?></th><th scope="col"></th></tr></thead>
+                            <tbody class="lrsd-sf-kv-rows">
+                            <?php foreach ($projection_points as $point) : ?>
+                                <tr class="lrsd-sf-kv-row">
+                                    <td><input type="text" class="regular-text" name="lrsd_sf_enrolment_projection_labels[]" aria-label="<?php esc_attr_e('Projected enrolment year', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['label'] ?? '')); ?>" /></td>
+                                    <td><input type="number" class="small-text" name="lrsd_sf_enrolment_projection_values[]" aria-label="<?php esc_attr_e('Projected enrolment value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['value'] ?? '')); ?>" /></td>
+                                    <td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="<?php esc_attr_e('Remove projected enrolment row', 'lrsd-school-facilities'); ?>">&#x2715;</button></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <button type="button" class="button lrsd-sf-add-kv-row" data-label-name="lrsd_sf_enrolment_projection_labels[]" data-value-name="lrsd_sf_enrolment_projection_values[]" data-value-type="number"><?php esc_html_e('+ Add Data Point', 'lrsd-school-facilities'); ?></button>
+                    </div>
                 </td>
             </tr>
         </tbody></table>
@@ -323,6 +358,32 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
             lrsd_sf_render_field_row($fk, $field, $val, $dropdown_options);
         }
         ?>
+        </tbody></table>
+        <?php lrsd_sf_render_section_footer(); ?>
+
+        <!-- ── Additions ───────────────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-additions', __('Additions', 'lrsd-school-facilities')); ?>
+        <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
+            <tr>
+                <th scope="row"><?php esc_html_e('Building Additions', 'lrsd-school-facilities'); ?></th>
+                <td>
+                    <div class="lrsd-sf-kv-list">
+                        <table class="lrsd-sf-kv-table" role="presentation">
+                            <thead><tr><th scope="col"><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th scope="col"><?php esc_html_e('Size', 'lrsd-school-facilities'); ?></th><th scope="col"></th></tr></thead>
+                            <tbody class="lrsd-sf-kv-rows">
+                            <?php foreach ($additions as $addition) : ?>
+                                <tr class="lrsd-sf-kv-row">
+                                    <td><input type="text" class="regular-text" name="lrsd_sf_additions_year[]" aria-label="<?php esc_attr_e('Addition year', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($addition['year'] ?? '')); ?>" /></td>
+                                    <td><input type="text" class="regular-text" name="lrsd_sf_additions_size[]" aria-label="<?php esc_attr_e('Addition size', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($addition['size'] ?? '')); ?>" /></td>
+                                    <td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="<?php esc_attr_e('Remove addition row', 'lrsd-school-facilities'); ?>">&#x2715;</button></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <button type="button" class="button lrsd-sf-add-kv-row" data-label-name="lrsd_sf_additions_year[]" data-value-name="lrsd_sf_additions_size[]"><?php esc_html_e('+ Add Addition', 'lrsd-school-facilities'); ?></button>
+                    </div>
+                </td>
+            </tr>
         </tbody></table>
         <?php lrsd_sf_render_section_footer(); ?>
 
@@ -374,6 +435,28 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                     <textarea id="playground_lines" name="lrsd_sf_playground_lines" rows="7" class="large-text code"><?php echo esc_textarea($playground_lines); ?></textarea>
                     <p class="description"><?php esc_html_e('Enter each piece of playground equipment or feature on its own line.', 'lrsd-school-facilities'); ?></p>
                 </td>
+            </tr>
+        </tbody></table>
+        <?php lrsd_sf_render_section_footer(); ?>
+
+        <!-- ── Childcare ───────────────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-childcare', __('Childcare & BLAST', 'lrsd-school-facilities')); ?>
+        <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
+            <tr>
+                <th scope="row"><label for="lrsd_sf_childcare_infant"><?php esc_html_e('Infant (0-23 months)', 'lrsd-school-facilities'); ?></label></th>
+                <td><input type="text" id="lrsd_sf_childcare_infant" class="regular-text" name="lrsd_sf_childcare[Infant (0-23 months)]" value="<?php echo esc_attr((string)($childcare['Infant (0-23 months)'] ?? '')); ?>" /></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="lrsd_sf_childcare_preschool"><?php esc_html_e('Pre-school (2-6 years)', 'lrsd-school-facilities'); ?></label></th>
+                <td><input type="text" id="lrsd_sf_childcare_preschool" class="regular-text" name="lrsd_sf_childcare[Pre-school (2-6 years)]" value="<?php echo esc_attr((string)($childcare['Pre-school (2-6 years)'] ?? '')); ?>" /></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="lrsd_sf_childcare_schoolage"><?php esc_html_e('School-age (7+ years)', 'lrsd-school-facilities'); ?></label></th>
+                <td><input type="text" id="lrsd_sf_childcare_schoolage" class="regular-text" name="lrsd_sf_childcare[School-age (7+ years)]" value="<?php echo esc_attr((string)($childcare['School-age (7+ years)'] ?? '')); ?>" /></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="lrsd_sf_childcare_blast"><?php esc_html_e('BLAST', 'lrsd-school-facilities'); ?></label></th>
+                <td><input type="text" id="lrsd_sf_childcare_blast" class="regular-text" name="lrsd_sf_childcare[BLAST]" value="<?php echo esc_attr((string)($childcare['BLAST'] ?? '')); ?>" /></td>
             </tr>
         </tbody></table>
         <?php lrsd_sf_render_section_footer(); ?>
@@ -691,18 +774,61 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
     }
 
     // ── Enrolment history/projection series ──────────────────────────────────
-    if (isset($_POST['lrsd_sf_enrolment_history'])) {
-        $history_series = lrsd_sf_parse_enrolment_series_lines(
-            sanitize_textarea_field(wp_unslash($_POST['lrsd_sf_enrolment_history']))
-        );
+    if (isset($_POST['lrsd_sf_enrolment_history_labels']) || isset($_POST['lrsd_sf_enrolment_history_values'])) {
+        $history_labels = isset($_POST['lrsd_sf_enrolment_history_labels']) && is_array($_POST['lrsd_sf_enrolment_history_labels'])
+            ? wp_unslash($_POST['lrsd_sf_enrolment_history_labels'])
+            : [];
+        $history_values = isset($_POST['lrsd_sf_enrolment_history_values']) && is_array($_POST['lrsd_sf_enrolment_history_values'])
+            ? wp_unslash($_POST['lrsd_sf_enrolment_history_values'])
+            : [];
+        $history_series = lrsd_sf_parse_posted_enrolment_series_points($history_labels, $history_values);
         lrsd_sf_set_nested_value($school_data, ['enrolment', 'history'], $history_series);
     }
 
-    if (isset($_POST['lrsd_sf_enrolment_projection'])) {
-        $projection_series = lrsd_sf_parse_enrolment_series_lines(
-            sanitize_textarea_field(wp_unslash($_POST['lrsd_sf_enrolment_projection']))
-        );
+    if (isset($_POST['lrsd_sf_enrolment_projection_labels']) || isset($_POST['lrsd_sf_enrolment_projection_values'])) {
+        $projection_labels = isset($_POST['lrsd_sf_enrolment_projection_labels']) && is_array($_POST['lrsd_sf_enrolment_projection_labels'])
+            ? wp_unslash($_POST['lrsd_sf_enrolment_projection_labels'])
+            : [];
+        $projection_values = isset($_POST['lrsd_sf_enrolment_projection_values']) && is_array($_POST['lrsd_sf_enrolment_projection_values'])
+            ? wp_unslash($_POST['lrsd_sf_enrolment_projection_values'])
+            : [];
+        $projection_series = lrsd_sf_parse_posted_enrolment_series_points($projection_labels, $projection_values);
         lrsd_sf_set_nested_value($school_data, ['enrolment', 'projection'], $projection_series);
+    }
+
+    // ── Additions ────────────────────────────────────────────────────────────
+    if (isset($_POST['lrsd_sf_additions_year']) || isset($_POST['lrsd_sf_additions_size'])) {
+        $years = isset($_POST['lrsd_sf_additions_year']) && is_array($_POST['lrsd_sf_additions_year'])
+            ? wp_unslash($_POST['lrsd_sf_additions_year'])
+            : [];
+        $sizes = isset($_POST['lrsd_sf_additions_size']) && is_array($_POST['lrsd_sf_additions_size'])
+            ? wp_unslash($_POST['lrsd_sf_additions_size'])
+            : [];
+        $count = max(count($years), count($sizes));
+        $additions = [];
+        for ($index = 0; $index < $count; $index++) {
+            $year = sanitize_text_field(trim((string)($years[$index] ?? '')));
+            $size = sanitize_text_field(trim((string)($sizes[$index] ?? '')));
+            if ($year === '' && $size === '') {
+                continue;
+            }
+            $additions[] = [
+                'year' => $year,
+                'size' => $size,
+            ];
+        }
+        lrsd_sf_set_nested_value($school_data, ['additions'], $additions);
+    }
+
+    // ── Childcare ────────────────────────────────────────────────────────────
+    if (isset($_POST['lrsd_sf_childcare']) && is_array($_POST['lrsd_sf_childcare'])) {
+        $childcare_raw = wp_unslash($_POST['lrsd_sf_childcare']);
+        $labels = ['Infant (0-23 months)', 'Pre-school (2-6 years)', 'School-age (7+ years)', 'BLAST'];
+        $childcare = [];
+        foreach ($labels as $label) {
+            $childcare[$label] = sanitize_text_field((string)($childcare_raw[$label] ?? ''));
+        }
+        lrsd_sf_set_nested_value($school_data, ['childcare'], $childcare);
     }
 
     // ── Custom cards ─────────────────────────────────────────────────────────

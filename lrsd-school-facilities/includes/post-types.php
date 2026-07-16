@@ -53,3 +53,85 @@ function lrsd_sf_submenu_highlight($submenu_file) {
     return $submenu_file;
 }
 add_filter('submenu_file', 'lrsd_sf_submenu_highlight');
+
+/**
+ * Force the Update by School list table to load alphabetically by school title.
+ */
+function lrsd_sf_default_school_admin_sort($query) {
+    if (!is_admin() || !$query->is_main_query()) {
+        return;
+    }
+
+    global $pagenow;
+    if ($pagenow !== 'edit.php') {
+        return;
+    }
+
+    $post_type = $query->get('post_type');
+    if ($post_type !== 'lr_school') {
+        return;
+    }
+
+    $query->set('orderby', 'title');
+    $query->set('order', 'ASC');
+
+    $meta_query = $query->get('meta_query');
+    if (!is_array($meta_query)) {
+        $meta_query = [];
+    }
+    $meta_query[] = [
+        'relation' => 'OR',
+        [
+            'key'     => 'lrsd_school_id',
+            'compare' => 'NOT EXISTS',
+        ],
+        [
+            'key'     => 'lrsd_school_id',
+            'value'   => lrsd_sf_get_reserved_dataset_keys(),
+            'compare' => 'NOT IN',
+        ],
+    ];
+    $query->set('meta_query', $meta_query);
+}
+add_action('pre_get_posts', 'lrsd_sf_default_school_admin_sort');
+
+/**
+ * Remove bulk actions from Update by School list table.
+ */
+function lrsd_sf_remove_school_bulk_actions($actions) {
+    return [];
+}
+add_filter('bulk_actions-edit-lr_school', 'lrsd_sf_remove_school_bulk_actions');
+
+/**
+ * Remove date-based filter dropdown from Update by School list table.
+ */
+function lrsd_sf_remove_school_month_filter($months, $post_type) {
+    if ($post_type === 'lr_school') {
+        return [];
+    }
+    return $months;
+}
+add_filter('months_dropdown_results', 'lrsd_sf_remove_school_month_filter', 10, 2);
+
+/**
+ * Hide extra filtering controls in Update by School list table.
+ */
+function lrsd_sf_hide_school_list_filters() {
+    $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+    if (!$screen || $screen->id !== 'edit-lr_school') {
+        return;
+    }
+    ?>
+    <style>
+        .edit-php.post-type-lr_school .subsubsub,
+        .edit-php.post-type-lr_school .search-box,
+        .edit-php.post-type-lr_school .tablenav .actions.bulkactions,
+        .edit-php.post-type-lr_school .tablenav .actions select[name="action"],
+        .edit-php.post-type-lr_school .tablenav .actions select[name="action2"] {
+            display: none !important;
+        }
+    </style>
+    <?php
+}
+add_action('admin_head-edit.php', 'lrsd_sf_hide_school_list_filters');

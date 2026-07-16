@@ -42,6 +42,7 @@ function lrsd_sf_handle_bulk_update() {
     });
 
     $playground_categories = ['playground'];
+    $series_categories = ['history', 'projection'];
     $project_paths = [
         'projects_provincial_requested'  => ['projects', 'provincial', 'requested'],
         'projects_provincial_inProgress' => ['projects', 'provincial', 'inProgress'],
@@ -55,6 +56,9 @@ function lrsd_sf_handle_bulk_update() {
 
     foreach ($schools as $school_id_key => $field_values) {
         $school_id_key = sanitize_text_field((string)$school_id_key);
+        if (lrsd_sf_is_reserved_dataset_key($school_id_key)) {
+            continue;
+        }
         $post_id = lrsd_sf_find_school_post_by_id($school_id_key);
         if (!$post_id) {
             continue;
@@ -84,6 +88,52 @@ function lrsd_sf_handle_bulk_update() {
             $lines = explode("\n", sanitize_textarea_field((string)$field_values['playground_lines']));
             $lines = array_values(array_filter(array_map('trim', $lines), static function ($line) { return $line !== ''; }));
             lrsd_sf_set_nested_value($school_data, ['playground'], $lines);
+        }
+
+        if (in_array($category, $series_categories, true)) {
+            $labels_raw = isset($field_values['enrolment_labels']) && is_array($field_values['enrolment_labels'])
+                ? $field_values['enrolment_labels']
+                : [];
+            $values_raw = isset($field_values['enrolment_values']) && is_array($field_values['enrolment_values'])
+                ? $field_values['enrolment_values']
+                : [];
+            $series = lrsd_sf_parse_posted_enrolment_series_points($labels_raw, $values_raw);
+            lrsd_sf_set_nested_value($school_data, ['enrolment', $category], $series);
+        }
+
+        if ($category === 'additions') {
+            $years_raw = isset($field_values['additions_year']) && is_array($field_values['additions_year'])
+                ? $field_values['additions_year']
+                : [];
+            $sizes_raw = isset($field_values['additions_size']) && is_array($field_values['additions_size'])
+                ? $field_values['additions_size']
+                : [];
+            $count = max(count($years_raw), count($sizes_raw));
+            $additions = [];
+            for ($index = 0; $index < $count; $index++) {
+                $year = sanitize_text_field(trim((string)($years_raw[$index] ?? '')));
+                $size = sanitize_text_field(trim((string)($sizes_raw[$index] ?? '')));
+                if ($year === '' && $size === '') {
+                    continue;
+                }
+                $additions[] = [
+                    'year' => $year,
+                    'size' => $size,
+                ];
+            }
+            lrsd_sf_set_nested_value($school_data, ['additions'], $additions);
+        }
+
+        if ($category === 'childcare') {
+            $labels = ['Infant (0-23 months)', 'Pre-school (2-6 years)', 'School-age (7+ years)', 'BLAST'];
+            $childcare_raw = isset($field_values['childcare']) && is_array($field_values['childcare'])
+                ? $field_values['childcare']
+                : [];
+            $childcare = [];
+            foreach ($labels as $label) {
+                $childcare[$label] = sanitize_text_field((string)($childcare_raw[$label] ?? ''));
+            }
+            lrsd_sf_set_nested_value($school_data, ['childcare'], $childcare);
         }
 
         // Projects (when category is projects_provincial or projects_local)

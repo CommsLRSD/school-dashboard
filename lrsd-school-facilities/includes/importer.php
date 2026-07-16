@@ -83,7 +83,7 @@ function lrsd_sf_handle_import() {
 
     foreach ($decoded as $key => $school) {
 
-        if ($key === 'lastUpdated') {
+        if (lrsd_sf_is_reserved_dataset_key($key)) {
             continue;
         }
 

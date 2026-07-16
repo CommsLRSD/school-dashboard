@@ -716,6 +716,39 @@
         });
     }
 
+    function initKeyValueRows() {
+        $(document).on('click', '.lrsd-sf-add-kv-row', function () {
+            var $btn = $(this);
+            var labelName = $btn.data('label-name') || '';
+            var valueName = $btn.data('value-name') || '';
+            var rawValueType = $btn.data('value-type');
+            var valueType = rawValueType === 'number' ? 'number' : 'text';
+            if (!labelName || !valueName) {
+                return;
+            }
+
+            var labelAria = i18n.kvLabel || 'Label';
+            if (labelName.toLowerCase().indexOf('year') !== -1) {
+                labelAria = i18n.kvYear || 'Year';
+            }
+            var valueAria = valueType === 'number' ? (i18n.kvValue || 'Value') : ((i18n.kvTextValue || i18n.kvValue) || 'Text value');
+            var removeAria = i18n.removeRow || 'Remove row';
+
+            var rowHtml =
+                '<tr class="lrsd-sf-kv-row">' +
+                    '<td><input type="text" class="regular-text" name="' + labelName + '" aria-label="' + labelAria + '" value="" /></td>' +
+                    '<td><input type="' + valueType + '" class="' + (valueType === 'number' ? 'small-text' : 'regular-text') + '" name="' + valueName + '" aria-label="' + valueAria + '" value="" /></td>' +
+                    '<td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="' + removeAria + '">&#x2715;</button></td>' +
+                '</tr>';
+
+            $btn.siblings('.lrsd-sf-kv-table').find('.lrsd-sf-kv-rows').append(rowHtml);
+        });
+
+        $(document).on('click', '.lrsd-sf-remove-kv-row', function () {
+            $(this).closest('.lrsd-sf-kv-row').remove();
+        });
+    }
+
     // ── Advanced JSON Editor ───────────────────────────────────────────────────
 
     function initAdvancedEditor() {
@@ -928,6 +961,7 @@
         initCustomCards();
         initPreSubmit();
         initBulkUpdate();
+        initKeyValueRows();
         initCardEditorPage();
         initAdvancedEditor();
     });

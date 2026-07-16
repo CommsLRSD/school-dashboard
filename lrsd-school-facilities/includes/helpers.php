@@ -3,6 +3,20 @@
 defined('ABSPATH') || exit;
 
 /**
+ * Dataset keys reserved for global/non-school data.
+ */
+function lrsd_sf_get_reserved_dataset_keys() {
+    return ['lastUpdated', 'fosMapLookup', 'globalCustomCards'];
+}
+
+/**
+ * True when a key is one of the reserved non-school dataset keys.
+ */
+function lrsd_sf_is_reserved_dataset_key($key) {
+    return in_array((string) $key, lrsd_sf_get_reserved_dataset_keys(), true);
+}
+
+/**
  * Find a school post ID by stable school ID.
  */
 function lrsd_sf_find_school_post_by_id($school_id) {
@@ -68,7 +82,7 @@ function lrsd_sf_get_school_dataset() {
     foreach ($posts as $post) {
         $school_id = get_post_meta($post->ID, 'lrsd_school_id', true);
         $school_id = sanitize_text_field((string) $school_id);
-        if ($school_id === '') {
+        if ($school_id === '' || lrsd_sf_is_reserved_dataset_key($school_id)) {
             continue;
         }
 
@@ -313,7 +327,7 @@ function lrsd_sf_get_all_card_types() {
         'accessibility'       => __('Accessibility', 'lrsd-school-facilities'),
         'playground'          => __('Playground', 'lrsd-school-facilities'),
         'transportation'      => __('Transportation', 'lrsd-school-facilities'),
-        'childcare'           => __('Childcare', 'lrsd-school-facilities'),
+        'childcare'           => __('Childcare & BLAST', 'lrsd-school-facilities'),
         'catchment_map'       => __('Catchment Map', 'lrsd-school-facilities'),
         'projects_provincial' => __('Provincial Projects', 'lrsd-school-facilities'),
         'projects_local'      => __('Local Projects', 'lrsd-school-facilities'),

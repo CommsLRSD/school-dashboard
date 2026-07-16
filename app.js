@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "accessibility": "Accessibility",
         "playground": "Playground Features",
         "transportation": "Transportation",
-        "childcare": "Childcare",
+        "childcare": "Childcare & BLAST",
         "catchment_map": "Catchment Map",
         "projects_provincial": "Provincially Funded Capital Projects",
         "projects_local": "Locally Funded Capital Projects"
@@ -597,7 +597,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     'GLENLAWN FOS': 'public/maps/glenlawn-fos-map.svg',
                     'NELSON MCINTYRE FOS': 'public/maps/nms-fos-map.svg'
                 }, fosMapLookupData);
-                const mapFilename = fosMapLookup[school.familyOfSchools] || `public/maps/${school.id}-map.jpg`;
+                const mapFilename = school.catchment?.map || fosMapLookup[school.familyOfSchools] || `public/maps/${school.id}-map.jpg`;
                 const schoolName = sanitizeHTML(school.schoolName || '');
                 const migrationRaw = school.catchment?.migration;
                 const migration = formatMigrationValue(migrationRaw);
@@ -650,7 +650,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     projects_provincial: 'public/icon/provincial-funded.svg', 
                     projects_local: 'public/icon/local-funded.svg' 
                 };
-                const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare', projects_provincial: 'Provincially Funded Capital Projects', projects_local: 'Locally Funded Capital Projects' };
+                const titles = { building_systems: 'Building Systems', accessibility: 'Accessibility', playground: 'Playground', transportation: 'Transportation', childcare: 'Childcare & BLAST', projects_provincial: 'Provincially Funded Capital Projects', projects_local: 'Locally Funded Capital Projects' };
                 
                 // Function to determine the appropriate icon for a playground item
                 const getPlaygroundIcon = (item) => {
@@ -746,6 +746,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     }).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
                 } else {
                     data = school[cardType === 'building_systems' ? 'building' : cardType];
+                    if (cardType === 'childcare') {
+                        const defaults = {
+                            'Infant (0-23 months)': '',
+                            'Pre-school (2-6 years)': '',
+                            'School-age (7+ years)': '',
+                            'BLAST': '',
+                        };
+                        data = { ...defaults, ...(data || {}) };
+                    }
                     listItems = Array.isArray(data) ? data.map(item => `<li class="detail-item">${item}</li>`).join('') : Object.entries(data).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${formatLabel(key)}</span><span class="detail-value">${val === "YES" ? '<span class="yes-badge">YES</span>' : val === "NO" ? '<span class="no-badge">NO</span>' : formatNumber(val)}</span></li>`).join('');
                 }
 
