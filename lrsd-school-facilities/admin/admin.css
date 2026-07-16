@@ -1,3 +1,8 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   LRSD School Facilities — Admin Styles
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Import / Export grid ─────────────────────────────────────────────────── */
 .lrsd-sf-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -8,11 +13,483 @@
 .lrsd-sf-card {
     border: 1px solid #dcdcde;
     background: #fff;
-    padding: 16px;
-    border-radius: 6px;
+    padding: 20px 24px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+
+.lrsd-sf-card h2 {
+    margin-top: 0;
+    font-size: 15px;
+}
+
+/* ── Editor wrapper ────────────────────────────────────────────────────────── */
+.lrsd-sf-editor {
+    margin: 0 -12px;
+}
+
+.lrsd-sf-last-updated {
+    background: #f0f6fc;
+    border-left: 4px solid #2271b1;
+    padding: 8px 12px;
+    margin: 8px 12px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+    color: #1d2327;
+}
+
+/* ── Collapsible Sections ─────────────────────────────────────────────────── */
+.lrsd-sf-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    margin: 10px 0 0;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+}
+
+.lrsd-sf-section-header:hover {
+    background: #e8e9ea;
+}
+
+.lrsd-sf-section-label {
+    font-weight: 600;
+    font-size: 13px;
+    color: #1d2327;
+}
+
+.lrsd-sf-section-toggle {
+    width: 18px;
+    height: 18px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.lrsd-sf-section-toggle::before,
+.lrsd-sf-section-toggle::after {
+    content: '';
+    position: absolute;
+    background: #646970;
+    border-radius: 2px;
+    transition: transform 0.2s;
+}
+
+/* Horizontal bar */
+.lrsd-sf-section-toggle::before {
+    width: 12px;
+    height: 2px;
+    top: 8px;
+    left: 3px;
+}
+
+/* Vertical bar — visible when collapsed (aria-expanded="false"), hidden when open (aria-expanded="true") */
+.lrsd-sf-section-toggle::after {
+    width: 2px;
+    height: 12px;
+    top: 3px;
+    left: 8px;
+}
+
+/* When collapsed (aria-expanded="false"), show the + icon (vertical bar visible) */
+.lrsd-sf-section-header[aria-expanded="false"] .lrsd-sf-section-toggle::after {
+    transform: scaleY(1);
+}
+
+/* When open/expanded (aria-expanded="true"), hide the vertical bar → shows − */
+.lrsd-sf-section-header[aria-expanded="true"] .lrsd-sf-section-toggle::after {
+    transform: scaleY(0);
+}
+
+.lrsd-sf-section-body {
+    border: 1px solid #dcdcde;
+    border-top: none;
+    padding: 12px 14px 16px;
+    background: #fff;
+    border-radius: 0 0 6px 6px;
+    margin-bottom: 2px;
+    /* display controlled by JS */
+}
+
+/* ── Editor Table ─────────────────────────────────────────────────────────── */
+.lrsd-sf-editor-table {
+    margin: 0 !important;
+}
+
+.lrsd-sf-editor-table th {
+    width: 200px;
+    padding: 8px 10px 8px 0;
+    font-weight: 500;
+    vertical-align: middle;
+}
+
+.lrsd-sf-editor-table td {
+    padding: 6px 0;
+    vertical-align: middle;
 }
 
 .lrsd-sf-editor-table input.regular-text {
     width: 100%;
-    max-width: 420px;
+    max-width: 380px;
+}
+
+/* ── Select / Dropdown ────────────────────────────────────────────────────── */
+.lrsd-sf-select-wrap {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.lrsd-sf-select {
+    min-width: 220px;
+    max-width: 320px;
+}
+
+.lrsd-sf-add-option-btn {
+    font-size: 12px !important;
+    padding: 0 8px !important;
+    height: 28px !important;
+    line-height: 26px !important;
+}
+
+/* ── Media Picker ────────────────────────────────────────────────────────── */
+.lrsd-sf-media-wrap {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.lrsd-sf-media-wrap .description {
+    flex-basis: 100%;
+    font-size: 11px;
+    color: #646970;
+    word-break: break-all;
+}
+
+.lrsd-sf-media-btn {
+    white-space: nowrap;
+}
+
+/* ── Custom Cards ─────────────────────────────────────────────────────────── */
+#lrsd-sf-custom-cards,
+#lrsd-sf-global-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.lrsd-sf-custom-card,
+.lrsd-sf-global-card-template {
+    border: 1px solid #c3c4c7;
+    border-radius: 6px;
+    background: #fafafa;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+
+.lrsd-sf-custom-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f0f0f1;
+    padding: 8px 12px;
+    border-bottom: 1px solid #c3c4c7;
+}
+
+.lrsd-sf-card-drag {
+    cursor: grab;
+    color: #a7aaad;
+    font-size: 20px !important;
+    flex-shrink: 0;
+}
+
+.lrsd-sf-card-drag:active {
+    cursor: grabbing;
+}
+
+.lrsd-sf-card-name {
+    flex: 1;
+    font-size: 13px;
+}
+
+/* "All Schools" badge on global cards */
+.lrsd-sf-global-badge {
+    display: inline-flex;
+    align-items: center;
+    background: #2271b1;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.lrsd-sf-remove-card,
+.lrsd-sf-remove-global-card {
+    margin-left: auto;
+    color: #b32d2e !important;
+    border-color: #b32d2e !important;
+    padding: 2px 8px !important;
+    font-size: 12px !important;
+    height: auto !important;
+    line-height: 1.6 !important;
+}
+
+.lrsd-sf-custom-card .form-table,
+.lrsd-sf-global-card-template .form-table {
+    margin: 8px 0 0 !important;
+    padding: 0 12px 12px;
+}
+
+.lrsd-sf-custom-card .form-table th,
+.lrsd-sf-global-card-template .form-table th {
+    width: 160px;
+}
+
+/* Items list */
+.lrsd-sf-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.lrsd-sf-item-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.lrsd-sf-item-label,
+.lrsd-sf-item-value {
+    width: 180px;
+    max-width: 100%;
+}
+
+.lrsd-sf-remove-item {
+    padding: 0 6px !important;
+    height: 28px !important;
+    line-height: 26px !important;
+    color: #b32d2e !important;
+    font-size: 12px !important;
+}
+
+/* Label list (Card Editor subcategory names) */
+.lrsd-sf-label-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.lrsd-sf-label-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.lrsd-sf-label-text {
+    max-width: 340px;
+}
+
+.lrsd-sf-remove-label {
+    padding: 0 6px !important;
+    height: 28px !important;
+    line-height: 26px !important;
+    color: #b32d2e !important;
+    font-size: 12px !important;
+}
+
+/* Global Cards — School Data section */
+.lrsd-sf-global-card-data {
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    background: #fff;
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+
+.lrsd-sf-gcv-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 10px 14px;
+    background: #f0f6fc;
+    border-bottom: 1px solid #dcdcde;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.lrsd-sf-global-card-data .form-table {
+    margin: 0 !important;
+    padding: 0 14px 12px;
+}
+
+.lrsd-sf-global-card-data .form-table th {
+    width: 200px;
+    padding: 6px 10px 6px 0;
+    font-weight: 500;
+}
+
+.lrsd-sf-global-card-data .form-table td {
+    padding: 4px 0;
+}
+
+/* ── Card Order Sortable ─────────────────────────────────────────────────── */
+#lrsd-sf-card-order {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 480px;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.lrsd-sf-order-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    border-bottom: 1px solid #f0f0f1;
+    font-size: 13px;
+    cursor: grab;
+    background: #fff;
+    transition: background 0.1s;
+}
+
+.lrsd-sf-order-item:last-child {
+    border-bottom: none;
+}
+
+.lrsd-sf-order-item:hover {
+    background: #f6f7f7;
+}
+
+.lrsd-sf-order-item.ui-sortable-helper {
+    background: #e8f0fb;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+    border-radius: 4px;
+    cursor: grabbing;
+}
+
+.lrsd-sf-order-item .dashicons {
+    color: #a7aaad;
+    font-size: 18px !important;
+    flex-shrink: 0;
+}
+
+/* "Global" badge in card order list */
+.lrsd-sf-order-global-badge {
+    margin-left: auto;
+    background: #2271b1;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+}
+
+/* ── Bulk Update Page ─────────────────────────────────────────────────────── */
+.lrsd-sf-bulk-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 16px;
+    padding-bottom: 2px;
+    border-bottom: 2px solid #dcdcde;
+}
+
+.lrsd-sf-bulk-tab {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 4px 4px 0 0;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-bottom: none;
+    font-size: 13px;
+    color: #1d2327;
+    text-decoration: none;
+    margin-bottom: -2px;
+    transition: background 0.15s;
+}
+
+.lrsd-sf-bulk-tab:hover {
+    background: #e8e9ea;
+    color: #1d2327;
+}
+
+.lrsd-sf-bulk-tab.is-active {
+    background: #fff;
+    border-color: #dcdcde;
+    border-bottom-color: #fff;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.lrsd-sf-bulk-table {
+    margin-top: 0 !important;
+    border-radius: 0 6px 6px 6px;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.lrsd-sf-bulk-table th,
+.lrsd-sf-bulk-table td {
+    padding: 8px 12px;
+    vertical-align: middle;
+    font-size: 13px;
+}
+
+.lrsd-sf-bulk-table th {
+    background: #f6f7f7;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.lrsd-sf-bulk-school-name {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.lrsd-sf-bulk-table input.small-text {
+    width: 70px;
+}
+
+.lrsd-sf-bulk-table input.regular-text {
+    width: 160px;
+}
+
+.lrsd-sf-bulk-table select {
+    max-width: 180px;
+}
+
+.lrsd-sf-bulk-table textarea {
+    width: 100%;
+    min-width: 180px;
+}
+
+/* ── Responsive tweaks ───────────────────────────────────────────────────── */
+@media (max-width: 782px) {
+    .lrsd-sf-select-wrap,
+    .lrsd-sf-media-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .lrsd-sf-bulk-tabs {
+        flex-direction: column;
+    }
 }
