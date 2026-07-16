@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Info dialog content constants
     const CAPACITY_INFO_TEXT = 'School\'s student capacity at 20 students per K-3 classroom & 25 per 4-12 classroom.';
     const ENROLMENT_INFO_TEXT = 'Data as of Sept. 30, 2025';
+    // Keep this order in sync with lrsd_sf_get_default_dashboard_card_order() in the WordPress plugin.
     const DEFAULT_SCHOOL_CARD_TYPES = ['school_header', 'details', 'additions', 'enrolment', 'capacity', 'utilization', 'projection', 'history', 'building_systems', 'accessibility', 'playground', 'transportation', 'childcare', 'catchment_map', 'projects_provincial', 'projects_local'];
     
     // Schools requiring photo credit on header image

@@ -322,6 +322,9 @@ function lrsd_sf_sanitize_custom_card_type($card_type) {
 
 /**
  * Returns the standard dashboard card order used by the frontend.
+ *
+ * Keep this list in sync with DEFAULT_SCHOOL_CARD_TYPES in /app.js so the
+ * editor, importer/exporter, and public dashboard all render cards the same way.
  */
 function lrsd_sf_get_default_dashboard_card_order() {
     return [
@@ -345,6 +348,15 @@ function lrsd_sf_get_default_dashboard_card_order() {
 }
 
 /**
+ * Legacy card-order IDs that should expand to the current dashboard cards.
+ */
+function lrsd_sf_get_legacy_card_order_map() {
+    return [
+        'enrolment_capacity' => ['enrolment', 'capacity', 'utilization'],
+    ];
+}
+
+/**
  * Normalize a school card order array.
  *
  * Converts legacy combined cards to the current separate dashboard cards,
@@ -353,7 +365,7 @@ function lrsd_sf_get_default_dashboard_card_order() {
 function lrsd_sf_normalize_card_order($card_order, array $school_custom_ids = [], array $global_card_ids = []) {
     $default_order  = lrsd_sf_get_default_dashboard_card_order();
     $valid_ids      = array_merge($default_order, $school_custom_ids, $global_card_ids);
-    $legacy_map     = ['enrolment_capacity' => ['enrolment', 'capacity', 'utilization']];
+    $legacy_map     = lrsd_sf_get_legacy_card_order_map();
     $normalized     = [];
     $source_order   = is_array($card_order) ? $card_order : [];
 
