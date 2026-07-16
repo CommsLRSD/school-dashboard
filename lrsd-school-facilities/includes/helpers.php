@@ -236,6 +236,7 @@ function lrsd_sf_get_dropdown_options() {
             'N/A',
             'Required',
             'Inaccessible',
+            'Joint use agreement with neighbouring facility',
         ],
         'elevator' => [
             'YES',
@@ -412,6 +413,7 @@ function lrsd_sf_handle_save_global_cards() {
     }
 
     update_option('lrsd_sf_global_custom_cards', $cards);
+    lrsd_sf_push_version_history(__('Card templates save', 'lrsd-school-facilities'));
     lrsd_sf_flush_dataset_cache();
     lrsd_sf_set_admin_notice(__('Global card templates saved.', 'lrsd-school-facilities'), 'success');
 

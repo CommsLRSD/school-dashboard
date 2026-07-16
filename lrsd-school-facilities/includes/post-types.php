@@ -20,7 +20,7 @@ function lrsd_sf_register_post_type() {
         'labels'             => $labels,
         'public'             => false,
         'show_ui'            => true,
-        'show_in_menu'       => 'lrsd-school-facilities',
+        'show_in_menu'       => false,
         'show_in_rest'       => true,
         'supports'           => ['title'],
         'has_archive'        => false,
@@ -31,3 +31,25 @@ function lrsd_sf_register_post_type() {
         'menu_position'      => 58,
     ]);
 }
+
+/**
+ * Ensure the correct parent menu and submenu are highlighted when editing
+ * a school post (lr_school), since the post type is not auto-added to the menu.
+ */
+function lrsd_sf_parent_menu_highlight($parent_file) {
+    global $post_type;
+    if ($post_type === 'lr_school') {
+        return 'lrsd-school-facilities';
+    }
+    return $parent_file;
+}
+add_filter('parent_file', 'lrsd_sf_parent_menu_highlight');
+
+function lrsd_sf_submenu_highlight($submenu_file) {
+    global $post_type;
+    if ($post_type === 'lr_school') {
+        return 'edit.php?post_type=lr_school';
+    }
+    return $submenu_file;
+}
+add_filter('submenu_file', 'lrsd_sf_submenu_highlight');

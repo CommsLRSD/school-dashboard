@@ -26,6 +26,15 @@ function lrsd_sf_handle_bulk_update() {
         exit;
     }
 
+    // Snapshot current state into version history before applying bulk changes
+    lrsd_sf_push_version_history(
+        sprintf(
+            /* translators: %s: category name */
+            __('Bulk update: %s', 'lrsd-school-facilities'),
+            $category
+        )
+    );
+
     $field_map = lrsd_sf_get_simple_field_map();
     // Only process fields belonging to the submitted category
     $cat_fields = array_filter($field_map, static function ($field) use ($category) {

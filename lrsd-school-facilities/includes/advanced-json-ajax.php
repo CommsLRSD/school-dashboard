@@ -4,7 +4,7 @@ defined('ABSPATH') || exit;
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-define('LRSD_SF_ADV_MAX_HISTORY', 10);
+define('LRSD_SF_ADV_MAX_HISTORY', 20);
 define('LRSD_SF_ADV_HISTORY_OPTION', 'lrsd_sf_json_version_history');
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────

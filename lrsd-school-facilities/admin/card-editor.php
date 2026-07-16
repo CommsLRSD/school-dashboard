@@ -26,7 +26,7 @@ function lrsd_sf_render_card_editor_page() {
         <?php endif; ?>
 
         <p class="description" style="max-width:640px;margin-bottom:16px;">
-            <?php esc_html_e('Define card templates that appear on every school\'s dashboard. Set the card title, display type, icon, and subcategory names (labels) here. Per-school data values are entered in each school\'s individual editor under "Global Cards — School Data".', 'lrsd-school-facilities'); ?>
+            <?php esc_html_e('Define card templates that appear on every school\'s dashboard. Click "Duplicate from Card Format" below to choose a starting format — each option shows which existing cards use that layout so you know what kind of card you\'re creating. Set the card title, display type, icon, and subcategory names (labels) here. Per-school data values are entered in each school\'s individual editor under "Global Cards — School Data".', 'lrsd-school-facilities'); ?>
         </p>
 
         <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" id="lrsd-sf-card-editor-form">
@@ -107,7 +107,7 @@ function lrsd_sf_render_card_editor_page() {
 
             <p style="margin-top:12px;">
                 <button type="button" class="button button-secondary" id="lrsd-sf-add-global-card">
-                    <?php esc_html_e('+ Add Global Card', 'lrsd-school-facilities'); ?>
+                    <?php esc_html_e('+ Duplicate from Card Format', 'lrsd-school-facilities'); ?>
                 </button>
             </p>
 

@@ -102,7 +102,7 @@ function lrsd_sf_render_advanced_editor_page() {
                 <?php esc_html_e('Version History', 'lrsd-school-facilities'); ?>
             </h2>
             <p class="description" style="margin-bottom:12px;">
-                <?php esc_html_e('The last 10 saves are kept. Click "Restore" to load a previous version into the editor, then save to apply it.', 'lrsd-school-facilities'); ?>
+                <?php esc_html_e('The last 20 saves are kept. Click "Restore" to load a previous version into the editor, then save to apply it.', 'lrsd-school-facilities'); ?>
             </p>
 
             <?php if (empty($history)) : ?>

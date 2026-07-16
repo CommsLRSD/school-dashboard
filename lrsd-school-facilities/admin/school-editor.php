@@ -423,7 +423,8 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
 
         <!-- ── Custom Cards ────────────────────────────────────── -->
         <?php lrsd_sf_render_section_header('lrsd-sec-custom-cards', __('Custom Cards (This School)', 'lrsd-school-facilities')); ?>
-        <p class="description" style="margin:8px 0 4px;"><?php esc_html_e('Add extra info cards that appear only on this school\'s dashboard. To add a card that appears on all schools, use the', 'lrsd-school-facilities'); ?>
+        <p class="description" style="margin:8px 0 4px;"><?php esc_html_e('Add extra info cards that appear only on this school\'s dashboard. Click the button below to choose a card format to duplicate — each format shows which existing cards use it so you know what you\'re creating.', 'lrsd-school-facilities'); ?>
+            <?php esc_html_e('To add a card that appears on all schools, use the', 'lrsd-school-facilities'); ?>
             <a href="<?php echo esc_url(add_query_arg('page', 'lrsd-school-facilities-cards', admin_url('admin.php'))); ?>"><?php esc_html_e('Card Editor', 'lrsd-school-facilities'); ?></a>.
         </p>
         <p class="description" style="margin:0 0 12px;"><?php esc_html_e('Each card can have a title, display type, icon, category label, key–value items, and optional notes.', 'lrsd-school-facilities'); ?></p>
@@ -441,8 +442,10 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                 <div class="lrsd-sf-custom-card-header">
                     <span class="lrsd-sf-card-drag dashicons dashicons-move" title="<?php esc_attr_e('Drag to reorder', 'lrsd-school-facilities'); ?>"></span>
                     <strong class="lrsd-sf-card-name"><?php echo esc_html($card['title'] ?? __('(Untitled Card)', 'lrsd-school-facilities')); ?></strong>
+                    <button type="button" class="button lrsd-sf-toggle-preview" title="<?php esc_attr_e('Toggle card preview', 'lrsd-school-facilities'); ?>"><?php esc_html_e('Show Preview', 'lrsd-school-facilities'); ?></button>
                     <button type="button" class="button lrsd-sf-remove-card" title="<?php esc_attr_e('Remove card', 'lrsd-school-facilities'); ?>">&#x2715;</button>
                 </div>
+                <div class="lrsd-sf-card-preview-wrap" style="display:none;"></div>
                 <table class="form-table" role="presentation"><tbody>
                     <tr>
                         <th><label><?php esc_html_e('Card Title', 'lrsd-school-facilities'); ?></label></th>
@@ -495,7 +498,7 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         <?php endforeach; ?>
         </div><!-- /#lrsd-sf-custom-cards -->
         <p style="margin-top:10px;">
-            <button type="button" class="button button-primary" id="lrsd-sf-add-card"><?php esc_html_e('+ Add Card', 'lrsd-school-facilities'); ?></button>
+            <button type="button" class="button button-primary" id="lrsd-sf-add-card"><?php esc_html_e('+ Duplicate from Card Format', 'lrsd-school-facilities'); ?></button>
         </p>
         <input type="hidden" id="lrsd_sf_custom_cards_json" name="lrsd_sf_custom_cards_json" value="<?php echo esc_attr(wp_json_encode($custom_cards, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)); ?>" />
         <?php lrsd_sf_render_section_footer(); ?>
@@ -619,6 +622,18 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
         lrsd_sf_set_editor_notice(__('JSON validation error: please provide valid school JSON before saving.', 'lrsd-school-facilities'), 'error');
         return;
     }
+
+    // ── Snapshot current state into version history BEFORE applying changes ─────
+    $school_name_label = isset($_POST['lrsd_sf_fields']['schoolName'])
+        ? sanitize_text_field(wp_unslash($_POST['lrsd_sf_fields']['schoolName']))
+        : $post->post_title;
+    lrsd_sf_push_version_history(
+        sprintf(
+            /* translators: %s: school name */
+            __('School save: %s', 'lrsd-school-facilities'),
+            $school_name_label
+        )
+    );
 
     // ── Apply simple fields ──────────────────────────────────────────────────
     $simple_fields = isset($_POST['lrsd_sf_fields']) && is_array($_POST['lrsd_sf_fields'])
