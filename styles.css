@@ -546,9 +546,9 @@ body {
 }
 
 .data-card[data-flippable="true"] .card-flip-container {
-    position: relative;
+    display: grid;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     transform-style: preserve-3d;
     transition: transform 0.6s;
 }
@@ -558,13 +558,13 @@ body {
 }
 
 .card-face {
-    position: absolute;
+    grid-area: 1 / 1;
     width: 100%;
-    height: 100%;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     display: flex;
     flex-direction: column;
+    min-height: 100%;
 }
 
 .card-face-front {
@@ -656,7 +656,7 @@ body {
     line-height: 1.6;
     font-size: 0.9rem;
     flex: 1;
-    overflow-y: auto;
+    overflow-y: visible;
 }
 
 .card-back-content p {
@@ -1097,7 +1097,7 @@ body {
 
 .list-card .card-body { 
     padding: 0.5rem 1.25rem;
-    overflow-y: auto;
+    overflow-y: visible;
     position: relative;
     /* Increased from 3rem to 4rem to prevent info icon overlap with progress bar */
     /* Mobile maintains this 4rem value (previously had same issue) */
