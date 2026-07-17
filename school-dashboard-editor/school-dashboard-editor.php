@@ -32,6 +32,7 @@ add_action('admin_menu', 'lrsd_sf_register_admin_pages');
 add_action('admin_post_lrsd_sf_import', 'lrsd_sf_handle_import');
 add_action('admin_post_lrsd_sf_export', 'lrsd_sf_handle_export');
 add_action('admin_post_lrsd_sf_bulk_update', 'lrsd_sf_handle_bulk_update');
+add_action('admin_post_lrsd_sf_create_school', 'lrsd_sf_handle_create_school');
 add_action('wp_ajax_lrsd_sf_add_custom_option', 'lrsd_sf_ajax_add_custom_option');
 add_action('add_meta_boxes_lr_school', 'lrsd_sf_register_school_meta_box');
 add_action('save_post_lr_school', 'lrsd_sf_save_school_meta', 10, 2);

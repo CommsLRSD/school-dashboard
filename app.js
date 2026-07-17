@@ -129,6 +129,10 @@ document.addEventListener('DOMContentLoaded', function() {
         return num;
     };
 
+    const formatUtilizationPercent = (utilizationPercent) => (
+        utilizationPercent === 'N/A' ? utilizationPercent : `${utilizationPercent}%`
+    );
+
     // Helper function to fix label text (e.g., add line breaks)
     const formatLabel = (label) => {
         // Replace "Automatic entrance door operators" with proper label
@@ -152,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    const categories = {
+    const baseCategories = {
         "details": "Contact & Building Info",
         "enrolment_capacity": "Enrolment & Classroom Capacity",
         "history": "Historic Enrolment",
@@ -166,6 +170,65 @@ document.addEventListener('DOMContentLoaded', function() {
         "catchment_map": "Catchment Map",
         "projects_provincial": "Provincially Funded Capital Projects",
         "projects_local": "Locally Funded Capital Projects"
+    };
+
+    let categoryMap = Object.assign({}, baseCategories);
+
+    const buildCategoryMap = () => {
+        const categoryMap = Object.assign({}, baseCategories);
+        const customCategories = (Array.isArray(globalCustomCards) ? globalCustomCards : [])
+            .map((card) => ({
+                id: String(card?.id || '').replace(/[^a-z0-9_-]/gi, ''),
+                title: String(card?.title || '').trim()
+            }))
+            .filter((card) => card.id && card.title)
+            .sort((left, right) => String(left.title).localeCompare(String(right.title)))
+            .reduce((acc, card) => {
+                acc[card.id] = card.title;
+                return acc;
+            }, {});
+
+        return Object.assign(categoryMap, customCategories);
+    };
+
+    const refreshCategoryMap = () => {
+        categoryMap = buildCategoryMap();
+    };
+
+    const getCategoryMap = () => categoryMap;
+    const getCategoryLabel = (categoryId) => getCategoryMap()[categoryId] || '';
+
+    const getUtilizationMetrics = (school) => {
+        const current = Number(school?.enrolment?.current || 0);
+        const capacity = Number(school?.enrolment?.capacity || 0);
+
+        if (!(capacity > 0)) {
+            return {
+                current,
+                capacity,
+                utilization: 0,
+                utilizationPercent: 'N/A',
+                isOverCapacity: false,
+                isYellowZone: false,
+                capacityClass: '',
+                progressWidth: 0
+            };
+        }
+
+        const utilization = current / capacity;
+        const isOverCapacity = utilization >= 1;
+        const isYellowZone = utilization >= 0.95 && utilization < 1;
+
+        return {
+            current,
+            capacity,
+            utilization,
+            utilizationPercent: (utilization * 100).toFixed(1),
+            isOverCapacity,
+            isYellowZone,
+            capacityClass: isOverCapacity ? 'over-capacity' : (isYellowZone ? 'yellow-zone' : ''),
+            progressWidth: Math.min(100, utilization * 100)
+        };
     };
 
     /**
@@ -204,6 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
             schoolData = schools;
             fosMapLookupData = (typeof fosMapLookup === 'object' && fosMapLookup) ? fosMapLookup : {};
             globalCustomCards = Array.isArray(gcCards) ? gcCards : [];
+            refreshCategoryMap();
             
             // Validate that we have data
             const schoolIds = Object.keys(schoolData);
@@ -213,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Initialize selected IDs with first available values
             selectedSchoolId = schoolIds[0];
-            selectedCategoryId = Object.keys(categories)[0];
+            selectedCategoryId = Object.keys(getCategoryMap())[0];
             
             // Set footer timestamp
             if (lastUpdated) {
@@ -340,8 +404,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Add category links after the existing filter buttons
-        const categoryLinks = Object.entries(categories).map(([key, name]) => 
-            `<a href="#" class="nav-list-item" data-type="category" data-id="${key}">${name}</a>`
+        const categoryLinks = Object.entries(getCategoryMap()).map(([key, name]) =>
+            `<a href="#" class="nav-list-item" data-type="category" data-id="${key}">${sanitizeHTML(name)}</a>`
         ).join('');
         categoryListContainer.innerHTML += categoryLinks;
     }
@@ -577,13 +641,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Calculate utilization safely with null checks
-        const current = school.enrolment?.current || 0;
-        const capacity = school.enrolment?.capacity || 1; // Avoid division by zero
-        const utilization = current / capacity;
-        const utilizationPercent = (utilization * 100).toFixed(1);
-        const isOverCapacity = utilization >= 1;
-        const isYellowZone = utilization >= 0.95 && utilization < 1;
-        const capacityClass = isOverCapacity ? 'over-capacity' : (isYellowZone ? 'yellow-zone' : '');
+        const utilizationMetrics = getUtilizationMetrics(school);
+        const current = utilizationMetrics.current;
+        const capacity = utilizationMetrics.capacity;
+        const utilizationPercent = utilizationMetrics.utilizationPercent;
+        const isOverCapacity = utilizationMetrics.isOverCapacity;
+        const isYellowZone = utilizationMetrics.isYellowZone;
+        const capacityClass = utilizationMetrics.capacityClass;
         const sizeClass = getTileSizeClass(cardType);
 
         switch(cardType) {
@@ -655,13 +719,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (isYellowZone) {
                     warningIcon = '<img src="public/icon/yellow-warning.svg" alt="" class="warning-icon warning-icon-yellow">';
                 }
-                return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><img src="public/icon/utilization.svg" alt="" class="card-header-icon"><h2 class="card-title">Utilization${warningIcon}</h2></div><div class="card-body"><div class="stat-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div>`;
+                return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><img src="public/icon/utilization.svg" alt="" class="card-header-icon"><h2 class="card-title">Utilization${warningIcon}</h2></div><div class="card-body"><div class="stat-value">${formatUtilizationPercent(utilizationPercent)}</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${utilizationMetrics.progressWidth}%"></div></div></div></div>`;
             }
 
-            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(school.enrolment.current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(school.enrolment.capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}%</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></div></div></div></div>`;
+            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${formatUtilizationPercent(utilizationPercent)}</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${utilizationMetrics.progressWidth}%"></div></div></div></div></div></div>`;
 
             case 'enrolment_capacity': {
-                const frontContent = `<div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(school.enrolment.current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(school.enrolment.capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}%</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${Math.min(100, utilization * 100)}%"></div></div></li></ul><button class="info-icon-btn" data-info-type="enrolment-capacity" aria-label="Show enrolment and capacity information"><img src="public/icon/info.svg" alt=""></button></div>`;
+                const frontContent = `<div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${formatUtilizationPercent(utilizationPercent)}</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${utilizationMetrics.progressWidth}%"></div></div></li></ul><button class="info-icon-btn" data-info-type="enrolment-capacity" aria-label="Show enrolment and capacity information"><img src="public/icon/info.svg" alt=""></button></div>`;
                 return createFlippableCard(
                     `list-card ${sizeClass}`,
                     frontContent,
@@ -1088,7 +1152,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const school = schoolData[selectedSchoolId];
             stickyBannerText.textContent = school.schoolName.toUpperCase();
         } else {
-            stickyBannerText.textContent = categories[selectedCategoryId].toUpperCase();
+            stickyBannerText.textContent = getCategoryLabel(selectedCategoryId).toUpperCase();
         }
         
         // Check if we're near the top of the page
@@ -1222,15 +1286,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const showWarningIcons = cardType === 'enrolment_capacity';
             
             const cardHTML = filteredSchools.map(school => {
-                const utilization = school.enrolment.current / school.enrolment.capacity;
-                const utilizationPercent = (utilization * 100).toFixed(1);
+                const utilizationMetrics = getUtilizationMetrics(school);
                 let warningIcon = '';
                 
                 // Show warning icons for enrolment_capacity cards
                 if (showWarningIcons) {
-                    if (utilization >= 1) {
+                    if (utilizationMetrics.isOverCapacity) {
                         warningIcon = '<img src="public/icon/red-warning.svg" alt="" class="warning-icon warning-icon-red">';
-                    } else if (utilization >= 0.95 && utilization < 1) {
+                    } else if (utilizationMetrics.isYellowZone) {
                         warningIcon = '<img src="public/icon/yellow-warning.svg" alt="" class="warning-icon warning-icon-yellow">';
                     }
                 }
