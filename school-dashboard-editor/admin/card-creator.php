@@ -10,20 +10,32 @@ function lrsd_sf_render_card_creator_page() {
     <div class="wrap lrsd-sf-wrap lrsd-sf-card-creator-wrap">
         <h1><?php esc_html_e('Card Creator', 'lrsd-school-facilities'); ?></h1>
         <p class="description">
-            <?php esc_html_e('Create, preview, duplicate, and save global dashboard cards with a simplified layout preview for each card type.', 'lrsd-school-facilities'); ?>
+            <?php esc_html_e('Create, preview, duplicate, and save dashboard cards. Global cards appear on every school; Select Schools cards appear only on the schools you choose.', 'lrsd-school-facilities'); ?>
         </p>
 
         <div id="lrsd-sf-card-creator" class="lrsd-sf-card-creator-app">
             <div class="lrsd-sf-creator-topbar">
-                <button type="button" class="button" id="lrsd-sf-card-new"><?php esc_html_e('New Card', 'lrsd-school-facilities'); ?></button>
+                <button type="button" class="button button-primary" id="lrsd-sf-card-new-global"><?php esc_html_e('New Global Card', 'lrsd-school-facilities'); ?></button>
+                <button type="button" class="button" id="lrsd-sf-card-new-select"><?php esc_html_e('New Select Schools Card', 'lrsd-school-facilities'); ?></button>
             </div>
 
             <div id="lrsd-sf-card-status" class="lrsd-sf-card-status" aria-live="polite"></div>
 
             <section class="lrsd-sf-creator-panel lrsd-sf-card-browser-panel">
-                <h2><?php esc_html_e('Created Cards', 'lrsd-school-facilities'); ?></h2>
-                <p class="description"><?php esc_html_e('Edit or delete cards directly from this list, or create a new card.', 'lrsd-school-facilities'); ?></p>
-                <ul id="lrsd-sf-card-list" class="lrsd-sf-card-list"></ul>
+                <h2><?php esc_html_e('Saved Cards', 'lrsd-school-facilities'); ?></h2>
+                <p class="description"><?php esc_html_e('Edit or delete cards directly from this list, or create a new card above.', 'lrsd-school-facilities'); ?></p>
+                <div class="lrsd-sf-card-columns">
+                    <div class="lrsd-sf-card-column">
+                        <h3 class="lrsd-sf-card-column-title"><?php esc_html_e('Global Cards', 'lrsd-school-facilities'); ?></h3>
+                        <p class="description lrsd-sf-card-column-desc"><?php esc_html_e('Visible on all schools.', 'lrsd-school-facilities'); ?></p>
+                        <ul id="lrsd-sf-card-list-global" class="lrsd-sf-card-list"></ul>
+                    </div>
+                    <div class="lrsd-sf-card-column">
+                        <h3 class="lrsd-sf-card-column-title"><?php esc_html_e('Select School Cards', 'lrsd-school-facilities'); ?></h3>
+                        <p class="description lrsd-sf-card-column-desc"><?php esc_html_e('Visible only on chosen schools.', 'lrsd-school-facilities'); ?></p>
+                        <ul id="lrsd-sf-card-list-select" class="lrsd-sf-card-list"></ul>
+                    </div>
+                </div>
             </section>
 
             <div id="lrsd-sf-card-workspace" class="lrsd-sf-card-workspace" hidden>
@@ -52,6 +64,31 @@ function lrsd_sf_render_card_creator_page() {
                     <div class="lrsd-sf-form-row">
                         <label for="lrsd-sf-card-type"><?php esc_html_e('Card Type', 'lrsd-school-facilities'); ?></label>
                         <select id="lrsd-sf-card-type"></select>
+                    </div>
+
+                    <div class="lrsd-sf-form-row lrsd-sf-scope-row">
+                        <label><?php esc_html_e('Visibility', 'lrsd-school-facilities'); ?></label>
+                        <div class="lrsd-sf-scope-options">
+                            <label class="lrsd-sf-scope-option">
+                                <input type="radio" name="lrsd-sf-card-scope" id="lrsd-sf-scope-global" value="global">
+                                <span><?php esc_html_e('Global — visible on all schools', 'lrsd-school-facilities'); ?></span>
+                            </label>
+                            <label class="lrsd-sf-scope-option">
+                                <input type="radio" name="lrsd-sf-card-scope" id="lrsd-sf-scope-select" value="select">
+                                <span><?php esc_html_e('Select Schools — visible only on chosen schools', 'lrsd-school-facilities'); ?></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="lrsd-sf-school-picker" class="lrsd-sf-school-picker" hidden>
+                        <label><?php esc_html_e('Schools', 'lrsd-school-facilities'); ?></label>
+                        <p class="description"><?php esc_html_e('Choose one or more schools this card will appear on.', 'lrsd-school-facilities'); ?></p>
+                        <div class="lrsd-sf-school-picker-actions">
+                            <button type="button" class="button-link" id="lrsd-sf-school-picker-all"><?php esc_html_e('Select All', 'lrsd-school-facilities'); ?></button>
+                            <span class="lrsd-sf-school-picker-sep">·</span>
+                            <button type="button" class="button-link" id="lrsd-sf-school-picker-none"><?php esc_html_e('Deselect All', 'lrsd-school-facilities'); ?></button>
+                        </div>
+                        <div id="lrsd-sf-school-picker-list" class="lrsd-sf-school-picker-list"></div>
                     </div>
 
                     <div class="lrsd-sf-form-row">
