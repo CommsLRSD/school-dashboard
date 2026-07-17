@@ -339,7 +339,7 @@ function lrsd_sf_card_creator_get_attachment_id_from_url($url) {
         strpos($url_path, $base_path) === 0
     ) {
         $relative_path = ltrim(substr($url_path, strlen($base_path)), '/');
-        $relative_path = wp_normalize_path(rawurldecode($relative_path));
+        $relative_path = sanitize_text_field(wp_normalize_path(rawurldecode($relative_path)));
 
         if ($relative_path !== '' && validate_file($relative_path) === 0) {
             $filetype = wp_check_filetype($relative_path);
@@ -353,6 +353,7 @@ function lrsd_sf_card_creator_get_attachment_id_from_url($url) {
                 'fields'         => 'ids',
                 'posts_per_page' => 1,
                 'no_found_rows'  => true,
+                'orderby'        => 'none',
                 'meta_key'       => '_wp_attached_file',
                 'meta_compare'   => '=',
                 'meta_value'     => $relative_path,
