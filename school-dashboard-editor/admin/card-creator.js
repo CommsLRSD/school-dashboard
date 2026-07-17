@@ -539,7 +539,7 @@
         if (!assetPath) {
             return '';
         }
-        if (isAbsoluteUrl(assetPath) || /^data:|^blob:|^\/\//.test(assetPath)) {
+        if (isAbsoluteUrl(assetPath) || /^data:|^blob:/.test(assetPath)) {
             return assetPath;
         }
         if (baseUrl.charAt(baseUrl.length - 1) !== '/') {
