@@ -268,16 +268,123 @@ function lrsd_sf_card_creator_apply_card_order(array $school_data, $card_id, $sh
     return $school_data;
 }
 
+/**
+ * Normalize a media URL for safe attachment lookup.
+ *
+ * Removes query/hash fragments and only keeps http/https URLs.
+ *
+ * @param mixed $url Raw media URL.
+ * @return string
+ */
+function lrsd_sf_card_creator_normalize_media_url($url) {
+    $url = esc_url_raw((string) $url);
+    if ($url === '') {
+        return '';
+    }
+
+    $parts = wp_parse_url($url);
+    if (!is_array($parts) || empty($parts['scheme']) || empty($parts['host'])) {
+        return '';
+    }
+    if (!in_array(strtolower((string) $parts['scheme']), ['http', 'https'], true)) {
+        return '';
+    }
+
+    $normalized = $parts['scheme'] . '://' . $parts['host'];
+    if (!empty($parts['port'])) {
+        $normalized .= ':' . (int) $parts['port'];
+    }
+    $normalized .= $parts['path'] ?? '';
+
+    return $normalized;
+}
+
+/**
+ * Resolve a local media attachment ID from its URL.
+ *
+ * Uses WordPress core lookup first, then falls back to an SVG-specific uploads
+ * path lookup for cases where attachment_url_to_postid() does not resolve the
+ * original file URL.
+ *
+ * @param mixed $url Raw media URL.
+ * @return int
+ */
+function lrsd_sf_card_creator_get_attachment_id_from_url($url) {
+    $normalized_url = lrsd_sf_card_creator_normalize_media_url($url);
+    if ($normalized_url === '') {
+        return 0;
+    }
+
+    $attachment_id = attachment_url_to_postid($normalized_url);
+    if ($attachment_id > 0) {
+        return (int) $attachment_id;
+    }
+
+    $uploads = wp_get_upload_dir();
+    $baseurl = isset($uploads['baseurl']) ? untrailingslashit((string) $uploads['baseurl']) : '';
+    $url_parts = wp_parse_url($normalized_url);
+    $base_parts = wp_parse_url($baseurl);
+    $url_path = is_array($url_parts) ? (string) ($url_parts['path'] ?? '') : '';
+    $base_path = is_array($base_parts) ? (string) ($base_parts['path'] ?? '') : '';
+    $base_path = $base_path === '' ? '' : trailingslashit(untrailingslashit($base_path));
+
+    if (
+        $baseurl !== '' &&
+        is_array($url_parts) &&
+        is_array($base_parts) &&
+        !empty($url_parts['host']) &&
+        !empty($base_parts['host']) &&
+        strtolower((string) $url_parts['host']) === strtolower((string) $base_parts['host']) &&
+        $base_path !== '' &&
+        strpos($url_path, $base_path) === 0
+    ) {
+        $relative_path = ltrim(substr($url_path, strlen($base_path)), '/');
+        $relative_path = sanitize_text_field(wp_normalize_path(rawurldecode($relative_path)));
+
+        if ($relative_path !== '' && validate_file($relative_path) === 0) {
+            $filetype = wp_check_filetype($relative_path);
+            $is_svg = ($filetype['ext'] ?? '') === 'svg' && ($filetype['type'] ?? '') === 'image/svg+xml';
+            if (!$is_svg) {
+                return 0;
+            }
+
+            $attachments = get_posts([
+                'post_type'      => 'attachment',
+                'fields'         => 'ids',
+                'posts_per_page' => 1,
+                'no_found_rows'  => true,
+                'orderby'        => 'none',
+                'meta_key'       => '_wp_attached_file',
+                'meta_compare'   => '=',
+                'meta_value'     => $relative_path,
+            ]);
+
+            if (!empty($attachments[0])) {
+                return (int) $attachments[0];
+            }
+        }
+    }
+
+    return 0;
+}
+
 function lrsd_sf_is_media_library_icon($url) {
     if (!filter_var($url, FILTER_VALIDATE_URL)) {
         return false;
     }
-    $home = home_url();
-    // Must be from this site
-    if (strpos($url, $home) !== 0) {
+
+    $normalized_url = lrsd_sf_card_creator_normalize_media_url($url);
+    if ($normalized_url === '') {
         return false;
     }
-    return (bool) attachment_url_to_postid($url);
+
+    $site_host = wp_parse_url(home_url(), PHP_URL_HOST);
+    $icon_host = wp_parse_url($normalized_url, PHP_URL_HOST);
+    if (!$site_host || !$icon_host || strtolower((string) $site_host) !== strtolower((string) $icon_host)) {
+        return false;
+    }
+
+    return lrsd_sf_card_creator_get_attachment_id_from_url($normalized_url) > 0;
 }
 
 function lrsd_sf_card_creator_validate_card_type($card_type, array $registry) {
