@@ -109,7 +109,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 0,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 0,
+      "Special Needs (12+ years)": 0,
       "BLAST": 32
     },
     "projects": {
@@ -271,7 +273,9 @@
     "childcare": {
       "Infant (0-23 months)": "N/A",
       "Pre-school (2-6 years)": "N/A",
+      "School-age (5+ years)": "N/A",
       "School-age (7+ years)": "N/A",
+      "Special Needs (12+ years)": "N/A",
       "BLAST": "N/A"
     },
     "projects": {
@@ -431,7 +435,9 @@
     "childcare": {
       "Infant (0-23 months)": "N/A",
       "Pre-school (2-6 years)": "N/A",
+      "School-age (5+ years)": "N/A",
       "School-age (7+ years)": "N/A",
+      "Special Needs (12+ years)": "N/A",
       "BLAST": "N/A"
     },
     "projects": {
@@ -587,7 +593,9 @@
     "childcare": {
       "Infant (0-23 months)": "N/A",
       "Pre-school (2-6 years)": "N/A",
+      "School-age (5+ years)": "N/A",
       "School-age (7+ years)": "N/A",
+      "Special Needs (12+ years)": "N/A",
       "BLAST": "N/A"
     },
     "projects": {
@@ -733,7 +741,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 10,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 45,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -869,7 +879,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 15,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 45,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -1177,7 +1189,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 30,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 35,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -1329,6 +1343,7 @@
     "childcare": {
       "Infant (0-23 months)": "N/A",
       "Pre-school (2-6 years)": "N/A",
+      "School-age (5+ years)": "N/A",
       "School-age (7+ years)": "N/A",
       "Special Needs (12+ years)": 6,
       "BLAST": "N/A"
@@ -1486,7 +1501,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 15,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 50,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -1633,7 +1650,9 @@
     "childcare": {
       "Infant (0-23 months)": 8,
       "Pre-school (2-6 years)": 40,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 85,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -1772,7 +1791,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 18,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 32,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -1924,7 +1945,9 @@
     "childcare": {
       "Infant (0-23 months)": 16,
       "Pre-school (2-6 years)": 58,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 60,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -2073,6 +2096,7 @@
       "Pre-school (2-6 years)": 36,
       "School-age (5+ years)": 40,
       "School-age (7+ years)": 15,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -2214,7 +2238,9 @@
     "childcare": {
       "Infant (0-23 months)": "N/A",
       "Pre-school (2-6 years)": "N/A",
+      "School-age (5+ years)": "N/A",
       "School-age (7+ years)": "N/A",
+      "Special Needs (12+ years)": "N/A",
       "BLAST": "N/A"
     },
     "projects": {
@@ -2363,7 +2389,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 18,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 22,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -2502,7 +2530,9 @@
     "childcare": {
       "Infant (0-23 months)": "N/A",
       "Pre-school (2-6 years)": "N/A",
+      "School-age (5+ years)": "N/A",
       "School-age (7+ years)": "N/A",
+      "Special Needs (12+ years)": "N/A",
       "BLAST": "N/A"
     },
     "projects": {
@@ -2651,7 +2681,9 @@
     "childcare": {
       "Infant (0-23 months)": 4,
       "Pre-school (2-6 years)": 16,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 0,
+      "Special Needs (12+ years)": 0,
       "BLAST": 32
     },
     "projects": {
@@ -2806,7 +2838,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 36,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 19,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -2966,7 +3000,9 @@
     "childcare": {
       "Infant (0-23 months)": "N/A",
       "Pre-school (2-6 years)": "N/A",
+      "School-age (5+ years)": "N/A",
       "School-age (7+ years)": "N/A",
+      "Special Needs (12+ years)": "N/A",
       "BLAST": "N/A"
     },
     "projects": {
@@ -3112,7 +3148,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 20,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 0,
+      "Special Needs (12+ years)": 0,
       "BLAST": 32
     },
     "projects": {
@@ -3279,6 +3317,7 @@
       "Pre-school (2-6 years)": 0,
       "School-age (5+ years)": 27,
       "School-age (7+ years)": 0,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -3407,7 +3446,9 @@
     "childcare": {
       "Infant (0-23 months)": 20,
       "Pre-school (2-6 years)": 64,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 60,
+      "Special Needs (12+ years)": 0,
       "BLAST": 56
     },
     "projects": {
@@ -3541,6 +3582,7 @@
       "Pre-school (2-6 years)": 42,
       "School-age (5+ years)": 45,
       "School-age (7+ years)": 23,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -3688,7 +3730,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 30,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 45,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -3849,6 +3893,7 @@
       "Pre-school (2-6 years)": 0,
       "School-age (5+ years)": 30,
       "School-age (7+ years)": 0,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -3986,7 +4031,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 18,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 44,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -4133,7 +4180,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 8,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 29,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -4282,6 +4331,7 @@
     "childcare": {
       "Infant (0-23 months)": "N/A",
       "Pre-school (2-6 years)": "N/A",
+      "School-age (5+ years)": "N/A",
       "School-age (7+ years)": "N/A",
       "Special Needs (12+ years)": 8,
       "BLAST": "N/A"
@@ -4435,6 +4485,7 @@
       "Pre-school (2-6 years)": 10,
       "School-age (5+ years)": 35,
       "School-age (7+ years)": 0,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -4583,7 +4634,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 0,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 0,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -4727,7 +4780,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 18,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 57,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -4860,6 +4915,7 @@
       "Pre-school (2-6 years)": 0,
       "School-age (5+ years)": 30,
       "School-age (7+ years)": 0,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -5009,6 +5065,7 @@
       "Pre-school (2-6 years)": 0,
       "School-age (5+ years)": 35,
       "School-age (7+ years)": 0,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -5152,6 +5209,7 @@
       "Pre-school (2-6 years)": 0,
       "School-age (5+ years)": 60,
       "School-age (7+ years)": 0,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -5290,7 +5348,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 23,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 41,
+      "Special Needs (12+ years)": 0,
       "BLAST": 40
     },
     "projects": {
@@ -5432,7 +5492,9 @@
     "childcare": {
       "Infant (0-23 months)": 20,
       "Pre-school (2-6 years)": 54,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 30,
+      "Special Needs (12+ years)": 0,
       "BLAST": 90
     },
     "projects": {
@@ -5556,6 +5618,7 @@
       "Pre-school (2-6 years)": 103,
       "School-age (5+ years)": 43,
       "School-age (7+ years)": 85,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
@@ -5701,7 +5764,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 32,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 33,
+      "Special Needs (12+ years)": 0,
       "BLAST": 32
     },
     "projects": {
@@ -5853,7 +5918,9 @@
     "childcare": {
       "Infant (0-23 months)": 0,
       "Pre-school (2-6 years)": 19,
+      "School-age (5+ years)": 0,
       "School-age (7+ years)": 0,
+      "Special Needs (12+ years)": 0,
       "BLAST": 32
     },
     "projects": {
@@ -6016,6 +6083,7 @@
       "Pre-school (2-6 years)": 0,
       "School-age (5+ years)": 37,
       "School-age (7+ years)": 0,
+      "Special Needs (12+ years)": 0,
       "BLAST": 0
     },
     "projects": {
