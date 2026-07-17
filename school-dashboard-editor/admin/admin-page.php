@@ -515,6 +515,13 @@ function lrsd_sf_render_bulk_update_page() {
             <input type="hidden" name="bulk_category" value="<?php echo esc_attr($category); ?>" />
             <?php wp_nonce_field('lrsd_sf_bulk_update_action', 'lrsd_sf_bulk_update_nonce'); ?>
 
+            <div class="lrsd-sf-page-actions lrsd-sf-page-actions--top">
+                <p class="lrsd-sf-page-actions-copy"><?php esc_html_e('Save changes from here or at the bottom of the page.', 'lrsd-school-facilities'); ?></p>
+                <button type="submit" class="button button-primary lrsd-sf-bulk-save-action">
+                    <?php esc_html_e('Save All Changes', 'lrsd-school-facilities'); ?>
+                </button>
+            </div>
+
             <table class="lrsd-sf-bulk-table widefat striped">
                 <thead>
                     <tr>
@@ -746,11 +753,12 @@ function lrsd_sf_render_bulk_update_page() {
                 </tbody>
             </table>
 
-            <p style="margin-top: 16px;">
-                <button type="submit" class="button button-primary" id="lrsd-sf-bulk-save">
+            <div class="lrsd-sf-page-actions lrsd-sf-page-actions--bottom">
+                <p class="lrsd-sf-page-actions-copy"><?php esc_html_e('Ready to publish updates? Save from here without scrolling back up.', 'lrsd-school-facilities'); ?></p>
+                <button type="submit" class="button button-primary lrsd-sf-bulk-save-action">
                     <?php esc_html_e('Save All Changes', 'lrsd-school-facilities'); ?>
                 </button>
-            </p>
+            </div>
         </form>
 
         <?php endif; ?>

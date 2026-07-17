@@ -162,7 +162,7 @@
     // ── Bulk Update Confirmation ───────────────────────────────────────────────
 
     function initBulkUpdate() {
-        $('#lrsd-sf-bulk-save').on('click', function (e) {
+        $('.lrsd-sf-bulk-save-action').on('click', function (e) {
             if (!confirm(i18n.confirmBulk || 'Save changes to all schools in this category?')) {
                 e.preventDefault();
             }
@@ -206,8 +206,8 @@
 
     function initAdvancedEditor() {
         var $editor    = $('#lrsd-sf-adv-json');
-        var $saveBtn   = $('#lrsd-sf-adv-save');
-        var $spinner   = $('#lrsd-sf-adv-spinner');
+        var $saveBtn   = $('.lrsd-sf-adv-save-action');
+        var $spinner   = $('.lrsd-sf-adv-spinner');
         var $status    = $('#lrsd-sf-adv-status');
         var $copyBtn   = $('#lrsd-sf-adv-copy');
         var $fmtBtn    = $('#lrsd-sf-adv-format');
