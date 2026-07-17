@@ -284,11 +284,14 @@ function lrsd_sf_encode_school_data(array $school_data) {
 }
 
 /**
- * Generate a stable internal school ID.
+ * Generate a stable internal school ID in the format "school-{identifier}".
  *
  * Persisted posts use their numeric post ID for easier debugging and repeatable
  * exports. Unsaved/temporary contexts fall back to a sanitized UUID so blank
  * editor state can still render with a valid placeholder ID.
+ *
+ * @param int $post_id Optional saved post ID.
+ * @return string
  */
 function lrsd_sf_generate_school_id($post_id = 0) {
     $post_id = (int) $post_id;
@@ -301,6 +304,9 @@ function lrsd_sf_generate_school_id($post_id = 0) {
 
 /**
  * Build the blank school structure used for newly created records.
+ *
+ * @param string $school_id Internal school ID.
+ * @return array<string, mixed>
  */
 function lrsd_sf_get_blank_school_data($school_id = '') {
     $school_id = sanitize_key((string) $school_id);

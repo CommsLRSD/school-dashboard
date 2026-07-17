@@ -129,7 +129,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return num;
     };
 
-    const formatUtilizationPercent = (utilizationPercent) => `${utilizationPercent}${utilizationPercent === 'N/A' ? '' : '%'}`;
+    const formatUtilizationPercent = (utilizationPercent) => (
+        utilizationPercent === 'N/A' ? utilizationPercent : `${utilizationPercent}%`
+    );
 
     // Helper function to fix label text (e.g., add line breaks)
     const formatLabel = (label) => {
@@ -170,7 +172,9 @@ document.addEventListener('DOMContentLoaded', function() {
         "projects_local": "Locally Funded Capital Projects"
     };
 
-    const getCategoryMap = () => {
+    let categoryMap = Object.assign({}, baseCategories);
+
+    const buildCategoryMap = () => {
         const categoryMap = Object.assign({}, baseCategories);
         const customCategories = (Array.isArray(globalCustomCards) ? globalCustomCards : [])
             .filter((card) => card && card.id && card.title)
@@ -183,6 +187,11 @@ document.addEventListener('DOMContentLoaded', function() {
         return Object.assign(categoryMap, customCategories);
     };
 
+    const refreshCategoryMap = () => {
+        categoryMap = buildCategoryMap();
+    };
+
+    const getCategoryMap = () => categoryMap;
     const getCategoryLabel = (categoryId) => getCategoryMap()[categoryId] || '';
 
     const getUtilizationMetrics = (school) => {
@@ -254,6 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
             schoolData = schools;
             fosMapLookupData = (typeof fosMapLookup === 'object' && fosMapLookup) ? fosMapLookup : {};
             globalCustomCards = Array.isArray(gcCards) ? gcCards : [];
+            refreshCategoryMap();
             
             // Validate that we have data
             const schoolIds = Object.keys(schoolData);
