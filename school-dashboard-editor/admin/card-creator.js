@@ -623,13 +623,20 @@
         // Content-Security-Policy headers on the WordPress admin page.
         var inlineCode = (lrsdSfCardCreator.rendererInlineScript || '').trim();
         if (inlineCode) {
-            // Guard against '</script' sequences that would prematurely end the script
-            // block inside the srcdoc HTML string.
-            // Per the HTML tokeniser spec, after '</' the parser looks for an ASCII alpha
-            // character to start a tag name.  A backslash is not ASCII alpha, so inserting
-            // one between '<' and '/' causes the parser to emit '<' and '/' as plain text
-            // and stay in script-data state — the script element is NOT closed.
-            var safeCode = inlineCode.replace(/<\/script/gi, '<\\/script');
+            // Guard against patterns that could break or terminate the inline script block
+            // inside the srcdoc HTML string.
+            //
+            // 1. '</script': Per the HTML tokeniser spec (script-data-end-tag-open state),
+            //    inserting a backslash between '<' and '/' prevents the parser from recognising
+            //    the sequence as an end tag — a backslash is not a valid tag-name start.
+            // 2. '<!--': In XHTML or legacy parsing modes this sequence could start a comment
+            //    that swallows script content.  Escape the '<' to prevent it.
+            // 3. '-->': The sequence that closes an HTML-style inline comment; escape it for
+            //    the same reason.
+            var safeCode = inlineCode
+                .replace(/<\/script/gi, '<\\/script')
+                .replace(/<!--/g, '<\\!--')
+                .replace(/-->/g, '--\\>');
             return '<script>' + safeCode + '<\/script>';
         }
 
