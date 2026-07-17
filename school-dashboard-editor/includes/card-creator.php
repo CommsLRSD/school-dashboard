@@ -268,16 +268,84 @@ function lrsd_sf_card_creator_apply_card_order(array $school_data, $card_id, $sh
     return $school_data;
 }
 
+function lrsd_sf_card_creator_normalize_media_url($url) {
+    $url = esc_url_raw((string) $url);
+    if ($url === '') {
+        return '';
+    }
+
+    $parts = wp_parse_url($url);
+    if (!is_array($parts) || empty($parts['scheme']) || empty($parts['host'])) {
+        return '';
+    }
+
+    $normalized = $parts['scheme'] . '://' . $parts['host'];
+    if (!empty($parts['port'])) {
+        $normalized .= ':' . (int) $parts['port'];
+    }
+    $normalized .= $parts['path'] ?? '';
+
+    return $normalized;
+}
+
+function lrsd_sf_card_creator_get_attachment_id_from_url($url) {
+    global $wpdb;
+
+    $normalized_url = lrsd_sf_card_creator_normalize_media_url($url);
+    if ($normalized_url === '') {
+        return 0;
+    }
+
+    $attachment_id = attachment_url_to_postid($normalized_url);
+    if ($attachment_id > 0) {
+        return (int) $attachment_id;
+    }
+
+    $uploads = wp_get_upload_dir();
+    $baseurl = isset($uploads['baseurl']) ? untrailingslashit((string) $uploads['baseurl']) : '';
+    if ($baseurl !== '' && strpos($normalized_url, $baseurl . '/') === 0) {
+        $relative_path = ltrim(substr($normalized_url, strlen($baseurl)), '/');
+        $relative_path = rawurldecode($relative_path);
+
+        if ($relative_path !== '') {
+            $attachment_id = (int) $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_wp_attached_file' AND meta_value = %s LIMIT 1",
+                    $relative_path
+                )
+            );
+
+            if ($attachment_id > 0) {
+                return $attachment_id;
+            }
+        }
+    }
+
+    return (int) $wpdb->get_var(
+        $wpdb->prepare(
+            "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'attachment' AND guid = %s LIMIT 1",
+            $normalized_url
+        )
+    );
+}
+
 function lrsd_sf_is_media_library_icon($url) {
     if (!filter_var($url, FILTER_VALIDATE_URL)) {
         return false;
     }
-    $home = home_url();
-    // Must be from this site
-    if (strpos($url, $home) !== 0) {
+
+    $normalized_url = lrsd_sf_card_creator_normalize_media_url($url);
+    if ($normalized_url === '') {
         return false;
     }
-    return (bool) attachment_url_to_postid($url);
+
+    $site_host = wp_parse_url(home_url(), PHP_URL_HOST);
+    $icon_host = wp_parse_url($normalized_url, PHP_URL_HOST);
+    if (!$site_host || !$icon_host || strtolower((string) $site_host) !== strtolower((string) $icon_host)) {
+        return false;
+    }
+
+    return lrsd_sf_card_creator_get_attachment_id_from_url($normalized_url) > 0;
 }
 
 function lrsd_sf_card_creator_validate_card_type($card_type, array $registry) {
