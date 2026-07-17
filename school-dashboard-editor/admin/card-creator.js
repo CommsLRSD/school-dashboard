@@ -419,22 +419,27 @@
                 showStatus((response && response.data && response.data.message) || getI18n('deleteFailed', 'Delete failed.'), 'error');
                 return;
             }
+            var activeWasDeleted = !!activeCardId && activeCardId === deletedCardId;
             data.cards = toEditableCards(response.data.state || {});
 
-            if (activeCardId && activeCardId !== deletedCardId) {
+            if (!data.cards.length) {
+                data.currentIndex = -1;
+            } else if (activeCardId && !activeWasDeleted) {
                 data.currentIndex = data.cards.findIndex(function (candidate) {
                     return candidate.card && candidate.card.id === activeCardId;
                 });
-                if (data.currentIndex < 0 && data.cards.length) {
+                if (data.currentIndex < 0) {
                     data.currentIndex = 0;
                 }
+            } else {
+                data.currentIndex = Math.min(index, data.cards.length - 1);
             }
 
             renderCardOptions();
             renderCardList();
-            if (!activeCardId || activeCardId === deletedCardId) {
+            if (!data.cards.length || !activeCardId || activeWasDeleted) {
                 closeWorkspace();
-            } else if (data.workspaceOpen && data.currentIndex >= 0) {
+            } else if (data.workspaceOpen) {
                 selectCurrentCard();
             }
             showStatus(response.data.message || getI18n('deleteSuccess', 'Card deleted.'), 'success');

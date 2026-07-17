@@ -83,7 +83,7 @@ function lrsd_sf_render_advanced_editor_page() {
                     <?php esc_html_e('Save &amp; Publish', 'lrsd-school-facilities'); ?>
                 </button>
                 <span class="spinner lrsd-sf-adv-spinner" style="float:none;margin:0 8px;"></span>
-                <span class="description"><?php esc_html_e('Publish updates from here or from the bottom action bar.', 'lrsd-school-facilities'); ?></span>
+                <span class="description"><?php esc_html_e('Save & publish is available in both action bars so you can commit updates without extra scrolling.', 'lrsd-school-facilities'); ?></span>
             </div>
 
             <textarea
@@ -100,7 +100,7 @@ function lrsd_sf_render_advanced_editor_page() {
                     <?php esc_html_e('Save &amp; Publish', 'lrsd-school-facilities'); ?>
                 </button>
                 <span class="spinner lrsd-sf-adv-spinner" style="float:none;margin:0 8px;"></span>
-                <span class="description"><?php esc_html_e('Saving will update all school records and push the current dataset live.', 'lrsd-school-facilities'); ?></span>
+                <span class="description"><?php esc_html_e('Save & publish is available in both action bars so you can commit updates without extra scrolling.', 'lrsd-school-facilities'); ?></span>
             </div>
         </div>
 
