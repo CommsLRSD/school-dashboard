@@ -129,32 +129,27 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
             true
         );
 
-        $renderer_source   = '';
-        $renderer_url      = '';
-        $asset_base_url    = home_url('/');
-        $frontend_styles_url = home_url('/styles.css');
-        $plugin_url_one_up = trailingslashit(dirname(untrailingslashit(LRSD_SF_PLUGIN_URL)));
-        $plugin_url_two_up = trailingslashit(dirname(dirname(untrailingslashit(LRSD_SF_PLUGIN_URL))));
+        $renderer_url           = '';
+        $asset_base_url         = home_url('/');
+        $frontend_styles_url    = home_url('/styles.css');
+        $plugin_parent_url      = trailingslashit(dirname(untrailingslashit(LRSD_SF_PLUGIN_URL)));
+        $plugin_grandparent_url = trailingslashit(dirname(dirname(untrailingslashit(LRSD_SF_PLUGIN_URL))));
         $renderer_candidates = [
             [
                 'path'     => dirname(LRSD_SF_PLUGIN_DIR) . '/card-renderer.js',
-                'base_url' => $plugin_url_one_up,
+                'base_url' => $plugin_parent_url,
             ],
             [
                 'path'     => dirname(LRSD_SF_PLUGIN_DIR, 2) . '/card-renderer.js',
-                'base_url' => $plugin_url_two_up,
+                'base_url' => $plugin_grandparent_url,
             ],
         ];
         foreach ($renderer_candidates as $renderer_path) {
             if (file_exists($renderer_path['path']) && is_readable($renderer_path['path'])) {
-                $renderer_size = filesize($renderer_path['path']);
-                if ($renderer_size !== false && $renderer_size <= LRSD_SF_MAX_RENDERER_SOURCE_SIZE_BYTES) {
-                    $renderer_source    = file_get_contents($renderer_path['path']);
-                    $asset_base_url     = $renderer_path['base_url'];
-                    $frontend_styles_url = $renderer_path['base_url'] . 'styles.css';
-                    $renderer_url       = $renderer_path['base_url'] . 'card-renderer.js';
-                    break;
-                }
+                $asset_base_url      = esc_url_raw($renderer_path['base_url']);
+                $frontend_styles_url = esc_url_raw($renderer_path['base_url'] . 'styles.css');
+                $renderer_url        = esc_url_raw($renderer_path['base_url'] . 'card-renderer.js');
+                break;
             }
         }
 
@@ -165,7 +160,6 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
             'assetBaseUrl'     => $asset_base_url,
             'frontendStylesUrl'=> $frontend_styles_url,
             'rendererUrl'      => $renderer_url,
-            'rendererSource'   => $renderer_source ?: '',
             'i18n'             => [
                 'loading'             => __('Loading card data…', 'lrsd-school-facilities'),
                 'loadError'           => __('Failed to load card data.', 'lrsd-school-facilities'),

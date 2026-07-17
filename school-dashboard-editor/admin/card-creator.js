@@ -512,9 +512,26 @@
         return /^https?:\/\//.test(str);
     }
 
+    function getTrustedUrl(url) {
+        var value = String(url || '');
+        var parsed;
+        if (!value) {
+            return '';
+        }
+        try {
+            parsed = new window.URL(value, window.location.origin);
+        } catch (error) {
+            return '';
+        }
+        if (!/^https?:$/.test(parsed.protocol) || parsed.origin !== window.location.origin) {
+            return '';
+        }
+        return parsed.href;
+    }
+
     function resolveAssetUrl(path) {
         var assetPath = String(path || '');
-        var baseUrl = String(lrsdSfCardCreator.assetBaseUrl || lrsdSfCardCreator.siteUrl || '/');
+        var baseUrl = getTrustedUrl(lrsdSfCardCreator.assetBaseUrl) || getTrustedUrl(lrsdSfCardCreator.siteUrl) || window.location.origin + '/';
         if (!assetPath) {
             return '';
         }
@@ -590,13 +607,16 @@
     }
 
     function initPreviewFrame() {
-        var rendererScript = lrsdSfCardCreator.rendererUrl
-            ? '<script src="' + escapeHtml(lrsdSfCardCreator.rendererUrl) + '"></script>'
-            : '<script>' + (lrsdSfCardCreator.rendererSource || '') + '</script>';
+        var previewBaseUrl = getTrustedUrl(lrsdSfCardCreator.assetBaseUrl) || getTrustedUrl(lrsdSfCardCreator.siteUrl) || window.location.origin + '/';
+        var rendererUrl = getTrustedUrl(lrsdSfCardCreator.rendererUrl);
+        var frontendStylesUrl = getTrustedUrl(lrsdSfCardCreator.frontendStylesUrl);
+        var rendererScript = rendererUrl
+            ? '<script src="' + escapeHtml(rendererUrl) + '"></script>'
+            : '';
         var iframeDoc = '' +
             '<!doctype html><html><head><meta charset="utf-8">' +
-            '<base href="' + escapeHtml(lrsdSfCardCreator.assetBaseUrl || lrsdSfCardCreator.siteUrl || "/") + '">' +
-            '<link rel="stylesheet" href="' + escapeHtml(lrsdSfCardCreator.frontendStylesUrl) + '">' +
+            '<base href="' + escapeHtml(previewBaseUrl) + '">' +
+            (frontendStylesUrl ? '<link rel="stylesheet" href="' + escapeHtml(frontendStylesUrl) + '">' : '') +
             '<style>body{margin:0;padding:1rem;background:#f5f6f8}.card-grid{grid-template-columns:minmax(300px, 420px);grid-auto-rows:280px}.data-card{opacity:1;animation:none}</style>' +
             '</head><body><main class="card-grid" id="card-grid"></main>' +
             rendererScript +
