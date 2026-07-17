@@ -619,9 +619,40 @@
     margin-bottom: 12px;
 }
 
+.lrsd-sf-card-browser-panel {
+    margin-bottom: 16px;
+}
+
+.lrsd-sf-card-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+}
+
+.lrsd-sf-card-list .lrsd-sf-card-open {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+}
+
+.lrsd-sf-card-list-empty {
+    color: #646970;
+    font-style: italic;
+}
+
+.lrsd-sf-card-workspace[hidden] {
+    display: none;
+}
+
 .lrsd-sf-card-select {
     min-width: 320px;
     max-width: 100%;
+}
+
+.lrsd-sf-creator-workspace-topbar {
+    margin-top: 0;
 }
 
 .lrsd-sf-card-status {
@@ -690,9 +721,25 @@
 
 #lrsd-sf-card-dynamic-fields .lrsd-sf-item-row {
     display: grid;
-    grid-template-columns: 1fr 1fr auto auto auto;
+    grid-template-columns: minmax(120px, 1fr) minmax(120px, 1fr) minmax(110px, auto) minmax(180px, 1fr) auto auto auto;
     gap: 6px;
     margin-bottom: 6px;
+}
+
+.lrsd-sf-note-fields {
+    margin-top: 8px;
+    display: grid;
+    gap: 8px;
+}
+
+.lrsd-sf-media-input-wrap {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.lrsd-sf-media-input-wrap input {
+    flex: 1;
 }
 
 .lrsd-sf-row-limit-hint {

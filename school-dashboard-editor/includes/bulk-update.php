@@ -51,6 +51,20 @@ function lrsd_sf_handle_bulk_update() {
         'projects_local_inProgress'      => ['projects', 'local', 'inProgress'],
         'projects_local_completed'       => ['projects', 'local', 'completed'],
     ];
+    $global_custom_cards = lrsd_sf_get_global_custom_cards();
+    $custom_card_lookup = [];
+    foreach ($global_custom_cards as $custom_card) {
+        if (!is_array($custom_card)) {
+            continue;
+        }
+        $custom_id = sanitize_key((string) ($custom_card['id'] ?? ''));
+        if ($custom_id === '') {
+            continue;
+        }
+        $custom_card_lookup[$custom_id] = $custom_card;
+    }
+    $is_custom_card_category = isset($custom_card_lookup[$category]);
+    $custom_card_template = $is_custom_card_category ? $custom_card_lookup[$category] : null;
 
     $updated = 0;
 
@@ -134,6 +148,67 @@ function lrsd_sf_handle_bulk_update() {
                 $childcare[$label] = sanitize_text_field((string)($childcare_raw[$label] ?? ''));
             }
             lrsd_sf_set_nested_value($school_data, ['childcare'], $childcare);
+        }
+
+        if ($is_custom_card_category && is_array($custom_card_template)) {
+            $custom_values = isset($school_data['customCardValues']) && is_array($school_data['customCardValues'])
+                ? $school_data['customCardValues']
+                : [];
+            $entry = [];
+            $card_type = sanitize_key((string) ($custom_card_template['cardType'] ?? 'details_list'));
+
+            if ($card_type === 'image') {
+                $entry['imageUrl'] = esc_url_raw((string) ($field_values['custom_image_url'] ?? ''));
+                $entry['imageLink'] = esc_url_raw((string) ($field_values['custom_image_link'] ?? ''));
+                $entry['imageOverlayText'] = sanitize_text_field((string) ($field_values['custom_image_overlay'] ?? ''));
+            } else {
+                $template_items = isset($custom_card_template['items']) && is_array($custom_card_template['items'])
+                    ? array_values($custom_card_template['items'])
+                    : [];
+                $raw_values = isset($field_values['custom_item_values']) && is_array($field_values['custom_item_values'])
+                    ? $field_values['custom_item_values']
+                    : [];
+                $entry_items = [];
+                foreach ($template_items as $index => $template_item) {
+                    if (!is_array($template_item)) {
+                        continue;
+                    }
+                    $entry_items[] = [
+                        'label' => sanitize_text_field((string) ($template_item['label'] ?? '')),
+                        'value' => sanitize_text_field((string) ($raw_values[$index] ?? '')),
+                    ];
+                }
+                $entry['items'] = $entry_items;
+            }
+
+            $entry['notes'] = sanitize_textarea_field((string) ($field_values['custom_notes'] ?? ''));
+
+            $has_content = false;
+            foreach ($entry as $entry_value) {
+                if (is_array($entry_value)) {
+                    foreach ($entry_value as $nested) {
+                        if (is_array($nested)) {
+                            if (trim((string) ($nested['value'] ?? '')) !== '') {
+                                $has_content = true;
+                                break 2;
+                            }
+                        } elseif (trim((string) $nested) !== '') {
+                            $has_content = true;
+                            break 2;
+                        }
+                    }
+                } elseif (trim((string) $entry_value) !== '') {
+                    $has_content = true;
+                    break;
+                }
+            }
+
+            if ($has_content) {
+                $custom_values[$category] = $entry;
+            } elseif (isset($custom_values[$category])) {
+                unset($custom_values[$category]);
+            }
+            $school_data['customCardValues'] = $custom_values;
         }
 
         // Projects (when category is projects_provincial or projects_local)

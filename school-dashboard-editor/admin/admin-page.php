@@ -213,14 +213,18 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
                 'maxRowsReached'      => __('Maximum rows reached for this card type.', 'lrsd-school-facilities'),
                 'deleteFailed'        => __('Delete failed.', 'lrsd-school-facilities'),
                 'noIconsFound'        => __('No icons found.', 'lrsd-school-facilities'),
+                'noCardsYet'          => __('No cards yet. Click New Card to create one.', 'lrsd-school-facilities'),
                 'secureIdRequired'    => __('Secure ID generation is unavailable in this browser.', 'lrsd-school-facilities'),
                 'duplicateSuffix'     => __('Copy', 'lrsd-school-facilities'),
                 'unsavedCardFallback' => __('Unsaved card', 'lrsd-school-facilities'),
-                'globalLabel'         => __('Global', 'lrsd-school-facilities'),
-                'schoolLabel'         => __('School-specific', 'lrsd-school-facilities'),
                 'mediaLibraryTitle'   => __('Choose Icon from Media Library', 'lrsd-school-facilities'),
                 'mediaLibraryButton'  => __('Use as Icon', 'lrsd-school-facilities'),
+                'mediaLibraryImageTitle' => __('Choose Image from Media Library', 'lrsd-school-facilities'),
+                'mediaLibraryImageButton' => __('Use Image', 'lrsd-school-facilities'),
                 'mediaLibraryUnavailable' => __('Media library is not available. Please reload the page and try again.', 'lrsd-school-facilities'),
+                'previewEmpty'        => __('Select or create a card to preview it.', 'lrsd-school-facilities'),
+                'addNote'             => __('Add Note', 'lrsd-school-facilities'),
+                'editNote'            => __('Edit Note', 'lrsd-school-facilities'),
             ],
         ]);
     }
@@ -427,6 +431,24 @@ function lrsd_sf_render_bulk_update_page() {
         'projects_provincial'  => __('Provincially Funded Capital Projects', 'lrsd-school-facilities'),
         'projects_local'       => __('Locally Funded Capital Projects', 'lrsd-school-facilities'),
     ];
+    $global_custom_cards = lrsd_sf_get_global_custom_cards();
+    $custom_card_lookup = [];
+    foreach ($global_custom_cards as $custom_card) {
+        if (!is_array($custom_card)) {
+            continue;
+        }
+        $custom_id = sanitize_key((string) ($custom_card['id'] ?? ''));
+        if ($custom_id === '') {
+            continue;
+        }
+        $custom_title = sanitize_text_field((string) ($custom_card['title'] ?? ''));
+        $categories[$custom_id] = sprintf(
+            /* translators: %s: custom card title */
+            __('Custom: %s', 'lrsd-school-facilities'),
+            $custom_title !== '' ? $custom_title : $custom_id
+        );
+        $custom_card_lookup[$custom_id] = $custom_card;
+    }
 
     // Validate selected category
     if (!array_key_exists($category, $categories)) {
@@ -443,6 +465,8 @@ function lrsd_sf_render_bulk_update_page() {
     $is_additions  = $category === 'additions';
     $is_childcare  = $category === 'childcare';
     $is_projects   = in_array($category, ['projects_provincial', 'projects_local'], true);
+    $is_custom_card = isset($custom_card_lookup[$category]);
+    $selected_custom_card = $is_custom_card ? $custom_card_lookup[$category] : null;
 
     // Get all published schools sorted alphabetically
     $posts = get_posts([
@@ -512,6 +536,33 @@ function lrsd_sf_render_bulk_update_page() {
                             <th><?php esc_html_e('Requested', 'lrsd-school-facilities'); ?></th>
                             <th><?php esc_html_e('In Progress', 'lrsd-school-facilities'); ?></th>
                             <th><?php esc_html_e('Completed', 'lrsd-school-facilities'); ?></th>
+                        <?php elseif ($is_custom_card) :
+                            $custom_type = sanitize_key((string) ($selected_custom_card['cardType'] ?? 'details_list'));
+                            if ($custom_type === 'image') :
+                        ?>
+                            <th><?php esc_html_e('Image URL', 'lrsd-school-facilities'); ?></th>
+                            <th><?php esc_html_e('Image Link', 'lrsd-school-facilities'); ?></th>
+                            <th><?php esc_html_e('Overlay Text', 'lrsd-school-facilities'); ?></th>
+                            <th><?php esc_html_e('Notes', 'lrsd-school-facilities'); ?></th>
+                            <?php else :
+                                $custom_items = isset($selected_custom_card['items']) && is_array($selected_custom_card['items']) ? array_values($selected_custom_card['items']) : [];
+                                foreach ($custom_items as $custom_item_index => $custom_item) :
+                                    if (!is_array($custom_item)) {
+                                        continue;
+                                    }
+                                    $custom_label = sanitize_text_field((string) ($custom_item['label'] ?? ''));
+                                    if ($custom_label === '') {
+                                        $custom_label = sprintf(
+                                            /* translators: %d: field number */
+                                            __('Field %d', 'lrsd-school-facilities'),
+                                            (int) $custom_item_index + 1
+                                        );
+                                    }
+                            ?>
+                                <th><?php echo esc_html($custom_label); ?></th>
+                                <?php endforeach; ?>
+                                <th><?php esc_html_e('Notes', 'lrsd-school-facilities'); ?></th>
+                            <?php endif; ?>
                         <?php else : ?>
                             <?php foreach ($cat_fields as $fk => $field) : ?>
                                 <th><?php echo esc_html($field['label']); ?></th>
@@ -608,6 +659,48 @@ function lrsd_sf_render_bulk_update_page() {
                                           rows="4" class="large-text"><?php echo esc_textarea($prog_lines); ?></textarea></td>
                             <td><textarea name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][<?php echo esc_attr($pk_comp); ?>]"
                                           rows="4" class="large-text"><?php echo esc_textarea($comp_lines); ?></textarea></td>
+                        <?php elseif ($is_custom_card) :
+                            $custom_entry = isset($sdata['customCardValues'][$category]) && is_array($sdata['customCardValues'][$category]) ? $sdata['customCardValues'][$category] : [];
+                            $custom_type = sanitize_key((string) ($selected_custom_card['cardType'] ?? 'details_list'));
+                            if ($custom_type === 'image') :
+                        ?>
+                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][custom_image_url]" value="<?php echo esc_attr((string) ($custom_entry['imageUrl'] ?? '')); ?>" /></td>
+                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][custom_image_link]" value="<?php echo esc_attr((string) ($custom_entry['imageLink'] ?? '')); ?>" /></td>
+                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][custom_image_overlay]" value="<?php echo esc_attr((string) ($custom_entry['imageOverlayText'] ?? '')); ?>" /></td>
+                            <td><textarea name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][custom_notes]" rows="3" class="large-text"><?php echo esc_textarea((string) ($custom_entry['notes'] ?? '')); ?></textarea></td>
+                            <?php else :
+                                $custom_items = isset($selected_custom_card['items']) && is_array($selected_custom_card['items']) ? array_values($selected_custom_card['items']) : [];
+                                $custom_item_values = isset($custom_entry['items']) && is_array($custom_entry['items']) ? array_values($custom_entry['items']) : [];
+                                foreach ($custom_items as $custom_item_index => $custom_item) :
+                                    if (!is_array($custom_item)) {
+                                        continue;
+                                    }
+                                    $custom_value = isset($custom_item_values[$custom_item_index]['value']) ? (string) $custom_item_values[$custom_item_index]['value'] : '';
+                                    $custom_value_type = sanitize_key((string) ($custom_item['valueType'] ?? 'text'));
+                                    if ($custom_value_type === 'number') :
+                            ?>
+                                <td><input type="number" step="any" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][custom_item_values][<?php echo esc_attr((string) $custom_item_index); ?>]" value="<?php echo esc_attr($custom_value); ?>" /></td>
+                                    <?php elseif ($custom_value_type === 'dropdown') :
+                                        $custom_options = isset($custom_item['options']) && is_array($custom_item['options']) ? array_values($custom_item['options']) : [];
+                                        $custom_options = array_values(array_filter(array_map('sanitize_text_field', $custom_options), static function ($option) { return $option !== ''; }));
+                                        if ($custom_value !== '' && !in_array($custom_value, $custom_options, true)) {
+                                            $custom_options[] = $custom_value;
+                                        }
+                                    ?>
+                                <td>
+                                    <select name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][custom_item_values][<?php echo esc_attr((string) $custom_item_index); ?>]">
+                                        <option value=""><?php esc_html_e('— Select —', 'lrsd-school-facilities'); ?></option>
+                                        <?php foreach ($custom_options as $custom_option) : ?>
+                                            <option value="<?php echo esc_attr($custom_option); ?>"<?php selected($custom_value, $custom_option); ?>><?php echo esc_html($custom_option); ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                                    <?php else : ?>
+                                <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][custom_item_values][<?php echo esc_attr((string) $custom_item_index); ?>]" value="<?php echo esc_attr($custom_value); ?>" /></td>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                                <td><textarea name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][custom_notes]" rows="3" class="large-text"><?php echo esc_textarea((string) ($custom_entry['notes'] ?? '')); ?></textarea></td>
+                            <?php endif; ?>
                         <?php else : ?>
                             <?php foreach ($cat_fields as $fk => $field) :
                                 $val  = lrsd_sf_get_nested_value($sdata, $field['path'], '');

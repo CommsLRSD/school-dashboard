@@ -9,10 +9,10 @@
     var data = {
         registry: {},
         icons: [],
-        schools: [],
         cards: [],
         currentIndex: -1,
         previewReady: false,
+        workspaceOpen: false,
     };
 
     var ui = {};
@@ -65,17 +65,7 @@
         (state.globalCards || []).forEach(function (card) {
             cards.push({
                 card: $.extend(true, {}, card),
-                assignment: { scope: 'global', schoolIds: [] },
                 previousAssignment: { scope: 'global', schoolIds: [] },
-                conflict: false,
-            });
-        });
-        (state.schoolCards || []).forEach(function (entry) {
-            cards.push({
-                card: $.extend(true, {}, entry.card || {}),
-                assignment: { scope: 'school', schoolIds: (entry.schoolIds || []).slice() },
-                previousAssignment: { scope: 'school', schoolIds: (entry.schoolIds || []).slice() },
-                conflict: !!entry.conflict,
             });
         });
         cards.sort(function (a, b) {
@@ -98,23 +88,12 @@
             }
             data.registry = response.data.registry || {};
             data.icons = response.data.icons || [];
-            data.schools = response.data.schools || [];
             data.cards = toEditableCards(response.data.state || {});
-            if (!data.cards.length) {
-                var firstType = Object.keys(data.registry)[0] || 'details_list';
-                data.cards.push({
-                    card: defaultCardForType(firstType),
-                    assignment: { scope: 'global', schoolIds: [] },
-                    previousAssignment: { scope: '', schoolIds: [] },
-                    conflict: false,
-                });
-            }
-            data.currentIndex = 0;
             renderTypeOptions();
-            renderSchoolOptions();
             renderCardOptions();
+            renderCardList();
             initPreviewFrame();
-            selectCurrentCard();
+            closeWorkspace();
             hideStatus();
         }).fail(function () {
             showStatus(getI18n('loadError', 'Failed to load card data.'), 'error');
@@ -128,27 +107,30 @@
         ui.cardType.html(options);
     }
 
-    function renderSchoolOptions() {
-        var options = data.schools.map(function (school) {
-            return '<option value="' + escapeHtml(school.id) + '">' + escapeHtml(school.name) + '</option>';
-        }).join('');
-        ui.schoolSelect.html(options);
-    }
-
     function cardDisplayLabel(entry) {
         var card = entry.card || {};
-        var base = card.title || card.id || getI18n('unsavedCardFallback', 'Unsaved card');
-        var scope = entry.assignment.scope === 'school' ? getI18n('schoolLabel', 'School-specific') : getI18n('globalLabel', 'Global');
-        return base + ' (' + scope + ')';
+        return card.title || card.id || getI18n('unsavedCardFallback', 'Unsaved card');
     }
 
     function renderCardOptions() {
         var options = data.cards.map(function (entry, index) {
             var selected = (index === data.currentIndex) ? ' selected' : '';
-            var conflict = entry.conflict ? ' ⚠' : '';
-            return '<option value="' + index + '"' + selected + '>' + cardDisplayLabel(entry) + conflict + '</option>';
+            return '<option value="' + index + '"' + selected + '>' + cardDisplayLabel(entry) + '</option>';
         }).join('');
         ui.cardSelect.html(options);
+    }
+
+    function renderCardList() {
+        if (!data.cards.length) {
+            ui.cardList.html('<li class="lrsd-sf-card-list-empty">' + escapeHtml(getI18n('noCardsYet', 'No cards yet. Click New Card to create one.')) + '</li>');
+            return;
+        }
+        var html = data.cards.map(function (entry, index) {
+            var card = entry.card || {};
+            var title = card.title || card.id || getI18n('unsavedCardFallback', 'Unsaved card');
+            return '<li><button type="button" class="button button-link lrsd-sf-card-open" data-index="' + String(index) + '">' + escapeHtml(title) + '</button></li>';
+        }).join('');
+        ui.cardList.html(html);
     }
 
     function getCurrentEntry() {
@@ -175,9 +157,7 @@
         ui.noteMode.val(card.noteMode || 'inline');
         ui.noteTitle.val(card.noteTitle || '');
         ui.notes.val(card.notes || '');
-        ui.scope.filter('[value="' + entry.assignment.scope + '"]').prop('checked', true);
-        ui.schoolWrap.toggle(entry.assignment.scope === 'school');
-        ui.schoolSelect.val(entry.assignment.schoolIds || []);
+        setNoteFieldsExpanded(false);
         renderDynamicFields(card);
         syncJsonFromCard();
         renderPreview();
@@ -196,10 +176,6 @@
         card.noteTitle = ui.noteTitle.val().trim();
         card.notes = ui.notes.val();
 
-        var scope = ui.scope.filter(':checked').val() || 'global';
-        entry.assignment.scope = scope;
-        entry.assignment.schoolIds = scope === 'school' ? (ui.schoolSelect.val() || []) : [];
-
         if (card.cardType === 'image') {
             card.imageUrl = $('#lrsd-sf-card-image-url').val() || '';
             card.imageLink = $('#lrsd-sf-card-image-link').val() || '';
@@ -212,10 +188,14 @@
                 var $row = $(this);
                 var label = ($row.find('.lrsd-sf-item-label').val() || '').trim();
                 var value = ($row.find('.lrsd-sf-item-value').val() || '').trim();
-                if (!label && !value) {
+                var valueType = ($row.find('.lrsd-sf-item-value-type').val() || 'text');
+                var options = (($row.find('.lrsd-sf-item-options').val() || '').split(',').map(function (option) {
+                    return option.trim();
+                })).filter(Boolean);
+                if (!label && !value && (valueType !== 'dropdown' || !options.length)) {
                     return;
                 }
-                card.items.push({ label: label, value: value });
+                card.items.push({ label: label, value: value, valueType: valueType, options: options });
             });
         }
         renderCardOptions();
@@ -231,13 +211,14 @@
 
         if (cardType === 'image') {
             var imageHtml = '' +
-                '<div class="lrsd-sf-form-row"><label for="lrsd-sf-card-image-url">Image URL</label><input type="text" id="lrsd-sf-card-image-url" class="regular-text" value="' + escapeHtml(card.imageUrl || '') + '"></div>' +
+                '<div class="lrsd-sf-form-row"><label for="lrsd-sf-card-image-url">Image URL</label><div class="lrsd-sf-media-input-wrap"><input type="text" id="lrsd-sf-card-image-url" class="regular-text" value="' + escapeHtml(card.imageUrl || '') + '"><button type="button" class="button" id="lrsd-sf-image-media-library">From Media Library</button></div></div>' +
                 '<div class="lrsd-sf-form-row"><label for="lrsd-sf-card-image-link">Image Link (optional)</label><input type="text" id="lrsd-sf-card-image-link" class="regular-text" value="' + escapeHtml(card.imageLink || '') + '"></div>' +
                 '<div class="lrsd-sf-form-row"><label for="lrsd-sf-card-image-overlay">Overlay Text</label><input type="text" id="lrsd-sf-card-image-overlay" class="regular-text" maxlength="' + (limits.maxOverlayLength || 90) + '" value="' + escapeHtml(card.imageOverlayText || '') + '"></div>' +
                 '<div class="lrsd-sf-form-row"><label for="lrsd-sf-card-image-size">Image Size</label><select id="lrsd-sf-card-image-size"><option value="standard">Standard</option><option value="wide">Wide</option></select></div>';
             ui.dynamicFields.html(imageHtml);
             $('#lrsd-sf-card-image-size').val(card.imageSize || 'standard');
             ui.dynamicFields.find('input,select').on('input change', persistFormToCurrent);
+            ui.dynamicFields.find('#lrsd-sf-image-media-library').on('click', openCardImageMediaPicker);
             return;
         }
 
@@ -254,9 +235,13 @@
 
         function rowHtml(item, idx) {
             var showLabel = cardType !== 'simple_list';
+            var valueType = item.valueType || 'text';
+            var optionsText = Array.isArray(item.options) ? item.options.join(', ') : '';
             return '<div class="lrsd-sf-item-row" data-index="' + idx + '">' +
                 (showLabel ? '<input type="text" class="regular-text lrsd-sf-item-label" maxlength="' + (limits.maxLabelLength || 60) + '" placeholder="Label" value="' + escapeHtml(item.label || '') + '">' : '<input type="hidden" class="lrsd-sf-item-label" value="">') +
                 '<input type="text" class="regular-text lrsd-sf-item-value" maxlength="' + (limits.maxValueLength || 120) + '" placeholder="' + (showLabel ? 'Value' : 'Item text') + '" value="' + escapeHtml(item.value || '') + '">' +
+                '<select class="lrsd-sf-item-value-type"><option value="text"' + (valueType === 'text' ? ' selected' : '') + '>Text</option><option value="number"' + (valueType === 'number' ? ' selected' : '') + '>Number</option><option value="dropdown"' + (valueType === 'dropdown' ? ' selected' : '') + '>Dropdown</option></select>' +
+                '<input type="text" class="regular-text lrsd-sf-item-options" placeholder="Dropdown options (comma separated)" value="' + escapeHtml(optionsText) + '"' + (valueType === 'dropdown' ? '' : ' style="display:none"') + '>' +
                 '<button type="button" class="button lrsd-sf-item-up">↑</button>' +
                 '<button type="button" class="button lrsd-sf-item-down">↓</button>' +
                 '<button type="button" class="button lrsd-sf-item-remove">✕</button>' +
@@ -266,13 +251,19 @@
         function refreshRows() {
             var html = items.map(rowHtml).join('');
             $('#lrsd-sf-item-rows').html(html);
-            $('#lrsd-sf-item-rows').find('input').on('input', function () {
+            $('#lrsd-sf-item-rows').find('input,select').on('input change', function () {
                 var $row = $(this).closest('.lrsd-sf-item-row');
                 var idx = Number($row.data('index'));
+                var selectedType = $row.find('.lrsd-sf-item-value-type').val() || 'text';
                 items[idx] = {
                     label: $row.find('.lrsd-sf-item-label').val() || '',
                     value: $row.find('.lrsd-sf-item-value').val() || '',
+                    valueType: selectedType,
+                    options: (($row.find('.lrsd-sf-item-options').val() || '').split(',').map(function (option) {
+                        return option.trim();
+                    })).filter(Boolean),
                 };
+                $row.find('.lrsd-sf-item-options').toggle(selectedType === 'dropdown');
                 card.items = items;
                 persistFormToCurrent();
             });
@@ -336,9 +327,6 @@
         if (!schema) {
             return getI18n('invalidCardType', 'Invalid card type.');
         }
-        if (entry.assignment.scope === 'school' && !(entry.assignment.schoolIds || []).length) {
-            return getI18n('schoolRequired', 'Select at least one school.');
-        }
         var maxItems = ((schema.limits || {}).maxItems) || 8;
         if (card.cardType !== 'image') {
             if (!Array.isArray(card.items) || !card.items.length) {
@@ -364,8 +352,6 @@
             nonce: lrsdSfCardCreator.nonce,
             payload: JSON.stringify({
                 card: entry.card,
-                assignment: entry.assignment,
-                previousAssignment: entry.previousAssignment || { scope: '', schoolIds: [] },
             }),
         }).done(function (response) {
             if (!response || !response.success) {
@@ -381,8 +367,10 @@
                 data.currentIndex = 0;
             }
             renderCardOptions();
+            renderCardList();
             selectCurrentCard();
             showStatus(response.data.message || getI18n('saveSuccess', 'Card saved.'), 'success');
+            closeWorkspace();
         }).fail(function () {
             showStatus(getI18n('saveError', 'Could not save card.'), 'error');
         });
@@ -399,7 +387,6 @@
             nonce: lrsdSfCardCreator.nonce,
             payload: JSON.stringify({
                 cardId: entry.card.id,
-                assignment: entry.assignment,
             }),
         }).done(function (response) {
             if (!response || !response.success) {
@@ -407,19 +394,10 @@
                 return;
             }
             data.cards = toEditableCards(response.data.state || {});
-            if (!data.cards.length) {
-                var firstType = Object.keys(data.registry)[0] || 'details_list';
-                data.cards.push({
-                    card: defaultCardForType(firstType),
-                    assignment: { scope: 'global', schoolIds: [] },
-                    previousAssignment: { scope: '', schoolIds: [] },
-                    conflict: false,
-                });
-            }
-            data.currentIndex = 0;
             renderCardOptions();
-            selectCurrentCard();
+            renderCardList();
             showStatus(response.data.message || getI18n('deleteSuccess', 'Card deleted.'), 'success');
+            closeWorkspace();
         }).fail(function () {
             showStatus(getI18n('deleteFailed', 'Delete failed.'), 'error');
         });
@@ -441,11 +419,15 @@
         data.cards.push(cloned);
         data.currentIndex = data.cards.length - 1;
         renderCardOptions();
+        renderCardList();
+        openWorkspace();
         selectCurrentCard();
     }
 
     function newCard() {
-        persistFormToCurrent();
+        if (data.workspaceOpen) {
+            persistFormToCurrent();
+        }
         var type = ui.cardType.val() || Object.keys(data.registry)[0] || 'details_list';
         var nextCard = defaultCardForType(type);
         if (!nextCard.id) {
@@ -454,12 +436,12 @@
         }
         data.cards.push({
             card: nextCard,
-            assignment: { scope: 'global', schoolIds: [] },
             previousAssignment: { scope: '', schoolIds: [] },
-            conflict: false,
         });
         data.currentIndex = data.cards.length - 1;
         renderCardOptions();
+        renderCardList();
+        openWorkspace();
         selectCurrentCard();
     }
 
@@ -475,6 +457,7 @@
             cardType: type,
         });
         renderCardOptions();
+        renderCardList();
         selectCurrentCard();
     }
 
@@ -614,6 +597,66 @@
             persistFormToCurrent();
         });
         frame.open();
+    }
+
+    function openCardImageMediaPicker() {
+        if (!window.wp || !window.wp.media) {
+            showStatus(getI18n('mediaLibraryUnavailable', 'Media library is not available. Please reload the page and try again.'), 'error');
+            return;
+        }
+        var frame = window.wp.media({
+            title: getI18n('mediaLibraryImageTitle', 'Choose Image from Media Library'),
+            button: { text: getI18n('mediaLibraryImageButton', 'Use Image') },
+            multiple: false,
+        });
+        frame.on('select', function () {
+            var attachment = frame.state().get('selection').first().toJSON();
+            var url = attachment.url || '';
+            if (!url) {
+                return;
+            }
+            $('#lrsd-sf-card-image-url').val(url);
+            persistFormToCurrent();
+        });
+        frame.open();
+    }
+
+    function openWorkspace() {
+        data.workspaceOpen = true;
+        ui.workspace.prop('hidden', false);
+    }
+
+    function closeWorkspace() {
+        data.workspaceOpen = false;
+        data.currentIndex = -1;
+        ui.workspace.prop('hidden', true);
+        ui.cardSelect.val('');
+        renderPreviewEmpty();
+    }
+
+    function openCardByIndex(index) {
+        if (!Number.isFinite(index) || index < 0 || index >= data.cards.length) {
+            return;
+        }
+        data.currentIndex = index;
+        renderCardOptions();
+        openWorkspace();
+        selectCurrentCard();
+    }
+
+    function renderPreviewEmpty() {
+        var iframe = ui.previewFrame.get(0);
+        if (!iframe || !iframe.contentWindow || !data.previewReady) return;
+        var root = iframe.contentDocument && iframe.contentDocument.getElementById('card-preview-root');
+        if (!root) return;
+        root.className = 'preview-empty';
+        root.innerHTML = escapeHtml(getI18n('previewEmpty', 'Select or create a card to preview it.'));
+    }
+
+    function setNoteFieldsExpanded(isExpanded) {
+        var expanded = !!isExpanded;
+        ui.noteFields.prop('hidden', !expanded);
+        ui.noteToggle.text(expanded ? getI18n('editNote', 'Edit Note') : getI18n('addNote', 'Add Note'));
     }
 
     function initPreviewFrame() {
@@ -766,11 +809,15 @@
 
     function renderPreview() {
         var entry = getCurrentEntry();
-        if (!entry) return;
         var iframe = ui.previewFrame.get(0);
         if (!iframe || !iframe.contentWindow || !data.previewReady) return;
         var root = iframe.contentDocument && iframe.contentDocument.getElementById('card-preview-root');
         if (!root) return;
+        if (!entry) {
+            root.className = 'preview-empty';
+            root.innerHTML = escapeHtml(getI18n('previewEmpty', 'Select or create a card to preview it.'));
+            return;
+        }
         root.className = '';
         root.innerHTML = buildPreviewMarkup(entry.card);
     }
@@ -785,13 +832,14 @@
 
     function bindEvents() {
         ui.cardSelect.on('change', function () {
-            persistFormToCurrent();
+            if (data.workspaceOpen) {
+                persistFormToCurrent();
+            }
             var nextIndex = Number($(this).val());
             if (!Number.isFinite(nextIndex) || nextIndex < 0 || nextIndex >= data.cards.length) {
                 return;
             }
-            data.currentIndex = nextIndex;
-            selectCurrentCard();
+            openCardByIndex(nextIndex);
             hideStatus();
         });
 
@@ -815,17 +863,16 @@
         ui.noteMode.on('change', persistFormToCurrent);
         ui.noteTitle.on('input', persistFormToCurrent);
         ui.notes.on('input', persistFormToCurrent);
-        ui.scope.on('change', function () {
-            ui.schoolWrap.toggle(ui.scope.filter(':checked').val() === 'school');
-            persistFormToCurrent();
+        ui.noteToggle.on('click', function () {
+            setNoteFieldsExpanded(ui.noteFields.prop('hidden'));
         });
-        ui.schoolSelect.on('change', persistFormToCurrent);
 
         ui.btnSave.on('click', saveCurrentCard);
         ui.btnDelete.on('click', deleteCurrentCard);
         ui.btnDuplicate.on('click', duplicateCurrentCard);
         ui.btnReset.on('click', resetCurrentCardDefaults);
         ui.btnNew.on('click', newCard);
+        ui.btnClose.on('click', closeWorkspace);
         ui.btnApplyJson.on('click', applyJsonToForm);
 
         ui.btnIconOpen.on('click', openIconPicker);
@@ -842,6 +889,14 @@
                 closeIconPicker();
             }
         });
+
+        ui.cardList.on('click', '.lrsd-sf-card-open', function () {
+            if (data.workspaceOpen) {
+                persistFormToCurrent();
+            }
+            openCardByIndex(Number($(this).data('index')));
+            hideStatus();
+        });
     }
 
     $(function () {
@@ -851,16 +906,18 @@
         ui.btnReset = $('#lrsd-sf-card-reset');
         ui.btnDelete = $('#lrsd-sf-card-delete');
         ui.btnSave = $('#lrsd-sf-card-save');
+        ui.btnClose = $('#lrsd-sf-card-close');
         ui.status = $('#lrsd-sf-card-status');
+        ui.workspace = $('#lrsd-sf-card-workspace');
+        ui.cardList = $('#lrsd-sf-card-list');
         ui.title = $('#lrsd-sf-card-title');
         ui.cardType = $('#lrsd-sf-card-type');
         ui.icon = $('#lrsd-sf-card-icon');
+        ui.noteToggle = $('#lrsd-sf-note-toggle');
+        ui.noteFields = $('#lrsd-sf-note-fields');
         ui.noteMode = $('#lrsd-sf-card-note-mode');
         ui.noteTitle = $('#lrsd-sf-card-note-title');
         ui.notes = $('#lrsd-sf-card-notes');
-        ui.scope = $('input[name="lrsd_sf_card_scope"]');
-        ui.schoolWrap = $('#lrsd-sf-school-picker-wrap');
-        ui.schoolSelect = $('#lrsd-sf-card-schools');
         ui.dynamicFields = $('#lrsd-sf-card-dynamic-fields');
         ui.json = $('#lrsd-sf-card-json');
         ui.btnApplyJson = $('#lrsd-sf-apply-json');
