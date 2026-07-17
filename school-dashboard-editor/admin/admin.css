@@ -45,7 +45,7 @@
     justify-content: space-between;
     padding: 10px 14px;
     margin: 10px 0 0;
-    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    background: #f3f6fa;
     border: 1px solid #d7dde5;
     border-radius: 12px 12px 0 0;
     cursor: pointer;
@@ -277,7 +277,7 @@
 }
 
 .lrsd-sf-bulk-tab.is-active {
-    background: linear-gradient(180deg, #ffffff 0%, #f3f8ff 100%);
+    background: #eaf2fc;
     border-color: #8eb3d9;
     font-weight: 600;
     color: #1d2327;
