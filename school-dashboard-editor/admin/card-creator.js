@@ -9,6 +9,7 @@
     var data = {
         registry: {},
         icons: [],
+        schools: [],
         cards: [],
         currentIndex: -1,
         previewReady: false,
@@ -76,7 +77,20 @@
         (state.globalCards || []).forEach(function (card) {
             cards.push({
                 card: $.extend(true, {}, card),
+                scope: 'global',
+                schoolIds: [],
                 previousAssignment: { scope: 'global', schoolIds: [] },
+            });
+        });
+        (state.selectSchoolCards || []).forEach(function (rawCard) {
+            var schoolIds = Array.isArray(rawCard.schoolIds) ? rawCard.schoolIds.slice() : [];
+            var cardCopy = $.extend(true, {}, rawCard);
+            delete cardCopy.schoolIds;
+            cards.push({
+                card: cardCopy,
+                scope: 'select',
+                schoolIds: schoolIds,
+                previousAssignment: { scope: 'select', schoolIds: schoolIds.slice() },
             });
         });
         cards.sort(function (a, b) {
@@ -99,6 +113,7 @@
             }
             data.registry = response.data.registry || {};
             data.icons = response.data.icons || [];
+            data.schools = response.data.schools || [];
             data.cards = toEditableCards(response.data.state || {});
             renderTypeOptions();
             renderCardOptions();
@@ -131,13 +146,13 @@
         ui.cardSelect.html(options);
     }
 
-    function renderCardList() {
-        if (!data.cards.length) {
-            ui.cardList.html('<li class="lrsd-sf-card-list-empty">' + escapeHtml(getI18n('noCardsYet', 'No cards yet. Click New Card to create one.')) + '</li>');
-            return;
+    function buildCardListHtml(entries) {
+        if (!entries.length) {
+            return '<li class="lrsd-sf-card-list-empty">' + escapeHtml(getI18n('noCardsYet', 'None yet.')) + '</li>';
         }
-        var html = data.cards.map(function (entry, index) {
-            var card = entry.card || {};
+        return entries.map(function (item) {
+            var index = item.index;
+            var card = item.entry.card || {};
             var title = card.title || card.id || getI18n('unsavedCardFallback', 'Unsaved card');
             return '' +
                 '<li class="lrsd-sf-card-list-item">' +
@@ -148,7 +163,20 @@
                     '</div>' +
                 '</li>';
         }).join('');
-        ui.cardList.html(html);
+    }
+
+    function renderCardList() {
+        var globalEntries = [];
+        var selectEntries = [];
+        data.cards.forEach(function (entry, index) {
+            if (entry.scope === 'select') {
+                selectEntries.push({ entry: entry, index: index });
+            } else {
+                globalEntries.push({ entry: entry, index: index });
+            }
+        });
+        ui.cardListGlobal.html(buildCardListHtml(globalEntries));
+        ui.cardListSelect.html(buildCardListHtml(selectEntries));
     }
 
     function getCurrentEntry() {
@@ -176,6 +204,13 @@
         ui.noteTitle.val(card.noteTitle || '');
         ui.notes.val(card.notes || '');
         setNoteFieldsExpanded(false);
+
+        // Scope + school picker
+        var scope = entry.scope || 'global';
+        $('input[name="lrsd-sf-card-scope"][value="' + scope + '"]').prop('checked', true);
+        renderSchoolPicker(entry.schoolIds || []);
+        ui.schoolPicker.prop('hidden', scope !== 'select');
+
         renderDynamicFields(card);
         syncJsonFromCard();
         renderPreview();
@@ -193,6 +228,17 @@
         card.noteMode = ui.noteMode.val();
         card.noteTitle = ui.noteTitle.val().trim();
         card.notes = ui.notes.val();
+
+        // Persist scope and selected schools
+        entry.scope = $('input[name="lrsd-sf-card-scope"]:checked').val() || 'global';
+        if (entry.scope === 'select') {
+            entry.schoolIds = [];
+            ui.schoolPickerList.find('.lrsd-sf-school-checkbox:checked').each(function () {
+                entry.schoolIds.push($(this).val());
+            });
+        } else {
+            entry.schoolIds = [];
+        }
 
         if (card.cardType === 'image') {
             card.imageUrl = $('#lrsd-sf-card-image-url').val() || '';
@@ -344,6 +390,9 @@
         if (!isAbsoluteUrl(card.icon) && $.inArray(card.icon, data.icons) === -1) {
             return getI18n('iconNotAllowed', 'Icon must be selected from the icon registry.');
         }
+        if ((entry.scope || 'global') === 'select' && (!Array.isArray(entry.schoolIds) || !entry.schoolIds.length)) {
+            return getI18n('schoolsRequired', 'Select at least one school.');
+        }
         var schema = data.registry[card.cardType];
         if (!schema) {
             return getI18n('invalidCardType', 'Invalid card type.');
@@ -373,6 +422,8 @@
             nonce: lrsdSfCardCreator.nonce,
             payload: JSON.stringify({
                 card: entry.card,
+                scope: entry.scope || 'global',
+                schoolIds: entry.schoolIds || [],
             }),
         }).done(function (response) {
             if (!response || !response.success) {
@@ -465,6 +516,8 @@
         }
         cloned.card.id = newId;
         cloned.card.title = (cloned.card.title || getI18n('unsavedCardFallback', 'Card')) + ' ' + getI18n('duplicateSuffix', 'Copy');
+        cloned.scope = entry.scope || 'global';
+        cloned.schoolIds = (entry.schoolIds || []).slice();
         cloned.previousAssignment = { scope: '', schoolIds: [] };
         data.cards.push(cloned);
         data.currentIndex = data.cards.length - 1;
@@ -474,7 +527,7 @@
         selectCurrentCard();
     }
 
-    function newCard() {
+    function newCard(scope) {
         if (data.workspaceOpen) {
             persistFormToCurrent();
         }
@@ -486,6 +539,8 @@
         }
         data.cards.push({
             card: nextCard,
+            scope: scope || 'global',
+            schoolIds: [],
             previousAssignment: { scope: '', schoolIds: [] },
         });
         data.currentIndex = data.cards.length - 1;
@@ -493,6 +548,14 @@
         renderCardList();
         openWorkspace();
         selectCurrentCard();
+    }
+
+    function newGlobalCard() {
+        newCard('global');
+    }
+
+    function newSelectSchoolCard() {
+        newCard('select');
     }
 
     function resetCurrentCardDefaults() {
@@ -708,6 +771,23 @@
         var expanded = !!isExpanded;
         ui.noteFields.prop('hidden', !expanded);
         ui.noteToggle.text(expanded ? getI18n('editNote', 'Edit Note') : getI18n('addNote', 'Add Note'));
+    }
+
+    function renderSchoolPicker(checkedIds) {
+        if (!data.schools.length) {
+            ui.schoolPickerList.html('<p class="description">' + escapeHtml(getI18n('noSchoolsFound', 'No schools found.')) + '</p>');
+            return;
+        }
+        var html = data.schools.map(function (school) {
+            var id = escapeHtml(school.id || '');
+            var name = escapeHtml(school.name || school.id || '');
+            var checked = (checkedIds.indexOf(school.id) !== -1) ? ' checked' : '';
+            return '<label class="lrsd-sf-school-item">' +
+                '<input type="checkbox" class="lrsd-sf-school-checkbox" value="' + id + '"' + checked + '> ' +
+                name +
+                '</label>';
+        }).join('');
+        ui.schoolPickerList.html(html);
     }
 
     function initPreviewFrame() {
@@ -946,11 +1026,30 @@
             setNoteFieldsExpanded(ui.noteFields.prop('hidden'));
         });
 
+        // Scope radio buttons
+        $(document).on('change', 'input[name="lrsd-sf-card-scope"]', function () {
+            var scope = $(this).val();
+            ui.schoolPicker.prop('hidden', scope !== 'select');
+            persistFormToCurrent();
+        });
+
+        // School picker select/deselect all
+        $('#lrsd-sf-school-picker-all').on('click', function () {
+            ui.schoolPickerList.find('.lrsd-sf-school-checkbox').prop('checked', true);
+            persistFormToCurrent();
+        });
+        $('#lrsd-sf-school-picker-none').on('click', function () {
+            ui.schoolPickerList.find('.lrsd-sf-school-checkbox').prop('checked', false);
+            persistFormToCurrent();
+        });
+        ui.schoolPickerList.on('change', '.lrsd-sf-school-checkbox', persistFormToCurrent);
+
         ui.btnSave.on('click', saveCurrentCard);
         ui.btnDelete.on('click', deleteCurrentCard);
         ui.btnDuplicate.on('click', duplicateCurrentCard);
         ui.btnReset.on('click', resetCurrentCardDefaults);
-        ui.btnNew.on('click', newCard);
+        ui.btnNewGlobal.on('click', newGlobalCard);
+        ui.btnNewSelect.on('click', newSelectSchoolCard);
         ui.btnClose.on('click', closeWorkspace);
         ui.btnApplyJson.on('click', applyJsonToForm);
 
@@ -969,7 +1068,8 @@
             }
         });
 
-        ui.cardList.on('click', '.lrsd-sf-card-open, .lrsd-sf-card-edit-inline', function () {
+        // Card list click handlers (delegated to both columns)
+        $(document).on('click', '.lrsd-sf-card-open, .lrsd-sf-card-edit-inline', function () {
             if (data.workspaceOpen) {
                 persistFormToCurrent();
             }
@@ -977,14 +1077,15 @@
             hideStatus();
         });
 
-        ui.cardList.on('click', '.lrsd-sf-card-delete-inline', function () {
+        $(document).on('click', '.lrsd-sf-card-delete-inline', function () {
             deleteCardByIndex(Number($(this).data('index')));
         });
     }
 
     $(function () {
         ui.cardSelect = $('#lrsd-sf-card-select');
-        ui.btnNew = $('#lrsd-sf-card-new');
+        ui.btnNewGlobal = $('#lrsd-sf-card-new-global');
+        ui.btnNewSelect = $('#lrsd-sf-card-new-select');
         ui.btnDuplicate = $('#lrsd-sf-card-duplicate');
         ui.btnReset = $('#lrsd-sf-card-reset');
         ui.btnDelete = $('#lrsd-sf-card-delete');
@@ -992,7 +1093,8 @@
         ui.btnClose = $('#lrsd-sf-card-close, .lrsd-sf-card-close-action');
         ui.status = $('#lrsd-sf-card-status');
         ui.workspace = $('#lrsd-sf-card-workspace');
-        ui.cardList = $('#lrsd-sf-card-list');
+        ui.cardListGlobal = $('#lrsd-sf-card-list-global');
+        ui.cardListSelect = $('#lrsd-sf-card-list-select');
         ui.title = $('#lrsd-sf-card-title');
         ui.cardType = $('#lrsd-sf-card-type');
         ui.icon = $('#lrsd-sf-card-icon');
@@ -1011,6 +1113,8 @@
         ui.btnIconMedia = $('#lrsd-sf-icon-media-library');
         ui.iconSearch = $('#lrsd-sf-icon-search');
         ui.iconGrid = $('#lrsd-sf-icon-grid');
+        ui.schoolPicker = $('#lrsd-sf-school-picker');
+        ui.schoolPickerList = $('#lrsd-sf-school-picker-list');
 
         bindEvents();
         loadCardData();
