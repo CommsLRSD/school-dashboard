@@ -548,7 +548,7 @@
         if (!baseUrl) {
             return '';
         }
-        if (baseUrl.charAt(baseUrl.length - 1) !== '/') {
+        if (!baseUrl.endsWith('/')) {
             baseUrl += '/';
         }
         return baseUrl + assetPath.replace(/^\/+/, '');
