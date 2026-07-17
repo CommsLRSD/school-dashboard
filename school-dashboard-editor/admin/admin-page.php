@@ -2,6 +2,10 @@
 
 defined('ABSPATH') || exit;
 
+if (!defined('LRSD_SF_MAX_RENDERER_SOURCE_SIZE_BYTES')) {
+    define('LRSD_SF_MAX_RENDERER_SOURCE_SIZE_BYTES', 200000);
+}
+
 function lrsd_sf_register_admin_pages() {
     add_menu_page(
         __('School Dashboard Editor', 'lrsd-school-facilities'),
@@ -124,8 +128,20 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
             true
         );
 
-        $renderer_path   = dirname(LRSD_SF_PLUGIN_DIR) . '/card-renderer.js';
-        $renderer_source = file_exists($renderer_path) ? file_get_contents($renderer_path) : '';
+        $renderer_source = '';
+        $renderer_candidates = [
+            dirname(LRSD_SF_PLUGIN_DIR) . '/card-renderer.js',
+            dirname(LRSD_SF_PLUGIN_DIR, 2) . '/card-renderer.js',
+        ];
+        foreach ($renderer_candidates as $renderer_path) {
+            if (file_exists($renderer_path) && is_readable($renderer_path)) {
+                $renderer_size = filesize($renderer_path);
+                if ($renderer_size !== false && $renderer_size <= LRSD_SF_MAX_RENDERER_SOURCE_SIZE_BYTES) {
+                    $renderer_source = file_get_contents($renderer_path);
+                    break;
+                }
+            }
+        }
 
         wp_localize_script('lrsd-sf-card-creator', 'lrsdSfCardCreator', [
             'ajaxUrl'          => admin_url('admin-ajax.php'),
@@ -144,6 +160,17 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
                 'schoolRequired'      => __('Select at least one school for school-specific cards.', 'lrsd-school-facilities'),
                 'titleRequired'       => __('Card title is required.', 'lrsd-school-facilities'),
                 'iconRequired'        => __('Select an icon before saving.', 'lrsd-school-facilities'),
+                'iconNotAllowed'      => __('Icon must be selected from the icon registry.', 'lrsd-school-facilities'),
+                'invalidCardType'     => __('Invalid card type.', 'lrsd-school-facilities'),
+                'addAtLeastOneRow'    => __('Add at least one row.', 'lrsd-school-facilities'),
+                'tooManyRows'         => __('Too many rows for this card type.', 'lrsd-school-facilities'),
+                'maxRowsHint'         => __('Recommended max %d rows to preserve card height.', 'lrsd-school-facilities'),
+                'jsonUnknownType'     => __('Unknown card type in JSON.', 'lrsd-school-facilities'),
+                'jsonApplied'         => __('JSON applied to form.', 'lrsd-school-facilities'),
+                'maxRowsReached'      => __('Maximum rows reached for this card type.', 'lrsd-school-facilities'),
+                'deleteFailed'        => __('Delete failed.', 'lrsd-school-facilities'),
+                'noIconsFound'        => __('No icons found.', 'lrsd-school-facilities'),
+                'secureIdRequired'    => __('Secure ID generation is unavailable in this browser.', 'lrsd-school-facilities'),
                 'duplicateSuffix'     => __('Copy', 'lrsd-school-facilities'),
                 'unsavedCardFallback' => __('Unsaved card', 'lrsd-school-facilities'),
                 'globalLabel'         => __('Global', 'lrsd-school-facilities'),

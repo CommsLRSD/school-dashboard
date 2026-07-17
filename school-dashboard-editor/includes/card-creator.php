@@ -75,6 +75,10 @@ function lrsd_sf_get_card_type_registry() {
     ];
 }
 
+function lrsd_sf_card_creator_generate_id() {
+    return 'custom_' . sanitize_key((string) wp_generate_uuid4());
+}
+
 function lrsd_sf_get_card_creator_icon_registry() {
     $defaults = [
         'public/icon/details.svg',
@@ -102,15 +106,21 @@ function lrsd_sf_get_card_creator_icon_registry() {
         'public/icon/info.svg',
     ];
 
-    $root_dir  = dirname(LRSD_SF_PLUGIN_DIR);
-    $icons_dir = $root_dir . '/public/icon';
-    if (is_dir($icons_dir)) {
+    $icon_dirs = [
+        dirname(LRSD_SF_PLUGIN_DIR) . '/public/icon',
+        dirname(LRSD_SF_PLUGIN_DIR, 2) . '/public/icon',
+    ];
+    foreach ($icon_dirs as $icons_dir) {
+        if (!is_dir($icons_dir)) {
+            continue;
+        }
         $files = glob($icons_dir . '/*.svg');
         if (is_array($files)) {
             foreach ($files as $file) {
                 $defaults[] = 'public/icon/' . basename($file);
             }
         }
+        break;
     }
 
     $defaults = array_values(array_unique(array_filter($defaults, 'is_string')));
@@ -271,10 +281,12 @@ function lrsd_sf_card_creator_sanitize_card(array $raw_card, array $registry, ar
 
     $card_id = sanitize_key((string) ($raw_card['id'] ?? ''));
     if ($card_id === '') {
-        $card_id = 'custom_' . sanitize_key((string) wp_generate_password(10, false, false));
+        $card_id = lrsd_sf_card_creator_generate_id();
     }
-    if (strpos($card_id, 'custom_') !== 0) {
-        $card_id = 'custom_' . ltrim($card_id, '_');
+    if ($card_id === 'custom_') {
+        $card_id = lrsd_sf_card_creator_generate_id();
+    } elseif (strpos($card_id, 'custom_') !== 0) {
+        $card_id = 'custom_' . trim($card_id, '_');
     }
 
     $title = sanitize_text_field((string) ($raw_card['title'] ?? ''));
@@ -336,7 +348,7 @@ function lrsd_sf_card_creator_sanitize_card(array $raw_card, array $registry, ar
         'icon'     => $icon,
         'cardType' => $card_type,
         'noteMode' => $note_mode,
-        'noteTitle'=> mb_substr($note_title, 0, 80),
+        'noteTitle' => mb_substr($note_title, 0, 80),
         'notes'    => mb_substr($notes, 0, 800),
         'items'    => array_values($items),
     ];
@@ -420,7 +432,14 @@ function lrsd_sf_ajax_card_creator_save() {
     }
 
     $previous      = is_array($payload['previousAssignment'] ?? null) ? $payload['previousAssignment'] : [];
-    $prev_scope    = (($previous['scope'] ?? '') === 'school') ? 'school' : (($previous['scope'] ?? '') === 'global' ? 'global' : '');
+    $prev_scope_raw = (string) ($previous['scope'] ?? '');
+    if ($prev_scope_raw === 'school') {
+        $prev_scope = 'school';
+    } elseif ($prev_scope_raw === 'global') {
+        $prev_scope = 'global';
+    } else {
+        $prev_scope = '';
+    }
     $prev_school_ids = isset($previous['schoolIds']) && is_array($previous['schoolIds']) ? $previous['schoolIds'] : [];
     $prev_school_ids = array_values(array_unique(array_filter(array_map('sanitize_text_field', $prev_school_ids))));
 

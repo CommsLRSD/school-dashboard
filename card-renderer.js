@@ -36,6 +36,9 @@
     var iconSrc = template.icon || 'public/icon/details.svg';
     var title = sanitizeHTML(template.title || 'Custom Card');
     var rawType = template.cardType || 'details_list';
+    // Backward compatibility for legacy imported custom cards that stored cardType "list"
+    // before the explicit registry normalized this to "details_list".
+    // Keep this mapping indefinitely because existing historical JSON exports can still include it.
     var cardType = rawType === 'list' ? 'details_list' : rawType;
     var noteMode = template.noteMode === 'flip' ? 'flip' : 'inline';
     var noteTitle = sanitizeHTML(template.noteTitle || ((template.title || 'Custom Card') + ' Note'));

@@ -20,6 +20,16 @@
         return (lrsdSfCardCreator.i18n && lrsdSfCardCreator.i18n[key]) || fallback || key;
     }
 
+    function generateCardId() {
+        if (!(window.crypto && window.crypto.getRandomValues)) {
+            return '';
+        }
+        var bytes = new Uint32Array(2);
+        window.crypto.getRandomValues(bytes);
+        var rand = bytes[0].toString(36) + bytes[1].toString(36);
+        return 'custom_' + Date.now() + '_' + rand;
+    }
+
     function showStatus(message, type) {
         var $status = ui.status;
         $status.removeClass('is-error is-success is-info').addClass(type ? 'is-' + type : 'is-info').text(message || '').show();
@@ -32,8 +42,9 @@
     function defaultCardForType(type) {
         var schema = data.registry[type] || {};
         var defaults = $.extend(true, {}, schema.defaultValues || {});
+        var generatedId = generateCardId();
         return {
-            id: 'custom_' + Date.now(),
+            id: generatedId,
             title: defaults.title || getI18n('unsavedCardFallback', 'Unsaved card'),
             icon: (data.icons[0] || 'public/icon/details.svg'),
             cardType: type,
@@ -111,14 +122,14 @@
 
     function renderTypeOptions() {
         var options = Object.keys(data.registry).map(function (key) {
-            return '<option value="' + key + '">' + (data.registry[key].label || key) + '</option>';
+            return '<option value="' + escapeHtml(key) + '">' + escapeHtml(data.registry[key].label || key) + '</option>';
         }).join('');
         ui.cardType.html(options);
     }
 
     function renderSchoolOptions() {
         var options = data.schools.map(function (school) {
-            return '<option value="' + school.id + '">' + school.name + '</option>';
+            return '<option value="' + escapeHtml(school.id) + '">' + escapeHtml(school.name) + '</option>';
         }).join('');
         ui.schoolSelect.html(options);
     }
@@ -231,7 +242,8 @@
             items.push({ label: '', value: '' });
         }
 
-        var rows = '<div class="lrsd-sf-row-limit-hint">Recommended max ' + maxItems + ' rows to preserve card height.</div>' +
+        var rowHint = getI18n('maxRowsHint', 'Recommended max %d rows to preserve card height.').replace('%d', String(maxItems));
+        var rows = '<div class="lrsd-sf-row-limit-hint">' + escapeHtml(rowHint) + '</div>' +
             '<div id="lrsd-sf-item-rows"></div><p><button type="button" class="button" id="lrsd-sf-item-add">+ Add Row</button></p>';
         ui.dynamicFields.html(rows);
 
@@ -265,7 +277,7 @@
 
         ui.dynamicFields.on('click', '#lrsd-sf-item-add', function () {
             if (items.length >= maxItems) {
-                showStatus('Maximum rows reached for this card type.', 'error');
+                showStatus(getI18n('maxRowsReached', 'Maximum rows reached for this card type.'), 'error');
                 return;
             }
             items.push({ label: '', value: '' });
@@ -312,11 +324,11 @@
             return getI18n('iconRequired', 'Select an icon.');
         }
         if ($.inArray(card.icon, data.icons) === -1) {
-            return 'Icon must be selected from the icon registry.';
+            return getI18n('iconNotAllowed', 'Icon must be selected from the icon registry.');
         }
         var schema = data.registry[card.cardType];
         if (!schema) {
-            return 'Invalid card type.';
+            return getI18n('invalidCardType', 'Invalid card type.');
         }
         if (entry.assignment.scope === 'school' && !(entry.assignment.schoolIds || []).length) {
             return getI18n('schoolRequired', 'Select at least one school.');
@@ -324,10 +336,10 @@
         var maxItems = ((schema.limits || {}).maxItems) || 8;
         if (card.cardType !== 'image') {
             if (!Array.isArray(card.items) || !card.items.length) {
-                return 'Add at least one row.';
+                return getI18n('addAtLeastOneRow', 'Add at least one row.');
             }
             if (card.items.length > maxItems) {
-                return 'Too many rows for this card type.';
+                return getI18n('tooManyRows', 'Too many rows for this card type.');
             }
         }
         return '';
@@ -385,7 +397,7 @@
             }),
         }).done(function (response) {
             if (!response || !response.success) {
-                showStatus((response && response.data && response.data.message) || 'Delete failed.', 'error');
+                showStatus((response && response.data && response.data.message) || getI18n('deleteFailed', 'Delete failed.'), 'error');
                 return;
             }
             data.cards = toEditableCards(response.data.state || {});
@@ -403,7 +415,7 @@
             selectCurrentCard();
             showStatus(response.data.message || getI18n('deleteSuccess', 'Card deleted.'), 'success');
         }).fail(function () {
-            showStatus('Delete failed.', 'error');
+            showStatus(getI18n('deleteFailed', 'Delete failed.'), 'error');
         });
     }
 
@@ -412,7 +424,12 @@
         var entry = getCurrentEntry();
         if (!entry) return;
         var cloned = $.extend(true, {}, entry);
-        cloned.card.id = 'custom_' + Date.now();
+        var newId = generateCardId();
+        if (!newId) {
+            showStatus(getI18n('secureIdRequired', 'Secure ID generation is unavailable in this browser.'), 'error');
+            return;
+        }
+        cloned.card.id = newId;
         cloned.card.title = (cloned.card.title || getI18n('unsavedCardFallback', 'Card')) + ' ' + getI18n('duplicateSuffix', 'Copy');
         cloned.previousAssignment = { scope: '', schoolIds: [] };
         data.cards.push(cloned);
@@ -424,8 +441,13 @@
     function newCard() {
         persistFormToCurrent();
         var type = ui.cardType.val() || Object.keys(data.registry)[0] || 'details_list';
+        var nextCard = defaultCardForType(type);
+        if (!nextCard.id) {
+            showStatus(getI18n('secureIdRequired', 'Secure ID generation is unavailable in this browser.'), 'error');
+            return;
+        }
         data.cards.push({
-            card: defaultCardForType(type),
+            card: nextCard,
             assignment: { scope: 'global', schoolIds: [] },
             previousAssignment: { scope: '', schoolIds: [] },
             conflict: false,
@@ -472,12 +494,12 @@
         }
         parsed.cardType = parsed.cardType || entry.card.cardType;
         if (!data.registry[parsed.cardType]) {
-            showStatus('Unknown card type in JSON.', 'error');
+            showStatus(getI18n('jsonUnknownType', 'Unknown card type in JSON.'), 'error');
             return;
         }
         entry.card = $.extend(true, {}, entry.card, parsed);
         selectCurrentCard();
-        showStatus('JSON applied to form.', 'success');
+        showStatus(getI18n('jsonApplied', 'JSON applied to form.'), 'success');
     }
 
     function renderIconGrid(filterText) {
@@ -486,10 +508,12 @@
             return !q || iconPath.toLowerCase().indexOf(q) !== -1;
         });
         var html = icons.map(function (iconPath) {
-            return '<button type="button" class="lrsd-sf-icon-option" data-icon="' + iconPath + '">' +
-                '<img src="' + lrsdSfCardCreator.siteUrl + iconPath + '" alt=""><span>' + iconPath.replace('public/icon/', '').replace('.svg', '') + '</span></button>';
+            var safePath = escapeHtml(iconPath);
+            var label = escapeHtml(iconPath.replace('public/icon/', '').replace('.svg', ''));
+            return '<button type="button" class="lrsd-sf-icon-option" data-icon="' + safePath + '">' +
+                '<img src="' + escapeHtml(lrsdSfCardCreator.siteUrl + iconPath) + '" alt=""><span>' + label + '</span></button>';
         }).join('');
-        ui.iconGrid.html(html || '<p class="description">No icons found.</p>');
+        ui.iconGrid.html(html || '<p class="description">' + escapeHtml(getI18n('noIconsFound', 'No icons found.')) + '</p>');
     }
 
     function openIconPicker() {
@@ -546,7 +570,11 @@
     function bindEvents() {
         ui.cardSelect.on('change', function () {
             persistFormToCurrent();
-            data.currentIndex = Number($(this).val());
+            var nextIndex = Number($(this).val());
+            if (!Number.isFinite(nextIndex) || nextIndex < 0 || nextIndex >= data.cards.length) {
+                return;
+            }
+            data.currentIndex = nextIndex;
             selectCurrentCard();
             hideStatus();
         });
