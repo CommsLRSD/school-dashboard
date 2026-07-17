@@ -268,6 +268,14 @@ function lrsd_sf_card_creator_apply_card_order(array $school_data, $card_id, $sh
     return $school_data;
 }
 
+/**
+ * Normalize a media URL for safe attachment lookup.
+ *
+ * Removes query/hash fragments and only keeps http/https URLs.
+ *
+ * @param mixed $url Raw media URL.
+ * @return string
+ */
 function lrsd_sf_card_creator_normalize_media_url($url) {
     $url = esc_url_raw((string) $url);
     if ($url === '') {
@@ -291,6 +299,16 @@ function lrsd_sf_card_creator_normalize_media_url($url) {
     return $normalized;
 }
 
+/**
+ * Resolve a local media attachment ID from its URL.
+ *
+ * Uses WordPress core lookup first, then falls back to an SVG-specific uploads
+ * path lookup for cases where attachment_url_to_postid() does not resolve the
+ * original file URL.
+ *
+ * @param mixed $url Raw media URL.
+ * @return int
+ */
 function lrsd_sf_card_creator_get_attachment_id_from_url($url) {
     $normalized_url = lrsd_sf_card_creator_normalize_media_url($url);
     if ($normalized_url === '') {
@@ -325,7 +343,8 @@ function lrsd_sf_card_creator_get_attachment_id_from_url($url) {
 
         if ($relative_path !== '' && validate_file($relative_path) === 0) {
             $filetype = wp_check_filetype($relative_path);
-            if (($filetype['ext'] ?? '') !== 'svg' || ($filetype['type'] ?? '') !== 'image/svg+xml') {
+            $is_svg = ($filetype['ext'] ?? '') === 'svg' && ($filetype['type'] ?? '') === 'image/svg+xml';
+            if (!$is_svg) {
                 return 0;
             }
 
@@ -335,6 +354,7 @@ function lrsd_sf_card_creator_get_attachment_id_from_url($url) {
                 'posts_per_page' => 1,
                 'no_found_rows'  => true,
                 'meta_key'       => '_wp_attached_file',
+                'meta_compare'   => '=',
                 'meta_value'     => $relative_path,
             ]);
 
