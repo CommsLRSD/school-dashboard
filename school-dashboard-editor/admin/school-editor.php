@@ -741,7 +741,6 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                    href="<?php echo esc_url($delete_url); ?>"
                    class="button lrsd-sf-btn-danger"
                    aria-disabled="true"
-                   style="pointer-events:none;opacity:.4;"
                 ><?php esc_html_e('Delete School', 'lrsd-school-facilities'); ?></a>
                 <button type="button" id="lrsd-sf-delete-cancel-btn" class="button button-secondary"><?php esc_html_e('Cancel', 'lrsd-school-facilities'); ?></button>
             </div>
@@ -750,22 +749,28 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
 
     <script>
     (function () {
-        var trigger  = document.getElementById('lrsd-sf-delete-trigger');
-        var modal    = document.getElementById('lrsd-sf-delete-modal');
-        var input    = document.getElementById('lrsd-sf-delete-confirm-input');
+        var trigger    = document.getElementById('lrsd-sf-delete-trigger');
+        var modal      = document.getElementById('lrsd-sf-delete-modal');
+        var input      = document.getElementById('lrsd-sf-delete-confirm-input');
         var confirmBtn = document.getElementById('lrsd-sf-delete-confirm-btn');
         var cancelBtn  = document.getElementById('lrsd-sf-delete-cancel-btn');
+
+        function onKeyDown(e) {
+            if (e.key === 'Escape') closeModal();
+        }
 
         function openModal() {
             input.value = '';
             setConfirmState(false);
             modal.hidden = false;
             input.focus();
+            document.addEventListener('keydown', onKeyDown);
         }
 
         function closeModal() {
             modal.hidden = true;
             input.value = '';
+            document.removeEventListener('keydown', onKeyDown);
         }
 
         function setConfirmState(enabled) {
@@ -785,10 +790,6 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
 
         modal.addEventListener('click', function (e) {
             if (e.target === modal) closeModal();
-        });
-
-        document.addEventListener('keydown', function (e) {
-            if (!modal.hidden && e.key === 'Escape') closeModal();
         });
 
         input.addEventListener('input', function () {
