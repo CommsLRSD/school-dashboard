@@ -229,7 +229,7 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         $childcare = [];
     }
 
-    // Card order: current frontend order only (no custom/global card ids).
+    // Card order: current frontend order only (no custom/global card IDs).
     $saved_order = lrsd_sf_get_nested_value($school_data, ['cardOrder'], []);
     $card_order  = lrsd_sf_normalize_card_order($saved_order);
 

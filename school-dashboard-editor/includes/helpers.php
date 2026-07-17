@@ -437,16 +437,13 @@ function lrsd_sf_normalize_card_order($card_order, array $school_custom_ids = []
  * Normalize stored school dashboard metadata for export/rendering.
  */
 function lrsd_sf_normalize_school_dashboard_data(array $school_data, array $global_custom_cards = []) {
-    $has_card_order    = isset($school_data['cardOrder']) && is_array($school_data['cardOrder']);
-    $school_custom_ids = is_array($school_data['customCards'] ?? null)
-        ? array_column($school_data['customCards'], 'id')
-        : [];
-    $global_card_ids   = array_column($global_custom_cards, 'id');
+    $has_card_order  = isset($school_data['cardOrder']) && is_array($school_data['cardOrder']);
+    $global_card_ids = array_column($global_custom_cards, 'id');
 
     if ($has_card_order) {
         $school_data['cardOrder'] = lrsd_sf_normalize_card_order(
             $school_data['cardOrder'],
-            $school_custom_ids,
+            [],
             $global_card_ids
         );
     } else {
