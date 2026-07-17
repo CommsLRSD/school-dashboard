@@ -426,7 +426,8 @@
                 data.currentIndex = -1;
             } else if (activeCardId && !activeWasDeleted) {
                 data.currentIndex = data.cards.findIndex(function (candidate) {
-                    return candidate.card && candidate.card.id === activeCardId;
+                    var candidateCard = candidate && candidate.card ? candidate.card : null;
+                    return candidateCard && candidateCard.id === activeCardId;
                 });
                 if (data.currentIndex < 0) {
                     data.currentIndex = 0;
