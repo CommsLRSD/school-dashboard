@@ -551,6 +551,10 @@
         selectCurrentCard();
     }
 
+    function newGlobalCard() {
+        newCard('global');
+    }
+
     function resetCurrentCardDefaults() {
         var entry = getCurrentEntry();
         if (!entry) return;
@@ -1041,9 +1045,7 @@
         ui.btnDelete.on('click', deleteCurrentCard);
         ui.btnDuplicate.on('click', duplicateCurrentCard);
         ui.btnReset.on('click', resetCurrentCardDefaults);
-        ui.btnNew.on('click', function () {
-            newCard('global');
-        });
+        ui.btnNew.on('click', newGlobalCard);
         ui.btnClose.on('click', closeWorkspace);
         ui.btnApplyJson.on('click', applyJsonToForm);
 
