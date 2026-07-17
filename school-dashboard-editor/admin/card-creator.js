@@ -623,9 +623,12 @@
         // Content-Security-Policy headers on the WordPress admin page.
         var inlineCode = (lrsdSfCardCreator.rendererInlineScript || '').trim();
         if (inlineCode) {
-            // Guard against </script> sequences that would prematurely end the script
-            // block inside the srcdoc HTML string.
-            var safeCode = inlineCode.replace(/<\/script/gi, '<\\/script');
+            // Per the HTML spec (script-data-less-than-sign state), inserting any
+            // non-solidus, non-alpha character between '<' and '/' prevents the parser
+            // from entering the end-tag-open state.  We replace '</script' with
+            // '<ESCAPE/script' where ESCAPE is a character that cannot start a tag name,
+            // breaking the pattern without altering the executed JavaScript.
+            var safeCode = inlineCode.replace(/<(\/script)/gi, '<\\$1');
             return '<script>' + safeCode + '<\/script>';
         }
 
@@ -639,6 +642,8 @@
         return '';
     }
 
+    var PREVIEW_NOTICE_STYLE = 'padding:1rem;color:#646970;font-size:13px;';
+
     function initPreviewFrame() {
         var previewBaseUrl = getAssetBaseUrl();
         var frontendStylesUrl = getTrustedUrl(lrsdSfCardCreator.frontendStylesUrl);
@@ -647,13 +652,13 @@
 
         var unavailableNotice = hasRenderer
             ? ''
-            : '<p style="padding:1rem;color:#646970;font-size:13px;">Preview renderer is not available. The <code>card-renderer.js</code> file could not be located.</p>';
+            : '<p style="' + PREVIEW_NOTICE_STYLE + '">Preview renderer is not available. The <code>card-renderer.js</code> file could not be located.<\/p>';
 
         var iframeDoc = '' +
             '<!doctype html><html><head><meta charset="utf-8">' +
             (previewBaseUrl ? '<base href="' + escapeHtml(previewBaseUrl) + '">' : '') +
             (frontendStylesUrl ? '<link rel="stylesheet" href="' + escapeHtml(frontendStylesUrl) + '">' : '') +
-            '<style>body{margin:0;padding:1rem;background:#f5f6f8}.card-grid{grid-template-columns:minmax(300px,420px);grid-auto-rows:280px}.data-card{opacity:1;animation:none}</style>' +
+            '<style>body{margin:0;padding:1rem;background:#f5f6f8}.card-grid{grid-template-columns:minmax(300px,420px);grid-auto-rows:280px}.data-card{opacity:1;animation:none}<\/style>' +
             '<\/head><body>' +
             unavailableNotice +
             '<main class="card-grid" id="card-grid"><\/main>' +
@@ -665,7 +670,7 @@
             'var root=document.getElementById("card-grid");' +
             'if(!root){return;}' +
             'if(!window.LrsdCardRenderer||!window.LrsdCardRenderer.renderCustomCardHtml){' +
-            'root.innerHTML="<p style=\\"padding:1rem;color:#646970;font-size:13px;\\">Renderer unavailable.<\\/p>";' +
+            'root.innerHTML="<p style=\\"' + PREVIEW_NOTICE_STYLE + '\\">Renderer unavailable.<\\/p>";' +
             'return;}' +
             'root.innerHTML=window.LrsdCardRenderer.renderCustomCardHtml(p.card||{},null,p.sizeClass||"");' +
             '});' +
