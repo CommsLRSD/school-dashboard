@@ -144,11 +144,11 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
                 'base_url' => $plugin_grandparent_url,
             ],
         ];
-        foreach ($renderer_candidates as $renderer_path) {
-            if (file_exists($renderer_path['path']) && is_readable($renderer_path['path'])) {
-                $asset_base_url      = esc_url_raw($renderer_path['base_url']);
-                $frontend_styles_url = esc_url_raw($renderer_path['base_url'] . 'styles.css');
-                $renderer_url        = esc_url_raw($renderer_path['base_url'] . 'card-renderer.js');
+        foreach ($renderer_candidates as $renderer_candidate) {
+            if (file_exists($renderer_candidate['path']) && is_readable($renderer_candidate['path'])) {
+                $asset_base_url      = esc_url_raw($renderer_candidate['base_url']);
+                $frontend_styles_url = esc_url_raw($renderer_candidate['base_url'] . 'styles.css');
+                $renderer_url        = esc_url_raw($renderer_candidate['base_url'] . 'card-renderer.js');
                 break;
             }
         }

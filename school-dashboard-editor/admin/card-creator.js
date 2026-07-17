@@ -529,9 +529,13 @@
         return parsed.href;
     }
 
+    function getAssetBaseUrl() {
+        return getTrustedUrl(lrsdSfCardCreator.assetBaseUrl) || getTrustedUrl(lrsdSfCardCreator.siteUrl) || window.location.origin + '/';
+    }
+
     function resolveAssetUrl(path) {
         var assetPath = String(path || '');
-        var baseUrl = getTrustedUrl(lrsdSfCardCreator.assetBaseUrl) || getTrustedUrl(lrsdSfCardCreator.siteUrl) || window.location.origin + '/';
+        var baseUrl = getAssetBaseUrl();
         if (!assetPath) {
             return '';
         }
@@ -607,7 +611,7 @@
     }
 
     function initPreviewFrame() {
-        var previewBaseUrl = getTrustedUrl(lrsdSfCardCreator.assetBaseUrl) || getTrustedUrl(lrsdSfCardCreator.siteUrl) || window.location.origin + '/';
+        var previewBaseUrl = getAssetBaseUrl();
         var rendererUrl = getTrustedUrl(lrsdSfCardCreator.rendererUrl);
         var frontendStylesUrl = getTrustedUrl(lrsdSfCardCreator.frontendStylesUrl);
         var rendererScript = rendererUrl
