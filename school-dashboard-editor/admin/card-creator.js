@@ -664,7 +664,7 @@
 
     function getPreviewTypeLabel(cardType) {
         var schema = data.registry[cardType] || {};
-        return schema.label || cardType || getI18n('previewTypeFallback', 'Card');
+        return schema.label || (cardType ? cardType : getI18n('previewTypeFallback', 'Card'));
     }
 
     function isValidPreviewItem(item) {
@@ -672,8 +672,8 @@
             return false;
         }
 
-        var hasLabel = item.label && String(item.label).trim() !== '';
-        var hasValue = item.value && String(item.value).trim() !== '';
+        var hasLabel = String(item.label == null ? '' : item.label).trim() !== '';
+        var hasValue = String(item.value == null ? '' : item.value).trim() !== '';
         return hasLabel || hasValue;
     }
 
