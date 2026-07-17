@@ -163,6 +163,10 @@
             return;
         }
         var card = entry.card;
+        // If the card's icon is a full URL (media library pick) not yet in the registry, add it
+        if (card.icon && /^https?:\/\//.test(card.icon) && $.inArray(card.icon, data.icons) === -1) {
+            data.icons.unshift(card.icon);
+        }
         ui.cardSelect.val(String(data.currentIndex));
         ui.title.val(card.title || '');
         ui.cardType.val(card.cardType || Object.keys(data.registry)[0] || 'details_list');
@@ -323,7 +327,8 @@
         if (!card.icon) {
             return getI18n('iconRequired', 'Select an icon.');
         }
-        if ($.inArray(card.icon, data.icons) === -1) {
+        // Allow both registry paths and media library full URLs
+        if (!/^https?:\/\//.test(card.icon) && $.inArray(card.icon, data.icons) === -1) {
             return getI18n('iconNotAllowed', 'Icon must be selected from the icon registry.');
         }
         var schema = data.registry[card.cardType];
@@ -509,9 +514,11 @@
         });
         var html = icons.map(function (iconPath) {
             var safePath = escapeHtml(iconPath);
-            var label = escapeHtml(iconPath.replace('public/icon/', '').replace('.svg', ''));
+            // Full URLs (media library picks) are used as-is; relative paths get siteUrl prepended
+            var imgSrc = /^https?:\/\//.test(iconPath) ? safePath : escapeHtml(lrsdSfCardCreator.siteUrl + iconPath);
+            var label = escapeHtml(iconPath.replace(/^.*\//, '').replace(/\.[^.]+$/, ''));
             return '<button type="button" class="lrsd-sf-icon-option" data-icon="' + safePath + '">' +
-                '<img src="' + escapeHtml(lrsdSfCardCreator.siteUrl + iconPath) + '" alt=""><span>' + label + '</span></button>';
+                '<img src="' + imgSrc + '" alt="" loading="lazy"><span>' + label + '</span></button>';
         }).join('');
         ui.iconGrid.html(html || '<p class="description">' + escapeHtml(getI18n('noIconsFound', 'No icons found.')) + '</p>');
     }
@@ -524,6 +531,31 @@
 
     function closeIconPicker() {
         ui.iconModal.prop('hidden', true);
+    }
+
+    function openMediaLibraryPicker() {
+        if (!window.wp || !window.wp.media) {
+            return;
+        }
+        var frame = window.wp.media({
+            title: getI18n('mediaLibraryTitle', 'Choose Icon from Media Library'),
+            button: { text: getI18n('mediaLibraryButton', 'Use as Icon') },
+            multiple: false,
+        });
+        frame.on('select', function () {
+            var attachment = frame.state().get('selection').first().toJSON();
+            var url = attachment.url || '';
+            if (!url) {
+                return;
+            }
+            if ($.inArray(url, data.icons) === -1) {
+                data.icons.unshift(url);
+            }
+            ui.icon.val(url);
+            closeIconPicker();
+            persistFormToCurrent();
+        });
+        frame.open();
     }
 
     function initPreviewFrame() {
@@ -614,6 +646,7 @@
 
         ui.btnIconOpen.on('click', openIconPicker);
         ui.btnIconClose.on('click', closeIconPicker);
+        ui.btnIconMedia.on('click', openMediaLibraryPicker);
         ui.iconSearch.on('input', function () { renderIconGrid($(this).val()); });
         ui.iconGrid.on('click', '.lrsd-sf-icon-option', function () {
             ui.icon.val($(this).data('icon'));
@@ -651,6 +684,7 @@
         ui.iconModal = $('#lrsd-sf-icon-picker-modal');
         ui.btnIconOpen = $('#lrsd-sf-icon-picker-open');
         ui.btnIconClose = $('#lrsd-sf-icon-picker-close');
+        ui.btnIconMedia = $('#lrsd-sf-icon-media-library');
         ui.iconSearch = $('#lrsd-sf-icon-search');
         ui.iconGrid = $('#lrsd-sf-icon-grid');
 

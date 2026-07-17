@@ -719,6 +719,11 @@
     padding: 20px;
 }
 
+/* Prevent display:flex from overriding the hidden attribute */
+.lrsd-sf-icon-picker-modal[hidden] {
+    display: none !important;
+}
+
 .lrsd-sf-icon-picker-dialog {
     width: min(920px, 100%);
     max-height: 80vh;
@@ -736,6 +741,12 @@
     margin-bottom: 8px;
 }
 
+.lrsd-sf-icon-picker-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .lrsd-sf-icon-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -746,17 +757,24 @@
 .lrsd-sf-icon-option {
     border: 1px solid #dcdcde;
     border-radius: 6px;
-    padding: 8px;
+    padding: 10px 8px 8px;
     background: #fff;
     cursor: pointer;
     text-align: center;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.lrsd-sf-icon-option:hover {
+    border-color: #2271b1;
+    background: #f0f6fc;
 }
 
 .lrsd-sf-icon-option img {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     display: block;
     margin: 0 auto 6px;
+    object-fit: contain;
 }
 
 .lrsd-sf-icon-option span {

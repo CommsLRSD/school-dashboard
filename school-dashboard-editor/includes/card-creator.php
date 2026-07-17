@@ -268,6 +268,18 @@ function lrsd_sf_card_creator_apply_card_order(array $school_data, $card_id, $sh
     return $school_data;
 }
 
+function lrsd_sf_is_media_library_icon($url) {
+    if (!filter_var($url, FILTER_VALIDATE_URL)) {
+        return false;
+    }
+    $home = home_url();
+    // Must be from this site
+    if (strpos($url, $home) !== 0) {
+        return false;
+    }
+    return (bool) attachment_url_to_postid($url);
+}
+
 function lrsd_sf_card_creator_validate_card_type($card_type, array $registry) {
     $card_type = sanitize_key((string) $card_type);
     return isset($registry[$card_type]) ? $card_type : '';
@@ -295,7 +307,11 @@ function lrsd_sf_card_creator_sanitize_card(array $raw_card, array $registry, ar
     }
 
     $icon = sanitize_text_field((string) ($raw_card['icon'] ?? ''));
-    if ($icon === '' || !in_array($icon, $icons, true)) {
+    // Preserve full URLs (media library picks) without stripping the scheme
+    if (filter_var($icon, FILTER_VALIDATE_URL)) {
+        $icon = esc_url_raw($icon);
+    }
+    if ($icon === '' || (!in_array($icon, $icons, true) && !lrsd_sf_is_media_library_icon($icon))) {
         return new WP_Error('invalid_icon', __('Select a valid icon from the icon picker.', 'lrsd-school-facilities'));
     }
 
