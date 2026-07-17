@@ -623,12 +623,13 @@
         // Content-Security-Policy headers on the WordPress admin page.
         var inlineCode = (lrsdSfCardCreator.rendererInlineScript || '').trim();
         if (inlineCode) {
-            // Per the HTML spec (script-data-less-than-sign state), inserting any
-            // non-solidus, non-alpha character between '<' and '/' prevents the parser
-            // from entering the end-tag-open state.  We replace '</script' with
-            // '<ESCAPE/script' where ESCAPE is a character that cannot start a tag name,
-            // breaking the pattern without altering the executed JavaScript.
-            var safeCode = inlineCode.replace(/<(\/script)/gi, '<\\$1');
+            // Guard against '</script' sequences that would prematurely end the script
+            // block inside the srcdoc HTML string.
+            // Per the HTML tokeniser spec, after '</' the parser looks for an ASCII alpha
+            // character to start a tag name.  A backslash is not ASCII alpha, so inserting
+            // one between '<' and '/' causes the parser to emit '<' and '/' as plain text
+            // and stay in script-data state — the script element is NOT closed.
+            var safeCode = inlineCode.replace(/<\/script/gi, '<\\/script');
             return '<script>' + safeCode + '<\/script>';
         }
 
@@ -658,7 +659,7 @@
             '<!doctype html><html><head><meta charset="utf-8">' +
             (previewBaseUrl ? '<base href="' + escapeHtml(previewBaseUrl) + '">' : '') +
             (frontendStylesUrl ? '<link rel="stylesheet" href="' + escapeHtml(frontendStylesUrl) + '">' : '') +
-            '<style>body{margin:0;padding:1rem;background:#f5f6f8}.card-grid{grid-template-columns:minmax(300px,420px);grid-auto-rows:280px}.data-card{opacity:1;animation:none}<\/style>' +
+            '<style>body{margin:0;padding:1rem;background:#f5f6f8}.card-grid{grid-template-columns:minmax(300px, 420px);grid-auto-rows:280px}.data-card{opacity:1;animation:none}<\/style>' +
             '<\/head><body>' +
             unavailableNotice +
             '<main class="card-grid" id="card-grid"><\/main>' +
