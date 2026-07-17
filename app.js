@@ -177,7 +177,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const buildCategoryMap = () => {
         const categoryMap = Object.assign({}, baseCategories);
         const customCategories = (Array.isArray(globalCustomCards) ? globalCustomCards : [])
-            .filter((card) => card && card.id && card.title)
+            .map((card) => ({
+                id: String(card?.id || '').replace(/[^a-z0-9_-]/gi, ''),
+                title: String(card?.title || '').trim()
+            }))
+            .filter((card) => card.id && card.title)
             .sort((left, right) => String(left.title).localeCompare(String(right.title)))
             .reduce((acc, card) => {
                 acc[card.id] = card.title;
@@ -401,7 +405,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Add category links after the existing filter buttons
         const categoryLinks = Object.entries(getCategoryMap()).map(([key, name]) =>
-            `<a href="#" class="nav-list-item" data-type="category" data-id="${sanitizeHTML(key)}">${sanitizeHTML(name)}</a>`
+            `<a href="#" class="nav-list-item" data-type="category" data-id="${key}">${sanitizeHTML(name)}</a>`
         ).join('');
         categoryListContainer.innerHTML += categoryLinks;
     }

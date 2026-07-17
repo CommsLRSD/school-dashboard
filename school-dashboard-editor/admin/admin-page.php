@@ -430,6 +430,15 @@ function lrsd_sf_handle_create_school() {
         exit;
     }
 
+    wp_update_post([
+        'ID'         => $post_id,
+        'post_title' => sprintf(
+            /* translators: %d: school post ID */
+            __('New School %d', 'lrsd-school-facilities'),
+            (int) $post_id
+        ),
+    ]);
+
     $school_id = lrsd_sf_generate_school_id($post_id);
     update_post_meta($post_id, 'lrsd_school_id', $school_id);
     update_post_meta($post_id, 'lrsd_school_data', lrsd_sf_encode_school_data(lrsd_sf_get_blank_school_data($school_id)));
