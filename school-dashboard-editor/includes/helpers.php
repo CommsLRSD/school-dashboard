@@ -453,6 +453,17 @@ function lrsd_sf_normalize_school_dashboard_data(array $school_data, array $glob
     return $school_data;
 }
 
+function lrsd_sf_get_childcare_labels() {
+    return [
+        'Infant (0-23 months)',
+        'Pre-school (2-6 years)',
+        'School-age (5+ years)',
+        'School-age (7+ years)',
+        'Special Needs (12+ years)',
+        'BLAST',
+    ];
+}
+
 /**
  * Returns the list of all standard card type IDs with human-readable labels.
  */

@@ -504,7 +504,9 @@ function lrsd_sf_render_bulk_update_page() {
                         <?php elseif ($is_childcare) : ?>
                             <th><?php esc_html_e('Infant (0-23 months)', 'lrsd-school-facilities'); ?></th>
                             <th><?php esc_html_e('Pre-school (2-6 years)', 'lrsd-school-facilities'); ?></th>
+                            <th><?php esc_html_e('School-age (5+ years)', 'lrsd-school-facilities'); ?></th>
                             <th><?php esc_html_e('School-age (7+ years)', 'lrsd-school-facilities'); ?></th>
+                            <th><?php esc_html_e('Special Needs (12+ years)', 'lrsd-school-facilities'); ?></th>
                             <th><?php esc_html_e('BLAST', 'lrsd-school-facilities'); ?></th>
                         <?php elseif ($is_projects) : ?>
                             <th><?php esc_html_e('Requested', 'lrsd-school-facilities'); ?></th>
@@ -587,7 +589,9 @@ function lrsd_sf_render_bulk_update_page() {
                         ?>
                             <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][Infant (0-23 months)]" aria-label="<?php esc_attr_e('Infant childcare value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($childcare['Infant (0-23 months)'] ?? '')); ?>" /></td>
                             <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][Pre-school (2-6 years)]" aria-label="<?php esc_attr_e('Pre-school childcare value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($childcare['Pre-school (2-6 years)'] ?? '')); ?>" /></td>
+                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][School-age (5+ years)]" aria-label="<?php esc_attr_e('School-age 5+ childcare value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($childcare['School-age (5+ years)'] ?? '')); ?>" /></td>
                             <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][School-age (7+ years)]" aria-label="<?php esc_attr_e('School-age childcare value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($childcare['School-age (7+ years)'] ?? '')); ?>" /></td>
+                            <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][Special Needs (12+ years)]" aria-label="<?php esc_attr_e('Special needs childcare value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($childcare['Special Needs (12+ years)'] ?? '')); ?>" /></td>
                             <td><input type="text" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][childcare][BLAST]" aria-label="<?php esc_attr_e('BLAST childcare value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($childcare['BLAST'] ?? '')); ?>" /></td>
                         <?php elseif ($is_projects) :
                             $proj_type = ($category === 'projects_provincial') ? 'provincial' : 'local';

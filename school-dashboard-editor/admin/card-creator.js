@@ -616,73 +616,42 @@
         frame.open();
     }
 
-    function buildRendererScript() {
-        // Prefer inlining the renderer content so the srcdoc iframe has no external
-        // script dependencies.  This avoids unreliable external loads from null-origin
-        // (srcdoc) documents, which can fail silently due to browser security rules or
-        // Content-Security-Policy headers on the WordPress admin page.
-        var inlineCode = (lrsdSfCardCreator.rendererInlineScript || '').trim();
-        if (inlineCode) {
-            // Guard against patterns that could break or terminate the inline script block
-            // inside the srcdoc HTML string.
-            //
-            // 1. '</script': Per the HTML tokeniser spec (script-data-end-tag-open state),
-            //    inserting a backslash between '<' and '/' prevents the parser from recognising
-            //    the sequence as an end tag — a backslash is not a valid tag-name start.
-            // 2. '<!--': In XHTML or legacy parsing modes this sequence could start a comment
-            //    that swallows script content.  Escape the '<' to prevent it.
-            // 3. '-->': The sequence that closes an HTML-style inline comment; escape it for
-            //    the same reason.
-            var safeCode = inlineCode
-                .replace(/<\/script/gi, '<\\/script')
-                .replace(/<!--/g, '<\\!--')
-                .replace(/-->/g, '--\\>');
-            return '<script>' + safeCode + '<\/script>';
-        }
-
-        // Fall back to a <script src="..."> tag (e.g. standalone plugin install where the
-        // renderer content was not available server-side but may be served at the site root).
-        var rendererUrl = getTrustedUrl(lrsdSfCardCreator.rendererUrl);
-        if (rendererUrl) {
-            return '<script src="' + escapeHtml(rendererUrl) + '"><\/script>';
-        }
-
-        return '';
-    }
-
-    var PREVIEW_NOTICE_STYLE = 'padding:1rem;color:#646970;font-size:13px;';
-
     function initPreviewFrame() {
-        var previewBaseUrl = getAssetBaseUrl();
-        var frontendStylesUrl = getTrustedUrl(lrsdSfCardCreator.frontendStylesUrl);
-        var rendererScript = buildRendererScript();
-        var hasRenderer = rendererScript !== '';
-
-        var unavailableNotice = hasRenderer
-            ? ''
-            : '<p style="' + PREVIEW_NOTICE_STYLE + '">Preview renderer is not available. The <code>card-renderer.js</code> file could not be located.<\/p>';
-
         var iframeDoc = '' +
             '<!doctype html><html><head><meta charset="utf-8">' +
-            (previewBaseUrl ? '<base href="' + escapeHtml(previewBaseUrl) + '">' : '') +
-            (frontendStylesUrl ? '<link rel="stylesheet" href="' + escapeHtml(frontendStylesUrl) + '">' : '') +
-            '<style>body{margin:0;padding:1rem;background:#f5f6f8}.card-grid{grid-template-columns:minmax(300px, 420px);grid-auto-rows:280px}.data-card{opacity:1;animation:none}<\/style>' +
+            '<style>' +
+            'body{margin:0;padding:16px;background:#f5f6f8;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#1d2327;}' +
+            '.preview-shell{max-width:420px;margin:0 auto;}' +
+            '.preview-card{background:#fff;border:1px solid #dcdcde;border-radius:16px;box-shadow:0 4px 16px rgba(15,23,42,.08);overflow:hidden;}' +
+            '.preview-header{display:flex;align-items:center;gap:12px;padding:16px 16px 12px;border-bottom:1px solid #f0f0f1;}' +
+            '.preview-icon{width:40px;height:40px;border-radius:12px;background:#f0f6fc;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto;}' +
+            '.preview-icon img{width:24px;height:24px;display:block;object-fit:contain;}' +
+            '.preview-icon-fallback{font-size:18px;font-weight:600;color:#3858e9;line-height:1;}' +
+            '.preview-title-wrap{min-width:0;flex:1;}' +
+            '.preview-type{display:inline-block;margin-bottom:4px;padding:2px 8px;border-radius:999px;background:#f6f7f7;color:#50575e;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}' +
+            '.preview-title{margin:0;font-size:18px;line-height:1.3;}' +
+            '.preview-body{padding:16px;display:grid;gap:12px;}' +
+            '.preview-detail-list,.preview-simple-list{list-style:none;margin:0;padding:0;display:grid;gap:8px;}' +
+            '.preview-detail-row,.preview-simple-row{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:12px;background:#f6f7f7;}' +
+            '.preview-detail-label{font-weight:600;color:#2c3338;}' +
+            '.preview-detail-value{color:#50575e;text-align:right;}' +
+            '.preview-highlight{padding:24px 16px;border-radius:16px;background:linear-gradient(135deg,#3858e9,#5aa9ff);color:#fff;text-align:center;}' +
+            '.preview-highlight-value{font-size:32px;font-weight:700;line-height:1.1;}' +
+            '.preview-highlight-label{margin-top:6px;font-size:13px;opacity:.9;}' +
+            '.preview-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}' +
+            '.preview-stat{padding:12px;border-radius:14px;background:#f6f7f7;min-height:76px;display:flex;flex-direction:column;justify-content:space-between;}' +
+            '.preview-stat-label{font-size:12px;color:#50575e;}' +
+            '.preview-stat-value{font-size:24px;font-weight:700;line-height:1.2;color:#1d2327;}' +
+            '.preview-image{position:relative;min-height:220px;border-radius:16px;background:linear-gradient(135deg,#dcdcde,#c3c4c7);overflow:hidden;display:flex;align-items:flex-end;justify-content:flex-start;}' +
+            '.preview-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}' +
+            '.preview-image-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#50575e;font-weight:600;letter-spacing:.02em;}' +
+            '.preview-image-overlay{position:relative;margin:14px;padding:10px 12px;border-radius:12px;background:rgba(29,35,39,.72);color:#fff;font-size:14px;max-width:calc(100% - 28px);}' +
+            '.preview-note{padding:12px 14px;border-radius:14px;background:#f0f6fc;color:#1d2327;font-size:13px;line-height:1.5;}' +
+            '.preview-note strong{display:block;margin-bottom:4px;}' +
+            '.preview-empty{padding:24px 16px;border:1px dashed #c3c4c7;border-radius:14px;text-align:center;color:#646970;background:#fff;}' +
+            '<\/style>' +
             '<\/head><body>' +
-            unavailableNotice +
-            '<main class="card-grid" id="card-grid"><\/main>' +
-            rendererScript +
-            '<script>' +
-            'window.addEventListener("message",function(e){' +
-            'if(!e.data||e.data.type!=="render-card"){return;}' +
-            'var p=e.data.payload||{};' +
-            'var root=document.getElementById("card-grid");' +
-            'if(!root){return;}' +
-            'if(!window.LrsdCardRenderer||!window.LrsdCardRenderer.renderCustomCardHtml){' +
-            'root.innerHTML="<p style=\\"' + PREVIEW_NOTICE_STYLE + '\\">Renderer unavailable.<\\/p>";' +
-            'return;}' +
-            'root.innerHTML=window.LrsdCardRenderer.renderCustomCardHtml(p.card||{},null,p.sizeClass||"");' +
-            '});' +
-            '<\/script>' +
+            '<main class="preview-shell"><div id="card-preview-root" class="preview-empty">Preview loading…<\/div><\/main>' +
             '<\/body><\/html>';
 
         data.previewReady = false;
@@ -693,10 +662,93 @@
         ui.previewFrame.attr('srcdoc', iframeDoc);
     }
 
-    function getPreviewSizeClass(cardType) {
-        if (['details_list'].indexOf(cardType) !== -1) return 'tile-double-height';
-        if (cardType === 'image') return 'tile-double-width';
-        return '';
+    function getPreviewTypeLabel(cardType) {
+        var schema = data.registry[cardType] || {};
+        return schema.label || cardType || getI18n('previewTypeFallback', 'Card');
+    }
+
+    function getPreviewItems(card) {
+        return Array.isArray(card.items) ? card.items.filter(function (item) {
+            return item && ((item.label && String(item.label).trim() !== '') || (item.value && String(item.value).trim() !== ''));
+        }) : [];
+    }
+
+    function buildPreviewIcon(card) {
+        var iconUrl = resolveAssetUrl(card.icon || '');
+        if (iconUrl) {
+            return '<div class="preview-icon"><img src="' + escapeHtml(iconUrl) + '" alt=""><\/div>';
+        }
+
+        return '<div class="preview-icon"><span class="preview-icon-fallback">' + escapeHtml((card.title || 'C').charAt(0).toUpperCase()) + '<\/span><\/div>';
+    }
+
+    function buildPreviewNotes(card) {
+        var notes = String(card.notes || '').trim();
+        if (!notes) {
+            return '';
+        }
+
+        var noteTitle = String(card.noteTitle || '').trim() || getI18n('previewNoteFallback', 'Card note');
+        return '<div class="preview-note"><strong>' + escapeHtml(noteTitle) + '<\/strong>' + escapeHtml(notes).replace(/\n/g, '<br>') + '<\/div>';
+    }
+
+    function buildPreviewBody(card) {
+        var cardType = card.cardType || 'details_list';
+        var items = getPreviewItems(card);
+
+        if (cardType === 'image') {
+            var imageUrl = resolveAssetUrl(card.imageUrl || '');
+            var overlayText = String(card.imageOverlayText || '').trim();
+            return '<div class="preview-image">' +
+                (imageUrl ? '<img src="' + escapeHtml(imageUrl) + '" alt="">' : '<div class="preview-image-placeholder">Image preview<\/div>') +
+                (overlayText ? '<div class="preview-image-overlay">' + escapeHtml(overlayText) + '<\/div>' : '') +
+                '<\/div>' +
+                buildPreviewNotes(card);
+        }
+
+        if (cardType === 'highlight') {
+            var highlightItem = items[0] || {};
+            return '<div class="preview-highlight">' +
+                '<div class="preview-highlight-value">' + escapeHtml(highlightItem.value || '—') + '<\/div>' +
+                '<div class="preview-highlight-label">' + escapeHtml(highlightItem.label || 'Value') + '<\/div>' +
+                '<\/div>' +
+                buildPreviewNotes(card);
+        }
+
+        if (cardType === 'stat') {
+            var statMarkup = (items.length ? items.slice(0, 4) : [{ label: 'Metric', value: '—' }]).map(function (item) {
+                return '<div class="preview-stat">' +
+                    '<div class="preview-stat-label">' + escapeHtml(item.label || 'Metric') + '<\/div>' +
+                    '<div class="preview-stat-value">' + escapeHtml(item.value || '—') + '<\/div>' +
+                    '<\/div>';
+            }).join('');
+            return '<div class="preview-stats">' + statMarkup + '<\/div>' + buildPreviewNotes(card);
+        }
+
+        if (cardType === 'simple_list') {
+            var simpleMarkup = (items.length ? items.slice(0, 5) : [{ value: 'List item' }]).map(function (item) {
+                return '<li class="preview-simple-row"><span>' + escapeHtml(item.value || item.label || 'List item') + '<\/span><\/li>';
+            }).join('');
+            return '<ul class="preview-simple-list">' + simpleMarkup + '<\/ul>' + buildPreviewNotes(card);
+        }
+
+        var detailMarkup = (items.length ? items.slice(0, 5) : [{ label: 'Label', value: 'Value' }]).map(function (item) {
+            return '<li class="preview-detail-row"><span class="preview-detail-label">' + escapeHtml(item.label || 'Label') + '<\/span><span class="preview-detail-value">' + escapeHtml(item.value || 'Value') + '<\/span><\/li>';
+        }).join('');
+        return '<ul class="preview-detail-list">' + detailMarkup + '<\/ul>' + buildPreviewNotes(card);
+    }
+
+    function buildPreviewMarkup(card) {
+        return '<article class="preview-card">' +
+            '<header class="preview-header">' +
+            buildPreviewIcon(card) +
+            '<div class="preview-title-wrap">' +
+            '<span class="preview-type">' + escapeHtml(getPreviewTypeLabel(card.cardType)) + '<\/span>' +
+            '<h2 class="preview-title">' + escapeHtml(card.title || getI18n('unsavedCardFallback', 'Unsaved card')) + '<\/h2>' +
+            '<\/div>' +
+            '<\/header>' +
+            '<div class="preview-body">' + buildPreviewBody(card) + '<\/div>' +
+            '<\/article>';
     }
 
     function renderPreview() {
@@ -704,13 +756,10 @@
         if (!entry) return;
         var iframe = ui.previewFrame.get(0);
         if (!iframe || !iframe.contentWindow || !data.previewReady) return;
-        iframe.contentWindow.postMessage({
-            type: 'render-card',
-            payload: {
-                card: entry.card,
-                sizeClass: getPreviewSizeClass(entry.card.cardType),
-            },
-        }, '*');
+        var root = iframe.contentDocument && iframe.contentDocument.getElementById('card-preview-root');
+        if (!root) return;
+        root.className = '';
+        root.innerHTML = buildPreviewMarkup(entry.card);
     }
 
     function escapeHtml(str) {

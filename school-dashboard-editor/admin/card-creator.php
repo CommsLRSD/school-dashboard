@@ -10,7 +10,7 @@ function lrsd_sf_render_card_creator_page() {
     <div class="wrap lrsd-sf-wrap lrsd-sf-card-creator-wrap">
         <h1><?php esc_html_e('Card Creator', 'lrsd-school-facilities'); ?></h1>
         <p class="description">
-            <?php esc_html_e('Create, preview, duplicate, assign, and save dashboard cards with live rendering that matches production card markup.', 'lrsd-school-facilities'); ?>
+            <?php esc_html_e('Create, preview, duplicate, assign, and save dashboard cards with a simplified layout preview for each card type.', 'lrsd-school-facilities'); ?>
         </p>
 
         <div id="lrsd-sf-card-creator" class="lrsd-sf-card-creator-app">
@@ -92,8 +92,8 @@ function lrsd_sf_render_card_creator_page() {
                 </section>
 
                 <section class="lrsd-sf-creator-panel lrsd-sf-creator-preview-panel">
-                    <h2><?php esc_html_e('Live Preview', 'lrsd-school-facilities'); ?></h2>
-                    <p class="description"><?php esc_html_e('Preview uses the same card markup/classes and shared renderer used by the dashboard.', 'lrsd-school-facilities'); ?></p>
+                    <h2><?php esc_html_e('Preview', 'lrsd-school-facilities'); ?></h2>
+                    <p class="description"><?php esc_html_e('Preview shows a simplified layout for the selected card type.', 'lrsd-school-facilities'); ?></p>
                     <iframe id="lrsd-sf-card-preview-frame" class="lrsd-sf-card-preview-frame" title="<?php esc_attr_e('Card preview', 'lrsd-school-facilities'); ?>"></iframe>
                 </section>
             </div>
