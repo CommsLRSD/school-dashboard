@@ -193,7 +193,7 @@
                     return option.trim();
                 })).filter(Boolean);
                 var existingValue = (existingItems[rowIdx] && existingItems[rowIdx].value) || '';
-                if (!label && (valueType !== 'dropdown' || !options.length)) {
+                if (!label && !(valueType === 'dropdown' && options.length)) {
                     return;
                 }
                 card.items.push({ label: label, value: existingValue, valueType: valueType, options: options });
