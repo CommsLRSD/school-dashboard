@@ -19,6 +19,7 @@ function lrsd_sf_render_card_creator_page() {
                 <select id="lrsd-sf-card-select" class="lrsd-sf-card-select"></select>
                 <button type="button" class="button" id="lrsd-sf-card-new"><?php esc_html_e('New Card', 'lrsd-school-facilities'); ?></button>
                 <button type="button" class="button" id="lrsd-sf-card-duplicate"><?php esc_html_e('Duplicate', 'lrsd-school-facilities'); ?></button>
+                <button type="button" class="button" id="lrsd-sf-card-reset"><?php esc_html_e('Reset to Defaults', 'lrsd-school-facilities'); ?></button>
                 <button type="button" class="button button-link-delete" id="lrsd-sf-card-delete"><?php esc_html_e('Delete', 'lrsd-school-facilities'); ?></button>
                 <button type="button" class="button button-primary" id="lrsd-sf-card-save"><?php esc_html_e('Save Card', 'lrsd-school-facilities'); ?></button>
             </div>

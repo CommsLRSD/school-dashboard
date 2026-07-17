@@ -435,6 +435,21 @@
         selectCurrentCard();
     }
 
+    function resetCurrentCardDefaults() {
+        var entry = getCurrentEntry();
+        if (!entry) return;
+        var type = entry.card.cardType || (Object.keys(data.registry)[0] || 'details_list');
+        var defaults = defaultCardForType(type);
+        entry.card = $.extend(true, {}, entry.card, defaults, {
+            id: entry.card.id,
+            title: entry.card.title || defaults.title,
+            icon: entry.card.icon || defaults.icon,
+            cardType: type,
+        });
+        renderCardOptions();
+        selectCurrentCard();
+    }
+
     function syncJsonFromCard() {
         var entry = getCurrentEntry();
         if (!entry) return;
@@ -565,6 +580,7 @@
         ui.btnSave.on('click', saveCurrentCard);
         ui.btnDelete.on('click', deleteCurrentCard);
         ui.btnDuplicate.on('click', duplicateCurrentCard);
+        ui.btnReset.on('click', resetCurrentCardDefaults);
         ui.btnNew.on('click', newCard);
         ui.btnApplyJson.on('click', applyJsonToForm);
 
@@ -587,6 +603,7 @@
         ui.cardSelect = $('#lrsd-sf-card-select');
         ui.btnNew = $('#lrsd-sf-card-new');
         ui.btnDuplicate = $('#lrsd-sf-card-duplicate');
+        ui.btnReset = $('#lrsd-sf-card-reset');
         ui.btnDelete = $('#lrsd-sf-card-delete');
         ui.btnSave = $('#lrsd-sf-card-save');
         ui.status = $('#lrsd-sf-card-status');
