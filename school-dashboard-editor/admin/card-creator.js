@@ -183,19 +183,20 @@
             card.imageSize = $('#lrsd-sf-card-image-size').val() || 'standard';
             card.items = [];
         } else {
+            var existingItems = Array.isArray(card.items) ? card.items : [];
             card.items = [];
-            ui.dynamicFields.find('.lrsd-sf-item-row').each(function () {
+            ui.dynamicFields.find('.lrsd-sf-item-row').each(function (rowIdx) {
                 var $row = $(this);
                 var label = ($row.find('.lrsd-sf-item-label').val() || '').trim();
-                var value = ($row.find('.lrsd-sf-item-value').val() || '').trim();
                 var valueType = ($row.find('.lrsd-sf-item-value-type').val() || 'text');
                 var options = (($row.find('.lrsd-sf-item-options').val() || '').split(',').map(function (option) {
                     return option.trim();
                 })).filter(Boolean);
-                if (!label && !value && (valueType !== 'dropdown' || !options.length)) {
+                var existingValue = (existingItems[rowIdx] && existingItems[rowIdx].value) || '';
+                if (!label && (valueType !== 'dropdown' || !options.length)) {
                     return;
                 }
-                card.items.push({ label: label, value: value, valueType: valueType, options: options });
+                card.items.push({ label: label, value: existingValue, valueType: valueType, options: options });
             });
         }
         renderCardOptions();
@@ -234,12 +235,14 @@
         ui.dynamicFields.html(rows);
 
         function rowHtml(item, idx) {
-            var showLabel = cardType !== 'simple_list';
+            var isSimpleList = cardType === 'simple_list';
+            var labelPlaceholder = isSimpleList ? 'Item text' : 'Label';
+            // For simple_list, item text was historically stored in value; fall back to it when label is empty
+            var labelValue = item.label || (isSimpleList ? item.value || '' : '');
             var valueType = item.valueType || 'text';
             var optionsText = Array.isArray(item.options) ? item.options.join(', ') : '';
             return '<div class="lrsd-sf-item-row" data-index="' + idx + '">' +
-                (showLabel ? '<input type="text" class="regular-text lrsd-sf-item-label" maxlength="' + (limits.maxLabelLength || 60) + '" placeholder="Label" value="' + escapeHtml(item.label || '') + '">' : '<input type="hidden" class="lrsd-sf-item-label" value="">') +
-                '<input type="text" class="regular-text lrsd-sf-item-value" maxlength="' + (limits.maxValueLength || 120) + '" placeholder="' + (showLabel ? 'Value' : 'Item text') + '" value="' + escapeHtml(item.value || '') + '">' +
+                '<input type="text" class="regular-text lrsd-sf-item-label" maxlength="' + (limits.maxLabelLength || 60) + '" placeholder="' + labelPlaceholder + '" value="' + escapeHtml(labelValue) + '">' +
                 '<select class="lrsd-sf-item-value-type"><option value="text"' + (valueType === 'text' ? ' selected' : '') + '>Text</option><option value="number"' + (valueType === 'number' ? ' selected' : '') + '>Number</option><option value="dropdown"' + (valueType === 'dropdown' ? ' selected' : '') + '>Dropdown</option></select>' +
                 '<input type="text" class="regular-text lrsd-sf-item-options" placeholder="Dropdown options (comma separated)" value="' + escapeHtml(optionsText) + '"' + (valueType === 'dropdown' ? '' : ' style="display:none"') + '>' +
                 '<button type="button" class="button lrsd-sf-item-up">↑</button>' +
@@ -257,7 +260,7 @@
                 var selectedType = $row.find('.lrsd-sf-item-value-type').val() || 'text';
                 items[idx] = {
                     label: $row.find('.lrsd-sf-item-label').val() || '',
-                    value: $row.find('.lrsd-sf-item-value').val() || '',
+                    value: (items[idx] && items[idx].value) || '',
                     valueType: selectedType,
                     options: (($row.find('.lrsd-sf-item-options').val() || '').split(',').map(function (option) {
                         return option.trim();
