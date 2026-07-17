@@ -287,7 +287,7 @@ function lrsd_sf_encode_school_data(array $school_data) {
  * Generate a stable internal school ID.
  *
  * Persisted posts use their numeric post ID for easier debugging and repeatable
- * exports. Unsaved/temporary contexts fall back to a UUID-based suffix so blank
+ * exports. Unsaved/temporary contexts fall back to a sanitized UUID so blank
  * editor state can still render with a valid placeholder ID.
  */
 function lrsd_sf_generate_school_id($post_id = 0) {

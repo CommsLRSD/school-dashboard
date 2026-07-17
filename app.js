@@ -129,6 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return num;
     };
 
+    const formatUtilizationPercent = (utilizationPercent) => `${utilizationPercent}${utilizationPercent === 'N/A' ? '' : '%'}`;
+
     // Helper function to fix label text (e.g., add line breaks)
     const formatLabel = (label) => {
         // Replace "Automatic entrance door operators" with proper label
@@ -181,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return Object.assign(categoryMap, customCategories);
     };
 
-    const getCategoryName = (categoryId) => getCategoryMap()[categoryId] || '';
+    const getCategoryLabel = (categoryId) => getCategoryMap()[categoryId] || '';
 
     const getUtilizationMetrics = (school) => {
         const current = Number(school?.enrolment?.current || 0);
@@ -703,13 +705,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (isYellowZone) {
                     warningIcon = '<img src="public/icon/yellow-warning.svg" alt="" class="warning-icon warning-icon-yellow">';
                 }
-                return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><img src="public/icon/utilization.svg" alt="" class="card-header-icon"><h2 class="card-title">Utilization${warningIcon}</h2></div><div class="card-body"><div class="stat-value">${utilizationPercent}${utilizationPercent === 'N/A' ? '' : '%'}</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${utilizationMetrics.progressWidth}%"></div></div></div></div>`;
+                return `<div class="data-card utilization-card ${capacityClass} ${sizeClass}"><div class="card-header"><img src="public/icon/utilization.svg" alt="" class="card-header-icon"><h2 class="card-title">Utilization${warningIcon}</h2></div><div class="card-body"><div class="stat-value">${formatUtilizationPercent(utilizationPercent)}</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${utilizationMetrics.progressWidth}%"></div></div></div></div>`;
             }
 
-            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${utilizationPercent}${utilizationPercent === 'N/A' ? '' : '%'}</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${utilizationMetrics.progressWidth}%"></div></div></div></div></div></div>`;
+            case 'stats': return `<div class="data-card stats-combined-card ${sizeClass}"><div class="card-header"><img src="public/icon/enrolment.svg" alt="" class="card-header-icon"><h2 class="card-title">Statistics</h2></div><div class="card-body"><div class="stats-rows"><div class="stat-row"><div class="stat-row-label">Enrolment</div><div class="stat-row-value">${formatNumber(current)}</div></div><div class="stat-row"><div class="stat-row-label">Capacity</div><div class="stat-row-value">${formatNumber(capacity)}</div></div><div class="stat-row ${capacityClass}"><div class="stat-row-label">Utilization</div><div class="stat-row-value">${formatUtilizationPercent(utilizationPercent)}</div><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${utilizationMetrics.progressWidth}%"></div></div></div></div></div></div>`;
 
             case 'enrolment_capacity': {
-                const frontContent = `<div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${utilizationPercent}${utilizationPercent === 'N/A' ? '' : '%'}</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${utilizationMetrics.progressWidth}%"></div></div></li></ul><button class="info-icon-btn" data-info-type="enrolment-capacity" aria-label="Show enrolment and capacity information"><img src="public/icon/info.svg" alt=""></button></div>`;
+                const frontContent = `<div class="card-header"><img src="public/icon/capacity.svg" alt="" class="card-header-icon"><h2 class="card-title">Enrolment & Classroom Capacity</h2></div><div class="card-body"><ul class="detail-list"><li class="detail-item"><span class="detail-label">Enrolment</span><span class="detail-value enrolment-value">${formatNumber(current)}</span></li><li class="detail-item"><span class="detail-label">Capacity</span><span class="detail-value capacity-value">${formatNumber(capacity)}</span></li><li class="detail-item ${capacityClass}"><span class="detail-label">Utilization</span><span class="detail-value utilization-value">${formatUtilizationPercent(utilizationPercent)}</span></li><li class="detail-item progress-item"><div class="progress-bar-container"><div class="progress-bar-fill ${capacityClass}" style="width: ${utilizationMetrics.progressWidth}%"></div></div></li></ul><button class="info-icon-btn" data-info-type="enrolment-capacity" aria-label="Show enrolment and capacity information"><img src="public/icon/info.svg" alt=""></button></div>`;
                 return createFlippableCard(
                     `list-card ${sizeClass}`,
                     frontContent,
@@ -1136,7 +1138,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const school = schoolData[selectedSchoolId];
             stickyBannerText.textContent = school.schoolName.toUpperCase();
         } else {
-            stickyBannerText.textContent = getCategoryName(selectedCategoryId).toUpperCase();
+            stickyBannerText.textContent = getCategoryLabel(selectedCategoryId).toUpperCase();
         }
         
         // Check if we're near the top of the page
