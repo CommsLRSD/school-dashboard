@@ -83,7 +83,7 @@ function lrsd_sf_render_advanced_editor_page() {
                     <?php esc_html_e('Save &amp; Publish', 'lrsd-school-facilities'); ?>
                 </button>
                 <span class="spinner lrsd-sf-adv-spinner" style="float:none;margin:0 8px;"></span>
-                <span class="description"><?php esc_html_e('Save &amp; publish is available in both action bars so you can commit updates without extra scrolling.', 'lrsd-school-facilities'); ?></span>
+                <span class="description"><?php esc_html_e('Save &amp; publish from the top action bar while you are still reviewing the start of the dataset.', 'lrsd-school-facilities'); ?></span>
             </div>
 
             <textarea
@@ -100,7 +100,7 @@ function lrsd_sf_render_advanced_editor_page() {
                     <?php esc_html_e('Save &amp; Publish', 'lrsd-school-facilities'); ?>
                 </button>
                 <span class="spinner lrsd-sf-adv-spinner" style="float:none;margin:0 8px;"></span>
-                <span class="description"><?php esc_html_e('Save &amp; publish is available in both action bars so you can commit updates without extra scrolling.', 'lrsd-school-facilities'); ?></span>
+                <span class="description"><?php esc_html_e('Save &amp; publish from the bottom action bar when you finish reviewing the full dataset.', 'lrsd-school-facilities'); ?></span>
             </div>
         </div>
 

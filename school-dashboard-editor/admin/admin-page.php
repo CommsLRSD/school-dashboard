@@ -516,7 +516,7 @@ function lrsd_sf_render_bulk_update_page() {
             <?php wp_nonce_field('lrsd_sf_bulk_update_action', 'lrsd_sf_bulk_update_nonce'); ?>
 
             <div class="lrsd-sf-page-actions lrsd-sf-page-actions--top">
-                <p class="lrsd-sf-page-actions-copy"><?php esc_html_e('Save changes from here or at the bottom of the page.', 'lrsd-school-facilities'); ?></p>
+                <p class="lrsd-sf-page-actions-copy"><?php esc_html_e('Save &amp; publish from either action bar—top or bottom.', 'lrsd-school-facilities'); ?></p>
                 <button type="submit" class="button button-primary lrsd-sf-bulk-save-action">
                     <?php esc_html_e('Save All Changes', 'lrsd-school-facilities'); ?>
                 </button>
@@ -754,7 +754,7 @@ function lrsd_sf_render_bulk_update_page() {
             </table>
 
             <div class="lrsd-sf-page-actions lrsd-sf-page-actions--bottom">
-                <p class="lrsd-sf-page-actions-copy"><?php esc_html_e('Ready to publish updates? Save from here without scrolling back up.', 'lrsd-school-facilities'); ?></p>
+                <p class="lrsd-sf-page-actions-copy"><?php esc_html_e('Save &amp; publish from either action bar—top or bottom.', 'lrsd-school-facilities'); ?></p>
                 <button type="submit" class="button button-primary lrsd-sf-bulk-save-action">
                     <?php esc_html_e('Save All Changes', 'lrsd-school-facilities'); ?>
                 </button>
