@@ -654,6 +654,7 @@
         if (!root) return;
         root.className = 'preview-empty';
         root.innerHTML = escapeHtml(getI18n('previewEmpty', 'Select or create a card to preview it.'));
+        resizePreviewFrame();
     }
 
     function setNoteFieldsExpanded(isExpanded) {
@@ -666,25 +667,25 @@
         var iframeDoc = '' +
             '<!doctype html><html><head><meta charset="utf-8">' +
             '<style>' +
-            'body{margin:0;padding:16px;background:#f5f6f8;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#1d2327;}' +
-            '.preview-shell{max-width:420px;margin:0 auto;}' +
-            '.preview-card{background:#fff;border:1px solid #dcdcde;border-radius:16px;box-shadow:0 4px 16px rgba(15,23,42,.08);overflow:hidden;}' +
-            '.preview-header{display:flex;align-items:center;gap:12px;padding:16px 16px 12px;border-bottom:1px solid #f0f0f1;}' +
-            '.preview-icon{width:40px;height:40px;border-radius:12px;background:#f0f6fc;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto;}' +
+            'body{margin:0;padding:20px;background:linear-gradient(180deg,#f7f8fb 0%,#eef3f8 100%);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#1d2327;}' +
+            '.preview-shell{max-width:392px;margin:0 auto;}' +
+            '.preview-card{background:#fff;border:1px solid #d7dce3;border-radius:18px;box-shadow:0 14px 36px rgba(15,23,42,.10);overflow:hidden;}' +
+            '.preview-header{display:flex;align-items:center;gap:12px;padding:18px 18px 14px;border-bottom:1px solid #eef1f5;}' +
+            '.preview-icon{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#eef4ff,#f5f8ff);display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto;box-shadow:inset 0 0 0 1px rgba(56,88,233,.08);}' +
             '.preview-icon img{width:24px;height:24px;display:block;object-fit:contain;}' +
             '.preview-icon-fallback{font-size:18px;font-weight:600;color:#3858e9;line-height:1;}' +
             '.preview-title-wrap{min-width:0;flex:1;}' +
-            '.preview-type{display:inline-block;margin-bottom:4px;padding:2px 8px;border-radius:999px;background:#f6f7f7;color:#50575e;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}' +
+            '.preview-type{display:inline-block;margin-bottom:6px;padding:3px 9px;border-radius:999px;background:#f4f6fb;color:#55606d;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}' +
             '.preview-title{margin:0;font-size:18px;line-height:1.3;}' +
-            '.preview-body{padding:16px;display:grid;gap:12px;}' +
-            '.preview-detail-list,.preview-simple-list{list-style:none;margin:0;padding:0;display:grid;gap:8px;}' +
-            '.preview-detail-row,.preview-simple-row{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:12px;background:#f6f7f7;}' +
+            '.preview-body{padding:18px;display:grid;gap:14px;}' +
+            '.preview-detail-list,.preview-simple-list{list-style:none;margin:0;padding:0;display:grid;gap:9px;}' +
+            '.preview-detail-row,.preview-simple-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:11px 13px;border-radius:13px;background:#f6f7fb;}' +
             '.preview-detail-label{font-weight:600;color:#2c3338;}' +
             '.preview-detail-value{color:#50575e;text-align:right;}' +
-            '.preview-highlight{padding:24px 16px;border-radius:16px;background:linear-gradient(135deg,#3858e9,#5aa9ff);color:#fff;text-align:center;}' +
+            '.preview-highlight{padding:24px 16px;border-radius:16px;background:linear-gradient(135deg,#3858e9,#5aa9ff);color:#fff;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.18);}' +
             '.preview-highlight-value{font-size:32px;font-weight:700;line-height:1.1;}' +
             '.preview-highlight-label{margin-top:6px;font-size:13px;opacity:.9;}' +
-            '.preview-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}' +
+            '.preview-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;}' +
             '.preview-stat{padding:12px;border-radius:14px;background:#f6f7f7;min-height:76px;display:flex;flex-direction:column;justify-content:space-between;}' +
             '.preview-stat-label{font-size:12px;color:#50575e;}' +
             '.preview-stat-value{font-size:24px;font-weight:700;line-height:1.2;color:#1d2327;}' +
@@ -694,6 +695,10 @@
             '.preview-image-overlay{position:relative;margin:14px;padding:10px 12px;border-radius:12px;background:rgba(29,35,39,.72);color:#fff;font-size:14px;max-width:calc(100% - 28px);}' +
             '.preview-note{padding:12px 14px;border-radius:14px;background:#f0f6fc;color:#1d2327;font-size:13px;line-height:1.5;}' +
             '.preview-note strong{display:block;margin-bottom:4px;}' +
+            '.preview-note-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:12px 14px;border:1px solid #d7dce3;border-radius:14px;background:#fff;color:#1d2327;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;box-shadow:0 8px 22px rgba(15,23,42,.06);}' +
+            '.preview-note-toggle-copy{display:flex;align-items:center;gap:10px;min-width:0;text-align:left;}' +
+            '.preview-note-toggle-icon{width:28px;height:28px;border-radius:999px;background:#f0f6fc;color:#3858e9;display:inline-flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex:0 0 auto;}' +
+            '.preview-note-toggle-label{color:#55606d;font-weight:500;}' +
             '.preview-empty{padding:24px 16px;border:1px dashed #c3c4c7;border-radius:14px;text-align:center;color:#646970;background:#fff;}' +
             '<\/style>' +
             '<\/head><body>' +
@@ -706,6 +711,26 @@
             renderPreview();
         });
         ui.previewFrame.attr('srcdoc', iframeDoc);
+    }
+
+    function resizePreviewFrame() {
+        var iframe = ui.previewFrame.get(0);
+        if (!iframe || !iframe.contentDocument) {
+            return;
+        }
+
+        var doc = iframe.contentDocument;
+        var docEl = doc.documentElement;
+        var body = doc.body;
+        var nextHeight = Math.max(
+            body ? body.scrollHeight : 0,
+            body ? body.offsetHeight : 0,
+            docEl ? docEl.scrollHeight : 0,
+            docEl ? docEl.offsetHeight : 0,
+            420
+        );
+
+        ui.previewFrame.css('height', String(nextHeight + 8) + 'px');
     }
 
     function getPreviewTypeLabel(cardType) {
@@ -748,6 +773,9 @@
 
         var rawNoteTitle = String(card.noteTitle || '').trim();
         var noteTitle = rawNoteTitle || getI18n('previewNoteFallback', 'Card note');
+        if ((card.noteMode || 'inline') === 'flip') {
+            return '<div class="preview-note-toggle"><span class="preview-note-toggle-copy"><span class="preview-note-toggle-icon">i<\/span><span><strong>' + escapeHtml(noteTitle) + '<\/strong><span class="preview-note-toggle-label">' + escapeHtml(getI18n('previewFlipNoteHint', 'Flip note button shown on the live card')) + '<\/span><\/span><\/span><span aria-hidden="true">→<\/span><\/div>';
+        }
         return '<div class="preview-note"><strong>' + escapeHtml(noteTitle) + '<\/strong>' + formatPreviewText(notes) + '<\/div>';
     }
 
@@ -775,7 +803,7 @@
         }
 
         if (cardType === 'stat') {
-            var statMarkup = (items.length ? items.slice(0, 4) : [{ label: 'Metric', value: '—' }]).map(function (item) {
+            var statMarkup = (items.length ? items : [{ label: 'Metric', value: '—' }]).map(function (item) {
                 return '<div class="preview-stat">' +
                     '<div class="preview-stat-label">' + escapeHtml(item.label || 'Metric') + '<\/div>' +
                     '<div class="preview-stat-value">' + escapeHtml(item.value || '—') + '<\/div>' +
@@ -785,13 +813,13 @@
         }
 
         if (cardType === 'simple_list') {
-            var simpleMarkup = (items.length ? items.slice(0, 5) : [{ value: 'List item' }]).map(function (item) {
+            var simpleMarkup = (items.length ? items : [{ value: 'List item' }]).map(function (item) {
                 return '<li class="preview-simple-row"><span>' + escapeHtml(item.value || item.label || 'List item') + '<\/span><\/li>';
             }).join('');
             return '<ul class="preview-simple-list">' + simpleMarkup + '<\/ul>' + buildPreviewNotes(card);
         }
 
-        var detailMarkup = (items.length ? items.slice(0, 5) : [{ label: 'Label', value: 'Value' }]).map(function (item) {
+        var detailMarkup = (items.length ? items : [{ label: 'Label', value: 'Value' }]).map(function (item) {
             return '<li class="preview-detail-row"><span class="preview-detail-label">' + escapeHtml(item.label || 'Label') + '<\/span><span class="preview-detail-value">' + escapeHtml(item.value || 'Value') + '<\/span><\/li>';
         }).join('');
         return '<ul class="preview-detail-list">' + detailMarkup + '<\/ul>' + buildPreviewNotes(card);
@@ -823,6 +851,7 @@
         }
         root.className = '';
         root.innerHTML = buildPreviewMarkup(entry.card);
+        resizePreviewFrame();
     }
 
     function escapeHtml(str) {
@@ -908,8 +937,8 @@
         ui.btnDuplicate = $('#lrsd-sf-card-duplicate');
         ui.btnReset = $('#lrsd-sf-card-reset');
         ui.btnDelete = $('#lrsd-sf-card-delete');
-        ui.btnSave = $('#lrsd-sf-card-save');
-        ui.btnClose = $('#lrsd-sf-card-close');
+        ui.btnSave = $('.lrsd-sf-card-save-action');
+        ui.btnClose = $('#lrsd-sf-card-close, .lrsd-sf-card-close-action');
         ui.status = $('#lrsd-sf-card-status');
         ui.workspace = $('#lrsd-sf-card-workspace');
         ui.cardList = $('#lrsd-sf-card-list');

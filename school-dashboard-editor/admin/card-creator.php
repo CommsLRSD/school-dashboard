@@ -28,13 +28,17 @@ function lrsd_sf_render_card_creator_page() {
 
             <div id="lrsd-sf-card-workspace" class="lrsd-sf-card-workspace" hidden>
                 <div class="lrsd-sf-creator-topbar lrsd-sf-creator-workspace-topbar">
-                    <label for="lrsd-sf-card-select" class="screen-reader-text"><?php esc_html_e('Select card', 'lrsd-school-facilities'); ?></label>
-                    <select id="lrsd-sf-card-select" class="lrsd-sf-card-select"></select>
-                    <button type="button" class="button" id="lrsd-sf-card-duplicate"><?php esc_html_e('Duplicate', 'lrsd-school-facilities'); ?></button>
-                    <button type="button" class="button" id="lrsd-sf-card-reset"><?php esc_html_e('Reset to Defaults', 'lrsd-school-facilities'); ?></button>
-                    <button type="button" class="button button-link-delete" id="lrsd-sf-card-delete"><?php esc_html_e('Delete', 'lrsd-school-facilities'); ?></button>
-                    <button type="button" class="button button-primary" id="lrsd-sf-card-save"><?php esc_html_e('Save Card', 'lrsd-school-facilities'); ?></button>
-                    <button type="button" class="button" id="lrsd-sf-card-close"><?php esc_html_e('Close', 'lrsd-school-facilities'); ?></button>
+                    <div class="lrsd-sf-creator-toolbar-group lrsd-sf-creator-toolbar-group--grow">
+                        <label for="lrsd-sf-card-select" class="screen-reader-text"><?php esc_html_e('Select card', 'lrsd-school-facilities'); ?></label>
+                        <select id="lrsd-sf-card-select" class="lrsd-sf-card-select"></select>
+                    </div>
+                    <div class="lrsd-sf-creator-toolbar-group">
+                        <button type="button" class="button" id="lrsd-sf-card-duplicate"><?php esc_html_e('Duplicate', 'lrsd-school-facilities'); ?></button>
+                        <button type="button" class="button" id="lrsd-sf-card-reset"><?php esc_html_e('Reset to Defaults', 'lrsd-school-facilities'); ?></button>
+                        <button type="button" class="button button-link-delete" id="lrsd-sf-card-delete"><?php esc_html_e('Delete', 'lrsd-school-facilities'); ?></button>
+                        <button type="button" class="button button-primary lrsd-sf-card-save-action" id="lrsd-sf-card-save"><?php esc_html_e('Save Card', 'lrsd-school-facilities'); ?></button>
+                        <button type="button" class="button" id="lrsd-sf-card-close"><?php esc_html_e('Close', 'lrsd-school-facilities'); ?></button>
+                    </div>
                 </div>
 
                 <div class="lrsd-sf-creator-layout">
@@ -94,6 +98,13 @@ function lrsd_sf_render_card_creator_page() {
                     <p class="description"><?php esc_html_e('Preview shows a simplified layout for the selected card type.', 'lrsd-school-facilities'); ?></p>
                     <iframe id="lrsd-sf-card-preview-frame" class="lrsd-sf-card-preview-frame" title="<?php esc_attr_e('Card preview', 'lrsd-school-facilities'); ?>"></iframe>
                 </section>
+                </div>
+                <div class="lrsd-sf-creator-bottombar">
+                    <p class="lrsd-sf-creator-bottombar-copy"><?php esc_html_e('Save buttons are available at both the top and bottom so you can keep moving quickly.', 'lrsd-school-facilities'); ?></p>
+                    <div class="lrsd-sf-creator-toolbar-group">
+                        <button type="button" class="button button-primary lrsd-sf-card-save-action"><?php esc_html_e('Save Card', 'lrsd-school-facilities'); ?></button>
+                        <button type="button" class="button lrsd-sf-card-close-action"><?php esc_html_e('Close', 'lrsd-school-facilities'); ?></button>
+                    </div>
                 </div>
             </div>
         </div>
