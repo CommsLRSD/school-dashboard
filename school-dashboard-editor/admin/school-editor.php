@@ -73,6 +73,117 @@ function lrsd_sf_render_section_footer() {
     echo '</div><!-- /.lrsd-sf-section-body -->';
 }
 
+function lrsd_sf_get_custom_card_item_label(array $item, $index) {
+    $label = sanitize_text_field((string) ($item['label'] ?? ''));
+    if ($label !== '') {
+        return $label;
+    }
+    return sprintf(
+        /* translators: %d: field position */
+        __('Field %d', 'lrsd-school-facilities'),
+        (int) $index + 1
+    );
+}
+
+function lrsd_sf_render_custom_card_value_control($name, array $item, $value, $id) {
+    $value_type = sanitize_key((string) ($item['valueType'] ?? 'text'));
+    $value = (string) $value;
+
+    if ($value_type === 'number') {
+        echo '<input type="number" step="any" id="' . esc_attr($id) . '" name="' . esc_attr($name) . '" value="' . esc_attr($value) . '" class="regular-text" />';
+        return;
+    }
+
+    if ($value_type === 'dropdown') {
+        $options = isset($item['options']) && is_array($item['options']) ? array_values($item['options']) : [];
+        $options = array_values(array_filter(array_map('sanitize_text_field', $options), static function ($option) {
+            return $option !== '';
+        }));
+        if ($value !== '' && !in_array($value, $options, true)) {
+            $options[] = $value;
+        }
+        echo '<select id="' . esc_attr($id) . '" name="' . esc_attr($name) . '">';
+        echo '<option value="">' . esc_html__('— Select —', 'lrsd-school-facilities') . '</option>';
+        foreach ($options as $option) {
+            echo '<option value="' . esc_attr($option) . '"' . selected($value, $option, false) . '>' . esc_html($option) . '</option>';
+        }
+        echo '</select>';
+        return;
+    }
+
+    echo '<input type="text" id="' . esc_attr($id) . '" name="' . esc_attr($name) . '" value="' . esc_attr($value) . '" class="regular-text" />';
+}
+
+function lrsd_sf_collect_posted_custom_card_values($posted_values, array $global_custom_cards) {
+    $posted_values = is_array($posted_values) ? $posted_values : [];
+    $custom_values = [];
+
+    foreach ($global_custom_cards as $card) {
+        if (!is_array($card)) {
+            continue;
+        }
+        $card_id = sanitize_key((string) ($card['id'] ?? ''));
+        if ($card_id === '') {
+            continue;
+        }
+
+        $raw_entry = isset($posted_values[$card_id]) && is_array($posted_values[$card_id]) ? $posted_values[$card_id] : [];
+        $entry = [];
+        $card_type = sanitize_key((string) ($card['cardType'] ?? 'details_list'));
+
+        if ($card_type === 'image') {
+            $entry['imageUrl'] = esc_url_raw((string) ($raw_entry['imageUrl'] ?? ''));
+            $entry['imageLink'] = esc_url_raw((string) ($raw_entry['imageLink'] ?? ''));
+            $entry['imageOverlayText'] = sanitize_text_field((string) ($raw_entry['imageOverlayText'] ?? ''));
+        } else {
+            $items = isset($card['items']) && is_array($card['items']) ? array_values($card['items']) : [];
+            $raw_values = isset($raw_entry['itemValues']) && is_array($raw_entry['itemValues']) ? $raw_entry['itemValues'] : [];
+            $entry_items = [];
+
+            foreach ($items as $index => $item) {
+                if (!is_array($item)) {
+                    continue;
+                }
+                $label = sanitize_text_field((string) ($item['label'] ?? ''));
+                $value = sanitize_text_field((string) ($raw_values[$index] ?? ''));
+                $entry_items[] = [
+                    'label' => $label,
+                    'value' => $value,
+                ];
+            }
+            $entry['items'] = $entry_items;
+        }
+
+        $entry['notes'] = sanitize_textarea_field((string) ($raw_entry['notes'] ?? ''));
+        $has_content = false;
+
+        foreach ($entry as $entry_value) {
+            if (is_array($entry_value)) {
+                foreach ($entry_value as $nested) {
+                    if (is_array($nested)) {
+                        if (trim((string) ($nested['value'] ?? '')) !== '') {
+                            $has_content = true;
+                            break 2;
+                        }
+                    } elseif (trim((string) $nested) !== '') {
+                        $has_content = true;
+                        break 2;
+                    }
+                }
+            } elseif (trim((string) $entry_value) !== '') {
+                $has_content = true;
+                break;
+            }
+        }
+
+        if ($has_content) {
+            $custom_values[$card_id] = $entry;
+        }
+    }
+
+    return $custom_values;
+}
+
 function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options) {
     $id    = esc_attr($field_key);
     $name  = 'lrsd_sf_fields[' . esc_attr($field_key) . ']';
@@ -88,117 +199,6 @@ function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options)
                 // Ensure current value is always visible
                 if ($value !== '' && !in_array((string)$value, $opts, true)) {
                     $opts[] = (string)$value;
-                }
-
-                function lrsd_sf_get_custom_card_item_label(array $item, $index) {
-                    $label = sanitize_text_field((string) ($item['label'] ?? ''));
-                    if ($label !== '') {
-                        return $label;
-                    }
-                    return sprintf(
-                        /* translators: %d: field position */
-                        __('Field %d', 'lrsd-school-facilities'),
-                        (int) $index + 1
-                    );
-                }
-
-                function lrsd_sf_render_custom_card_value_control($name, array $item, $value, $id) {
-                    $value_type = sanitize_key((string) ($item['valueType'] ?? 'text'));
-                    $value = (string) $value;
-
-                    if ($value_type === 'number') {
-                        echo '<input type="number" step="any" id="' . esc_attr($id) . '" name="' . esc_attr($name) . '" value="' . esc_attr($value) . '" class="regular-text" />';
-                        return;
-                    }
-
-                    if ($value_type === 'dropdown') {
-                        $options = isset($item['options']) && is_array($item['options']) ? array_values($item['options']) : [];
-                        $options = array_values(array_filter(array_map('sanitize_text_field', $options), static function ($option) {
-                            return $option !== '';
-                        }));
-                        if ($value !== '' && !in_array($value, $options, true)) {
-                            $options[] = $value;
-                        }
-                        echo '<select id="' . esc_attr($id) . '" name="' . esc_attr($name) . '">';
-                        echo '<option value="">' . esc_html__('— Select —', 'lrsd-school-facilities') . '</option>';
-                        foreach ($options as $option) {
-                            echo '<option value="' . esc_attr($option) . '"' . selected($value, $option, false) . '>' . esc_html($option) . '</option>';
-                        }
-                        echo '</select>';
-                        return;
-                    }
-
-                    echo '<input type="text" id="' . esc_attr($id) . '" name="' . esc_attr($name) . '" value="' . esc_attr($value) . '" class="regular-text" />';
-                }
-
-                function lrsd_sf_collect_posted_custom_card_values($posted_values, array $global_custom_cards) {
-                    $posted_values = is_array($posted_values) ? $posted_values : [];
-                    $custom_values = [];
-
-                    foreach ($global_custom_cards as $card) {
-                        if (!is_array($card)) {
-                            continue;
-                        }
-                        $card_id = sanitize_key((string) ($card['id'] ?? ''));
-                        if ($card_id === '') {
-                            continue;
-                        }
-
-                        $raw_entry = isset($posted_values[$card_id]) && is_array($posted_values[$card_id]) ? $posted_values[$card_id] : [];
-                        $entry = [];
-                        $card_type = sanitize_key((string) ($card['cardType'] ?? 'details_list'));
-
-                        if ($card_type === 'image') {
-                            $entry['imageUrl'] = esc_url_raw((string) ($raw_entry['imageUrl'] ?? ''));
-                            $entry['imageLink'] = esc_url_raw((string) ($raw_entry['imageLink'] ?? ''));
-                            $entry['imageOverlayText'] = sanitize_text_field((string) ($raw_entry['imageOverlayText'] ?? ''));
-                        } else {
-                            $items = isset($card['items']) && is_array($card['items']) ? array_values($card['items']) : [];
-                            $raw_values = isset($raw_entry['itemValues']) && is_array($raw_entry['itemValues']) ? $raw_entry['itemValues'] : [];
-                            $entry_items = [];
-
-                            foreach ($items as $index => $item) {
-                                if (!is_array($item)) {
-                                    continue;
-                                }
-                                $label = sanitize_text_field((string) ($item['label'] ?? ''));
-                                $value = sanitize_text_field((string) ($raw_values[$index] ?? ''));
-                                $entry_items[] = [
-                                    'label' => $label,
-                                    'value' => $value,
-                                ];
-                            }
-                            $entry['items'] = $entry_items;
-                        }
-
-                        $entry['notes'] = sanitize_textarea_field((string) ($raw_entry['notes'] ?? ''));
-                        $has_content = false;
-
-                        foreach ($entry as $entry_value) {
-                            if (is_array($entry_value)) {
-                                foreach ($entry_value as $nested) {
-                                    if (is_array($nested)) {
-                                        if (trim((string) ($nested['value'] ?? '')) !== '') {
-                                            $has_content = true;
-                                            break 2;
-                                        }
-                                    } elseif (trim((string) $nested) !== '') {
-                                        $has_content = true;
-                                        break 2;
-                                    }
-                                }
-                            } elseif (trim((string) $entry_value) !== '') {
-                                $has_content = true;
-                                break;
-                            }
-                        }
-
-                        if ($has_content) {
-                            $custom_values[$card_id] = $entry;
-                        }
-                    }
-
-                    return $custom_values;
                 }
 
                 $nonce_val = wp_create_nonce('lrsd_sf_custom_option_nonce');
