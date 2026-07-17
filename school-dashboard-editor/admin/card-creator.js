@@ -672,9 +672,13 @@
             return false;
         }
 
-        var hasLabel = String(item.label == null ? '' : item.label).trim() !== '';
-        var hasValue = String(item.value == null ? '' : item.value).trim() !== '';
+        var hasLabel = String(item.label ?? '').trim() !== '';
+        var hasValue = String(item.value ?? '').trim() !== '';
         return hasLabel || hasValue;
+    }
+
+    function formatPreviewText(text) {
+        return escapeHtml(text).replace(/\n/g, '<br>');
     }
 
     function getPreviewItems(card) {
@@ -698,7 +702,7 @@
 
         var rawNoteTitle = String(card.noteTitle || '').trim();
         var noteTitle = rawNoteTitle || getI18n('previewNoteFallback', 'Card note');
-        return '<div class="preview-note"><strong>' + escapeHtml(noteTitle) + '<\/strong>' + escapeHtml(notes).replace(/\n/g, '<br>') + '<\/div>';
+        return '<div class="preview-note"><strong>' + escapeHtml(noteTitle) + '<\/strong>' + formatPreviewText(notes) + '<\/div>';
     }
 
     function buildPreviewBody(card) {
