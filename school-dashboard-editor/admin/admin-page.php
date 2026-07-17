@@ -178,6 +178,7 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
                 'schoolLabel'         => __('School-specific', 'lrsd-school-facilities'),
                 'mediaLibraryTitle'   => __('Choose Icon from Media Library', 'lrsd-school-facilities'),
                 'mediaLibraryButton'  => __('Use as Icon', 'lrsd-school-facilities'),
+                'mediaLibraryUnavailable' => __('Media library is not available. Please reload the page and try again.', 'lrsd-school-facilities'),
             ],
         ]);
     }

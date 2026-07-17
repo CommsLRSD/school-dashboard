@@ -164,7 +164,7 @@
         }
         var card = entry.card;
         // If the card's icon is a full URL (media library pick) not yet in the registry, add it
-        if (card.icon && /^https?:\/\//.test(card.icon) && $.inArray(card.icon, data.icons) === -1) {
+        if (card.icon && isAbsoluteUrl(card.icon) && $.inArray(card.icon, data.icons) === -1) {
             data.icons.unshift(card.icon);
         }
         ui.cardSelect.val(String(data.currentIndex));
@@ -328,7 +328,7 @@
             return getI18n('iconRequired', 'Select an icon.');
         }
         // Allow both registry paths and media library full URLs
-        if (!/^https?:\/\//.test(card.icon) && $.inArray(card.icon, data.icons) === -1) {
+        if (!isAbsoluteUrl(card.icon) && $.inArray(card.icon, data.icons) === -1) {
             return getI18n('iconNotAllowed', 'Icon must be selected from the icon registry.');
         }
         var schema = data.registry[card.cardType];
@@ -507,6 +507,10 @@
         showStatus(getI18n('jsonApplied', 'JSON applied to form.'), 'success');
     }
 
+    function isAbsoluteUrl(str) {
+        return /^https?:\/\//.test(str);
+    }
+
     function renderIconGrid(filterText) {
         var q = (filterText || '').toLowerCase();
         var icons = data.icons.filter(function (iconPath) {
@@ -515,7 +519,7 @@
         var html = icons.map(function (iconPath) {
             var safePath = escapeHtml(iconPath);
             // Full URLs (media library picks) are used as-is; relative paths get siteUrl prepended
-            var imgSrc = /^https?:\/\//.test(iconPath) ? safePath : escapeHtml(lrsdSfCardCreator.siteUrl + iconPath);
+            var imgSrc = isAbsoluteUrl(iconPath) ? safePath : escapeHtml(lrsdSfCardCreator.siteUrl + iconPath);
             var label = escapeHtml(iconPath.replace(/^.*\//, '').replace(/\.[^.]+$/, ''));
             return '<button type="button" class="lrsd-sf-icon-option" data-icon="' + safePath + '">' +
                 '<img src="' + imgSrc + '" alt="" loading="lazy"><span>' + label + '</span></button>';
@@ -535,6 +539,7 @@
 
     function openMediaLibraryPicker() {
         if (!window.wp || !window.wp.media) {
+            showStatus(getI18n('mediaLibraryUnavailable', 'Media library is not available. Please reload the page and try again.'), 'error');
             return;
         }
         var frame = window.wp.media({

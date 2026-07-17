@@ -306,13 +306,19 @@ function lrsd_sf_card_creator_sanitize_card(array $raw_card, array $registry, ar
         return new WP_Error('missing_title', __('Card title is required.', 'lrsd-school-facilities'));
     }
 
-    $icon = sanitize_text_field((string) ($raw_card['icon'] ?? ''));
-    // Preserve full URLs (media library picks) without stripping the scheme
-    if (filter_var($icon, FILTER_VALIDATE_URL)) {
-        $icon = esc_url_raw($icon);
-    }
-    if ($icon === '' || (!in_array($icon, $icons, true) && !lrsd_sf_is_media_library_icon($icon))) {
-        return new WP_Error('invalid_icon', __('Select a valid icon from the icon picker.', 'lrsd-school-facilities'));
+    $icon_raw = (string) ($raw_card['icon'] ?? '');
+    // Validate icon: either a registered registry path or a valid media library attachment URL
+    if (filter_var($icon_raw, FILTER_VALIDATE_URL)) {
+        // Full URL — must be a valid attachment from this site's media library
+        $icon = esc_url_raw($icon_raw);
+        if ($icon === '' || !lrsd_sf_is_media_library_icon($icon)) {
+            return new WP_Error('invalid_icon', __('Select a valid icon from the icon picker.', 'lrsd-school-facilities'));
+        }
+    } else {
+        $icon = sanitize_text_field($icon_raw);
+        if ($icon === '' || !in_array($icon, $icons, true)) {
+            return new WP_Error('invalid_icon', __('Select a valid icon from the icon picker.', 'lrsd-school-facilities'));
+        }
     }
 
     $schema      = $registry[$card_type];
