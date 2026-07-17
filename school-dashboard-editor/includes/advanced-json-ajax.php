@@ -38,12 +38,7 @@ function lrsd_sf_import_dataset(array $decoded) {
     $global_custom_cards = [];
 
     if (isset($decoded['globalCustomCards']) && is_array($decoded['globalCustomCards'])) {
-        foreach ($decoded['globalCustomCards'] as $card) {
-            $sanitized_card = lrsd_sf_sanitize_custom_card_definition($card);
-            if ($sanitized_card !== null) {
-                $global_custom_cards[] = $sanitized_card;
-            }
-        }
+        $global_custom_cards = $decoded['globalCustomCards'];
     }
 
     foreach ($decoded as $key => $school) {

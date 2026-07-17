@@ -362,183 +362,6 @@ function lrsd_sf_get_global_custom_cards() {
 }
 
 /**
- * Returns available display types for custom cards.
- */
-function lrsd_sf_get_custom_card_display_types() {
-    return [
-        'details_list' => __('Label and Value List', 'lrsd-school-facilities'),
-        'simple_list'  => __('Simple List', 'lrsd-school-facilities'),
-        'highlight'    => __('Large Number', 'lrsd-school-facilities'),
-        'image'        => __('Image Card', 'lrsd-school-facilities'),
-        'stat'         => __('Highlights Grid', 'lrsd-school-facilities'),
-    ];
-}
-
-/**
- * Sanitize a custom card display type.
- */
-function lrsd_sf_sanitize_custom_card_type($card_type) {
-    $card_type = sanitize_key((string) $card_type);
-    $aliases = [
-        'list'        => 'details_list',
-        'two_column'  => 'details_list',
-        'single_list' => 'simple_list',
-        'one_column'  => 'simple_list',
-        'number'      => 'highlight',
-    ];
-
-    if (isset($aliases[$card_type])) {
-        $card_type = $aliases[$card_type];
-    }
-
-    $types = lrsd_sf_get_custom_card_display_types();
-    return isset($types[$card_type]) ? $card_type : 'details_list';
-}
-
-/**
- * Returns note display modes for custom cards.
- */
-function lrsd_sf_get_custom_card_note_modes() {
-    return [
-        'inline' => __('Show note below the card', 'lrsd-school-facilities'),
-        'flip'   => __('Show note on the back of the card', 'lrsd-school-facilities'),
-    ];
-}
-
-/**
- * Sanitize a custom card note mode.
- */
-function lrsd_sf_sanitize_custom_card_note_mode($note_mode) {
-    $note_mode = sanitize_key((string) $note_mode);
-    return in_array($note_mode, ['inline', 'flip'], true) ? $note_mode : 'inline';
-}
-
-/**
- * Returns supported value input types for editable custom-card rows.
- */
-function lrsd_sf_get_custom_card_value_types() {
-    return [
-        'text'   => __('Plain text', 'lrsd-school-facilities'),
-        'number' => __('Number', 'lrsd-school-facilities'),
-        'select' => __('Custom dropdown', 'lrsd-school-facilities'),
-    ];
-}
-
-/**
- * Sanitize a custom card value input type.
- */
-function lrsd_sf_sanitize_custom_card_value_type($value_type) {
-    $value_type = sanitize_key((string) $value_type);
-    return in_array($value_type, ['text', 'number', 'select'], true) ? $value_type : 'text';
-}
-
-/**
- * Returns image size options for image custom cards.
- */
-function lrsd_sf_get_custom_card_image_sizes() {
-    return [
-        'standard' => __('Standard', 'lrsd-school-facilities'),
-        'wide'     => __('Wider', 'lrsd-school-facilities'),
-    ];
-}
-
-/**
- * Sanitize a custom card image size.
- */
-function lrsd_sf_sanitize_custom_card_image_size($image_size) {
-    $image_size = sanitize_key((string) $image_size);
-    return in_array($image_size, ['standard', 'wide'], true) ? $image_size : 'standard';
-}
-
-/**
- * Sanitize one editable row within a custom card.
- */
-function lrsd_sf_sanitize_custom_card_item($item) {
-    if (!is_array($item)) {
-        return null;
-    }
-
-    $options = [];
-    if (is_array($item['options'] ?? null)) {
-        foreach ($item['options'] as $option) {
-            $option = sanitize_text_field($option);
-            if ($option !== '' && !in_array($option, $options, true)) {
-                $options[] = $option;
-            }
-        }
-    } elseif (is_string($item['options'] ?? null)) {
-        foreach (preg_split('/\r\n|\r|\n/', (string) $item['options']) as $option) {
-            $option = sanitize_text_field(trim($option));
-            if ($option !== '' && !in_array($option, $options, true)) {
-                $options[] = $option;
-            }
-        }
-    }
-
-    return [
-        'label'     => sanitize_text_field($item['label'] ?? ''),
-        'value'     => sanitize_text_field($item['value'] ?? ''),
-        'valueType' => lrsd_sf_sanitize_custom_card_value_type($item['valueType'] ?? 'text'),
-        'options'   => $options,
-    ];
-}
-
-/**
- * Sanitize a stored custom card definition.
- */
-function lrsd_sf_sanitize_custom_card_definition($card) {
-    if (!is_array($card)) {
-        return null;
-    }
-
-    $sanitized = [
-        'id'               => sanitize_key($card['id'] ?? ('custom_' . wp_generate_password(6, false))),
-        'title'            => sanitize_text_field($card['title'] ?? ''),
-        'icon'             => esc_url_raw($card['icon'] ?? ''),
-        'category'         => sanitize_text_field($card['category'] ?? ''),
-        'cardType'         => lrsd_sf_sanitize_custom_card_type($card['cardType'] ?? 'details_list'),
-        'notes'            => sanitize_textarea_field($card['notes'] ?? ''),
-        'noteMode'         => lrsd_sf_sanitize_custom_card_note_mode($card['noteMode'] ?? 'inline'),
-        'noteTitle'        => sanitize_text_field($card['noteTitle'] ?? ''),
-        'imageUrl'         => esc_url_raw($card['imageUrl'] ?? ''),
-        'imageSize'        => lrsd_sf_sanitize_custom_card_image_size($card['imageSize'] ?? 'standard'),
-        'imageOverlayText' => sanitize_text_field($card['imageOverlayText'] ?? ''),
-        'imageLink'        => esc_url_raw($card['imageLink'] ?? ''),
-        'items'            => [],
-    ];
-
-    if (is_array($card['items'] ?? null)) {
-        foreach ($card['items'] as $item) {
-            $sanitized_item = lrsd_sf_sanitize_custom_card_item($item);
-            if ($sanitized_item === null) {
-                continue;
-            }
-
-            if (
-                $sanitized_item['label'] === '' &&
-                $sanitized_item['value'] === '' &&
-                empty($sanitized_item['options'])
-            ) {
-                continue;
-            }
-
-            $sanitized['items'][] = $sanitized_item;
-        }
-    }
-
-    if ($sanitized['cardType'] === 'highlight' && empty($sanitized['items'])) {
-        $sanitized['items'][] = [
-            'label'     => '',
-            'value'     => '',
-            'valueType' => 'text',
-            'options'   => [],
-        ];
-    }
-
-    return $sanitized['id'] === '' ? null : $sanitized;
-}
-
-/**
  * Returns the standard dashboard card order used by the frontend.
  *
  * Keep this list in sync with DEFAULT_SCHOOL_CARD_TYPES in /app.js so the
@@ -611,84 +434,20 @@ function lrsd_sf_normalize_card_order($card_order, array $school_custom_ids = []
 }
 
 /**
- * Normalize custom card values to only include existing global cards.
- */
-function lrsd_sf_normalize_custom_card_values($raw_values, array $global_card_ids = []) {
-    if (!is_array($raw_values) || empty($global_card_ids)) {
-        return [];
-    }
-
-    $normalized = [];
-
-    foreach ($raw_values as $card_id => $card_data) {
-        $card_id = sanitize_key((string) $card_id);
-        if ($card_id === '' || !in_array($card_id, $global_card_ids, true) || !is_array($card_data)) {
-            continue;
-        }
-
-        $items = [];
-        if (is_array($card_data['items'] ?? null)) {
-            foreach ($card_data['items'] as $item) {
-                $sanitized_item = lrsd_sf_sanitize_custom_card_item($item);
-                if ($sanitized_item === null) {
-                    continue;
-                }
-
-                $items[] = $sanitized_item;
-            }
-        }
-
-        $normalized[$card_id] = [
-            'notes'            => sanitize_textarea_field($card_data['notes'] ?? ''),
-            'imageUrl'         => esc_url_raw($card_data['imageUrl'] ?? ''),
-            'imageOverlayText' => sanitize_text_field($card_data['imageOverlayText'] ?? ''),
-            'imageLink'        => esc_url_raw($card_data['imageLink'] ?? ''),
-            'items'            => $items,
-        ];
-    }
-
-    return $normalized;
-}
-
-/**
  * Normalize stored school dashboard metadata for export/rendering.
  */
 function lrsd_sf_normalize_school_dashboard_data(array $school_data, array $global_custom_cards = []) {
-    $has_card_order = isset($school_data['cardOrder']) && is_array($school_data['cardOrder']);
-    $custom_cards = [];
-    if (is_array($school_data['customCards'] ?? null)) {
-        foreach ($school_data['customCards'] as $card) {
-            $sanitized_card = lrsd_sf_sanitize_custom_card_definition($card);
-            if ($sanitized_card !== null) {
-                $custom_cards[] = $sanitized_card;
-            }
-        }
-    }
-
-    $school_custom_ids = array_column($custom_cards, 'id');
-    $global_card_ids   = array_column($global_custom_cards, 'id');
+    $has_card_order  = isset($school_data['cardOrder']) && is_array($school_data['cardOrder']);
+    $global_card_ids = array_column($global_custom_cards, 'id');
 
     if ($has_card_order) {
         $school_data['cardOrder'] = lrsd_sf_normalize_card_order(
             $school_data['cardOrder'],
-            $school_custom_ids,
+            [],
             $global_card_ids
         );
     } else {
         unset($school_data['cardOrder']);
-    }
-
-    if (!empty($custom_cards)) {
-        $school_data['customCards'] = $custom_cards;
-    } else {
-        unset($school_data['customCards']);
-    }
-
-    $custom_card_values = lrsd_sf_normalize_custom_card_values($school_data['customCardValues'] ?? [], $global_card_ids);
-    if (!empty($custom_card_values)) {
-        $school_data['customCardValues'] = $custom_card_values;
-    } else {
-        unset($school_data['customCardValues']);
     }
 
     return $school_data;
@@ -760,40 +519,4 @@ function lrsd_sf_ajax_add_custom_option() {
     }
 
     wp_send_json_success(['option_val' => $option_val]);
-}
-
-/**
- * admin-post: Save global custom card templates from the Card Editor page.
- */
-function lrsd_sf_handle_save_global_cards() {
-    check_admin_referer('lrsd_sf_save_global_cards_action', 'lrsd_sf_save_global_cards_nonce');
-
-    if (!current_user_can('manage_options')) {
-        wp_die(esc_html__('You do not have permission to perform this action.', 'lrsd-school-facilities'));
-    }
-
-    $raw = isset($_POST['lrsd_sf_global_cards_json'])
-        ? trim(wp_unslash($_POST['lrsd_sf_global_cards_json']))
-        : '';
-
-    $cards = [];
-    if ($raw !== '') {
-        $decoded = json_decode($raw, true);
-        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-            foreach ($decoded as $card) {
-                $sanitized_card = lrsd_sf_sanitize_custom_card_definition($card);
-                if ($sanitized_card !== null) {
-                    $cards[] = $sanitized_card;
-                }
-            }
-        }
-    }
-
-    update_option('lrsd_sf_global_custom_cards', $cards);
-    lrsd_sf_push_version_history(__('Card templates save', 'lrsd-school-facilities'));
-    lrsd_sf_flush_dataset_cache();
-    lrsd_sf_set_admin_notice(__('Global card templates saved.', 'lrsd-school-facilities'), 'success');
-
-    wp_safe_redirect(add_query_arg(['page' => 'lrsd-school-facilities-cards'], admin_url('admin.php')));
-    exit;
 }
