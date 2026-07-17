@@ -400,7 +400,7 @@ function lrsd_sf_card_creator_sanitize_card(array $raw_card, array $registry, ar
         }
         $label = sanitize_text_field((string) ($item['label'] ?? ''));
         $value = sanitize_text_field((string) ($item['value'] ?? ''));
-        $value_type = sanitize_key((string) ($item['valueType'] ?? 'text'));
+        $value_type = sanitize_key((string) ($item['valueType'] ?? ''));
         if (!in_array($value_type, ['text', 'number', 'dropdown'], true)) {
             $value_type = 'text';
         }

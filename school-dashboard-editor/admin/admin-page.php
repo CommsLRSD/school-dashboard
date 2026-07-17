@@ -682,7 +682,12 @@ function lrsd_sf_render_bulk_update_page() {
                                 <td><input type="number" step="any" class="regular-text" name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][custom_item_values][<?php echo esc_attr((string) $custom_item_index); ?>]" value="<?php echo esc_attr($custom_value); ?>" /></td>
                                     <?php elseif ($custom_value_type === 'dropdown') :
                                         $custom_options = isset($custom_item['options']) && is_array($custom_item['options']) ? array_values($custom_item['options']) : [];
-                                        $custom_options = array_values(array_filter(array_map('sanitize_text_field', $custom_options), static function ($option) { return $option !== ''; }));
+                                        $custom_options = array_values(array_filter(
+                                            array_map('sanitize_text_field', $custom_options),
+                                            static function ($option) {
+                                                return $option !== '';
+                                            }
+                                        ));
                                         if ($custom_value !== '' && !in_array($custom_value, $custom_options, true)) {
                                             $custom_options[] = $custom_value;
                                         }
