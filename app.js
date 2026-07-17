@@ -471,33 +471,92 @@ document.addEventListener('DOMContentLoaded', function() {
     const renderCustomCardHtml = (template, schoolValues, sizeClass) => {
         const iconSrc  = template.icon || 'public/icon/details.svg';
         const title    = sanitizeHTML(template.title || 'Custom Card');
-        const cardType = template.cardType || 'list';
+        const rawType  = template.cardType || 'details_list';
+        const cardType = rawType === 'list' ? 'details_list' : rawType;
+        const noteMode = template.noteMode === 'flip' ? 'flip' : 'inline';
+        const noteTitle = sanitizeHTML(template.noteTitle || `${template.title || 'Custom Card'} Note`);
 
-        // Build item list: if schoolValues provided (global card), merge labels with school values
-        let items = Array.isArray(template.items) ? template.items : [];
+        let items = Array.isArray(template.items) ? template.items.map(item => ({
+            label: item.label || '',
+            value: item.value || '',
+            valueType: item.valueType || 'text',
+            options: Array.isArray(item.options) ? item.options : [],
+        })) : [];
+
         if (schoolValues && Array.isArray(schoolValues.items) && schoolValues.items.length > 0) {
-            // Global card: use template labels, school values
             const valMap = {};
-            schoolValues.items.forEach(si => { valMap[si.label || ''] = si.value || ''; });
-            items = items.map(ti => ({ label: ti.label || '', value: valMap[ti.label || ''] || '' }));
+            schoolValues.items.forEach(si => {
+                valMap[si.label || ''] = si.value || '';
+            });
+            items = items.map(ti => ({
+                label: ti.label || '',
+                value: ((ti.label || '') in valMap) ? valMap[ti.label || ''] : (ti.value || ''),
+                valueType: ti.valueType || 'text',
+                options: ti.options || [],
+            }));
         }
 
-        // Notes: school override takes precedence for global cards; template notes for school cards
         const notesText = (schoolValues && schoolValues.notes) ? schoolValues.notes : (template.notes || '');
-        const notesHtml = notesText ? `<div class="tile-footnote-static">${sanitizeHTML(notesText)}</div>` : '';
+        const notesInlineHtml = notesText && noteMode !== 'flip'
+            ? `<div class="tile-footnote-static">${sanitizeHTML(notesText)}</div>`
+            : '';
+        const noteButton = notesText && noteMode === 'flip'
+            ? `<button class="info-icon-btn" data-info-type="${sanitizeHTML(template.id || template.title || 'custom-card')}" aria-label="Show note information"><img src="public/icon/info.svg" alt=""></button>`
+            : '';
+        const noteBackHtml = sanitizeHTML(notesText || '').replace(/\n/g, '<br>');
+        const infoType = sanitizeHTML(template.id || template.title || 'custom-card');
+
+        if (cardType === 'image') {
+            const imageUrl = sanitizeHTML((schoolValues && schoolValues.imageUrl) || template.imageUrl || '');
+            const overlayText = sanitizeHTML((schoolValues && schoolValues.imageOverlayText) || template.imageOverlayText || '');
+            const imageLink = sanitizeHTML((schoolValues && schoolValues.imageLink) || template.imageLink || '');
+            const imageAlt = overlayText || title;
+            const imageBody = imageUrl
+                ? `<img src="${imageUrl}" alt="${imageAlt}" class="custom-image-card-image">`
+                : `<div class="custom-image-card-placeholder">No image added.</div>`;
+            const imageContent = `<div class="card-header"><img src="${iconSrc}" alt="" class="card-header-icon"><h2 class="card-title">${title}</h2></div><div class="card-body"><div class="custom-image-card-frame ${template.imageSize === 'wide' ? 'custom-image-card-frame--wide' : ''}">${imageLink ? `<a href="${imageLink}" class="custom-image-card-link">` : ''}${imageBody}${overlayText ? `<div class="custom-image-card-overlay">${overlayText}</div>` : ''}${imageLink ? '</a>' : ''}</div>${noteButton}${notesInlineHtml}</div>`;
+            const imageClass = `list-card custom-image-card ${sizeClass} ${template.imageSize === 'wide' ? 'tile-double-width' : ''}`.trim();
+            return notesText && noteMode === 'flip'
+                ? createFlippableCard(imageClass, imageContent, noteTitle, iconSrc, noteBackHtml, infoType)
+                : `<div class="data-card ${imageClass}">${imageContent}</div>`;
+        }
+
+        if (cardType === 'highlight') {
+            const highlightItem = items[0] || {};
+            const frontContent = `<div class="card-header"><img src="${iconSrc}" alt="" class="card-header-icon"><h2 class="card-title">${title}</h2></div><div class="card-body"><div class="stat-value">${sanitizeHTML(highlightItem.value || '\u2014')}</div><div class="stat-label">${sanitizeHTML(highlightItem.label || '')}</div>${noteButton}${notesInlineHtml}</div>`;
+            return notesText && noteMode === 'flip'
+                ? createFlippableCard(`stat-card ${sizeClass}`, frontContent, noteTitle, iconSrc, noteBackHtml, infoType)
+                : `<div class="data-card stat-card ${sizeClass}">${frontContent}</div>`;
+        }
 
         if (cardType === 'stat') {
             const statItems = items.map(it =>
                 `<div class="stat-item"><div class="stat-item-label">${sanitizeHTML(it.label || '')}</div><div class="stat-item-value">${sanitizeHTML(it.value || '\u2014')}</div></div>`
             ).join('') || `<div class="stat-item"><div class="stat-item-value">\u2014</div></div>`;
-            return `<div class="data-card stat-card ${sizeClass}"><div class="card-header"><img src="${iconSrc}" alt="" class="card-header-icon"><h2 class="card-title">${title}</h2></div><div class="card-body"><div class="stats-grid">${statItems}</div>${notesHtml}</div></div>`;
+            const frontContent = `<div class="card-header"><img src="${iconSrc}" alt="" class="card-header-icon"><h2 class="card-title">${title}</h2></div><div class="card-body"><div class="stats-grid">${statItems}</div>${noteButton}${notesInlineHtml}</div>`;
+            return notesText && noteMode === 'flip'
+                ? createFlippableCard(`stat-card ${sizeClass}`, frontContent, noteTitle, iconSrc, noteBackHtml, infoType)
+                : `<div class="data-card stat-card ${sizeClass}">${frontContent}</div>`;
         }
 
-        // Default: list card
+        if (cardType === 'simple_list') {
+            const listItems = items.map(it => sanitizeHTML(it.value || it.label || '')).filter(Boolean);
+            const markup = listItems.length
+                ? listItems.map(it => `<li class="detail-item detail-item-single"><span class="detail-label detail-label-full">${it}</span></li>`).join('')
+                : '<li class="detail-item">No data available.</li>';
+            const frontContent = `<div class="card-header"><img src="${iconSrc}" alt="" class="card-header-icon"><h2 class="card-title">${title}</h2></div><div class="card-body"><ul class="detail-list">${markup}</ul>${noteButton}${notesInlineHtml}</div>`;
+            return notesText && noteMode === 'flip'
+                ? createFlippableCard(`list-card ${sizeClass}`, frontContent, noteTitle, iconSrc, noteBackHtml, infoType)
+                : `<div class="data-card list-card ${sizeClass}">${frontContent}</div>`;
+        }
+
         const listItems = items.map(it =>
             `<li class="detail-item"><span class="detail-label">${sanitizeHTML(it.label || '')}</span><span class="detail-value">${sanitizeHTML(it.value || '')}</span></li>`
         ).join('') || '<li class="detail-item">No data available.</li>';
-        return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="${iconSrc}" alt="" class="card-header-icon"><h2 class="card-title">${title}</h2></div><div class="card-body"><ul class="detail-list">${listItems}</ul>${notesHtml}</div></div>`;
+        const frontContent = `<div class="card-header"><img src="${iconSrc}" alt="" class="card-header-icon"><h2 class="card-title">${title}</h2></div><div class="card-body"><ul class="detail-list">${listItems}</ul>${noteButton}${notesInlineHtml}</div>`;
+        return notesText && noteMode === 'flip'
+            ? createFlippableCard(`list-card ${sizeClass}`, frontContent, noteTitle, iconSrc, noteBackHtml, infoType)
+            : `<div class="data-card list-card ${sizeClass}">${frontContent}</div>`;
     };
 
     /**

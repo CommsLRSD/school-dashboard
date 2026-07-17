@@ -34,41 +34,20 @@ function lrsd_sf_import_dataset(array $decoded) {
     $updated = 0;
     $errors  = 0;
 
-    $skip_keys = ['lastUpdated', 'fosMapLookup', 'globalCustomCards'];
+    $skip_keys = lrsd_sf_get_reserved_dataset_keys();
     $global_custom_cards = [];
 
     if (isset($decoded['globalCustomCards']) && is_array($decoded['globalCustomCards'])) {
         foreach ($decoded['globalCustomCards'] as $card) {
-            if (!is_array($card)) {
-                continue;
-            }
-            $s_card = [
-                'id'       => sanitize_key($card['id'] ?? ('custom_' . wp_generate_password(6, false))),
-                'title'    => sanitize_text_field($card['title'] ?? ''),
-                'icon'     => sanitize_text_field($card['icon'] ?? ''),
-                'category' => sanitize_text_field($card['category'] ?? ''),
-                'cardType' => lrsd_sf_sanitize_custom_card_type($card['cardType'] ?? 'list'),
-                'items'    => [],
-                'notes'    => sanitize_textarea_field($card['notes'] ?? ''),
-            ];
-            if (is_array($card['items'] ?? null)) {
-                foreach ($card['items'] as $item) {
-                    if (!is_array($item)) {
-                        continue;
-                    }
-                    $s_card['items'][] = [
-                        'label' => sanitize_text_field($item['label'] ?? ''),
-                    ];
-                }
-            }
-            if ($s_card['id'] !== '') {
-                $global_custom_cards[] = $s_card;
+            $sanitized_card = lrsd_sf_sanitize_custom_card_definition($card);
+            if ($sanitized_card !== null) {
+                $global_custom_cards[] = $sanitized_card;
             }
         }
     }
 
     foreach ($decoded as $key => $school) {
-        if (in_array($key, $skip_keys, true)) {
+        if (lrsd_sf_is_reserved_dataset_key($key)) {
             continue;
         }
         if (!is_array($school)) {
