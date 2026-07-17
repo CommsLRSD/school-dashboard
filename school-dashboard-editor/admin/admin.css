@@ -1162,3 +1162,57 @@
     margin: 8px 0 0;
     color: #777;
 }
+
+/* ── Delete confirmation modal ─────────────────────────────────────────── */
+.lrsd-sf-delete-modal {
+    position: fixed;
+    z-index: 100001;
+    inset: 0;
+    background: rgba(30, 35, 40, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.lrsd-sf-delete-modal[hidden] {
+    display: none !important;
+}
+
+.lrsd-sf-delete-dialog {
+    width: min(460px, 100%);
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #dcdcde;
+    padding: 28px 28px 22px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.18);
+}
+
+.lrsd-sf-delete-modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #d63638;
+    margin: 0 0 12px;
+}
+
+.lrsd-sf-delete-modal-body {
+    color: #3c434a;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.lrsd-sf-delete-confirm-input {
+    width: 100%;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.lrsd-sf-delete-modal-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
