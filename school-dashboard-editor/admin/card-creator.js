@@ -141,7 +141,7 @@
             var title = card.title || card.id || getI18n('unsavedCardFallback', 'Unsaved card');
             return '' +
                 '<li class="lrsd-sf-card-list-item">' +
-                    '<button type="button" class="button button-link lrsd-sf-card-open lrsd-sf-card-edit-inline" data-index="' + String(index) + '">' + escapeHtml(title) + '</button>' +
+                    '<button type="button" class="button button-link lrsd-sf-card-open" data-index="' + String(index) + '">' + escapeHtml(title) + '</button>' +
                     '<div class="lrsd-sf-card-list-actions">' +
                         '<button type="button" class="button button-small lrsd-sf-card-edit-inline" data-index="' + String(index) + '">' + escapeHtml(getI18n('editCard', 'Edit')) + '</button>' +
                         '<button type="button" class="button button-small button-link-delete lrsd-sf-card-delete-inline" data-index="' + String(index) + '">' + escapeHtml(getI18n('deleteCard', 'Delete')) + '</button>' +
