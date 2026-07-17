@@ -163,9 +163,9 @@
             return;
         }
         var card = entry.card;
-        // If the card's icon is a full URL (media library pick) not yet in the registry, add it
-        if (card.icon && isAbsoluteUrl(card.icon) && $.inArray(card.icon, data.icons) === -1) {
-            data.icons.unshift(card.icon);
+        // If the card's icon is a full URL (media library pick), ensure it's in the grid
+        if (card.icon && isAbsoluteUrl(card.icon)) {
+            ensureIconInRegistry(card.icon);
         }
         ui.cardSelect.val(String(data.currentIndex));
         ui.title.val(card.title || '');
@@ -511,6 +511,19 @@
         return /^https?:\/\//.test(str);
     }
 
+    function iconLabel(iconPath) {
+        // Strip query string and fragment for media library URLs, then extract the filename without extension
+        var clean = iconPath.replace(/[?#].*$/, '');
+        var filename = clean.replace(/^.*\//, '') || clean;
+        return filename.replace(/\.[^.]+$/, '') || iconPath;
+    }
+
+    function ensureIconInRegistry(url) {
+        if (url && $.inArray(url, data.icons) === -1) {
+            data.icons.unshift(url);
+        }
+    }
+
     function renderIconGrid(filterText) {
         var q = (filterText || '').toLowerCase();
         var icons = data.icons.filter(function (iconPath) {
@@ -520,7 +533,7 @@
             var safePath = escapeHtml(iconPath);
             // Full URLs (media library picks) are used as-is; relative paths get siteUrl prepended
             var imgSrc = isAbsoluteUrl(iconPath) ? safePath : escapeHtml(lrsdSfCardCreator.siteUrl + iconPath);
-            var label = escapeHtml(iconPath.replace(/^.*\//, '').replace(/\.[^.]+$/, ''));
+            var label = escapeHtml(iconLabel(iconPath));
             return '<button type="button" class="lrsd-sf-icon-option" data-icon="' + safePath + '">' +
                 '<img src="' + imgSrc + '" alt="" loading="lazy"><span>' + label + '</span></button>';
         }).join('');
@@ -553,9 +566,7 @@
             if (!url) {
                 return;
             }
-            if ($.inArray(url, data.icons) === -1) {
-                data.icons.unshift(url);
-            }
+            ensureIconInRegistry(url);
             ui.icon.val(url);
             closeIconPicker();
             persistFormToCurrent();

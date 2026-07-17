@@ -105,7 +105,7 @@ function lrsd_sf_render_card_creator_page() {
                     <h2><?php esc_html_e('Choose Icon', 'lrsd-school-facilities'); ?></h2>
                     <div class="lrsd-sf-icon-picker-actions">
                         <button type="button" class="button" id="lrsd-sf-icon-media-library"><?php esc_html_e('From Media Library', 'lrsd-school-facilities'); ?></button>
-                        <button type="button" class="button-link" id="lrsd-sf-icon-picker-close"><?php esc_html_e('Close ✕', 'lrsd-school-facilities'); ?></button>
+                        <button type="button" class="button-link" id="lrsd-sf-icon-picker-close"><?php esc_html_e('Close', 'lrsd-school-facilities'); ?> &#x2715;</button>
                     </div>
                 </div>
                 <input type="search" id="lrsd-sf-icon-search" placeholder="<?php esc_attr_e('Search icons…', 'lrsd-school-facilities'); ?>" />
