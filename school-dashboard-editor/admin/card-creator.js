@@ -12,6 +12,7 @@
         schools: [],
         cards: [],
         currentIndex: -1,
+        previewReady: false,
     };
 
     var ui = {};
@@ -112,8 +113,8 @@
             renderTypeOptions();
             renderSchoolOptions();
             renderCardOptions();
-            selectCurrentCard();
             initPreviewFrame();
+            selectCurrentCard();
             hideStatus();
         }).fail(function () {
             showStatus(getI18n('loadError', 'Failed to load card data.'), 'error');
@@ -511,6 +512,48 @@
         return /^https?:\/\//.test(str);
     }
 
+    function getTrustedUrl(url) {
+        var value = String(url || '');
+        var parsed;
+        if (!value) {
+            return '';
+        }
+        try {
+            parsed = new window.URL(value, window.location.origin);
+        } catch (error) {
+            return '';
+        }
+        if (!/^https?:$/.test(parsed.protocol) || parsed.origin !== window.location.origin) {
+            return '';
+        }
+        return parsed.href;
+    }
+
+    function getAssetBaseUrl() {
+        return getTrustedUrl(lrsdSfCardCreator.assetBaseUrl) || getTrustedUrl(lrsdSfCardCreator.siteUrl) || '';
+    }
+
+    function resolveAssetUrl(path) {
+        var assetPath = String(path || '');
+        var baseUrl = getAssetBaseUrl();
+        if (!assetPath) {
+            return '';
+        }
+        if (isAbsoluteUrl(assetPath)) {
+            return getTrustedUrl(assetPath);
+        }
+        if (/^data:|^blob:/.test(assetPath)) {
+            return assetPath;
+        }
+        if (!baseUrl) {
+            return '';
+        }
+        if (!baseUrl.endsWith('/')) {
+            baseUrl += '/';
+        }
+        return baseUrl + assetPath.replace(/^\/+/, '');
+    }
+
     function iconLabel(iconPath) {
         // Strip query string and fragment for media library URLs, then extract the filename without extension
         var clean = iconPath.replace(/[?#].*$/, '');
@@ -531,8 +574,7 @@
         });
         var html = icons.map(function (iconPath) {
             var safePath = escapeHtml(iconPath);
-            // Full URLs (media library picks) are used as-is; relative paths get siteUrl prepended
-            var imgSrc = isAbsoluteUrl(iconPath) ? safePath : escapeHtml(lrsdSfCardCreator.siteUrl + iconPath);
+            var imgSrc = escapeHtml(resolveAssetUrl(iconPath));
             var label = escapeHtml(iconLabel(iconPath));
             return '<button type="button" class="lrsd-sf-icon-option" data-icon="' + safePath + '">' +
                 '<img src="' + imgSrc + '" alt="" loading="lazy"><span>' + label + '</span></button>';
@@ -575,15 +617,26 @@
     }
 
     function initPreviewFrame() {
+        var previewBaseUrl = getAssetBaseUrl();
+        var rendererUrl = getTrustedUrl(lrsdSfCardCreator.rendererUrl);
+        var frontendStylesUrl = getTrustedUrl(lrsdSfCardCreator.frontendStylesUrl);
+        var rendererScript = rendererUrl
+            ? '<script src="' + escapeHtml(rendererUrl) + '"></script>'
+            : '';
         var iframeDoc = '' +
             '<!doctype html><html><head><meta charset="utf-8">' +
-            '<base href="' + escapeHtml(lrsdSfCardCreator.siteUrl) + '">' +
-            '<link rel="stylesheet" href="' + escapeHtml(lrsdSfCardCreator.frontendStylesUrl) + '">' +
+            (previewBaseUrl ? '<base href="' + escapeHtml(previewBaseUrl) + '">' : '') +
+            (frontendStylesUrl ? '<link rel="stylesheet" href="' + escapeHtml(frontendStylesUrl) + '">' : '') +
             '<style>body{margin:0;padding:1rem;background:#f5f6f8}.card-grid{grid-template-columns:minmax(300px, 420px);grid-auto-rows:280px}.data-card{opacity:1;animation:none}</style>' +
             '</head><body><main class="card-grid" id="card-grid"></main>' +
-            '<script>' + (lrsdSfCardCreator.rendererSource || '') + '</script>' +
+            rendererScript +
             '<script>window.addEventListener("message",function(event){if(!event.data||event.data.type!=="render-card"){return;}var payload=event.data.payload||{};var root=document.getElementById("card-grid");if(!window.LrsdCardRenderer||!window.LrsdCardRenderer.renderCustomCardHtml){root.innerHTML="<p>Renderer unavailable.</p>";return;}root.innerHTML=window.LrsdCardRenderer.renderCustomCardHtml(payload.card||{},null,payload.sizeClass||"");});</script>' +
             '</body></html>';
+        data.previewReady = false;
+        ui.previewFrame.off('load.lrsdSfCardCreator').on('load.lrsdSfCardCreator', function () {
+            data.previewReady = true;
+            renderPreview();
+        });
         ui.previewFrame.attr('srcdoc', iframeDoc);
     }
 
@@ -597,7 +650,7 @@
         var entry = getCurrentEntry();
         if (!entry) return;
         var iframe = ui.previewFrame.get(0);
-        if (!iframe || !iframe.contentWindow) return;
+        if (!iframe || !iframe.contentWindow || !data.previewReady) return;
         iframe.contentWindow.postMessage({
             type: 'render-card',
             payload: {
