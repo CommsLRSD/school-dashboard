@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2026-07-16",
+    "lastUpdated": "2026-07-17",
     "fosMapLookup": {
         "J.H. BRUNS FOS": "public/maps/bruns-fos-map.svg",
         "BÉLIVEAU FOS": "public/maps/beliveau-fos-map.svg",
@@ -176,7 +176,8 @@
             "catchment_map",
             "projects_provincial",
             "projects_local"
-        ]
+        ],
+        "customCards": []
     },
     "beliveau": {
         "id": "beliveau",
@@ -321,7 +322,25 @@
         "familyOfSchools": "BÉLIVEAU FOS",
         "schoolLevel": "High School",
         "grades": "7-12",
-        "program": "French Immersion"
+        "program": "French Immersion",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "cjs": {
         "id": "cjs",
@@ -458,7 +477,25 @@
         "familyOfSchools": "JEANNE-SAUVÉ FOS",
         "schoolLevel": "High School",
         "grades": "9-12",
-        "program": "French Immersion"
+        "program": "French Immersion",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "dakota": {
         "id": "dakota",
@@ -595,7 +632,25 @@
         "familyOfSchools": "DAKOTA FOS",
         "schoolLevel": "High School",
         "grades": "9-12",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "darwin": {
         "id": "darwin",
@@ -710,7 +765,25 @@
         "familyOfSchools": "DAKOTA FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "drdwpenner": {
         "id": "drdwpenner",
@@ -831,13 +904,31 @@
         "familyOfSchools": "GLENLAWN FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "frontenac": {
         "id": "frontenac",
         "schoolName": "Frontenac School",
         "schoolType": "School",
-        "headerImage": "public/frontenac.jpg",
+        "headerImage": "http://www2.lrsd.net/wp-content/uploads/2026/07/frontenac-2.jpg",
         "address": "866 Autumnwood Dr.",
         "phone": "(204) 257-0609",
         "enrolment": {
@@ -906,7 +997,8 @@
         },
         "catchment": {
             "migration": "-1.0",
-            "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)"
+            "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)",
+            "map": ""
         },
         "transportation": {
             "Parking spots": "55",
@@ -930,9 +1022,11 @@
             "Tetherball"
         ],
         "childcare": {
-            "Infant (0-23 months)": 0,
-            "Pre-school (2-6 years)": 30,
-            "School-age (7+ years)": 30,
+            "Infant (0-23 months)": "0",
+            "Pre-school (2-6 years)": "30",
+            "School-age (5+ years)": "",
+            "School-age (7+ years)": "30",
+            "Special Needs (12+ years)": "",
             "BLAST": ""
         },
         "projects": {
@@ -974,7 +1068,25 @@
         "familyOfSchools": "WINDSOR PARK FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "generalvanier": {
         "id": "generalvanier",
@@ -1106,7 +1218,25 @@
         "familyOfSchools": "WINDSOR PARK FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "glenlawn": {
         "id": "glenlawn",
@@ -1245,7 +1375,25 @@
         "familyOfSchools": "GLENLAWN FOS",
         "schoolLevel": "High School",
         "grades": "9-12",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "glenwood": {
         "id": "glenwood",
@@ -1380,7 +1528,25 @@
         "familyOfSchools": "GLENLAWN FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "hspaul": {
         "id": "hspaul",
@@ -1501,7 +1667,26 @@
         "familyOfSchools": "DAKOTA FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ],
+        "customCards": []
     },
     "hastings": {
         "id": "hastings",
@@ -1623,7 +1808,25 @@
         "familyOfSchools": "DAKOTA FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "highbury": {
         "id": "highbury",
@@ -1764,7 +1967,25 @@
         "familyOfSchools": "DAKOTA FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "islandlakes": {
         "id": "islandlakes",
@@ -1892,7 +2113,25 @@
         "familyOfSchools": "J.H. BRUNS FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "jhbruns": {
         "id": "jhbruns",
@@ -2024,7 +2263,25 @@
         "familyOfSchools": "J.H. BRUNS FOS",
         "schoolLevel": "High School",
         "grades": "9-12",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "lavallee": {
         "id": "lavallee",
@@ -2143,7 +2400,25 @@
         "familyOfSchools": "DAKOTA FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "louisrielartstech": {
         "id": "louisrielartstech",
@@ -2266,7 +2541,25 @@
         "familyOfSchools": "Other",
         "schoolLevel": "High School",
         "grades": "Grade 11, 12, post-secondary",
-        "program": "Technical Vocational"
+        "program": "Technical Vocational",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "marion": {
         "id": "marion",
@@ -2404,7 +2697,25 @@
         "familyOfSchools": "NELSON MCINTYRE FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "minnetonka": {
         "id": "minnetonka",
@@ -2537,7 +2848,25 @@
         "familyOfSchools": "GLENLAWN FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "nelsonmcintyre": {
         "id": "nelsonmcintyre",
@@ -2684,7 +3013,25 @@
         "familyOfSchools": "NELSON MCINTYRE FOS",
         "schoolLevel": "High School",
         "grades": "9-12",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "niakwaplace": {
         "id": "niakwaplace",
@@ -2806,7 +3153,25 @@
         "familyOfSchools": "J.H. BRUNS FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "nordale": {
         "id": "nordale",
@@ -2943,7 +3308,26 @@
         "familyOfSchools": "NELSON MCINTYRE FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ],
+        "customCards": []
     },
     "sagecreek": {
         "id": "sagecreek",
@@ -3055,7 +3439,25 @@
         "familyOfSchools": "J.H. BRUNS FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "samuelburland": {
         "id": "samuelburland",
@@ -3179,7 +3581,25 @@
         "familyOfSchools": "GLENLAWN FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "shamrock": {
         "id": "shamrock",
@@ -3311,7 +3731,25 @@
         "familyOfSchools": "J.H. BRUNS FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "stgeorge": {
         "id": "stgeorge",
@@ -3447,7 +3885,25 @@
         "familyOfSchools": "GLENLAWN FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-6 (Grades 7 & 8 moved to Windsor School in 2024-25)",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "victorhlwyatt": {
         "id": "victorhlwyatt",
@@ -3569,7 +4025,25 @@
         "familyOfSchools": "DAKOTA FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "victormager": {
         "id": "victormager",
@@ -3697,7 +4171,25 @@
         "familyOfSchools": "DAKOTA FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "windsorpark": {
         "id": "windsorpark",
@@ -3824,7 +4316,25 @@
         "familyOfSchools": "WINDSOR PARK FOS",
         "schoolLevel": "High School",
         "grades": "9-12",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "windsor": {
         "id": "windsor",
@@ -3958,7 +4468,25 @@
         "familyOfSchools": "GLENLAWN FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8 (Includes Grades 7 & 8 students relocated from St. George School)",
-        "program": "English Program"
+        "program": "English Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "ecolegeorgemcdowell": {
         "id": "ecolegeorgemcdowell",
@@ -4085,7 +4613,25 @@
         "familyOfSchools": "JEANNE-SAUVÉ FOS",
         "schoolLevel": "Elementary School",
         "grades": "6-8",
-        "program": "French Immersion"
+        "program": "French Immersion",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "ecoleguyot": {
         "id": "ecoleguyot",
@@ -4208,7 +4754,26 @@
         "familyOfSchools": "BÉLIVEAU FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "French Immersion"
+        "program": "French Immersion",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ],
+        "customCards": []
     },
     "ecolehenribergeron": {
         "id": "ecolehenribergeron",
@@ -4327,7 +4892,25 @@
         "familyOfSchools": "BÉLIVEAU FOS",
         "schoolLevel": "Elementary School",
         "grades": "French Immersion 5-8; Middle Immersion 4-6",
-        "program": "French Immersion & Middle Immersion"
+        "program": "French Immersion & Middle Immersion",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "ecolehowden": {
         "id": "ecolehowden",
@@ -4460,7 +5043,25 @@
         "familyOfSchools": "BÉLIVEAU FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-6",
-        "program": "French Immersion"
+        "program": "French Immersion",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "ecolejulieriel": {
         "id": "ecolejulieriel",
@@ -4574,7 +5175,25 @@
         "familyOfSchools": "JEANNE-SAUVÉ FOS",
         "schoolLevel": "Elementary School",
         "grades": "French Immersion K-5; Middle Immersion 4-6",
-        "program": "French Immersion & Middle Immersion"
+        "program": "French Immersion & Middle Immersion",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "ecolemarieannegaboury": {
         "id": "ecolemarieannegaboury",
@@ -4712,7 +5331,25 @@
         "familyOfSchools": "JEANNE-SAUVÉ FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "French Immersion"
+        "program": "French Immersion",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "ecolemazinagiizhik": {
         "id": "ecolemazinagiizhik",
@@ -4803,7 +5440,25 @@
         "familyOfSchools": "BÉLIVEAU FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "French Immersion Program"
+        "program": "French Immersion Program",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "ecoleprovencher": {
         "id": "ecoleprovencher",
@@ -4935,7 +5590,25 @@
         "familyOfSchools": "BÉLIVEAU FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-4",
-        "program": "French Immersion"
+        "program": "French Immersion",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "ecolestgermain": {
         "id": "ecolestgermain",
@@ -5061,7 +5734,25 @@
         "familyOfSchools": "JEANNE-SAUVÉ FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-5",
-        "program": "French Immersion"
+        "program": "French Immersion",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "ecolevanbelleghem": {
         "id": "ecolevanbelleghem",
@@ -5197,7 +5888,25 @@
         "familyOfSchools": "BÉLIVEAU FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-8",
-        "program": "French Immersion"
+        "program": "French Immersion",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     },
     "ecolevarennes": {
         "id": "ecolevarennes",
@@ -5340,6 +6049,24 @@
         "familyOfSchools": "JEANNE-SAUVÉ FOS",
         "schoolLevel": "Elementary School",
         "grades": "K-6 (Grades 7 & 8 moved to École Henri Bergeron in 2025-26)",
-        "program": "French Immersion"
+        "program": "French Immersion",
+        "cardOrder": [
+            "school_header",
+            "details",
+            "additions",
+            "enrolment",
+            "capacity",
+            "utilization",
+            "projection",
+            "history",
+            "building_systems",
+            "accessibility",
+            "playground",
+            "transportation",
+            "childcare",
+            "catchment_map",
+            "projects_provincial",
+            "projects_local"
+        ]
     }
 }
