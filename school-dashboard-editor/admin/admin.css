@@ -1124,3 +1124,41 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ── Delete / Danger Zone ───────────────────────────────────────────────────── */
+
+.lrsd-sf-btn-danger {
+    color: #d63638 !important;
+    border-color: #d63638 !important;
+    background: #fff !important;
+}
+
+.lrsd-sf-btn-danger:hover,
+.lrsd-sf-btn-danger:focus {
+    color: #fff !important;
+    background: #d63638 !important;
+    border-color: #b32d2e !important;
+    box-shadow: 0 0 0 1px #b32d2e !important;
+}
+
+.lrsd-sf-danger-zone {
+    margin-top: 20px;
+    padding: 14px 16px;
+    border: 1px solid #f0c2c2;
+    border-radius: 4px;
+    background: #fff8f8;
+}
+
+.lrsd-sf-danger-zone-label {
+    font-weight: 600;
+    color: #d63638;
+    margin: 0 0 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.lrsd-sf-danger-zone .description {
+    margin: 8px 0 0;
+    color: #777;
+}

@@ -309,10 +309,17 @@ function lrsd_sf_render_school_list_page() {
         admin_url('admin-post.php?action=lrsd_sf_create_school'),
         'lrsd_sf_create_school'
     );
+    $notice = lrsd_sf_get_admin_notice();
     ?>
     <div class="wrap lrsd-sf-wrap">
         <h1><?php esc_html_e('Update by School', 'lrsd-school-facilities'); ?></h1>
         <a href="<?php echo esc_url($create_school_url); ?>" class="page-title-action"><?php esc_html_e('Add New School', 'lrsd-school-facilities'); ?></a>
+
+        <?php if (!empty($notice['message'])) : ?>
+            <div class="notice notice-<?php echo esc_attr(($notice['type'] ?? 'success') === 'success' ? 'success' : 'error'); ?> is-dismissible">
+                <p><?php echo wp_kses_post($notice['message']); ?></p>
+            </div>
+        <?php endif; ?>
 
         <?php if (empty($posts)) : ?>
             <p><?php esc_html_e('No published school records found. Import a JSON file first.', 'lrsd-school-facilities'); ?></p>
@@ -354,6 +361,10 @@ function lrsd_sf_render_school_list_page() {
                     $school_level_label = $sdata['schoolLevel'] ?? '';
                     $family_of_schools = $sdata['familyOfSchools'] ?? '';
                     $edit_url = get_edit_post_link($school_post->ID);
+                    $delete_url = wp_nonce_url(
+                        admin_url('admin-post.php?action=lrsd_sf_delete_school&post_id=' . (int) $school_post->ID),
+                        'lrsd_sf_delete_school_' . (int) $school_post->ID
+                    );
                     $search_index = strtolower(implode(' ', [$school_name, $school_type, $school_level_label, $family_of_schools]));
                 ?>
                     <tr class="lrsd-sf-school-row" data-school-search="<?php echo esc_attr($search_index); ?>">
@@ -361,7 +372,11 @@ function lrsd_sf_render_school_list_page() {
                         <td><?php echo esc_html($school_type ?: '—'); ?></td>
                         <td><?php echo esc_html($school_level_label ?: '—'); ?></td>
                         <td><?php echo esc_html($family_of_schools ?: '—'); ?></td>
-                        <td><a class="button button-secondary" href="<?php echo esc_url($edit_url); ?>"><?php esc_html_e('Edit School', 'lrsd-school-facilities'); ?></a></td>
+                        <td>
+                            <a class="button button-secondary" href="<?php echo esc_url($edit_url); ?>"><?php esc_html_e('Edit School', 'lrsd-school-facilities'); ?></a>
+                            <a class="button lrsd-sf-btn-danger" href="<?php echo esc_url($delete_url); ?>"
+                               onclick="return confirm('<?php echo esc_js(sprintf(/* translators: %s: school name */ __('Are you sure you want to delete "%s"? This will remove it from the web app immediately.', 'lrsd-school-facilities'), $school_name)); ?>');"><?php esc_html_e('Delete', 'lrsd-school-facilities'); ?></a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
@@ -447,6 +462,58 @@ function lrsd_sf_handle_create_school() {
 
     $edit_url = get_edit_post_link($post_id, 'raw');
     wp_safe_redirect($edit_url ? $edit_url : admin_url('post.php?post=' . (int) $post_id . '&action=edit'));
+    exit;
+}
+
+// ─── Delete School Handler ────────────────────────────────────────────────────
+
+function lrsd_sf_handle_delete_school() {
+    if (!current_user_can('delete_posts')) {
+        wp_die(esc_html__('You do not have permission to delete school records.', 'lrsd-school-facilities'));
+    }
+
+    $post_id = isset($_GET['post_id']) ? (int) $_GET['post_id'] : 0;
+    if ($post_id <= 0) {
+        wp_die(esc_html__('Invalid school record.', 'lrsd-school-facilities'));
+    }
+
+    check_admin_referer('lrsd_sf_delete_school_' . $post_id);
+
+    $post = get_post($post_id);
+    if (!$post || $post->post_type !== 'lr_school') {
+        lrsd_sf_set_admin_notice(__('School record not found.', 'lrsd-school-facilities'), 'error');
+        wp_safe_redirect(admin_url('admin.php?page=lrsd-school-facilities-schools'));
+        exit;
+    }
+
+    if (!lrsd_sf_is_valid_school_post($post)) {
+        lrsd_sf_set_admin_notice(__('This record cannot be deleted from here.', 'lrsd-school-facilities'), 'error');
+        wp_safe_redirect(admin_url('admin.php?page=lrsd-school-facilities-schools'));
+        exit;
+    }
+
+    $school_data = lrsd_sf_normalize_school_data(get_post_meta($post_id, 'lrsd_school_data', true));
+    $school_name = lrsd_sf_get_school_display_name($school_data, $post->post_title);
+
+    $trashed = wp_trash_post($post_id);
+    if (!$trashed) {
+        lrsd_sf_set_admin_notice(__('Could not delete the school record. Please try again.', 'lrsd-school-facilities'), 'error');
+        wp_safe_redirect(admin_url('admin.php?page=lrsd-school-facilities-schools'));
+        exit;
+    }
+
+    lrsd_sf_flush_dataset_cache();
+
+    lrsd_sf_set_admin_notice(
+        sprintf(
+            /* translators: %s: school name */
+            __('"%s" has been deleted and removed from the web app.', 'lrsd-school-facilities'),
+            $school_name
+        ),
+        'success'
+    );
+
+    wp_safe_redirect(admin_url('admin.php?page=lrsd-school-facilities-schools'));
     exit;
 }
 

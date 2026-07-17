@@ -707,6 +707,23 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         <?php lrsd_sf_render_section_footer(); ?>
 
     </div><!-- /.lrsd-sf-editor -->
+
+    <?php if (current_user_can('delete_post', $post->ID)) :
+        $delete_url = wp_nonce_url(
+            admin_url('admin-post.php?action=lrsd_sf_delete_school&post_id=' . (int) $post->ID),
+            'lrsd_sf_delete_school_' . (int) $post->ID
+        );
+        $school_name_for_confirm = lrsd_sf_get_school_display_name($school_data, $post->post_title);
+    ?>
+    <div class="lrsd-sf-danger-zone">
+        <p class="lrsd-sf-danger-zone-label"><?php esc_html_e('Danger Zone', 'lrsd-school-facilities'); ?></p>
+        <a href="<?php echo esc_url($delete_url); ?>"
+           class="button lrsd-sf-btn-danger"
+           onclick="return confirm('<?php echo esc_js(sprintf(/* translators: %s: school name */ __('Are you sure you want to delete "%s"? This will remove it from the web app immediately.', 'lrsd-school-facilities'), $school_name_for_confirm)); ?>');"
+        ><?php esc_html_e('Delete School', 'lrsd-school-facilities'); ?></a>
+        <p class="description"><?php esc_html_e('Permanently removes this school from the dashboard side nav. This action moves the record to Trash.', 'lrsd-school-facilities'); ?></p>
+    </div>
+    <?php endif; ?>
     <?php
 }
 
