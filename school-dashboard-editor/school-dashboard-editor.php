@@ -33,11 +33,26 @@ add_action('admin_post_lrsd_sf_import', 'lrsd_sf_handle_import');
 add_action('admin_post_lrsd_sf_export', 'lrsd_sf_handle_export');
 add_action('admin_post_lrsd_sf_bulk_update', 'lrsd_sf_handle_bulk_update');
 add_action('admin_post_lrsd_sf_create_school', 'lrsd_sf_handle_create_school');
+add_action('admin_post_lrsd_sf_delete_school', 'lrsd_sf_handle_delete_school');
 add_action('wp_ajax_lrsd_sf_add_custom_option', 'lrsd_sf_ajax_add_custom_option');
 add_action('add_meta_boxes_lr_school', 'lrsd_sf_register_school_meta_box');
 add_action('save_post_lr_school', 'lrsd_sf_save_school_meta', 10, 2);
 add_action('admin_enqueue_scripts', 'lrsd_sf_enqueue_admin_assets');
 add_action('admin_notices', 'lrsd_sf_render_editor_notice');
+
+// ─── Cache invalidation on post status changes ────────────────────────────────
+
+add_action('wp_trash_post', function ($post_id) {
+    if (get_post_type($post_id) === 'lr_school') {
+        lrsd_sf_flush_dataset_cache();
+    }
+});
+
+add_action('untrash_post', function ($post_id) {
+    if (get_post_type($post_id) === 'lr_school') {
+        lrsd_sf_flush_dataset_cache();
+    }
+});
 
 register_activation_hook(__FILE__, function () {
     lrsd_sf_register_post_type();
