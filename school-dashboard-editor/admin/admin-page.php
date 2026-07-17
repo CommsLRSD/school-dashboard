@@ -305,9 +305,14 @@ function lrsd_sf_render_school_list_page() {
     }
 
     $posts = lrsd_sf_get_editable_school_posts();
+    $create_school_url = wp_nonce_url(
+        admin_url('admin-post.php?action=lrsd_sf_create_school'),
+        'lrsd_sf_create_school'
+    );
     ?>
     <div class="wrap lrsd-sf-wrap">
         <h1><?php esc_html_e('Update by School', 'lrsd-school-facilities'); ?></h1>
+        <a href="<?php echo esc_url($create_school_url); ?>" class="page-title-action"><?php esc_html_e('Add New School', 'lrsd-school-facilities'); ?></a>
 
         <?php if (empty($posts)) : ?>
             <p><?php esc_html_e('No published school records found. Import a JSON file first.', 'lrsd-school-facilities'); ?></p>
@@ -344,7 +349,7 @@ function lrsd_sf_render_school_list_page() {
                 <?php foreach ($posts as $school_post) :
                     $school_level = get_post_meta($school_post->ID, 'lrsd_school_data', true);
                     $sdata = lrsd_sf_normalize_school_data($school_level);
-                    $school_name = trim((string) ($sdata['schoolName'] ?? $school_post->post_title));
+                    $school_name = lrsd_sf_get_school_display_name($sdata, $school_post->post_title);
                     $school_type = $sdata['schoolType'] ?? '';
                     $school_level_label = $sdata['schoolLevel'] ?? '';
                     $family_of_schools = $sdata['familyOfSchools'] ?? '';
@@ -404,6 +409,36 @@ function lrsd_sf_render_school_list_page() {
         <?php endif; ?>
     </div>
     <?php
+}
+
+function lrsd_sf_handle_create_school() {
+    if (!current_user_can('edit_posts')) {
+        wp_die(esc_html__('You do not have permission to create school records.', 'lrsd-school-facilities'));
+    }
+
+    check_admin_referer('lrsd_sf_create_school');
+
+    $post_id = wp_insert_post([
+        'post_type'   => 'lr_school',
+        'post_status' => 'publish',
+        'post_title'  => __('New School', 'lrsd-school-facilities'),
+    ], true);
+
+    if (is_wp_error($post_id) || $post_id <= 0) {
+        lrsd_sf_set_admin_notice(__('Could not create the new school record. Please try again.', 'lrsd-school-facilities'), 'error');
+        wp_safe_redirect(admin_url('admin.php?page=lrsd-school-facilities-schools'));
+        exit;
+    }
+
+    $school_id = lrsd_sf_generate_school_id($post_id);
+    update_post_meta($post_id, 'lrsd_school_id', $school_id);
+    update_post_meta($post_id, 'lrsd_school_data', lrsd_sf_encode_school_data(lrsd_sf_get_blank_school_data($school_id)));
+
+    lrsd_sf_set_editor_notice(__('New school created. Fill in the blank fields and save when ready.', 'lrsd-school-facilities'), 'success');
+
+    $edit_url = get_edit_post_link($post_id, 'raw');
+    wp_safe_redirect($edit_url ? $edit_url : admin_url('post.php?post=' . (int) $post_id . '&action=edit'));
+    exit;
 }
 
 // ─── Bulk Update Page ─────────────────────────────────────────────────────────

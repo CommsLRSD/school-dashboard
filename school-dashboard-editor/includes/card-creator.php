@@ -140,7 +140,7 @@ function lrsd_sf_get_card_creator_school_rows() {
         }
 
         $school_data = lrsd_sf_normalize_school_data(get_post_meta($post->ID, 'lrsd_school_data', true));
-        $name = trim((string) ($school_data['schoolName'] ?? $post->post_title));
+        $name = lrsd_sf_get_school_display_name($school_data, $post->post_title);
         if ($name === '') {
             $name = $school_id;
         }
@@ -151,6 +151,10 @@ function lrsd_sf_get_card_creator_school_rows() {
             'name'   => $name,
         ];
     }
+
+    usort($rows, static function ($left, $right) {
+        return strcasecmp((string) ($left['name'] ?? ''), (string) ($right['name'] ?? ''));
+    });
 
     return $rows;
 }

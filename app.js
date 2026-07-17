@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    const categories = {
+    const BASE_CATEGORIES = {
         "details": "Contact & Building Info",
         "enrolment_capacity": "Enrolment & Classroom Capacity",
         "history": "Historic Enrolment",
@@ -167,6 +167,21 @@ document.addEventListener('DOMContentLoaded', function() {
         "projects_provincial": "Provincially Funded Capital Projects",
         "projects_local": "Locally Funded Capital Projects"
     };
+
+    const getCategoryMap = () => {
+        const categoryMap = Object.assign({}, BASE_CATEGORIES);
+        const customCategories = (Array.isArray(globalCustomCards) ? globalCustomCards : [])
+            .filter((card) => card && card.id && card.title)
+            .sort((left, right) => String(left.title).localeCompare(String(right.title)))
+            .reduce((acc, card) => {
+                acc[card.id] = card.title;
+                return acc;
+            }, {});
+
+        return Object.assign(categoryMap, customCategories);
+    };
+
+    const getCategoryName = (categoryId) => getCategoryMap()[categoryId] || '';
 
     /**
      * Main Initialization Function
@@ -213,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Initialize selected IDs with first available values
             selectedSchoolId = schoolIds[0];
-            selectedCategoryId = Object.keys(categories)[0];
+            selectedCategoryId = Object.keys(getCategoryMap())[0];
             
             // Set footer timestamp
             if (lastUpdated) {
@@ -340,8 +355,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Add category links after the existing filter buttons
-        const categoryLinks = Object.entries(categories).map(([key, name]) => 
-            `<a href="#" class="nav-list-item" data-type="category" data-id="${key}">${name}</a>`
+        const categoryLinks = Object.entries(getCategoryMap()).map(([key, name]) =>
+            `<a href="#" class="nav-list-item" data-type="category" data-id="${sanitizeHTML(key)}">${sanitizeHTML(name)}</a>`
         ).join('');
         categoryListContainer.innerHTML += categoryLinks;
     }
@@ -1088,7 +1103,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const school = schoolData[selectedSchoolId];
             stickyBannerText.textContent = school.schoolName.toUpperCase();
         } else {
-            stickyBannerText.textContent = categories[selectedCategoryId].toUpperCase();
+            stickyBannerText.textContent = getCategoryName(selectedCategoryId).toUpperCase();
         }
         
         // Check if we're near the top of the page
@@ -1222,7 +1237,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const showWarningIcons = cardType === 'enrolment_capacity';
             
             const cardHTML = filteredSchools.map(school => {
-                const utilization = school.enrolment.current / school.enrolment.capacity;
+                const current = school.enrolment?.current || 0;
+                const capacity = school.enrolment?.capacity || 1;
+                const utilization = current / capacity;
                 const utilizationPercent = (utilization * 100).toFixed(1);
                 let warningIcon = '';
                 

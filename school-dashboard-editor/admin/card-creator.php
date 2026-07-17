@@ -10,13 +10,12 @@ function lrsd_sf_render_card_creator_page() {
     <div class="wrap lrsd-sf-wrap lrsd-sf-card-creator-wrap">
         <h1><?php esc_html_e('Card Creator', 'lrsd-school-facilities'); ?></h1>
         <p class="description">
-            <?php esc_html_e('Create, preview, duplicate, and save dashboard cards. Global cards appear on every school; Select Schools cards appear only on the schools you choose.', 'lrsd-school-facilities'); ?>
+            <?php esc_html_e('Create, preview, duplicate, and save dashboard cards. New cards start as Global cards, and you can switch to Select Schools inside the workspace whenever needed.', 'lrsd-school-facilities'); ?>
         </p>
 
         <div id="lrsd-sf-card-creator" class="lrsd-sf-card-creator-app">
             <div class="lrsd-sf-creator-topbar">
-                <button type="button" class="button button-primary" id="lrsd-sf-card-new-global"><?php esc_html_e('New Global Card', 'lrsd-school-facilities'); ?></button>
-                <button type="button" class="button" id="lrsd-sf-card-new-select"><?php esc_html_e('New Select Schools Card', 'lrsd-school-facilities'); ?></button>
+                <button type="button" class="button button-primary" id="lrsd-sf-card-new"><?php esc_html_e('New Card', 'lrsd-school-facilities'); ?></button>
             </div>
 
             <div id="lrsd-sf-card-status" class="lrsd-sf-card-status" aria-live="polite"></div>

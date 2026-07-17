@@ -309,6 +309,9 @@ function lrsd_sf_parse_posted_enrolment_series_points($labels_raw, $values_raw) 
 
 function lrsd_sf_render_school_meta_box(WP_Post $post) {
     $school_data     = lrsd_sf_normalize_school_data(get_post_meta($post->ID, 'lrsd_school_data', true));
+    if (empty($school_data)) {
+        $school_data = lrsd_sf_get_blank_school_data(lrsd_sf_generate_school_id($post->ID));
+    }
     $field_map       = lrsd_sf_get_simple_field_map();
     $dropdown_options= lrsd_sf_get_dropdown_options();
     $all_card_types  = lrsd_sf_get_all_card_types();
@@ -887,6 +890,10 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
     $school_id = isset($school_data['id']) ? sanitize_text_field((string)$school_data['id']) : '';
     if ($school_id === '') {
         $school_id = get_post_meta($post_id, 'lrsd_school_id', true);
+    }
+    if ($school_id === '') {
+        $school_id = lrsd_sf_generate_school_id($post_id);
+        $school_data['id'] = $school_id;
     }
     if ($school_id !== '') {
         update_post_meta($post_id, 'lrsd_school_id', $school_id);

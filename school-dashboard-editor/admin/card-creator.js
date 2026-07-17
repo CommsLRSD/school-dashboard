@@ -551,14 +551,6 @@
         selectCurrentCard();
     }
 
-    function newGlobalCard() {
-        newCard('global');
-    }
-
-    function newSelectSchoolCard() {
-        newCard('select');
-    }
-
     function resetCurrentCardDefaults() {
         var entry = getCurrentEntry();
         if (!entry) return;
@@ -1049,8 +1041,9 @@
         ui.btnDelete.on('click', deleteCurrentCard);
         ui.btnDuplicate.on('click', duplicateCurrentCard);
         ui.btnReset.on('click', resetCurrentCardDefaults);
-        ui.btnNewGlobal.on('click', newGlobalCard);
-        ui.btnNewSelect.on('click', newSelectSchoolCard);
+        ui.btnNew.on('click', function () {
+            newCard('global');
+        });
         ui.btnClose.on('click', closeWorkspace);
         ui.btnApplyJson.on('click', applyJsonToForm);
 
@@ -1085,8 +1078,7 @@
 
     $(function () {
         ui.cardSelect = $('#lrsd-sf-card-select');
-        ui.btnNewGlobal = $('#lrsd-sf-card-new-global');
-        ui.btnNewSelect = $('#lrsd-sf-card-new-select');
+        ui.btnNew = $('#lrsd-sf-card-new');
         ui.btnDuplicate = $('#lrsd-sf-card-duplicate');
         ui.btnReset = $('#lrsd-sf-card-reset');
         ui.btnDelete = $('#lrsd-sf-card-delete');

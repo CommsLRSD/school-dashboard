@@ -51,9 +51,22 @@ function lrsd_sf_is_valid_school_post($post) {
     }
 
     $school_data = lrsd_sf_normalize_school_data(get_post_meta($post->ID, 'lrsd_school_data', true));
-    $school_name = trim((string) ($school_data['schoolName'] ?? $post->post_title));
+    $school_name = lrsd_sf_get_school_display_name($school_data, $post->post_title);
 
     return $school_name !== '';
+}
+
+/**
+ * Resolve the admin-facing school label, falling back to the post title.
+ */
+function lrsd_sf_get_school_display_name($school_data, $fallback_title = '') {
+    $school_data = is_array($school_data) ? $school_data : [];
+    $school_name = trim((string) ($school_data['schoolName'] ?? ''));
+    if ($school_name !== '') {
+        return $school_name;
+    }
+
+    return trim((string) $fallback_title);
 }
 
 /**
@@ -268,6 +281,98 @@ function lrsd_sf_get_admin_notice() {
  */
 function lrsd_sf_encode_school_data(array $school_data) {
     return wp_slash(wp_json_encode($school_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+}
+
+/**
+ * Generate a stable internal school ID.
+ */
+function lrsd_sf_generate_school_id($post_id = 0) {
+    $post_id = (int) $post_id;
+    if ($post_id > 0) {
+        return 'school-' . $post_id;
+    }
+
+    return 'school-' . sanitize_key((string) wp_generate_password(12, false, false));
+}
+
+/**
+ * Build the blank school structure used for newly created records.
+ */
+function lrsd_sf_get_blank_school_data($school_id = '') {
+    $school_id = sanitize_key((string) $school_id);
+    if ($school_id === '') {
+        $school_id = lrsd_sf_generate_school_id();
+    }
+
+    $childcare = [];
+    foreach (lrsd_sf_get_childcare_labels() as $label) {
+        $childcare[$label] = 0;
+    }
+
+    return [
+        'id'          => $school_id,
+        'schoolType'  => '',
+        'headerImage' => '',
+        'address'     => '',
+        'phone'       => '',
+        'enrolment'   => [
+            'capacity'   => 0,
+            'current'    => 0,
+            'projection' => ['labels' => [], 'values' => []],
+            'history'    => ['labels' => [], 'values' => []],
+        ],
+        'details' => [
+            'Built'   => 0,
+            'Size'    => '',
+            'Modular' => 0,
+        ],
+        'additions' => [],
+        'building'  => [
+            'Air Conditioning' => '',
+            'Heating'          => '',
+            'LED Lighting'     => '',
+        ],
+        'catchment' => [
+            'migration'   => '',
+            'description' => '',
+            'map'         => '',
+        ],
+        'transportation' => [
+            'Parking spots' => '',
+            'Bus Loop'      => '',
+        ],
+        'accessibility' => [
+            "Girls' washrooms"                 => 0,
+            "Boys' washrooms"                  => 0,
+            'Gender neutral washrooms'         => 0,
+            'Universal Washroom'               => '',
+            'Elevator'                         => '',
+            'Accessible parking stalls'        => 0,
+            'Accessible entrance'              => '',
+            'Automatic entrance door operators' => '',
+        ],
+        'playground' => [],
+        'childcare'  => $childcare,
+        'projects'   => [
+            'provincial' => [
+                'requested'  => [],
+                'inProgress' => [],
+                'completed'  => [],
+            ],
+            'local' => [
+                'requested'  => [],
+                'inProgress' => [],
+                'completed'  => [],
+            ],
+        ],
+        'familyOfSchools'  => '',
+        'schoolLevel'      => '',
+        'grades'           => '',
+        'program'          => '',
+        'cardOrder'        => lrsd_sf_get_default_dashboard_card_order(),
+        'customCards'      => [],
+        'customCardValues' => [],
+    ];
 }
 
 /**
