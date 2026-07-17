@@ -157,52 +157,9 @@ function lrsd_sf_get_card_creator_school_rows() {
 
 function lrsd_sf_get_card_creator_cards_state() {
     $global_cards = lrsd_sf_get_global_custom_cards();
-    $schools      = lrsd_sf_get_card_creator_school_rows();
-    $school_cards = [];
-
-    foreach ($schools as $school_row) {
-        $school_data = lrsd_sf_normalize_school_data(get_post_meta($school_row['postId'], 'lrsd_school_data', true));
-        $cards       = isset($school_data['customCards']) && is_array($school_data['customCards']) ? $school_data['customCards'] : [];
-
-        foreach ($cards as $card) {
-            $card_id = sanitize_key((string) ($card['id'] ?? ''));
-            if ($card_id === '') {
-                continue;
-            }
-
-            if (!isset($school_cards[$card_id])) {
-                $school_cards[$card_id] = [
-                    'card'      => $card,
-                    'schoolIds' => [],
-                    'conflict'  => false,
-                ];
-            } else {
-                $existing = wp_json_encode($school_cards[$card_id]['card']);
-                $incoming = wp_json_encode($card);
-                if ($existing !== $incoming) {
-                    $school_cards[$card_id]['conflict'] = true;
-                }
-            }
-
-            $school_cards[$card_id]['schoolIds'][] = $school_row['id'];
-        }
-    }
-
-    $school_cards = array_values(array_map(static function ($entry) {
-        $entry['schoolIds'] = array_values(array_unique($entry['schoolIds']));
-        sort($entry['schoolIds']);
-        return $entry;
-    }, $school_cards));
-
-    usort($school_cards, static function ($a, $b) {
-        $title_a = strtolower((string) ($a['card']['title'] ?? $a['card']['id'] ?? ''));
-        $title_b = strtolower((string) ($b['card']['title'] ?? $b['card']['id'] ?? ''));
-        return strcmp($title_a, $title_b);
-    });
 
     return [
         'globalCards' => array_values($global_cards),
-        'schoolCards' => $school_cards,
     ];
 }
 
@@ -443,12 +400,27 @@ function lrsd_sf_card_creator_sanitize_card(array $raw_card, array $registry, ar
         }
         $label = sanitize_text_field((string) ($item['label'] ?? ''));
         $value = sanitize_text_field((string) ($item['value'] ?? ''));
+        $value_type = sanitize_key((string) ($item['valueType'] ?? ''));
+        if (!in_array($value_type, ['text', 'number', 'dropdown'], true)) {
+            $value_type = 'text';
+        }
+        $options_raw = isset($item['options']) && is_array($item['options']) ? $item['options'] : [];
+        $options = array_values(array_filter(array_map(static function ($option) use ($max_value) {
+            return mb_substr(sanitize_text_field((string) $option), 0, $max_value);
+        }, $options_raw), static function ($option) {
+            return $option !== '';
+        }));
+        if ($value_type === 'dropdown' && empty($options)) {
+            $value_type = 'text';
+        }
         if ($label === '' && $value === '') {
             continue;
         }
         $items[] = [
             'label' => mb_substr($label, 0, $max_label),
             'value' => mb_substr($value, 0, $max_value),
+            'valueType' => $value_type,
+            'options' => $options,
         ];
     }
 
@@ -551,64 +523,16 @@ function lrsd_sf_ajax_card_creator_save() {
     }
 
     $card_id = sanitize_key((string) $card['id']);
-    $assignment = is_array($payload['assignment'] ?? null) ? $payload['assignment'] : [];
-    $scope      = (($assignment['scope'] ?? 'global') === 'school') ? 'school' : 'global';
-    $school_ids = isset($assignment['schoolIds']) && is_array($assignment['schoolIds']) ? $assignment['schoolIds'] : [];
-    $school_ids = array_values(array_unique(array_filter(array_map('sanitize_text_field', $school_ids))));
+    $global_cards = lrsd_sf_get_global_custom_cards();
+    $global_cards = lrsd_sf_card_creator_upsert_card($global_cards, $card);
+    update_option('lrsd_sf_global_custom_cards', $global_cards);
 
-    if ($scope === 'school' && empty($school_ids)) {
-        wp_send_json_error(['message' => __('Select at least one school for school-specific cards.', 'lrsd-school-facilities')], 400);
-    }
-
-    $previous      = is_array($payload['previousAssignment'] ?? null) ? $payload['previousAssignment'] : [];
-    $prev_scope_raw = (string) ($previous['scope'] ?? '');
-    if ($prev_scope_raw === 'school') {
-        $prev_scope = 'school';
-    } elseif ($prev_scope_raw === 'global') {
-        $prev_scope = 'global';
-    } else {
-        $prev_scope = '';
-    }
-    $prev_school_ids = isset($previous['schoolIds']) && is_array($previous['schoolIds']) ? $previous['schoolIds'] : [];
-    $prev_school_ids = array_values(array_unique(array_filter(array_map('sanitize_text_field', $prev_school_ids))));
-
-    if ($prev_scope === 'global') {
-        $global_cards = lrsd_sf_get_global_custom_cards();
-        $global_cards = lrsd_sf_card_creator_remove_card($global_cards, $card_id);
-        update_option('lrsd_sf_global_custom_cards', $global_cards);
-    }
-
-    if ($prev_scope === 'school') {
-        foreach ($prev_school_ids as $school_id) {
-            lrsd_sf_card_creator_update_school_record($school_id, static function ($school_data) use ($card_id) {
-                $existing_cards = isset($school_data['customCards']) && is_array($school_data['customCards']) ? $school_data['customCards'] : [];
-                $school_data['customCards'] = lrsd_sf_card_creator_remove_card($existing_cards, $card_id);
-                if (isset($school_data['customCardValues'][$card_id])) {
-                    unset($school_data['customCardValues'][$card_id]);
-                }
-                return lrsd_sf_card_creator_apply_card_order($school_data, $card_id, false);
-            });
-        }
-    }
-
-    if ($scope === 'global') {
-        $global_cards = lrsd_sf_get_global_custom_cards();
-        $global_cards = lrsd_sf_card_creator_upsert_card($global_cards, $card);
-        update_option('lrsd_sf_global_custom_cards', $global_cards);
-
-        foreach (lrsd_sf_get_card_creator_school_rows() as $school_row) {
-            lrsd_sf_card_creator_update_school_record($school_row['id'], static function ($school_data) use ($card_id) {
-                return lrsd_sf_card_creator_apply_card_order($school_data, $card_id, true);
-            });
-        }
-    } else {
-        foreach ($school_ids as $school_id) {
-            lrsd_sf_card_creator_update_school_record($school_id, static function ($school_data) use ($card, $card_id) {
-                $existing_cards = isset($school_data['customCards']) && is_array($school_data['customCards']) ? $school_data['customCards'] : [];
-                $school_data['customCards'] = lrsd_sf_card_creator_upsert_card($existing_cards, $card);
-                return lrsd_sf_card_creator_apply_card_order($school_data, $card_id, true);
-            });
-        }
+    foreach (lrsd_sf_get_card_creator_school_rows() as $school_row) {
+        lrsd_sf_card_creator_update_school_record($school_row['id'], static function ($school_data) use ($card_id) {
+            $existing_cards = isset($school_data['customCards']) && is_array($school_data['customCards']) ? $school_data['customCards'] : [];
+            $school_data['customCards'] = lrsd_sf_card_creator_remove_card($existing_cards, $card_id);
+            return lrsd_sf_card_creator_apply_card_order($school_data, $card_id, true);
+        });
     }
 
     update_option('lrsd_schools_last_updated', wp_date('Y-m-d'));
@@ -633,40 +557,25 @@ function lrsd_sf_ajax_card_creator_delete() {
         wp_send_json_error(['message' => __('Invalid payload.', 'lrsd-school-facilities')], 400);
     }
 
-    $card_id    = sanitize_key((string) ($payload['cardId'] ?? ''));
-    $assignment = is_array($payload['assignment'] ?? null) ? $payload['assignment'] : [];
-    $scope      = (($assignment['scope'] ?? 'global') === 'school') ? 'school' : 'global';
-    $school_ids = isset($assignment['schoolIds']) && is_array($assignment['schoolIds']) ? $assignment['schoolIds'] : [];
-    $school_ids = array_values(array_unique(array_filter(array_map('sanitize_text_field', $school_ids))));
+    $card_id = sanitize_key((string) ($payload['cardId'] ?? ''));
 
     if ($card_id === '') {
         wp_send_json_error(['message' => __('Card ID is required.', 'lrsd-school-facilities')], 400);
     }
 
-    if ($scope === 'global') {
-        $global_cards = lrsd_sf_get_global_custom_cards();
-        $global_cards = lrsd_sf_card_creator_remove_card($global_cards, $card_id);
-        update_option('lrsd_sf_global_custom_cards', $global_cards);
+    $global_cards = lrsd_sf_get_global_custom_cards();
+    $global_cards = lrsd_sf_card_creator_remove_card($global_cards, $card_id);
+    update_option('lrsd_sf_global_custom_cards', $global_cards);
 
-        foreach (lrsd_sf_get_card_creator_school_rows() as $school_row) {
-            lrsd_sf_card_creator_update_school_record($school_row['id'], static function ($school_data) use ($card_id) {
-                if (isset($school_data['customCardValues'][$card_id])) {
-                    unset($school_data['customCardValues'][$card_id]);
-                }
-                return lrsd_sf_card_creator_apply_card_order($school_data, $card_id, false);
-            });
-        }
-    } else {
-        foreach ($school_ids as $school_id) {
-            lrsd_sf_card_creator_update_school_record($school_id, static function ($school_data) use ($card_id) {
-                $existing_cards = isset($school_data['customCards']) && is_array($school_data['customCards']) ? $school_data['customCards'] : [];
-                $school_data['customCards'] = lrsd_sf_card_creator_remove_card($existing_cards, $card_id);
-                if (isset($school_data['customCardValues'][$card_id])) {
-                    unset($school_data['customCardValues'][$card_id]);
-                }
-                return lrsd_sf_card_creator_apply_card_order($school_data, $card_id, false);
-            });
-        }
+    foreach (lrsd_sf_get_card_creator_school_rows() as $school_row) {
+        lrsd_sf_card_creator_update_school_record($school_row['id'], static function ($school_data) use ($card_id) {
+            $existing_cards = isset($school_data['customCards']) && is_array($school_data['customCards']) ? $school_data['customCards'] : [];
+            $school_data['customCards'] = lrsd_sf_card_creator_remove_card($existing_cards, $card_id);
+            if (isset($school_data['customCardValues'][$card_id])) {
+                unset($school_data['customCardValues'][$card_id]);
+            }
+            return lrsd_sf_card_creator_apply_card_order($school_data, $card_id, false);
+        });
     }
 
     update_option('lrsd_schools_last_updated', wp_date('Y-m-d'));
