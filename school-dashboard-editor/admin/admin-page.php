@@ -129,19 +129,19 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
             true
         );
 
-        $renderer_url             = '';
-        $asset_base_url           = home_url('/');
-        $frontend_styles_url      = home_url('/styles.css');
-        $plugin_one_level_up_url  = trailingslashit(dirname(untrailingslashit(LRSD_SF_PLUGIN_URL)));
-        $plugin_two_levels_up_url = trailingslashit(dirname(dirname(untrailingslashit(LRSD_SF_PLUGIN_URL))));
+        $renderer_url           = '';
+        $asset_base_url         = home_url('/');
+        $frontend_styles_url    = home_url('/styles.css');
+        $asset_parent_url       = trailingslashit(dirname(untrailingslashit(LRSD_SF_PLUGIN_URL)));
+        $asset_grandparent_url  = trailingslashit(dirname(dirname(untrailingslashit(LRSD_SF_PLUGIN_URL))));
         $renderer_candidates = [
             [
                 'path'     => dirname(LRSD_SF_PLUGIN_DIR) . '/card-renderer.js',
-                'base_url' => $plugin_one_level_up_url,
+                'base_url' => $asset_parent_url,
             ],
             [
                 'path'     => dirname(LRSD_SF_PLUGIN_DIR, 2) . '/card-renderer.js',
-                'base_url' => $plugin_two_levels_up_url,
+                'base_url' => $asset_grandparent_url,
             ],
         ];
         foreach ($renderer_candidates as $renderer_candidate) {

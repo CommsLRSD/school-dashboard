@@ -530,7 +530,7 @@
     }
 
     function getAssetBaseUrl() {
-        return getTrustedUrl(lrsdSfCardCreator.assetBaseUrl) || getTrustedUrl(lrsdSfCardCreator.siteUrl) || window.location.origin + '/';
+        return getTrustedUrl(lrsdSfCardCreator.assetBaseUrl) || getTrustedUrl(lrsdSfCardCreator.siteUrl) || '';
     }
 
     function resolveAssetUrl(path) {
@@ -539,8 +539,14 @@
         if (!assetPath) {
             return '';
         }
-        if (isAbsoluteUrl(assetPath) || /^data:|^blob:/.test(assetPath)) {
+        if (isAbsoluteUrl(assetPath)) {
+            return getTrustedUrl(assetPath);
+        }
+        if (/^data:|^blob:/.test(assetPath)) {
             return assetPath;
+        }
+        if (!baseUrl) {
+            return '';
         }
         if (baseUrl.charAt(baseUrl.length - 1) !== '/') {
             baseUrl += '/';
@@ -619,7 +625,7 @@
             : '';
         var iframeDoc = '' +
             '<!doctype html><html><head><meta charset="utf-8">' +
-            '<base href="' + escapeHtml(previewBaseUrl) + '">' +
+            (previewBaseUrl ? '<base href="' + escapeHtml(previewBaseUrl) + '">' : '') +
             (frontendStylesUrl ? '<link rel="stylesheet" href="' + escapeHtml(frontendStylesUrl) + '">' : '') +
             '<style>body{margin:0;padding:1rem;background:#f5f6f8}.card-grid{grid-template-columns:minmax(300px, 420px);grid-auto-rows:280px}.data-card{opacity:1;animation:none}</style>' +
             '</head><body><main class="card-grid" id="card-grid"></main>' +
