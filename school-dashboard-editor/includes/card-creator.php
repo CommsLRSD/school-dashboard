@@ -278,6 +278,9 @@ function lrsd_sf_card_creator_normalize_media_url($url) {
     if (!is_array($parts) || empty($parts['scheme']) || empty($parts['host'])) {
         return '';
     }
+    if (!in_array(strtolower((string) $parts['scheme']), ['http', 'https'], true)) {
+        return '';
+    }
 
     $normalized = $parts['scheme'] . '://' . $parts['host'];
     if (!empty($parts['port'])) {
@@ -305,9 +308,13 @@ function lrsd_sf_card_creator_get_attachment_id_from_url($url) {
     $baseurl = isset($uploads['baseurl']) ? untrailingslashit((string) $uploads['baseurl']) : '';
     if ($baseurl !== '' && strpos($normalized_url, $baseurl . '/') === 0) {
         $relative_path = ltrim(substr($normalized_url, strlen($baseurl)), '/');
-        $relative_path = rawurldecode($relative_path);
+        $relative_path = wp_normalize_path(rawurldecode($relative_path));
 
-        if ($relative_path !== '') {
+        if (
+            $relative_path !== '' &&
+            strpos($relative_path, '../') === false &&
+            strpos($relative_path, '..\\') === false
+        ) {
             $attachment_id = (int) $wpdb->get_var(
                 $wpdb->prepare(
                     "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_wp_attached_file' AND meta_value = %s LIMIT 1",
