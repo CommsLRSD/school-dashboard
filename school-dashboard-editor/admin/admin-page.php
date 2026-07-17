@@ -46,15 +46,6 @@ function lrsd_sf_register_admin_pages() {
 
     add_submenu_page(
         'lrsd-school-facilities',
-        __('Card Editor', 'lrsd-school-facilities'),
-        __('Card Editor', 'lrsd-school-facilities'),
-        'manage_options',
-        'lrsd-school-facilities-cards',
-        'lrsd_sf_render_card_editor_page'
-    );
-
-    add_submenu_page(
-        'lrsd-school-facilities',
         __('Advanced JSON Editor', 'lrsd-school-facilities'),
         __('Advanced JSON Editor', 'lrsd-school-facilities'),
         'manage_options',
@@ -92,10 +83,6 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
         'ajaxUrl'          => admin_url('admin-ajax.php'),
         'customOptionNonce'=> wp_create_nonce('lrsd_sf_custom_option_nonce'),
         'isFosKey'         => 'familyOfSchools',
-        'displayTypes'     => lrsd_sf_get_custom_card_display_types(),
-        'noteModes'        => lrsd_sf_get_custom_card_note_modes(),
-        'valueTypes'       => lrsd_sf_get_custom_card_value_types(),
-        'imageSizes'       => lrsd_sf_get_custom_card_image_sizes(),
         'i18n'             => [
             'chooseMedia'       => __('Choose or Upload Media', 'lrsd-school-facilities'),
             'useMedia'          => __('Use this file', 'lrsd-school-facilities'),
@@ -104,8 +91,6 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
             'saved'             => __('Saved.', 'lrsd-school-facilities'),
             'error'             => __('An error occurred. Please try again.', 'lrsd-school-facilities'),
             'confirmBulk'       => __('Save changes to all schools in this category?', 'lrsd-school-facilities'),
-            'untitledCard'      => __('(Untitled Card)', 'lrsd-school-facilities'),
-            'allSchoolsLabel'   => __('Update by School', 'lrsd-school-facilities'),
             'addSubcategory'    => __('+ Add Subcategory', 'lrsd-school-facilities'),
             'labelPlaceholder'  => __('Label / subcategory name', 'lrsd-school-facilities'),
             'kvLabel'           => __('Label', 'lrsd-school-facilities'),
@@ -113,20 +98,11 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
             'kvValue'           => __('Value', 'lrsd-school-facilities'),
             'kvTextValue'       => __('Text value', 'lrsd-school-facilities'),
             'removeRow'         => __('Remove row', 'lrsd-school-facilities'),
-            'placeholderValue'  => __('Placeholder value', 'lrsd-school-facilities'),
-            'schoolValue'       => __('Value for this school', 'lrsd-school-facilities'),
-            'dropdownOptions'   => __('Dropdown options (one per line)', 'lrsd-school-facilities'),
-            'noteTitle'         => __('Note title', 'lrsd-school-facilities'),
-            'imageUrl'          => __('Image file', 'lrsd-school-facilities'),
-            'imageOverlayText'  => __('Overlay text', 'lrsd-school-facilities'),
-            'imageLink'         => __('Click-through link', 'lrsd-school-facilities'),
-            'showPreview'       => __('Show Preview', 'lrsd-school-facilities'),
-            'hidePreview'       => __('Hide Preview', 'lrsd-school-facilities'),
         ],
     ]);
 
-    // Enqueue WP media only on the school editor screen and card editor page, not on the bulk update page
-    if (get_post_type() === 'lr_school' || strpos((string)$hook_suffix, 'lrsd-school-facilities-cards') !== false) {
+    // Enqueue WP media only on the school editor screen, not on the bulk update page
+    if (get_post_type() === 'lr_school') {
         wp_enqueue_media();
     }
 }
@@ -253,7 +229,7 @@ function lrsd_sf_render_school_list_page() {
                     $search_index = strtolower(implode(' ', [$school_name, $school_type, $school_level_label, $family_of_schools]));
                 ?>
                     <tr class="lrsd-sf-school-row" data-school-search="<?php echo esc_attr($search_index); ?>">
-                        <td><strong><?php echo esc_html($school_name); ?></strong></td>
+                        <td><a href="<?php echo esc_url($edit_url); ?>"><?php echo esc_html($school_name); ?></a></td>
                         <td><?php echo esc_html($school_type ?: '—'); ?></td>
                         <td><?php echo esc_html($school_level_label ?: '—'); ?></td>
                         <td><?php echo esc_html($family_of_schools ?: '—'); ?></td>
