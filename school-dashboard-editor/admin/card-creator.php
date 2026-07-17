@@ -22,7 +22,7 @@ function lrsd_sf_render_card_creator_page() {
 
             <section class="lrsd-sf-creator-panel lrsd-sf-card-browser-panel">
                 <h2><?php esc_html_e('Created Cards', 'lrsd-school-facilities'); ?></h2>
-                <p class="description"><?php esc_html_e('Open a card to edit it, or create a new card.', 'lrsd-school-facilities'); ?></p>
+                <p class="description"><?php esc_html_e('Edit or delete cards directly from this list, or create a new card.', 'lrsd-school-facilities'); ?></p>
                 <ul id="lrsd-sf-card-list" class="lrsd-sf-card-list"></ul>
             </section>
 

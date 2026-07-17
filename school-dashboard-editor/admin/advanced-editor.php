@@ -78,6 +78,14 @@ function lrsd_sf_render_advanced_editor_page() {
 
             <div id="lrsd-sf-adv-status" class="lrsd-sf-adv-status" aria-live="polite"></div>
 
+            <div class="lrsd-sf-adv-save-bar lrsd-sf-adv-save-bar--top">
+                <button type="button" class="button button-primary button-large lrsd-sf-adv-save-action">
+                    <?php esc_html_e('Save &amp; Publish', 'lrsd-school-facilities'); ?>
+                </button>
+                <span class="spinner lrsd-sf-adv-spinner" style="float:none;margin:0 8px;"></span>
+                <span class="description"><?php esc_html_e('Save &amp; publish from the top action bar while you are still reviewing the start of the dataset.', 'lrsd-school-facilities'); ?></span>
+            </div>
+
             <textarea
                 id="lrsd-sf-adv-json"
                 class="lrsd-sf-adv-json-editor code"
@@ -88,11 +96,11 @@ function lrsd_sf_render_advanced_editor_page() {
             ><?php echo esc_textarea($json_pretty); ?></textarea>
 
             <div class="lrsd-sf-adv-save-bar">
-                <button type="button" id="lrsd-sf-adv-save" class="button button-primary button-large">
+                <button type="button" class="button button-primary button-large lrsd-sf-adv-save-action">
                     <?php esc_html_e('Save &amp; Publish', 'lrsd-school-facilities'); ?>
                 </button>
-                <span id="lrsd-sf-adv-spinner" class="spinner" style="float:none;margin:0 8px;"></span>
-                <span class="description"><?php esc_html_e('Saving will update all school records and push the current dataset live.', 'lrsd-school-facilities'); ?></span>
+                <span class="spinner lrsd-sf-adv-spinner" style="float:none;margin:0 8px;"></span>
+                <span class="description"><?php esc_html_e('Save &amp; publish from the bottom action bar when you finish reviewing the full dataset.', 'lrsd-school-facilities'); ?></span>
             </div>
         </div>
 

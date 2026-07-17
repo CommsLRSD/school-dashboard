@@ -11,11 +11,11 @@
 }
 
 .lrsd-sf-card {
-    border: 1px solid #dcdcde;
-    background: #fff;
+    border: 1px solid #d7dde5;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
     padding: 20px 24px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    border-radius: 16px;
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
 }
 
 .lrsd-sf-card h2 {
@@ -45,16 +45,16 @@
     justify-content: space-between;
     padding: 10px 14px;
     margin: 10px 0 0;
-    background: #f6f7f7;
-    border: 1px solid #dcdcde;
-    border-radius: 6px 6px 0 0;
+    background: #f3f6fa;
+    border: 1px solid #d7dde5;
+    border-radius: 12px 12px 0 0;
     cursor: pointer;
     user-select: none;
     transition: background 0.15s;
 }
 
 .lrsd-sf-section-header:hover {
-    background: #e8e9ea;
+    background: #eaf0f7;
 }
 
 .lrsd-sf-section-label {
@@ -106,11 +106,11 @@
 }
 
 .lrsd-sf-section-body {
-    border: 1px solid #dcdcde;
+    border: 1px solid #d7dde5;
     border-top: none;
     padding: 12px 14px 16px;
     background: #fff;
-    border-radius: 0 0 6px 6px;
+    border-radius: 0 0 12px 12px;
     margin-bottom: 2px;
     /* display controlled by JS */
 }
@@ -251,42 +251,46 @@
     flex-wrap: wrap;
     gap: 6px;
     margin-top: 16px;
-    padding-bottom: 2px;
-    border-bottom: 2px solid #dcdcde;
+    padding: 10px;
+    border: 1px solid #d7dde5;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
 }
 
 .lrsd-sf-bulk-tab {
     display: inline-block;
-    padding: 7px 14px;
-    border-radius: 4px 4px 0 0;
-    background: #f6f7f7;
-    border: 1px solid #dcdcde;
-    border-bottom: none;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #f7f9fc;
+    border: 1px solid #d7dde5;
     font-size: 13px;
     color: #1d2327;
     text-decoration: none;
-    margin-bottom: -2px;
-    transition: background 0.15s;
+    transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 
 .lrsd-sf-bulk-tab:hover {
-    background: #e8e9ea;
+    background: #eef3f9;
+    border-color: #9fb8d5;
     color: #1d2327;
 }
 
 .lrsd-sf-bulk-tab.is-active {
-    background: #fff;
-    border-color: #dcdcde;
-    border-bottom-color: #fff;
+    background: #eaf2fc;
+    border-color: #8eb3d9;
     font-weight: 600;
     color: #1d2327;
+    box-shadow: 0 6px 16px rgba(34, 113, 177, 0.15);
 }
 
 .lrsd-sf-bulk-table {
-    margin-top: 0 !important;
-    border-radius: 0 6px 6px 6px;
+    margin-top: 12px !important;
+    border-radius: 14px;
     overflow: hidden;
     max-width: 100%;
+    border: 1px solid #d7dde5;
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.05);
 }
 
 .lrsd-sf-bulk-table th,
@@ -297,7 +301,7 @@
 }
 
 .lrsd-sf-bulk-table th {
-    background: #f6f7f7;
+    background: #f5f8fc;
     font-weight: 600;
     white-space: nowrap;
 }
@@ -334,6 +338,16 @@
     .lrsd-sf-bulk-tabs {
         flex-direction: column;
     }
+
+    .lrsd-sf-page-actions,
+    .lrsd-sf-card-list-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .lrsd-sf-card-list-actions {
+        justify-content: flex-end;
+    }
 }
 
 /* Long dropdown option text wrapping */
@@ -362,10 +376,10 @@
 
 .lrsd-sf-adv-editor-card,
 .lrsd-sf-adv-history-card {
-    background: #fff;
-    border: 1px solid #dcdcde;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+    border: 1px solid #d7dde5;
+    border-radius: 16px;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.07);
     margin-bottom: 24px;
     overflow: hidden;
 }
@@ -376,8 +390,8 @@
     align-items: center;
     justify-content: space-between;
     padding: 12px 16px;
-    background: #f6f7f7;
-    border-bottom: 1px solid #dcdcde;
+    background: #f5f8fc;
+    border-bottom: 1px solid #d7dde5;
     gap: 10px;
 }
 
@@ -430,7 +444,7 @@
     line-height: 1.6;
     padding: 16px;
     border: none;
-    border-bottom: 1px solid #dcdcde;
+    border-bottom: 1px solid #d7dde5;
     resize: vertical;
     box-sizing: border-box;
     color: #1d2327;
@@ -451,7 +465,8 @@
     align-items: center;
     gap: 10px;
     padding: 14px 16px;
-    background: #f6f7f7;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border-top: 1px solid #d7dde5;
     flex-wrap: wrap;
 }
 
@@ -469,7 +484,7 @@
     margin-top: 0;
     font-size: 15px;
     color: #1d2327;
-    border-bottom: 1px solid #dcdcde;
+    border-bottom: 1px solid #e1e7ef;
     padding-bottom: 10px;
     margin-bottom: 10px;
 }
@@ -489,7 +504,7 @@
 
 .lrsd-sf-adv-history-table th {
     font-weight: 600;
-    background: #f6f7f7;
+    background: #f5f8fc;
     white-space: nowrap;
 }
 
@@ -556,8 +571,8 @@
     width: 280px;
     max-width: 100%;
     padding: 6px 10px;
-    border: 1px solid #8c8f94;
-    border-radius: 4px;
+    border: 1px solid #c5d0dc;
+    border-radius: 10px;
     font-size: 14px;
     line-height: 1.4;
     background: #fff;
@@ -568,7 +583,7 @@
 
 .lrsd-sf-school-search-input:focus {
     border-color: #2271b1;
-    box-shadow: 0 0 0 1px #2271b1;
+    box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.2);
 }
 
 .lrsd-sf-school-count {
@@ -578,11 +593,11 @@
 
 .lrsd-sf-school-table-wrap {
     max-width: 1000px;
-    background: #fff;
-    border: 1px solid #dcdcde;
-    border-radius: 8px;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+    border: 1px solid #d7dde5;
+    border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
 }
 
 .lrsd-sf-school-table {
@@ -648,10 +663,16 @@
     gap: 8px;
 }
 
+.lrsd-sf-card-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
 .lrsd-sf-card-list .lrsd-sf-card-open {
-    width: 100%;
+    flex: 1 1 auto;
     text-align: left;
-    justify-content: flex-start;
     padding: 10px 14px;
     border: 1px solid #d7dde5;
     border-radius: 12px;
@@ -662,11 +683,21 @@
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
+.lrsd-sf-card-list-actions {
+    display: inline-flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
 .lrsd-sf-card-list .lrsd-sf-card-open:hover,
 .lrsd-sf-card-list .lrsd-sf-card-open:focus {
     transform: translateY(-1px);
     border-color: #2271b1;
     box-shadow: 0 10px 22px rgba(34, 113, 177, 0.12);
+}
+
+.lrsd-sf-card-list .lrsd-sf-card-delete-inline {
+    color: #b32d2e;
 }
 
 .lrsd-sf-card-list-empty {
@@ -842,6 +873,25 @@
 .lrsd-sf-creator-panel details summary {
     cursor: pointer;
     font-weight: 600;
+}
+
+.lrsd-sf-page-actions {
+    margin: 12px 0;
+    padding: 14px 16px;
+    border: 1px solid #d7dde5;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.lrsd-sf-page-actions-copy {
+    margin: 0;
+    color: #5c6773;
 }
 
 .lrsd-sf-icon-picker-modal {

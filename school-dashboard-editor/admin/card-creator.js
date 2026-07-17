@@ -139,7 +139,14 @@
         var html = data.cards.map(function (entry, index) {
             var card = entry.card || {};
             var title = card.title || card.id || getI18n('unsavedCardFallback', 'Unsaved card');
-            return '<li><button type="button" class="button button-link lrsd-sf-card-open" data-index="' + String(index) + '">' + escapeHtml(title) + '</button></li>';
+            return '' +
+                '<li class="lrsd-sf-card-list-item">' +
+                    '<button type="button" class="button button-link lrsd-sf-card-open" data-index="' + String(index) + '">' + escapeHtml(title) + '</button>' +
+                    '<div class="lrsd-sf-card-list-actions">' +
+                        '<button type="button" class="button button-small lrsd-sf-card-edit-inline" data-index="' + String(index) + '">' + escapeHtml(getI18n('editCard', 'Edit')) + '</button>' +
+                        '<button type="button" class="button button-small button-link-delete lrsd-sf-card-delete-inline" data-index="' + String(index) + '">' + escapeHtml(getI18n('deleteCard', 'Delete')) + '</button>' +
+                    '</div>' +
+                '</li>';
         }).join('');
         ui.cardList.html(html);
     }
@@ -390,12 +397,17 @@
         });
     }
 
-    function deleteCurrentCard() {
-        var entry = getCurrentEntry();
-        if (!entry) return;
+    function deleteCardByIndex(index) {
+        if (index < 0 || index >= data.cards.length) return;
+        var entry = data.cards[index];
+        var activeEntry = getCurrentEntry();
+        var activeCardId = activeEntry && activeEntry.card ? activeEntry.card.id : '';
+        var deletedCardId = entry && entry.card ? entry.card.id : '';
+
         if (!window.confirm(getI18n('deleteConfirm', 'Delete this card?'))) {
             return;
         }
+
         $.post(lrsdSfCardCreator.ajaxUrl, {
             action: 'lrsd_sf_card_creator_delete',
             nonce: lrsdSfCardCreator.nonce,
@@ -407,14 +419,38 @@
                 showStatus((response && response.data && response.data.message) || getI18n('deleteFailed', 'Delete failed.'), 'error');
                 return;
             }
+            var activeWasDeleted = !!activeCardId && activeCardId === deletedCardId;
             data.cards = toEditableCards(response.data.state || {});
+
+            if (!data.cards.length) {
+                data.currentIndex = -1;
+            } else if (activeCardId && !activeWasDeleted) {
+                data.currentIndex = data.cards.findIndex(function (candidate) {
+                    var candidateCard = candidate && candidate.card ? candidate.card : null;
+                    return candidateCard && candidateCard.id === activeCardId;
+                });
+                if (data.currentIndex < 0) {
+                    data.currentIndex = 0;
+                }
+            } else {
+                data.currentIndex = Math.min(index, data.cards.length - 1);
+            }
+
             renderCardOptions();
             renderCardList();
+            if (!data.cards.length || !activeCardId || activeWasDeleted) {
+                closeWorkspace();
+            } else if (data.workspaceOpen) {
+                selectCurrentCard();
+            }
             showStatus(response.data.message || getI18n('deleteSuccess', 'Card deleted.'), 'success');
-            closeWorkspace();
         }).fail(function () {
             showStatus(getI18n('deleteFailed', 'Delete failed.'), 'error');
         });
+    }
+
+    function deleteCurrentCard() {
+        deleteCardByIndex(data.currentIndex);
     }
 
     function duplicateCurrentCard() {
@@ -933,12 +969,16 @@
             }
         });
 
-        ui.cardList.on('click', '.lrsd-sf-card-open', function () {
+        ui.cardList.on('click', '.lrsd-sf-card-open, .lrsd-sf-card-edit-inline', function () {
             if (data.workspaceOpen) {
                 persistFormToCurrent();
             }
             openCardByIndex(Number($(this).data('index')));
             hideStatus();
+        });
+
+        ui.cardList.on('click', '.lrsd-sf-card-delete-inline', function () {
+            deleteCardByIndex(Number($(this).data('index')));
         });
     }
 
