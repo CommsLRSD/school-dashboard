@@ -129,10 +129,11 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
             true
         );
 
-        $renderer_url        = '';
-        $asset_base_url      = home_url('/');
-        $frontend_styles_url = home_url('/styles.css');
-        $get_parent_url      = static function ($url, $levels = 1) {
+        $renderer_url           = '';
+        $renderer_inline_script = '';
+        $asset_base_url         = home_url('/');
+        $frontend_styles_url    = home_url('/styles.css');
+        $get_parent_url         = static function ($url, $levels = 1) {
             $parent_url = untrailingslashit($url);
             for ($i = 0; $i < max(1, (int) $levels); $i++) {
                 $parent_url = dirname($parent_url);
@@ -141,6 +142,10 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
         };
         $asset_parent_url      = $get_parent_url(LRSD_SF_PLUGIN_URL, 1);
         $asset_grandparent_url = $get_parent_url(LRSD_SF_PLUGIN_URL, 2);
+
+        // Search for card-renderer.js: plugin parent/grandparent dirs first (dev/monorepo
+        // layout where the plugin lives inside the frontend project), then fall back to the
+        // plugin's own admin directory in case it was copied there for standalone installs.
         $renderer_candidates = [
             [
                 'path'     => dirname(LRSD_SF_PLUGIN_DIR) . '/card-renderer.js',
@@ -150,24 +155,44 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
                 'path'     => dirname(LRSD_SF_PLUGIN_DIR, 2) . '/card-renderer.js',
                 'base_url' => $asset_grandparent_url,
             ],
+            [
+                'path'     => LRSD_SF_PLUGIN_DIR . 'admin/card-renderer.js',
+                'base_url' => LRSD_SF_PLUGIN_URL . 'admin/',
+            ],
         ];
         foreach ($renderer_candidates as $renderer_candidate) {
-            if (file_exists($renderer_candidate['path']) && is_readable($renderer_candidate['path'])) {
-                $asset_base_url      = esc_url_raw($renderer_candidate['base_url']);
-                $frontend_styles_url = esc_url_raw($renderer_candidate['base_url'] . 'styles.css');
-                $renderer_url        = esc_url_raw($renderer_candidate['base_url'] . 'card-renderer.js');
+            if (
+                file_exists($renderer_candidate['path']) &&
+                is_readable($renderer_candidate['path']) &&
+                filesize($renderer_candidate['path']) < LRSD_SF_MAX_RENDERER_SOURCE_SIZE_BYTES
+            ) {
+                $content = file_get_contents($renderer_candidate['path']); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+                if ($content !== false) {
+                    $renderer_inline_script = $content;
+                    $asset_base_url         = esc_url_raw($renderer_candidate['base_url']);
+                    $frontend_styles_url    = esc_url_raw($renderer_candidate['base_url'] . 'styles.css');
+                    $renderer_url           = esc_url_raw($renderer_candidate['base_url'] . 'card-renderer.js');
+                }
                 break;
             }
         }
 
+        // When the renderer file cannot be found on disk (e.g. standalone WP plugin install
+        // where the frontend app is deployed separately), fall back to the site-root URL so
+        // the iframe can still try to load the script at runtime.
+        if ('' === $renderer_url) {
+            $renderer_url = esc_url_raw(home_url('/card-renderer.js'));
+        }
+
         wp_localize_script('lrsd-sf-card-creator', 'lrsdSfCardCreator', [
-            'ajaxUrl'          => admin_url('admin-ajax.php'),
-            'nonce'            => wp_create_nonce('lrsd_sf_card_creator_nonce'),
-            'siteUrl'          => home_url('/'),
-            'assetBaseUrl'     => $asset_base_url,
-            'frontendStylesUrl'=> $frontend_styles_url,
-            'rendererUrl'      => $renderer_url,
-            'i18n'             => [
+            'ajaxUrl'              => admin_url('admin-ajax.php'),
+            'nonce'                => wp_create_nonce('lrsd_sf_card_creator_nonce'),
+            'siteUrl'              => home_url('/'),
+            'assetBaseUrl'         => $asset_base_url,
+            'frontendStylesUrl'    => $frontend_styles_url,
+            'rendererUrl'          => $renderer_url,
+            'rendererInlineScript' => $renderer_inline_script,
+            'i18n'                 => [
                 'loading'             => __('Loading card data…', 'lrsd-school-facilities'),
                 'loadError'           => __('Failed to load card data.', 'lrsd-school-facilities'),
                 'saveSuccess'         => __('Card saved.', 'lrsd-school-facilities'),

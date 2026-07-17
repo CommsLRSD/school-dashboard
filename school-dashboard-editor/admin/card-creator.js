@@ -616,22 +616,62 @@
         frame.open();
     }
 
+    function buildRendererScript() {
+        // Prefer inlining the renderer content so the srcdoc iframe has no external
+        // script dependencies.  This avoids unreliable external loads from null-origin
+        // (srcdoc) documents, which can fail silently due to browser security rules or
+        // Content-Security-Policy headers on the WordPress admin page.
+        var inlineCode = (lrsdSfCardCreator.rendererInlineScript || '').trim();
+        if (inlineCode) {
+            // Guard against </script> sequences that would prematurely end the script
+            // block inside the srcdoc HTML string.
+            var safeCode = inlineCode.replace(/<\/script/gi, '<\\/script');
+            return '<script>' + safeCode + '<\/script>';
+        }
+
+        // Fall back to a <script src="..."> tag (e.g. standalone plugin install where the
+        // renderer content was not available server-side but may be served at the site root).
+        var rendererUrl = getTrustedUrl(lrsdSfCardCreator.rendererUrl);
+        if (rendererUrl) {
+            return '<script src="' + escapeHtml(rendererUrl) + '"><\/script>';
+        }
+
+        return '';
+    }
+
     function initPreviewFrame() {
         var previewBaseUrl = getAssetBaseUrl();
-        var rendererUrl = getTrustedUrl(lrsdSfCardCreator.rendererUrl);
         var frontendStylesUrl = getTrustedUrl(lrsdSfCardCreator.frontendStylesUrl);
-        var rendererScript = rendererUrl
-            ? '<script src="' + escapeHtml(rendererUrl) + '"></script>'
-            : '';
+        var rendererScript = buildRendererScript();
+        var hasRenderer = rendererScript !== '';
+
+        var unavailableNotice = hasRenderer
+            ? ''
+            : '<p style="padding:1rem;color:#646970;font-size:13px;">Preview renderer is not available. The <code>card-renderer.js</code> file could not be located.</p>';
+
         var iframeDoc = '' +
             '<!doctype html><html><head><meta charset="utf-8">' +
             (previewBaseUrl ? '<base href="' + escapeHtml(previewBaseUrl) + '">' : '') +
             (frontendStylesUrl ? '<link rel="stylesheet" href="' + escapeHtml(frontendStylesUrl) + '">' : '') +
-            '<style>body{margin:0;padding:1rem;background:#f5f6f8}.card-grid{grid-template-columns:minmax(300px, 420px);grid-auto-rows:280px}.data-card{opacity:1;animation:none}</style>' +
-            '</head><body><main class="card-grid" id="card-grid"></main>' +
+            '<style>body{margin:0;padding:1rem;background:#f5f6f8}.card-grid{grid-template-columns:minmax(300px,420px);grid-auto-rows:280px}.data-card{opacity:1;animation:none}</style>' +
+            '<\/head><body>' +
+            unavailableNotice +
+            '<main class="card-grid" id="card-grid"><\/main>' +
             rendererScript +
-            '<script>window.addEventListener("message",function(event){if(!event.data||event.data.type!=="render-card"){return;}var payload=event.data.payload||{};var root=document.getElementById("card-grid");if(!window.LrsdCardRenderer||!window.LrsdCardRenderer.renderCustomCardHtml){root.innerHTML="<p>Renderer unavailable.</p>";return;}root.innerHTML=window.LrsdCardRenderer.renderCustomCardHtml(payload.card||{},null,payload.sizeClass||"");});</script>' +
-            '</body></html>';
+            '<script>' +
+            'window.addEventListener("message",function(e){' +
+            'if(!e.data||e.data.type!=="render-card"){return;}' +
+            'var p=e.data.payload||{};' +
+            'var root=document.getElementById("card-grid");' +
+            'if(!root){return;}' +
+            'if(!window.LrsdCardRenderer||!window.LrsdCardRenderer.renderCustomCardHtml){' +
+            'root.innerHTML="<p style=\\"padding:1rem;color:#646970;font-size:13px;\\">Renderer unavailable.<\\/p>";' +
+            'return;}' +
+            'root.innerHTML=window.LrsdCardRenderer.renderCustomCardHtml(p.card||{},null,p.sizeClass||"");' +
+            '});' +
+            '<\/script>' +
+            '<\/body><\/html>';
+
         data.previewReady = false;
         ui.previewFrame.off('load.lrsdSfCardCreator').on('load.lrsdSfCardCreator', function () {
             data.previewReady = true;
