@@ -125,7 +125,7 @@ function lrsd_sf_handle_bulk_update() {
         }
 
         if ($category === 'childcare') {
-            $labels = ['Infant (0-23 months)', 'Pre-school (2-6 years)', 'School-age (7+ years)', 'BLAST'];
+            $labels = lrsd_sf_get_childcare_labels();
             $childcare_raw = isset($field_values['childcare']) && is_array($field_values['childcare'])
                 ? $field_values['childcare']
                 : [];

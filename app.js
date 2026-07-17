@@ -840,7 +840,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         const defaults = {
                             'Infant (0-23 months)': '',
                             'Pre-school (2-6 years)': '',
+                            'School-age (5+ years)': '',
                             'School-age (7+ years)': '',
+                            'Special Needs (12+ years)': '',
                             'BLAST': '',
                         };
                         data = { ...defaults, ...(data || {}) };

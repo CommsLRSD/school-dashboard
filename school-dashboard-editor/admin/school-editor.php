@@ -422,8 +422,16 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                 <td><input type="text" id="lrsd_sf_childcare_preschool" class="regular-text" name="lrsd_sf_childcare[Pre-school (2-6 years)]" value="<?php echo esc_attr((string)($childcare['Pre-school (2-6 years)'] ?? '')); ?>" /></td>
             </tr>
             <tr>
+                <th scope="row"><label for="lrsd_sf_childcare_schoolage5"><?php esc_html_e('School-age (5+ years)', 'lrsd-school-facilities'); ?></label></th>
+                <td><input type="text" id="lrsd_sf_childcare_schoolage5" class="regular-text" name="lrsd_sf_childcare[School-age (5+ years)]" value="<?php echo esc_attr((string)($childcare['School-age (5+ years)'] ?? '')); ?>" /></td>
+            </tr>
+            <tr>
                 <th scope="row"><label for="lrsd_sf_childcare_schoolage"><?php esc_html_e('School-age (7+ years)', 'lrsd-school-facilities'); ?></label></th>
                 <td><input type="text" id="lrsd_sf_childcare_schoolage" class="regular-text" name="lrsd_sf_childcare[School-age (7+ years)]" value="<?php echo esc_attr((string)($childcare['School-age (7+ years)'] ?? '')); ?>" /></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="lrsd_sf_childcare_specialneeds"><?php esc_html_e('Special Needs (12+ years)', 'lrsd-school-facilities'); ?></label></th>
+                <td><input type="text" id="lrsd_sf_childcare_specialneeds" class="regular-text" name="lrsd_sf_childcare[Special Needs (12+ years)]" value="<?php echo esc_attr((string)($childcare['Special Needs (12+ years)'] ?? '')); ?>" /></td>
             </tr>
             <tr>
                 <th scope="row"><label for="lrsd_sf_childcare_blast"><?php esc_html_e('BLAST', 'lrsd-school-facilities'); ?></label></th>
@@ -645,7 +653,7 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
     // ── Childcare ────────────────────────────────────────────────────────────
     if (isset($_POST['lrsd_sf_childcare']) && is_array($_POST['lrsd_sf_childcare'])) {
         $childcare_raw = wp_unslash($_POST['lrsd_sf_childcare']);
-        $labels = ['Infant (0-23 months)', 'Pre-school (2-6 years)', 'School-age (7+ years)', 'BLAST'];
+        $labels = lrsd_sf_get_childcare_labels();
         $childcare = [];
         foreach ($labels as $label) {
             $childcare[$label] = sanitize_text_field((string)($childcare_raw[$label] ?? ''));
