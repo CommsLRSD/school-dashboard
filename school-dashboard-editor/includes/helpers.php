@@ -292,7 +292,7 @@ function lrsd_sf_generate_school_id($post_id = 0) {
         return 'school-' . $post_id;
     }
 
-    return 'school-' . sanitize_key((string) wp_generate_password(12, false, false));
+    return 'school-' . sanitize_key((string) wp_generate_uuid4());
 }
 
 /**

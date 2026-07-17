@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    const BASE_CATEGORIES = {
+    const baseCategories = {
         "details": "Contact & Building Info",
         "enrolment_capacity": "Enrolment & Classroom Capacity",
         "history": "Historic Enrolment",
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     const getCategoryMap = () => {
-        const categoryMap = Object.assign({}, BASE_CATEGORIES);
+        const categoryMap = Object.assign({}, baseCategories);
         const customCategories = (Array.isArray(globalCustomCards) ? globalCustomCards : [])
             .filter((card) => card && card.id && card.title)
             .sort((left, right) => String(left.title).localeCompare(String(right.title)))
