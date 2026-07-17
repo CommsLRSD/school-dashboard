@@ -16,6 +16,13 @@
     };
 
     var ui = {};
+    var previewFallbacks = {
+        blankValue: '—',
+        metricLabel: 'Metric',
+        listItem: 'List item',
+        detailLabel: 'Label',
+        detailValue: 'Value',
+    };
 
     function getI18n(key, fallback) {
         return (lrsdSfCardCreator.i18n && lrsdSfCardCreator.i18n[key]) || fallback || key;
@@ -796,31 +803,31 @@
         if (cardType === 'highlight') {
             var highlightItem = items[0] || {};
             return '<div class="preview-highlight">' +
-                '<div class="preview-highlight-value">' + escapeHtml(highlightItem.value || '—') + '<\/div>' +
-                '<div class="preview-highlight-label">' + escapeHtml(highlightItem.label || 'Value') + '<\/div>' +
+                '<div class="preview-highlight-value">' + escapeHtml(highlightItem.value || previewFallbacks.blankValue) + '<\/div>' +
+                '<div class="preview-highlight-label">' + escapeHtml(highlightItem.label || previewFallbacks.detailValue) + '<\/div>' +
                 '<\/div>' +
                 buildPreviewNotes(card);
         }
 
         if (cardType === 'stat') {
-            var statMarkup = (items.length ? items : [{ label: 'Metric', value: '—' }]).map(function (item) {
+            var statMarkup = (items.length ? items : [{ label: previewFallbacks.metricLabel, value: previewFallbacks.blankValue }]).map(function (item) {
                 return '<div class="preview-stat">' +
-                    '<div class="preview-stat-label">' + escapeHtml(item.label || 'Metric') + '<\/div>' +
-                    '<div class="preview-stat-value">' + escapeHtml(item.value || '—') + '<\/div>' +
+                    '<div class="preview-stat-label">' + escapeHtml(item.label || previewFallbacks.metricLabel) + '<\/div>' +
+                    '<div class="preview-stat-value">' + escapeHtml(item.value || previewFallbacks.blankValue) + '<\/div>' +
                     '<\/div>';
             }).join('');
             return '<div class="preview-stats">' + statMarkup + '<\/div>' + buildPreviewNotes(card);
         }
 
         if (cardType === 'simple_list') {
-            var simpleMarkup = (items.length ? items : [{ value: 'List item' }]).map(function (item) {
-                return '<li class="preview-simple-row"><span>' + escapeHtml(item.value || item.label || 'List item') + '<\/span><\/li>';
+            var simpleMarkup = (items.length ? items : [{ value: previewFallbacks.listItem }]).map(function (item) {
+                return '<li class="preview-simple-row"><span>' + escapeHtml(item.value || item.label || previewFallbacks.listItem) + '<\/span><\/li>';
             }).join('');
             return '<ul class="preview-simple-list">' + simpleMarkup + '<\/ul>' + buildPreviewNotes(card);
         }
 
-        var detailMarkup = (items.length ? items : [{ label: 'Label', value: 'Value' }]).map(function (item) {
-            return '<li class="preview-detail-row"><span class="preview-detail-label">' + escapeHtml(item.label || 'Label') + '<\/span><span class="preview-detail-value">' + escapeHtml(item.value || 'Value') + '<\/span><\/li>';
+        var detailMarkup = (items.length ? items : [{ label: previewFallbacks.detailLabel, value: previewFallbacks.detailValue }]).map(function (item) {
+            return '<li class="preview-detail-row"><span class="preview-detail-label">' + escapeHtml(item.label || previewFallbacks.detailLabel) + '<\/span><span class="preview-detail-value">' + escapeHtml(item.value || previewFallbacks.detailValue) + '<\/span><\/li>';
         }).join('');
         return '<ul class="preview-detail-list">' + detailMarkup + '<\/ul>' + buildPreviewNotes(card);
     }
