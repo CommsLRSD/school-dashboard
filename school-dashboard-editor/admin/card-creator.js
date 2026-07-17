@@ -23,6 +23,10 @@
         detailLabel: 'Label',
         detailValue: 'Value',
     };
+    var previewLayout = {
+        minFrameHeight: 420,
+        statMinWidth: 112,
+    };
 
     function getI18n(key, fallback) {
         return (lrsdSfCardCreator.i18n && lrsdSfCardCreator.i18n[key]) || fallback || key;
@@ -692,7 +696,7 @@
             '.preview-highlight{padding:24px 16px;border-radius:16px;background:linear-gradient(135deg,#3858e9,#5aa9ff);color:#fff;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.18);}' +
             '.preview-highlight-value{font-size:32px;font-weight:700;line-height:1.1;}' +
             '.preview-highlight-label{margin-top:6px;font-size:13px;opacity:.9;}' +
-            '.preview-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;}' +
+            '.preview-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(' + String(previewLayout.statMinWidth) + 'px,1fr));gap:10px;}' +
             '.preview-stat{padding:12px;border-radius:14px;background:#f6f7f7;min-height:76px;display:flex;flex-direction:column;justify-content:space-between;}' +
             '.preview-stat-label{font-size:12px;color:#50575e;}' +
             '.preview-stat-value{font-size:24px;font-weight:700;line-height:1.2;color:#1d2327;}' +
@@ -734,7 +738,7 @@
             body ? body.offsetHeight : 0,
             docEl ? docEl.scrollHeight : 0,
             docEl ? docEl.offsetHeight : 0,
-            420
+            previewLayout.minFrameHeight
         );
 
         ui.previewFrame.css('height', String(nextHeight + 8) + 'px');
