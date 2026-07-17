@@ -531,15 +531,11 @@ function lrsd_sf_ajax_card_creator_save() {
         $scope = 'global';
     }
 
-    $school_ids_raw = isset($payload['schoolIds']) && is_array($payload['schoolIds']) ? $payload['schoolIds'] : [];
-    $all_school_ids = array_column(lrsd_sf_get_card_creator_school_rows(), 'id');
-    $school_ids     = array_values(array_intersect(
-        array_unique(array_filter(array_map(
-            static function ($id) { return sanitize_text_field((string) $id); },
-            $school_ids_raw
-        ), static function ($id) { return $id !== ''; })),
-        $all_school_ids
-    ));
+    $school_ids_raw  = isset($payload['schoolIds']) && is_array($payload['schoolIds']) ? $payload['schoolIds'] : [];
+    $all_school_ids  = array_column(lrsd_sf_get_card_creator_school_rows(), 'id');
+    $sanitized_ids   = array_map(static function ($id) { return sanitize_text_field((string) $id); }, $school_ids_raw);
+    $filtered_ids    = array_filter($sanitized_ids, static function ($id) { return $id !== ''; });
+    $school_ids      = array_values(array_intersect(array_unique($filtered_ids), $all_school_ids));
 
     if ($scope === 'select' && empty($school_ids)) {
         wp_send_json_error(['message' => __('Select at least one school.', 'lrsd-school-facilities')], 400);

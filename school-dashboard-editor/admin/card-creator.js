@@ -84,6 +84,7 @@
         });
         (state.selectSchoolCards || []).forEach(function (rawCard) {
             var schoolIds = Array.isArray(rawCard.schoolIds) ? rawCard.schoolIds.slice() : [];
+            // Build a deep copy of the card object without the schoolIds metadata field
             var cardCopy = $.extend(true, {}, rawCard);
             delete cardCopy.schoolIds;
             cards.push({
@@ -148,7 +149,7 @@
 
     function buildCardListHtml(entries) {
         if (!entries.length) {
-            return '<li class="lrsd-sf-card-list-empty">' + escapeHtml(getI18n('noCardsYet', 'None yet.')) + '</li>';
+            return '<li class="lrsd-sf-card-list-empty">' + escapeHtml(getI18n('noneYet', 'None yet.')) + '</li>';
         }
         return entries.map(function (item) {
             var index = item.index;
