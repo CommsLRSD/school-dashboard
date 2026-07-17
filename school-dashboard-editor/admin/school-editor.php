@@ -719,7 +719,7 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         <p class="lrsd-sf-danger-zone-label"><?php esc_html_e('Danger Zone', 'lrsd-school-facilities'); ?></p>
         <a href="<?php echo esc_url($delete_url); ?>"
            class="button lrsd-sf-btn-danger"
-           onclick="return confirm(<?php echo esc_js(sprintf(/* translators: %s: school name */ __('Are you sure you want to delete "%s"? This will remove it from the web app immediately.', 'lrsd-school-facilities'), $school_name_for_confirm)); ?>);"
+           onclick="return confirm('<?php echo esc_js(sprintf(/* translators: %s: school name */ __('Are you sure you want to delete "%s"? This will remove it from the web app immediately.', 'lrsd-school-facilities'), $school_name_for_confirm)); ?>');"
         ><?php esc_html_e('Delete School', 'lrsd-school-facilities'); ?></a>
         <p class="description"><?php esc_html_e('Permanently removes this school from the dashboard side nav. This action moves the record to Trash.', 'lrsd-school-facilities'); ?></p>
     </div>
