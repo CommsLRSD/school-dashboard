@@ -45,7 +45,7 @@ function lrsd_sf_render_card_creator_page() {
                             <input type="text" id="lrsd-sf-card-icon" class="regular-text" readonly />
                             <button type="button" class="button" id="lrsd-sf-icon-picker-open"><?php esc_html_e('Pick Icon', 'lrsd-school-facilities'); ?></button>
                         </div>
-                        <p class="description"><?php esc_html_e('Only icons from the dashboard icon registry are allowed.', 'lrsd-school-facilities'); ?></p>
+                        <p class="description"><?php esc_html_e('Choose from the dashboard icon registry or upload from the Media Library.', 'lrsd-school-facilities'); ?></p>
                     </div>
 
                     <div class="lrsd-sf-form-row">
@@ -103,7 +103,10 @@ function lrsd_sf_render_card_creator_page() {
             <div class="lrsd-sf-icon-picker-dialog">
                 <div class="lrsd-sf-icon-picker-header">
                     <h2><?php esc_html_e('Choose Icon', 'lrsd-school-facilities'); ?></h2>
-                    <button type="button" class="button-link" id="lrsd-sf-icon-picker-close"><?php esc_html_e('Close', 'lrsd-school-facilities'); ?></button>
+                    <div class="lrsd-sf-icon-picker-actions">
+                        <button type="button" class="button" id="lrsd-sf-icon-media-library"><?php esc_html_e('From Media Library', 'lrsd-school-facilities'); ?></button>
+                        <button type="button" class="button-link" id="lrsd-sf-icon-picker-close"><?php esc_html_e('Close', 'lrsd-school-facilities'); ?> &#x2715;</button>
+                    </div>
                 </div>
                 <input type="search" id="lrsd-sf-icon-search" placeholder="<?php esc_attr_e('Search icons…', 'lrsd-school-facilities'); ?>" />
                 <div id="lrsd-sf-icon-grid" class="lrsd-sf-icon-grid"></div>

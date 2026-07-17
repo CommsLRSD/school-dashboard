@@ -120,6 +120,7 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
     }
 
     if ($hook_suffix === 'school-dashboard-editor_page_lrsd-school-facilities-card-creator') {
+        wp_enqueue_media();
         wp_enqueue_script(
             'lrsd-sf-card-creator',
             LRSD_SF_PLUGIN_URL . 'admin/card-creator.js',
@@ -175,6 +176,9 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
                 'unsavedCardFallback' => __('Unsaved card', 'lrsd-school-facilities'),
                 'globalLabel'         => __('Global', 'lrsd-school-facilities'),
                 'schoolLabel'         => __('School-specific', 'lrsd-school-facilities'),
+                'mediaLibraryTitle'   => __('Choose Icon from Media Library', 'lrsd-school-facilities'),
+                'mediaLibraryButton'  => __('Use as Icon', 'lrsd-school-facilities'),
+                'mediaLibraryUnavailable' => __('Media library is not available. Please reload the page and try again.', 'lrsd-school-facilities'),
             ],
         ]);
     }
