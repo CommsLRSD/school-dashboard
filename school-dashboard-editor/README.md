@@ -165,3 +165,36 @@ Notes:
 - Add structured UI editors for additions, accessibility, childcare, enrolment history/projection.
 - Add optional JSON schema validation for stronger import checks.
 - Add audit logging for record changes.
+
+## 17. Card Creator architecture
+- **Registry source:** `includes/card-creator.php` (`lrsd_sf_get_card_type_registry()`).
+- **Supported creator card types:** `details_list`, `simple_list`, `highlight`, `stat`, `image`.
+- **Shared preview renderer:** `/card-renderer.js` (used by frontend and Card Creator iframe preview).
+- **Card Creator UI:** `admin/card-creator.php` + `admin/card-creator.js`.
+- **Assignment model:**
+  - Global cards are stored in option `lrsd_sf_global_custom_cards`.
+  - School-specific cards are stored per school in `customCards` under `lrsd_school_data`.
+  - Card placement is controlled by each school's `cardOrder` (updated automatically on save/delete).
+
+## 18. Card Creator data flow
+1. UI loads registry + icon list + existing cards via `wp_ajax_lrsd_sf_card_creator_load`.
+2. Form fields are generated from registry schema, including type-specific defaults/limits.
+3. Live preview posts current card payload into an iframe that renders using shared card markup/classes.
+4. Save uses `wp_ajax_lrsd_sf_card_creator_save`:
+   - validates/sanitizes card data,
+   - applies assignment (global or selected schools),
+   - updates `cardOrder` safely for placement.
+5. Delete uses `wp_ajax_lrsd_sf_card_creator_delete` and removes assignment plus `cardOrder` references.
+
+## 19. Icon registry
+- Icon options come from `lrsd_sf_get_card_creator_icon_registry()` in `includes/card-creator.php`.
+- The registry starts from known production icon paths and augments from `public/icon/*.svg` when available.
+- Only registry icons are accepted by save validation (prevents arbitrary/unsafe icon paths).
+
+## 20. Adding a new card type
+1. Add a new schema entry in `lrsd_sf_get_card_type_registry()`:
+   - `key`, `label`, `description`,
+   - `defaultValues`,
+   - `limits` (row count / text length guardrails).
+2. Ensure `/card-renderer.js` supports the new `cardType` branch.
+3. The editor UI and preview auto-detect new types from the registry (no page rewrite needed).

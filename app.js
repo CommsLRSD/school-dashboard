@@ -469,6 +469,10 @@ document.addEventListener('DOMContentLoaded', function() {
      * @param {string} sizeClass - Tile size CSS class
      */
     const renderCustomCardHtml = (template, schoolValues, sizeClass) => {
+        if (window.LrsdCardRenderer && typeof window.LrsdCardRenderer.renderCustomCardHtml === 'function') {
+            return window.LrsdCardRenderer.renderCustomCardHtml(template, schoolValues, sizeClass);
+        }
+
         const iconSrc  = template.icon || 'public/icon/details.svg';
         const title    = sanitizeHTML(template.title || 'Custom Card');
         const rawType  = template.cardType || 'details_list';
