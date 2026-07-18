@@ -361,10 +361,6 @@ function lrsd_sf_render_school_list_page() {
                     $school_level_label = $sdata['schoolLevel'] ?? '';
                     $family_of_schools = $sdata['familyOfSchools'] ?? '';
                     $edit_url = get_edit_post_link($school_post->ID);
-                    $delete_url = wp_nonce_url(
-                        admin_url('admin-post.php?action=lrsd_sf_delete_school&post_id=' . (int) $school_post->ID),
-                        'lrsd_sf_delete_school_' . (int) $school_post->ID
-                    );
                     $search_index = strtolower(implode(' ', [$school_name, $school_type, $school_level_label, $family_of_schools]));
                 ?>
                     <tr class="lrsd-sf-school-row" data-school-search="<?php echo esc_attr($search_index); ?>">
@@ -374,8 +370,6 @@ function lrsd_sf_render_school_list_page() {
                         <td><?php echo esc_html($family_of_schools ?: '—'); ?></td>
                         <td>
                             <a class="button button-secondary" href="<?php echo esc_url($edit_url); ?>"><?php esc_html_e('Edit School', 'lrsd-school-facilities'); ?></a>
-                            <a class="button lrsd-sf-btn-danger" href="<?php echo esc_url($delete_url); ?>"
-                               onclick="return confirm('<?php echo esc_js(sprintf(/* translators: %s: school name */ __('Are you sure you want to delete "%s"? This will remove it from the web app immediately.', 'lrsd-school-facilities'), $school_name)); ?>');"><?php esc_html_e('Delete', 'lrsd-school-facilities'); ?></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

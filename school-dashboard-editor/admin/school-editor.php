@@ -717,12 +717,86 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
     ?>
     <div class="lrsd-sf-danger-zone">
         <p class="lrsd-sf-danger-zone-label"><?php esc_html_e('Danger Zone', 'lrsd-school-facilities'); ?></p>
-        <a href="<?php echo esc_url($delete_url); ?>"
-           class="button lrsd-sf-btn-danger"
-           onclick="return confirm('<?php echo esc_js(sprintf(/* translators: %s: school name */ __('Are you sure you want to delete "%s"? This will remove it from the web app immediately.', 'lrsd-school-facilities'), $school_name_for_confirm)); ?>');"
-        ><?php esc_html_e('Delete School', 'lrsd-school-facilities'); ?></a>
+        <button type="button"
+                class="button lrsd-sf-btn-danger"
+                id="lrsd-sf-delete-trigger"
+        ><?php esc_html_e('Delete School', 'lrsd-school-facilities'); ?></button>
         <p class="description"><?php esc_html_e('Permanently removes this school from the dashboard side nav. This action moves the record to Trash.', 'lrsd-school-facilities'); ?></p>
     </div>
+
+    <div id="lrsd-sf-delete-modal" class="lrsd-sf-delete-modal" hidden>
+        <div class="lrsd-sf-delete-dialog" role="dialog" aria-modal="true" aria-labelledby="lrsd-sf-delete-modal-title">
+            <p class="lrsd-sf-delete-modal-title" id="lrsd-sf-delete-modal-title"><?php esc_html_e('Delete School', 'lrsd-school-facilities'); ?></p>
+            <p class="lrsd-sf-delete-modal-body">
+                <?php echo esc_html(sprintf(
+                    /* translators: %s: school name */
+                    __('You are about to permanently delete "%s". This cannot be undone.', 'lrsd-school-facilities'),
+                    $school_name_for_confirm
+                )); ?>
+            </p>
+            <p class="lrsd-sf-delete-modal-body"><?php esc_html_e('Type DELETE to confirm:', 'lrsd-school-facilities'); ?></p>
+            <input type="text" id="lrsd-sf-delete-confirm-input" class="regular-text lrsd-sf-delete-confirm-input" placeholder="DELETE" autocomplete="off" />
+            <div class="lrsd-sf-delete-modal-actions">
+                <a id="lrsd-sf-delete-confirm-btn"
+                   href="<?php echo esc_url($delete_url); ?>"
+                   class="button lrsd-sf-btn-danger"
+                   aria-disabled="true"
+                ><?php esc_html_e('Delete School', 'lrsd-school-facilities'); ?></a>
+                <button type="button" id="lrsd-sf-delete-cancel-btn" class="button button-secondary"><?php esc_html_e('Cancel', 'lrsd-school-facilities'); ?></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        var trigger    = document.getElementById('lrsd-sf-delete-trigger');
+        var modal      = document.getElementById('lrsd-sf-delete-modal');
+        var input      = document.getElementById('lrsd-sf-delete-confirm-input');
+        var confirmBtn = document.getElementById('lrsd-sf-delete-confirm-btn');
+        var cancelBtn  = document.getElementById('lrsd-sf-delete-cancel-btn');
+
+        function onKeyDown(e) {
+            if (e.key === 'Escape') closeModal();
+        }
+
+        function openModal() {
+            input.value = '';
+            setConfirmState(false);
+            modal.hidden = false;
+            input.focus();
+            document.addEventListener('keydown', onKeyDown);
+        }
+
+        function closeModal() {
+            modal.hidden = true;
+            input.value = '';
+            document.removeEventListener('keydown', onKeyDown);
+        }
+
+        function setConfirmState(enabled) {
+            if (enabled) {
+                confirmBtn.removeAttribute('aria-disabled');
+                confirmBtn.style.pointerEvents = '';
+                confirmBtn.style.opacity = '';
+            } else {
+                confirmBtn.setAttribute('aria-disabled', 'true');
+                confirmBtn.style.pointerEvents = 'none';
+                confirmBtn.style.opacity = '.4';
+            }
+        }
+
+        trigger.addEventListener('click', openModal);
+        cancelBtn.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) closeModal();
+        });
+
+        input.addEventListener('input', function () {
+            setConfirmState(input.value === 'DELETE');
+        });
+    }());
+    </script>
     <?php endif; ?>
     <?php
 }
