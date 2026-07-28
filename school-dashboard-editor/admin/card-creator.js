@@ -715,7 +715,7 @@
             var $modal = frame.$el;
 
             // Delegate folder-select changes → update the library query
-            $modal.off('change.lrsdMFCC').on('change.lrsdMFCC', 'select', function () {
+            $modal.off('change.lrsdMF').on('change.lrsdMF', 'select', function () {
                 var $sel = $(this);
                 var hint = [
                     $sel.attr('name') || '',
