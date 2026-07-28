@@ -535,22 +535,24 @@ function lrsd_sf_render_bulk_update_page() {
     }
 
     $notice   = lrsd_sf_get_admin_notice();
-    $category = isset($_GET['bulk_category']) ? sanitize_key($_GET['bulk_category']) : 'enrolment';
+    $category = isset($_GET['bulk_category']) ? sanitize_key($_GET['bulk_category']) : 'school_header';
 
     $categories = [
+        'school_header'        => __('Header / School Photo', 'lrsd-school-facilities'),
         'details'              => __('Details', 'lrsd-school-facilities'),
         'additions'            => __('Additions', 'lrsd-school-facilities'),
-        'enrolment'            => __('Enrolment & Capacity', 'lrsd-school-facilities'),
-        'projection'           => __('Projected Enrolment', 'lrsd-school-facilities'),
+        'enrolment'            => __('Enrolment', 'lrsd-school-facilities'),
+        'capacity'             => __('Capacity', 'lrsd-school-facilities'),
         'history'              => __('Historic Enrolment', 'lrsd-school-facilities'),
-        'building'             => __('Building Systems', 'lrsd-school-facilities'),
+        'projection'           => __('Projected Enrolment', 'lrsd-school-facilities'),
+        'building_systems'     => __('Building Systems', 'lrsd-school-facilities'),
         'accessibility'        => __('Accessibility', 'lrsd-school-facilities'),
         'playground'           => __('Playground', 'lrsd-school-facilities'),
         'transportation'       => __('Transportation', 'lrsd-school-facilities'),
         'childcare'            => __('Childcare & BLAST', 'lrsd-school-facilities'),
-        'catchment'            => __('Catchment', 'lrsd-school-facilities'),
-        'projects_provincial'  => __('Provincially Funded Capital Projects', 'lrsd-school-facilities'),
-        'projects_local'       => __('Locally Funded Capital Projects', 'lrsd-school-facilities'),
+        'catchment_map'        => __('Catchment Map', 'lrsd-school-facilities'),
+        'projects_provincial'  => __('Provincial Projects', 'lrsd-school-facilities'),
+        'projects_local'       => __('Local Projects', 'lrsd-school-facilities'),
     ];
     $global_custom_cards = lrsd_sf_get_global_custom_cards();
     $custom_card_lookup = [];
@@ -573,7 +575,7 @@ function lrsd_sf_render_bulk_update_page() {
 
     // Validate selected category
     if (!array_key_exists($category, $categories)) {
-        $category = 'details';
+        $category = 'school_header';
     }
 
     $field_map   = lrsd_sf_get_simple_field_map();

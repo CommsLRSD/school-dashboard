@@ -2,13 +2,13 @@
 /**
  * Plugin Name: School Dashboard Editor
  * Description: Manage LRSD school facilities data in WordPress and expose it for the dashboard.
- * Version: 0.2.0
+ * Version: 0.3.0
  * Author: LRSD
  */
 
 defined('ABSPATH') || exit;
 
-define('LRSD_SF_VERSION', '0.2.0');
+define('LRSD_SF_VERSION', '0.3.0');
 define('LRSD_SF_PLUGIN_FILE', __FILE__);
 define('LRSD_SF_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('LRSD_SF_PLUGIN_URL', plugin_dir_url(__FILE__));

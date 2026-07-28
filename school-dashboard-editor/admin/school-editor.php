@@ -17,26 +17,27 @@ function lrsd_sf_register_school_meta_box() {
 
 function lrsd_sf_get_simple_field_map() {
     return [
-        // ── Core
-        'schoolName'      => ['label' => 'School Name',       'path' => ['schoolName'],       'type' => 'text',   'section' => 'details'],
-        'headerImage'     => ['label' => 'Header Image',      'path' => ['headerImage'],       'type' => 'media',  'section' => 'details'],
+        // ── Header / School Photo
+        'schoolName'      => ['label' => 'School Name',       'path' => ['schoolName'],       'type' => 'text',  'section' => 'school_header'],
+        'headerImage'     => ['label' => 'Header Image',      'path' => ['headerImage'],       'type' => 'media', 'section' => 'school_header'],
+        // ── Details
         'address'         => ['label' => 'Address',           'path' => ['address'],           'type' => 'text',   'section' => 'details'],
         'phone'           => ['label' => 'Phone',             'path' => ['phone'],             'type' => 'text',   'section' => 'details'],
         'familyOfSchools' => ['label' => 'Family of Schools', 'path' => ['familyOfSchools'],   'type' => 'select', 'options_key' => 'familyOfSchools', 'section' => 'details'],
         'schoolLevel'     => ['label' => 'School Level',      'path' => ['schoolLevel'],       'type' => 'select', 'options_key' => 'schoolLevel',     'section' => 'details'],
         'grades'          => ['label' => 'Grades',            'path' => ['grades'],            'type' => 'text',   'section' => 'details'],
         'program'         => ['label' => 'Program',           'path' => ['program'],           'type' => 'select', 'options_key' => 'program',         'section' => 'details'],
-        // ── Enrolment
-        'enrolment_capacity' => ['label' => 'Classroom Capacity',  'path' => ['enrolment', 'capacity'], 'type' => 'int',  'section' => 'enrolment'],
-        'enrolment_current'  => ['label' => 'Current Enrolment',   'path' => ['enrolment', 'current'],  'type' => 'int',  'section' => 'enrolment'],
-        // ── Details
         'details_built'   => ['label' => 'Year Built',        'path' => ['details', 'Built'],  'type' => 'int',  'section' => 'details'],
         'details_size'    => ['label' => 'Building Size',     'path' => ['details', 'Size'],   'type' => 'text', 'section' => 'details'],
         'details_modular' => ['label' => 'Modular Rooms',     'path' => ['details', 'Modular'],'type' => 'int',  'section' => 'details'],
-        // ── Building
-        'building_air_conditioning' => ['label' => 'Air Conditioning', 'path' => ['building', 'Air Conditioning'], 'type' => 'text', 'section' => 'building'],
-        'building_heating'          => ['label' => 'Heating',          'path' => ['building', 'Heating'],          'type' => 'text', 'section' => 'building'],
-        'building_led_lighting'     => ['label' => 'LED Lighting',     'path' => ['building', 'LED Lighting'],     'type' => 'text', 'section' => 'building'],
+        // ── Enrolment
+        'enrolment_current'  => ['label' => 'Current Enrolment',  'path' => ['enrolment', 'current'],  'type' => 'int', 'section' => 'enrolment'],
+        // ── Capacity
+        'enrolment_capacity' => ['label' => 'Classroom Capacity', 'path' => ['enrolment', 'capacity'], 'type' => 'int', 'section' => 'capacity'],
+        // ── Building Systems
+        'building_air_conditioning' => ['label' => 'Air Conditioning', 'path' => ['building', 'Air Conditioning'], 'type' => 'text', 'section' => 'building_systems'],
+        'building_heating'          => ['label' => 'Heating',          'path' => ['building', 'Heating'],          'type' => 'text', 'section' => 'building_systems'],
+        'building_led_lighting'     => ['label' => 'LED Lighting',     'path' => ['building', 'LED Lighting'],     'type' => 'text', 'section' => 'building_systems'],
         // ── Transportation
         'transportation_parking_spots' => ['label' => 'Parking Spots', 'path' => ['transportation', 'Parking spots'], 'type' => 'text',   'section' => 'transportation'],
         'transportation_bus_loop'      => ['label' => 'Bus Loop',       'path' => ['transportation', 'Bus Loop'],      'type' => 'select', 'options_key' => 'busLoop', 'section' => 'transportation'],
@@ -49,9 +50,9 @@ function lrsd_sf_get_simple_field_map() {
         'accessibility_parking_stalls'      => ['label' => 'Accessible Parking Stalls', 'path' => ['accessibility', 'Accessible parking stalls'],        'type' => 'int',    'section' => 'accessibility'],
         'accessibility_accessible_entrance' => ['label' => 'Accessible Entrance',       'path' => ['accessibility', 'Accessible entrance'],              'type' => 'text',   'section' => 'accessibility'],
         'accessibility_door_operators'      => ['label' => 'Auto Entrance Door Ops',    'path' => ['accessibility', 'Automatic entrance door operators'], 'type' => 'text',   'section' => 'accessibility'],
-        // ── Catchment
-        'catchment_migration' => ['label' => 'Catchment Migration', 'path' => ['catchment', 'migration'], 'type' => 'text', 'section' => 'catchment'],
-        'catchment_map'       => ['label' => 'Catchment Map',       'path' => ['catchment', 'map'],       'type' => 'media', 'section' => 'catchment'],
+        // ── Catchment Map
+        'catchment_migration' => ['label' => 'Catchment Migration', 'path' => ['catchment', 'migration'], 'type' => 'text',  'section' => 'catchment_map'],
+        'catchment_map'       => ['label' => 'Catchment Map',       'path' => ['catchment', 'map'],       'type' => 'media', 'section' => 'catchment_map'],
     ];
 }
 
@@ -374,61 +375,21 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         </p>
         <?php endif; ?>
 
-        <!-- ── Enrolment & Capacity ────────────────────────────── -->
-        <?php lrsd_sf_render_section_header('lrsd-sec-enrolment', __('Enrolment & Capacity', 'lrsd-school-facilities')); ?>
+        <!-- ── Header / School Photo ──────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-school-header', __('Header / School Photo', 'lrsd-school-facilities'), true); ?>
         <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
         <?php
         foreach ($field_map as $fk => $field) {
-            if (($field['section'] ?? '') !== 'enrolment') continue;
+            if (($field['section'] ?? '') !== 'school_header') continue;
             $val = lrsd_sf_get_nested_value($school_data, $field['path'], '');
             lrsd_sf_render_field_row($fk, $field, $val, $dropdown_options);
         }
         ?>
-            <tr>
-                <th scope="row"><?php esc_html_e('Historic Enrolment', 'lrsd-school-facilities'); ?></th>
-                <td>
-                    <div class="lrsd-sf-kv-list">
-                        <table class="lrsd-sf-kv-table" role="presentation">
-                            <thead><tr><th scope="col"><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th scope="col"><?php esc_html_e('Value', 'lrsd-school-facilities'); ?></th><th scope="col"></th></tr></thead>
-                            <tbody class="lrsd-sf-kv-rows">
-                            <?php foreach ($history_points as $point) : ?>
-                                <tr class="lrsd-sf-kv-row">
-                                    <td><input type="text" class="regular-text" name="lrsd_sf_enrolment_history_labels[]" aria-label="<?php esc_attr_e('Historic enrolment year', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['label'] ?? '')); ?>" /></td>
-                                    <td><input type="number" class="small-text" name="lrsd_sf_enrolment_history_values[]" aria-label="<?php esc_attr_e('Historic enrolment value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['value'] ?? '')); ?>" /></td>
-                                    <td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="<?php esc_attr_e('Remove historic enrolment row', 'lrsd-school-facilities'); ?>">&#x2715;</button></td>
-                                </tr>
-                            <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                        <button type="button" class="button lrsd-sf-add-kv-row" data-label-name="lrsd_sf_enrolment_history_labels[]" data-value-name="lrsd_sf_enrolment_history_values[]" data-value-type="number"><?php esc_html_e('+ Add Data Point', 'lrsd-school-facilities'); ?></button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row"><?php esc_html_e('Projected Enrolment', 'lrsd-school-facilities'); ?></th>
-                <td>
-                    <div class="lrsd-sf-kv-list">
-                        <table class="lrsd-sf-kv-table" role="presentation">
-                            <thead><tr><th scope="col"><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th scope="col"><?php esc_html_e('Value', 'lrsd-school-facilities'); ?></th><th scope="col"></th></tr></thead>
-                            <tbody class="lrsd-sf-kv-rows">
-                            <?php foreach ($projection_points as $point) : ?>
-                                <tr class="lrsd-sf-kv-row">
-                                    <td><input type="text" class="regular-text" name="lrsd_sf_enrolment_projection_labels[]" aria-label="<?php esc_attr_e('Projected enrolment year', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['label'] ?? '')); ?>" /></td>
-                                    <td><input type="number" class="small-text" name="lrsd_sf_enrolment_projection_values[]" aria-label="<?php esc_attr_e('Projected enrolment value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['value'] ?? '')); ?>" /></td>
-                                    <td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="<?php esc_attr_e('Remove projected enrolment row', 'lrsd-school-facilities'); ?>">&#x2715;</button></td>
-                                </tr>
-                            <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                        <button type="button" class="button lrsd-sf-add-kv-row" data-label-name="lrsd_sf_enrolment_projection_labels[]" data-value-name="lrsd_sf_enrolment_projection_values[]" data-value-type="number"><?php esc_html_e('+ Add Data Point', 'lrsd-school-facilities'); ?></button>
-                    </div>
-                </td>
-            </tr>
         </tbody></table>
         <?php lrsd_sf_render_section_footer(); ?>
 
         <!-- ── Details ─────────────────────────────────────────── -->
-        <?php lrsd_sf_render_section_header('lrsd-sec-details', __('Details', 'lrsd-school-facilities'), true); ?>
+        <?php lrsd_sf_render_section_header('lrsd-sec-details', __('Details', 'lrsd-school-facilities')); ?>
         <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
         <?php
         foreach ($field_map as $fk => $field) {
@@ -466,12 +427,12 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         </tbody></table>
         <?php lrsd_sf_render_section_footer(); ?>
 
-        <!-- ── Building Systems ────────────────────────────────── -->
-        <?php lrsd_sf_render_section_header('lrsd-sec-building', __('Building Systems', 'lrsd-school-facilities')); ?>
+        <!-- ── Enrolment ───────────────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-enrolment', __('Enrolment', 'lrsd-school-facilities')); ?>
         <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
         <?php
         foreach ($field_map as $fk => $field) {
-            if (($field['section'] ?? '') !== 'building') continue;
+            if (($field['section'] ?? '') !== 'enrolment') continue;
             $val = lrsd_sf_get_nested_value($school_data, $field['path'], '');
             lrsd_sf_render_field_row($fk, $field, $val, $dropdown_options);
         }
@@ -479,12 +440,77 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         </tbody></table>
         <?php lrsd_sf_render_section_footer(); ?>
 
-        <!-- ── Transportation ──────────────────────────────────── -->
-        <?php lrsd_sf_render_section_header('lrsd-sec-transportation', __('Transportation', 'lrsd-school-facilities')); ?>
+        <!-- ── Capacity ─────────────────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-capacity', __('Capacity', 'lrsd-school-facilities')); ?>
         <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
         <?php
         foreach ($field_map as $fk => $field) {
-            if (($field['section'] ?? '') !== 'transportation') continue;
+            if (($field['section'] ?? '') !== 'capacity') continue;
+            $val = lrsd_sf_get_nested_value($school_data, $field['path'], '');
+            lrsd_sf_render_field_row($fk, $field, $val, $dropdown_options);
+        }
+        ?>
+        </tbody></table>
+        <?php lrsd_sf_render_section_footer(); ?>
+
+        <!-- ── Historic Enrolment ──────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-history', __('Historic Enrolment', 'lrsd-school-facilities')); ?>
+        <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
+            <tr>
+                <th scope="row"><?php esc_html_e('Data Points', 'lrsd-school-facilities'); ?></th>
+                <td>
+                    <div class="lrsd-sf-kv-list">
+                        <table class="lrsd-sf-kv-table" role="presentation">
+                            <thead><tr><th scope="col"><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th scope="col"><?php esc_html_e('Value', 'lrsd-school-facilities'); ?></th><th scope="col"></th></tr></thead>
+                            <tbody class="lrsd-sf-kv-rows">
+                            <?php foreach ($history_points as $point) : ?>
+                                <tr class="lrsd-sf-kv-row">
+                                    <td><input type="text" class="regular-text" name="lrsd_sf_enrolment_history_labels[]" aria-label="<?php esc_attr_e('Historic enrolment year', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['label'] ?? '')); ?>" /></td>
+                                    <td><input type="number" class="small-text" name="lrsd_sf_enrolment_history_values[]" aria-label="<?php esc_attr_e('Historic enrolment value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['value'] ?? '')); ?>" /></td>
+                                    <td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="<?php esc_attr_e('Remove historic enrolment row', 'lrsd-school-facilities'); ?>">&#x2715;</button></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <button type="button" class="button lrsd-sf-add-kv-row" data-label-name="lrsd_sf_enrolment_history_labels[]" data-value-name="lrsd_sf_enrolment_history_values[]" data-value-type="number"><?php esc_html_e('+ Add Data Point', 'lrsd-school-facilities'); ?></button>
+                    </div>
+                </td>
+            </tr>
+        </tbody></table>
+        <?php lrsd_sf_render_section_footer(); ?>
+
+        <!-- ── Projected Enrolment ─────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-projection', __('Projected Enrolment', 'lrsd-school-facilities')); ?>
+        <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
+            <tr>
+                <th scope="row"><?php esc_html_e('Data Points', 'lrsd-school-facilities'); ?></th>
+                <td>
+                    <div class="lrsd-sf-kv-list">
+                        <table class="lrsd-sf-kv-table" role="presentation">
+                            <thead><tr><th scope="col"><?php esc_html_e('Year', 'lrsd-school-facilities'); ?></th><th scope="col"><?php esc_html_e('Value', 'lrsd-school-facilities'); ?></th><th scope="col"></th></tr></thead>
+                            <tbody class="lrsd-sf-kv-rows">
+                            <?php foreach ($projection_points as $point) : ?>
+                                <tr class="lrsd-sf-kv-row">
+                                    <td><input type="text" class="regular-text" name="lrsd_sf_enrolment_projection_labels[]" aria-label="<?php esc_attr_e('Projected enrolment year', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['label'] ?? '')); ?>" /></td>
+                                    <td><input type="number" class="small-text" name="lrsd_sf_enrolment_projection_values[]" aria-label="<?php esc_attr_e('Projected enrolment value', 'lrsd-school-facilities'); ?>" value="<?php echo esc_attr((string)($point['value'] ?? '')); ?>" /></td>
+                                    <td><button type="button" class="button lrsd-sf-remove-kv-row" aria-label="<?php esc_attr_e('Remove projected enrolment row', 'lrsd-school-facilities'); ?>">&#x2715;</button></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <button type="button" class="button lrsd-sf-add-kv-row" data-label-name="lrsd_sf_enrolment_projection_labels[]" data-value-name="lrsd_sf_enrolment_projection_values[]" data-value-type="number"><?php esc_html_e('+ Add Data Point', 'lrsd-school-facilities'); ?></button>
+                    </div>
+                </td>
+            </tr>
+        </tbody></table>
+        <?php lrsd_sf_render_section_footer(); ?>
+
+        <!-- ── Building Systems ────────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-building-systems', __('Building Systems', 'lrsd-school-facilities')); ?>
+        <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
+        <?php
+        foreach ($field_map as $fk => $field) {
+            if (($field['section'] ?? '') !== 'building_systems') continue;
             $val = lrsd_sf_get_nested_value($school_data, $field['path'], '');
             lrsd_sf_render_field_row($fk, $field, $val, $dropdown_options);
         }
@@ -518,7 +544,20 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         </tbody></table>
         <?php lrsd_sf_render_section_footer(); ?>
 
-        <!-- ── Childcare ───────────────────────────────────────── -->
+        <!-- ── Transportation ──────────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-transportation', __('Transportation', 'lrsd-school-facilities')); ?>
+        <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
+        <?php
+        foreach ($field_map as $fk => $field) {
+            if (($field['section'] ?? '') !== 'transportation') continue;
+            $val = lrsd_sf_get_nested_value($school_data, $field['path'], '');
+            lrsd_sf_render_field_row($fk, $field, $val, $dropdown_options);
+        }
+        ?>
+        </tbody></table>
+        <?php lrsd_sf_render_section_footer(); ?>
+
+        <!-- ── Childcare & BLAST ───────────────────────────────── -->
         <?php lrsd_sf_render_section_header('lrsd-sec-childcare', __('Childcare & BLAST', 'lrsd-school-facilities')); ?>
         <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
             <tr>
@@ -548,12 +587,12 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         </tbody></table>
         <?php lrsd_sf_render_section_footer(); ?>
 
-        <!-- ── Catchment ───────────────────────────────────────── -->
-        <?php lrsd_sf_render_section_header('lrsd-sec-catchment', __('Catchment', 'lrsd-school-facilities')); ?>
+        <!-- ── Catchment Map ───────────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-catchment-map', __('Catchment Map', 'lrsd-school-facilities')); ?>
         <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
         <?php
         foreach ($field_map as $fk => $field) {
-            if (($field['section'] ?? '') !== 'catchment') continue;
+            if (($field['section'] ?? '') !== 'catchment_map') continue;
             $val = lrsd_sf_get_nested_value($school_data, $field['path'], '');
             lrsd_sf_render_field_row($fk, $field, $val, $dropdown_options);
         }
@@ -561,8 +600,8 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         </tbody></table>
         <?php lrsd_sf_render_section_footer(); ?>
 
-        <!-- ── Projects – Provincial ───────────────────────────── -->
-        <?php lrsd_sf_render_section_header('lrsd-sec-projects-prov', __('Projects — Provincial', 'lrsd-school-facilities')); ?>
+        <!-- ── Provincial Projects ─────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-projects-prov', __('Provincial Projects', 'lrsd-school-facilities')); ?>
         <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
         <?php
         foreach (['projects_provincial_requested' => 'Requested', 'projects_provincial_inProgress' => 'In Progress', 'projects_provincial_completed' => 'Completed'] as $pk => $plabel) :
@@ -576,8 +615,8 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         </tbody></table>
         <?php lrsd_sf_render_section_footer(); ?>
 
-        <!-- ── Projects – Local ────────────────────────────────── -->
-        <?php lrsd_sf_render_section_header('lrsd-sec-projects-local', __('Projects — Local', 'lrsd-school-facilities')); ?>
+        <!-- ── Local Projects ──────────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-projects-local', __('Local Projects', 'lrsd-school-facilities')); ?>
         <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
         <?php
         foreach (['projects_local_requested' => 'Requested', 'projects_local_inProgress' => 'In Progress', 'projects_local_completed' => 'Completed'] as $pk => $plabel) :
