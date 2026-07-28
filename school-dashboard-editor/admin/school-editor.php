@@ -749,6 +749,9 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         var cancelBtn  = document.getElementById('lrsd-sf-delete-cancel-btn');
         var expectedDeleteName = confirmBtn ? (confirmBtn.getAttribute('data-delete-name') || '') : '';
         var deleteUrl = confirmBtn ? (confirmBtn.getAttribute('data-delete-url') || '#') : '#';
+        if (deleteUrl.indexOf('admin-post.php') === -1) {
+            deleteUrl = '#';
+        }
 
         function onKeyDown(e) {
             if (e.key === 'Escape') closeModal();
