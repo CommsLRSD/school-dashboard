@@ -18,15 +18,14 @@ function lrsd_sf_register_school_meta_box() {
 function lrsd_sf_get_simple_field_map() {
     return [
         // ── Core
-        'schoolName'      => ['label' => 'School Name',       'path' => ['schoolName'],       'type' => 'text',   'section' => 'core'],
-        'schoolType'      => ['label' => 'School Type',       'path' => ['schoolType'],        'type' => 'text',   'section' => 'core'],
-        'headerImage'     => ['label' => 'Header Image',      'path' => ['headerImage'],       'type' => 'media',  'section' => 'core'],
-        'address'         => ['label' => 'Address',           'path' => ['address'],           'type' => 'text',   'section' => 'core'],
-        'phone'           => ['label' => 'Phone',             'path' => ['phone'],             'type' => 'text',   'section' => 'core'],
-        'familyOfSchools' => ['label' => 'Family of Schools', 'path' => ['familyOfSchools'],   'type' => 'select', 'options_key' => 'familyOfSchools', 'section' => 'core'],
-        'schoolLevel'     => ['label' => 'School Level',      'path' => ['schoolLevel'],       'type' => 'select', 'options_key' => 'schoolLevel',     'section' => 'core'],
-        'grades'          => ['label' => 'Grades',            'path' => ['grades'],            'type' => 'text',   'section' => 'core'],
-        'program'         => ['label' => 'Program',           'path' => ['program'],           'type' => 'select', 'options_key' => 'program',         'section' => 'core'],
+        'schoolName'      => ['label' => 'School Name',       'path' => ['schoolName'],       'type' => 'text',   'section' => 'details'],
+        'headerImage'     => ['label' => 'Header Image',      'path' => ['headerImage'],       'type' => 'media',  'section' => 'details'],
+        'address'         => ['label' => 'Address',           'path' => ['address'],           'type' => 'text',   'section' => 'details'],
+        'phone'           => ['label' => 'Phone',             'path' => ['phone'],             'type' => 'text',   'section' => 'details'],
+        'familyOfSchools' => ['label' => 'Family of Schools', 'path' => ['familyOfSchools'],   'type' => 'select', 'options_key' => 'familyOfSchools', 'section' => 'details'],
+        'schoolLevel'     => ['label' => 'School Level',      'path' => ['schoolLevel'],       'type' => 'select', 'options_key' => 'schoolLevel',     'section' => 'details'],
+        'grades'          => ['label' => 'Grades',            'path' => ['grades'],            'type' => 'text',   'section' => 'details'],
+        'program'         => ['label' => 'Program',           'path' => ['program'],           'type' => 'select', 'options_key' => 'program',         'section' => 'details'],
         // ── Enrolment
         'enrolment_capacity' => ['label' => 'Classroom Capacity',  'path' => ['enrolment', 'capacity'], 'type' => 'int',  'section' => 'enrolment'],
         'enrolment_current'  => ['label' => 'Current Enrolment',   'path' => ['enrolment', 'current'],  'type' => 'int',  'section' => 'enrolment'],
@@ -375,19 +374,6 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         </p>
         <?php endif; ?>
 
-        <!-- ── Core Info ───────────────────────────────────────── -->
-        <?php lrsd_sf_render_section_header('lrsd-sec-core', __('Core Info', 'lrsd-school-facilities'), true); ?>
-        <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
-        <?php
-        foreach ($field_map as $fk => $field) {
-            if (($field['section'] ?? '') !== 'core') continue;
-            $val = lrsd_sf_get_nested_value($school_data, $field['path'], '');
-            lrsd_sf_render_field_row($fk, $field, $val, $dropdown_options);
-        }
-        ?>
-        </tbody></table>
-        <?php lrsd_sf_render_section_footer(); ?>
-
         <!-- ── Enrolment & Capacity ────────────────────────────── -->
         <?php lrsd_sf_render_section_header('lrsd-sec-enrolment', __('Enrolment & Capacity', 'lrsd-school-facilities')); ?>
         <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
@@ -441,8 +427,8 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         </tbody></table>
         <?php lrsd_sf_render_section_footer(); ?>
 
-        <!-- ── Building Details ────────────────────────────────── -->
-        <?php lrsd_sf_render_section_header('lrsd-sec-details', __('Building Details', 'lrsd-school-facilities')); ?>
+        <!-- ── Details ─────────────────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-details', __('Details', 'lrsd-school-facilities'), true); ?>
         <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
         <?php
         foreach ($field_map as $fk => $field) {
@@ -714,6 +700,7 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
             'lrsd_sf_delete_school_' . (int) $post->ID
         );
         $school_name_for_confirm = lrsd_sf_get_school_display_name($school_data, $post->post_title);
+        $delete_name_uppercase = lrsd_sf_uppercase_school_name($school_name_for_confirm);
     ?>
     <div class="lrsd-sf-danger-zone">
         <p class="lrsd-sf-danger-zone-label"><?php esc_html_e('Danger Zone', 'lrsd-school-facilities'); ?></p>
@@ -734,11 +721,18 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                     $school_name_for_confirm
                 )); ?>
             </p>
-            <p class="lrsd-sf-delete-modal-body"><?php esc_html_e('Type DELETE to confirm:', 'lrsd-school-facilities'); ?></p>
-            <input type="text" id="lrsd-sf-delete-confirm-input" class="regular-text lrsd-sf-delete-confirm-input" placeholder="DELETE" autocomplete="off" />
+            <p class="lrsd-sf-delete-modal-body"><?php echo esc_html(sprintf(
+                /* translators: %s: uppercase school name */
+                __('Type %s to confirm:', 'lrsd-school-facilities'),
+                '"' . $delete_name_uppercase . '"'
+            )); ?></p>
+            <input type="text" id="lrsd-sf-delete-confirm-input" class="regular-text lrsd-sf-delete-confirm-input" placeholder="<?php echo esc_attr($delete_name_uppercase); ?>" autocomplete="off" />
             <div class="lrsd-sf-delete-modal-actions">
                 <a id="lrsd-sf-delete-confirm-btn"
-                   href="<?php echo esc_url($delete_url); ?>"
+                   href="#"
+                   data-delete-url="<?php echo esc_url($delete_url); ?>"
+                   data-delete-endpoint="<?php echo esc_url(admin_url('admin-post.php')); ?>"
+                   data-delete-name="<?php echo esc_attr($delete_name_uppercase); ?>"
                    class="button lrsd-sf-btn-danger"
                    aria-disabled="true"
                 ><?php esc_html_e('Delete School', 'lrsd-school-facilities'); ?></a>
@@ -754,6 +748,24 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         var input      = document.getElementById('lrsd-sf-delete-confirm-input');
         var confirmBtn = document.getElementById('lrsd-sf-delete-confirm-btn');
         var cancelBtn  = document.getElementById('lrsd-sf-delete-cancel-btn');
+        var expectedDeleteName = confirmBtn ? (confirmBtn.getAttribute('data-delete-name') || '') : '';
+        var deleteUrl = confirmBtn ? (confirmBtn.getAttribute('data-delete-url') || '') : '';
+        var deleteEndpoint = confirmBtn ? (confirmBtn.getAttribute('data-delete-endpoint') || '') : '';
+
+        try {
+            var parsedDeleteUrl = new URL(deleteUrl, window.location.origin);
+            var parsedEndpointUrl = new URL(deleteEndpoint, window.location.origin);
+            if (
+                parsedDeleteUrl.origin === parsedEndpointUrl.origin &&
+                parsedDeleteUrl.pathname === parsedEndpointUrl.pathname
+            ) {
+                deleteUrl = parsedDeleteUrl.toString();
+            } else {
+                deleteUrl = '';
+            }
+        } catch (error) {
+            deleteUrl = '';
+        }
 
         function onKeyDown(e) {
             if (e.key === 'Escape') closeModal();
@@ -774,11 +786,15 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         }
 
         function setConfirmState(enabled) {
-            if (enabled) {
+            if (enabled && deleteUrl) {
+                var targetUrl = new URL(deleteUrl, window.location.origin);
+                targetUrl.searchParams.set('confirm_name', expectedDeleteName);
+                confirmBtn.setAttribute('href', targetUrl.toString());
                 confirmBtn.removeAttribute('aria-disabled');
                 confirmBtn.style.pointerEvents = '';
                 confirmBtn.style.opacity = '';
             } else {
+                confirmBtn.setAttribute('href', '#');
                 confirmBtn.setAttribute('aria-disabled', 'true');
                 confirmBtn.style.pointerEvents = 'none';
                 confirmBtn.style.opacity = '.4';
@@ -793,7 +809,7 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         });
 
         input.addEventListener('input', function () {
-            setConfirmState(input.value === 'DELETE');
+            setConfirmState(input.value === expectedDeleteName);
         });
     }());
     </script>

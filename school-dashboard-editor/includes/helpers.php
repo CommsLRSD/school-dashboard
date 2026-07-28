@@ -70,6 +70,18 @@ function lrsd_sf_get_school_display_name($school_data, $fallback_title = '') {
 }
 
 /**
+ * Convert a school name to uppercase while preserving UTF-8 accents.
+ */
+function lrsd_sf_uppercase_school_name($school_name) {
+    $school_name = (string) $school_name;
+    if (function_exists('mb_strtoupper')) {
+        return mb_strtoupper($school_name, 'UTF-8');
+    }
+
+    return strtoupper($school_name);
+}
+
+/**
  * Fetch school posts suitable for the Update by School admin page.
  *
  * @return WP_Post[]

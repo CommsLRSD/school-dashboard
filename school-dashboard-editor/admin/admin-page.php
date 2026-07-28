@@ -346,7 +346,6 @@ function lrsd_sf_render_school_list_page() {
                 <thead>
                     <tr>
                         <th><?php esc_html_e('School', 'lrsd-school-facilities'); ?></th>
-                        <th><?php esc_html_e('Type', 'lrsd-school-facilities'); ?></th>
                         <th><?php esc_html_e('Level', 'lrsd-school-facilities'); ?></th>
                         <th><?php esc_html_e('Family of Schools', 'lrsd-school-facilities'); ?></th>
                         <th><?php esc_html_e('Action', 'lrsd-school-facilities'); ?></th>
@@ -357,15 +356,13 @@ function lrsd_sf_render_school_list_page() {
                     $school_level = get_post_meta($school_post->ID, 'lrsd_school_data', true);
                     $sdata = lrsd_sf_normalize_school_data($school_level);
                     $school_name = lrsd_sf_get_school_display_name($sdata, $school_post->post_title);
-                    $school_type = $sdata['schoolType'] ?? '';
                     $school_level_label = $sdata['schoolLevel'] ?? '';
                     $family_of_schools = $sdata['familyOfSchools'] ?? '';
                     $edit_url = get_edit_post_link($school_post->ID);
-                    $search_index = strtolower(implode(' ', [$school_name, $school_type, $school_level_label, $family_of_schools]));
+                    $search_index = strtolower(implode(' ', [$school_name, $school_level_label, $family_of_schools]));
                 ?>
                     <tr class="lrsd-sf-school-row" data-school-search="<?php echo esc_attr($search_index); ?>">
                         <td><a href="<?php echo esc_url($edit_url); ?>"><?php echo esc_html($school_name); ?></a></td>
-                        <td><?php echo esc_html($school_type ?: '—'); ?></td>
                         <td><?php echo esc_html($school_level_label ?: '—'); ?></td>
                         <td><?php echo esc_html($family_of_schools ?: '—'); ?></td>
                         <td>
@@ -488,6 +485,25 @@ function lrsd_sf_handle_delete_school() {
 
     $school_data = lrsd_sf_normalize_school_data(get_post_meta($post_id, 'lrsd_school_data', true));
     $school_name = lrsd_sf_get_school_display_name($school_data, $post->post_title);
+    $expected_confirm_name = lrsd_sf_uppercase_school_name($school_name);
+    $provided_confirm_name = isset($_GET['confirm_name'])
+        ? sanitize_text_field(wp_unslash($_GET['confirm_name']))
+        : '';
+    $provided_confirm_name = is_string($provided_confirm_name) ? $provided_confirm_name : '';
+
+    if ($provided_confirm_name !== $expected_confirm_name) {
+        lrsd_sf_set_admin_notice(
+            sprintf(
+                /* translators: %s: uppercase school name */
+                __('Delete cancelled. Type %s exactly to confirm.', 'lrsd-school-facilities'),
+                '"' . $expected_confirm_name . '"'
+            ),
+            'error'
+        );
+        $edit_url = get_edit_post_link($post_id, 'raw');
+        wp_safe_redirect($edit_url ? $edit_url : admin_url('post.php?post=' . (int) $post_id . '&action=edit'));
+        exit;
+    }
 
     $trashed = wp_trash_post($post_id);
     if (!$trashed) {
@@ -522,7 +538,7 @@ function lrsd_sf_render_bulk_update_page() {
     $category = isset($_GET['bulk_category']) ? sanitize_key($_GET['bulk_category']) : 'enrolment';
 
     $categories = [
-        'details'              => __('Building Details', 'lrsd-school-facilities'),
+        'details'              => __('Details', 'lrsd-school-facilities'),
         'additions'            => __('Additions', 'lrsd-school-facilities'),
         'enrolment'            => __('Enrolment & Capacity', 'lrsd-school-facilities'),
         'projection'           => __('Projected Enrolment', 'lrsd-school-facilities'),
