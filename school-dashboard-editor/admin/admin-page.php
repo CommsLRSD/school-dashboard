@@ -232,6 +232,60 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
     }
 }
 
+// ─── LRSD Media Folders Compatibility ────────────────────────────────────────
+
+/**
+ * Enqueue the LRSD Media Folders plugin assets on any school-dashboard admin page
+ * that calls wp_enqueue_media().
+ *
+ * The lrsd-media-folders plugin may limit its own script enqueue to upload.php.
+ * This function, registered at admin_enqueue_scripts priority 20 (after the
+ * folder plugin's own priority-10 registration), ensures its assets are present
+ * wherever the School Dashboard Editor opens a wp.media() modal.
+ *
+ * If you update the folder plugin's internal script/style handle names, add them
+ * to the $handles array below and they will be enqueued automatically.
+ *
+ * @param string $hook_suffix Current admin page hook.
+ */
+function lrsd_sf_enqueue_media_folders_compat($hook_suffix) {
+    $is_school_editor = (
+        strpos((string) $hook_suffix, 'lrsd-school-facilities') !== false
+        || get_post_type() === 'lr_school'
+    );
+    if (!$is_school_editor) {
+        return;
+    }
+
+    if (!function_exists('is_plugin_active')) {
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    }
+    if (!is_plugin_active('lrsd-media-folders/lrsd-media-folders.php')) {
+        return;
+    }
+
+    // Give the folder plugin a chance to enqueue via its own dedicated action.
+    do_action('lrsd_media_folders_enqueue_assets');
+
+    // Enqueue any scripts/styles the folder plugin has already registered.
+    // This handles the case where the plugin calls wp_register_script() globally
+    // but wp_enqueue_script() only on upload.php.
+    $handles = [
+        'lrsd-media-folders',
+        'lrsd-media-folders-admin',
+        'lrsd-media-folders-script',
+        'lrsd-media-folders-scripts',
+    ];
+    foreach ($handles as $handle) {
+        if (wp_script_is($handle, 'registered') && !wp_script_is($handle, 'enqueued')) {
+            wp_enqueue_script($handle);
+        }
+        if (wp_style_is($handle, 'registered') && !wp_style_is($handle, 'enqueued')) {
+            wp_enqueue_style($handle);
+        }
+    }
+}
+
 // ─── Import / Export Page ─────────────────────────────────────────────────────
 
 function lrsd_sf_render_import_export_page() {
