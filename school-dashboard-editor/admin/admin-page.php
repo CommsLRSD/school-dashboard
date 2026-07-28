@@ -485,12 +485,11 @@ function lrsd_sf_handle_delete_school() {
 
     $school_data = lrsd_sf_normalize_school_data(get_post_meta($post_id, 'lrsd_school_data', true));
     $school_name = lrsd_sf_get_school_display_name($school_data, $post->post_title);
-    $expected_confirm_name = function_exists('mb_strtoupper')
-        ? mb_strtoupper((string) $school_name, 'UTF-8')
-        : strtoupper((string) $school_name);
+    $expected_confirm_name = lrsd_sf_uppercase_school_name($school_name);
     $provided_confirm_name = isset($_GET['confirm_name'])
-        ? sanitize_text_field(wp_unslash($_GET['confirm_name']))
+        ? wp_unslash($_GET['confirm_name'])
         : '';
+    $provided_confirm_name = is_string($provided_confirm_name) ? $provided_confirm_name : '';
 
     if ($provided_confirm_name !== $expected_confirm_name) {
         lrsd_sf_set_admin_notice(

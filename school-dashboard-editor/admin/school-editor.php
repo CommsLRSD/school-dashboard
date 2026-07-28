@@ -700,9 +700,7 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
             'lrsd_sf_delete_school_' . (int) $post->ID
         );
         $school_name_for_confirm = lrsd_sf_get_school_display_name($school_data, $post->post_title);
-        $delete_name_uppercase = function_exists('mb_strtoupper')
-            ? mb_strtoupper((string) $school_name_for_confirm, 'UTF-8')
-            : strtoupper((string) $school_name_for_confirm);
+        $delete_name_uppercase = lrsd_sf_uppercase_school_name($school_name_for_confirm);
     ?>
     <div class="lrsd-sf-danger-zone">
         <p class="lrsd-sf-danger-zone-label"><?php esc_html_e('Danger Zone', 'lrsd-school-facilities'); ?></p>
@@ -772,14 +770,8 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
 
         function setConfirmState(enabled) {
             if (enabled) {
-                try {
-                    var targetUrl = new URL(deleteUrl, window.location.origin);
-                    targetUrl.searchParams.set('confirm_name', expectedDeleteName);
-                    confirmBtn.setAttribute('href', targetUrl.toString());
-                } catch (error) {
-                    var separator = deleteUrl.indexOf('?') === -1 ? '?' : '&';
-                    confirmBtn.setAttribute('href', deleteUrl + separator + 'confirm_name=' + encodeURIComponent(expectedDeleteName));
-                }
+                var separator = deleteUrl.indexOf('?') === -1 ? '?' : '&';
+                confirmBtn.setAttribute('href', deleteUrl + separator + 'confirm_name=' + encodeURIComponent(expectedDeleteName));
                 confirmBtn.removeAttribute('aria-disabled');
                 confirmBtn.style.pointerEvents = '';
                 confirmBtn.style.opacity = '';
