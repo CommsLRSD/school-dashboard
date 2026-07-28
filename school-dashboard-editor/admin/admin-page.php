@@ -249,9 +249,10 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
  * @param string $hook_suffix Current admin page hook.
  */
 function lrsd_sf_enqueue_media_folders_compat($hook_suffix) {
+    $screen = function_exists('get_current_screen') ? get_current_screen() : null;
     $is_school_editor = (
         strpos((string) $hook_suffix, 'lrsd-school-facilities') !== false
-        || get_post_type() === 'lr_school'
+        || (null !== $screen && $screen->post_type === 'lr_school')
     );
     if (!$is_school_editor) {
         return;
@@ -267,14 +268,14 @@ function lrsd_sf_enqueue_media_folders_compat($hook_suffix) {
     // Give the folder plugin a chance to enqueue via its own dedicated action.
     do_action('lrsd_media_folders_enqueue_assets');
 
-    // Enqueue any scripts/styles the folder plugin has already registered.
-    // This handles the case where the plugin calls wp_register_script() globally
-    // but wp_enqueue_script() only on upload.php.
+    // Enqueue any scripts/styles the folder plugin has registered but not yet
+    // enqueued on this page. The primary handle matches the plugin slug; the
+    // '-admin' variant is included because some plugins use a separate handle
+    // for admin-only scripts. Add any additional handles here if the plugin's
+    // internals change.
     $handles = [
         'lrsd-media-folders',
         'lrsd-media-folders-admin',
-        'lrsd-media-folders-script',
-        'lrsd-media-folders-scripts',
     ];
     foreach ($handles as $handle) {
         if (wp_script_is($handle, 'registered') && !wp_script_is($handle, 'enqueued')) {
