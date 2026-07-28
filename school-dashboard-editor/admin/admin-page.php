@@ -451,8 +451,8 @@ function lrsd_sf_handle_create_school() {
 
     lrsd_sf_set_editor_notice(__('New school created. Fill in the blank fields and save when ready.', 'lrsd-school-facilities'), 'success');
 
-    $edit_url = get_edit_post_link($post_id, 'raw');
-    wp_safe_redirect($edit_url ? $edit_url : admin_url('post.php?post=' . (int) $post_id . '&action=edit'));
+    $edit_url = get_edit_post_link($post_id);
+    wp_safe_redirect($edit_url ? $edit_url : admin_url('edit.php?post_type=lr_school'));
     exit;
 }
 
