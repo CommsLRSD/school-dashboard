@@ -487,7 +487,7 @@ function lrsd_sf_handle_delete_school() {
     $school_name = lrsd_sf_get_school_display_name($school_data, $post->post_title);
     $expected_confirm_name = lrsd_sf_uppercase_school_name($school_name);
     $provided_confirm_name = isset($_GET['confirm_name'])
-        ? wp_unslash($_GET['confirm_name'])
+        ? sanitize_text_field(wp_unslash($_GET['confirm_name']))
         : '';
     $provided_confirm_name = is_string($provided_confirm_name) ? $provided_confirm_name : '';
 

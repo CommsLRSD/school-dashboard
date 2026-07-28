@@ -731,6 +731,7 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                 <a id="lrsd-sf-delete-confirm-btn"
                    href="#"
                    data-delete-url="<?php echo esc_url($delete_url); ?>"
+                   data-delete-endpoint="<?php echo esc_url(admin_url('admin-post.php')); ?>"
                    data-delete-name="<?php echo esc_attr($delete_name_uppercase); ?>"
                    class="button lrsd-sf-btn-danger"
                    aria-disabled="true"
@@ -748,9 +749,22 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         var confirmBtn = document.getElementById('lrsd-sf-delete-confirm-btn');
         var cancelBtn  = document.getElementById('lrsd-sf-delete-cancel-btn');
         var expectedDeleteName = confirmBtn ? (confirmBtn.getAttribute('data-delete-name') || '') : '';
-        var deleteUrl = confirmBtn ? (confirmBtn.getAttribute('data-delete-url') || '#') : '#';
-        if (deleteUrl.indexOf('admin-post.php') === -1) {
-            deleteUrl = '#';
+        var deleteUrl = confirmBtn ? (confirmBtn.getAttribute('data-delete-url') || '') : '';
+        var deleteEndpoint = confirmBtn ? (confirmBtn.getAttribute('data-delete-endpoint') || '') : '';
+
+        try {
+            var parsedDeleteUrl = new URL(deleteUrl, window.location.origin);
+            var parsedEndpointUrl = new URL(deleteEndpoint, window.location.origin);
+            if (
+                parsedDeleteUrl.origin === parsedEndpointUrl.origin &&
+                parsedDeleteUrl.pathname === parsedEndpointUrl.pathname
+            ) {
+                deleteUrl = parsedDeleteUrl.toString();
+            } else {
+                deleteUrl = '';
+            }
+        } catch (error) {
+            deleteUrl = '';
         }
 
         function onKeyDown(e) {
@@ -772,9 +786,10 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         }
 
         function setConfirmState(enabled) {
-            if (enabled) {
-                var separator = deleteUrl.indexOf('?') === -1 ? '?' : '&';
-                confirmBtn.setAttribute('href', deleteUrl + separator + 'confirm_name=' + encodeURIComponent(expectedDeleteName));
+            if (enabled && deleteUrl) {
+                var targetUrl = new URL(deleteUrl, window.location.origin);
+                targetUrl.searchParams.set('confirm_name', expectedDeleteName);
+                confirmBtn.setAttribute('href', targetUrl.toString());
                 confirmBtn.removeAttribute('aria-disabled');
                 confirmBtn.style.pointerEvents = '';
                 confirmBtn.style.opacity = '';
