@@ -1257,3 +1257,12 @@
     justify-content: flex-end;
     flex-wrap: wrap;
 }
+
+/* ── lrsd-media-folders: suppress "Move to folder" button in all wp.media() pickers ── */
+.media-modal .lrsd-move-to-folder,
+.media-modal .lrsd-media-folder-move,
+.media-modal .lrsd-folder-move-btn,
+.media-modal .lrsd-attachment-move-folder,
+.media-modal [class*="lrsd"][class*="move-folder"] {
+    display: none !important;
+}
