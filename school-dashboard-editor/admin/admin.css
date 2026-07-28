@@ -186,6 +186,47 @@
     line-height: 26px !important;
 }
 
+/* ── Custom Option Chips ─────────────────────────────────────────────────── */
+.lrsd-sf-custom-opts-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    flex-basis: 100%;
+    margin-top: 2px;
+}
+
+.lrsd-sf-custom-opt-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px 2px 9px;
+    background: #eef3f9;
+    border: 1px solid #c3d3e8;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #1d2327;
+    line-height: 1.4;
+}
+
+.lrsd-sf-delete-option-btn {
+    background: none;
+    border: none;
+    color: #8c9299;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 0 0 0 2px;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.15s;
+}
+
+.lrsd-sf-delete-option-btn:hover {
+    color: #d63638;
+}
+
 /* ── Media Picker ────────────────────────────────────────────────────────── */
 .lrsd-sf-media-wrap {
     display: flex;
