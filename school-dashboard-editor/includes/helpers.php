@@ -692,7 +692,7 @@ function lrsd_sf_ajax_delete_custom_option() {
         $custom = [];
     }
     if (isset($custom[$option_key]) && is_array($custom[$option_key])) {
-        $custom[$option_key] = array_values(array_filter($custom[$option_key], static function ($opt) use ($option_val) {
+        $custom[$option_key] = array_values(array_filter($custom[$option_key], function ($opt) use ($option_val) {
             return $opt !== $option_val;
         }));
         if (empty($custom[$option_key])) {

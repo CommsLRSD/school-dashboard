@@ -124,7 +124,6 @@
                         $select.val(addedVal);
                         // Add a delete chip to every select-wrap that shares this option key
                         // (only if this chip doesn't already exist for this value)
-                        var deleteNonce = lrsdSfAdmin ? lrsdSfAdmin.deleteOptionNonce : '';
                         $('select[data-option-key="' + optKey + '"]').each(function () {
                             var $wrap = $(this).closest('.lrsd-sf-select-wrap');
                             var $list = $wrap.find('.lrsd-sf-custom-opts-list');
@@ -137,15 +136,12 @@
                                     $list = $('<div class="lrsd-sf-custom-opts-list"></div>');
                                     $wrap.append($list);
                                 }
-                                var $chip = $(
-                                    '<span class="lrsd-sf-custom-opt-chip">' +
-                                        '<span>' + $('<span>').text(addedVal).html() + '</span>' +
-                                        '<button type="button" class="lrsd-sf-delete-option-btn"' +
-                                            ' data-option-key="' + optKey + '"' +
-                                            ' data-option-val="' + addedVal.replace(/"/g, '&quot;') + '"' +
-                                            ' title="Remove this custom option">&times;</button>' +
-                                    '</span>'
-                                );
+                                var $deleteBtn = $('<button type="button" class="lrsd-sf-delete-option-btn" title="Remove this custom option">&times;</button>')
+                                    .attr('data-option-key', optKey)
+                                    .attr('data-option-val', addedVal);
+                                var $chip = $('<span class="lrsd-sf-custom-opt-chip"></span>')
+                                    .append($('<span>').text(addedVal))
+                                    .append($deleteBtn);
                                 $list.append($chip);
                             }
                         });

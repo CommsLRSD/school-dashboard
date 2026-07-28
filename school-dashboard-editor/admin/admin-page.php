@@ -869,7 +869,7 @@ function lrsd_sf_render_bulk_update_page() {
                                     $key_custom_bulk = (is_array($raw_custom_bulk) && isset($raw_custom_bulk[$field['options_key']])) ? array_values((array)$raw_custom_bulk[$field['options_key']]) : [];
                                 ?>
                                     <div class="lrsd-sf-select-wrap">
-                                        <select id="<?php echo $bulk_select_id; ?>"
+                                        <select id="<?php echo esc_attr($bulk_select_id); ?>"
                                                 name="<?php echo esc_attr($name); ?>"
                                                 data-option-key="<?php echo esc_attr($field['options_key']); ?>">
                                             <option value=""><?php esc_html_e('— Select —', 'lrsd-school-facilities'); ?></option>
@@ -879,7 +879,7 @@ function lrsd_sf_render_bulk_update_page() {
                                         </select>
                                         <button type="button" class="button lrsd-sf-add-option-btn"
                                             data-option-key="<?php echo esc_attr($field['options_key']); ?>"
-                                            data-target-select="<?php echo $bulk_select_id; ?>"
+                                            data-target-select="<?php echo esc_attr($bulk_select_id); ?>"
                                             title="<?php esc_attr_e('Add a custom option to this dropdown', 'lrsd-school-facilities'); ?>">
                                             <?php esc_html_e('+ Custom', 'lrsd-school-facilities'); ?>
                                         </button>
