@@ -95,27 +95,29 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
     wp_localize_script('lrsd-sf-admin', 'lrsdSfAdmin', [
         'ajaxUrl'          => admin_url('admin-ajax.php'),
         'customOptionNonce'=> wp_create_nonce('lrsd_sf_custom_option_nonce'),
+        'deleteOptionNonce'=> wp_create_nonce('lrsd_sf_custom_option_nonce'),
         'isFosKey'         => 'familyOfSchools',
         'i18n'             => [
-            'chooseMedia'       => __('Choose or Upload Media', 'lrsd-school-facilities'),
-            'useMedia'          => __('Use this file', 'lrsd-school-facilities'),
-            'newOption'         => __('Enter the new option value:', 'lrsd-school-facilities'),
-            'fosCatchmentHint'  => __('Enter the catchment map file path for this Family of Schools (e.g. public/maps/my-fos-map.svg). Leave blank if not applicable.', 'lrsd-school-facilities'),
-            'saved'             => __('Saved.', 'lrsd-school-facilities'),
-            'error'             => __('An error occurred. Please try again.', 'lrsd-school-facilities'),
-            'confirmBulk'       => __('Save changes to all schools in this category?', 'lrsd-school-facilities'),
-            'addSubcategory'    => __('+ Add Subcategory', 'lrsd-school-facilities'),
-            'labelPlaceholder'  => __('Label / subcategory name', 'lrsd-school-facilities'),
-            'kvLabel'           => __('Label', 'lrsd-school-facilities'),
-            'kvYear'            => __('Year', 'lrsd-school-facilities'),
-            'kvValue'           => __('Value', 'lrsd-school-facilities'),
-            'kvTextValue'       => __('Text value', 'lrsd-school-facilities'),
-            'removeRow'         => __('Remove row', 'lrsd-school-facilities'),
+            'chooseMedia'         => __('Choose or Upload Media', 'lrsd-school-facilities'),
+            'useMedia'            => __('Use this file', 'lrsd-school-facilities'),
+            'newOption'           => __('Enter the new option value:', 'lrsd-school-facilities'),
+            'fosCatchmentHint'    => __('Enter the catchment map file path for this Family of Schools (e.g. public/maps/my-fos-map.svg). Leave blank if not applicable.', 'lrsd-school-facilities'),
+            'confirmDeleteOption' => __('Remove this custom option from all dropdowns? This cannot be undone.', 'lrsd-school-facilities'),
+            'saved'               => __('Saved.', 'lrsd-school-facilities'),
+            'error'               => __('An error occurred. Please try again.', 'lrsd-school-facilities'),
+            'confirmBulk'         => __('Save changes to all schools in this category?', 'lrsd-school-facilities'),
+            'addSubcategory'      => __('+ Add Subcategory', 'lrsd-school-facilities'),
+            'labelPlaceholder'    => __('Label / subcategory name', 'lrsd-school-facilities'),
+            'kvLabel'             => __('Label', 'lrsd-school-facilities'),
+            'kvYear'              => __('Year', 'lrsd-school-facilities'),
+            'kvValue'             => __('Value', 'lrsd-school-facilities'),
+            'kvTextValue'         => __('Text value', 'lrsd-school-facilities'),
+            'removeRow'           => __('Remove row', 'lrsd-school-facilities'),
         ],
     ]);
 
-    // Enqueue WP media only on the school editor screen, not on the bulk update page
-    if (get_post_type() === 'lr_school') {
+    // Enqueue WP media on the school editor screen and bulk update page
+    if (get_post_type() === 'lr_school' || strpos((string)$hook_suffix, 'lrsd-school-facilities-bulk') !== false) {
         wp_enqueue_media();
     }
 
@@ -541,8 +543,7 @@ function lrsd_sf_render_bulk_update_page() {
         'school_header'        => __('Header / School Photo', 'lrsd-school-facilities'),
         'details'              => __('Details', 'lrsd-school-facilities'),
         'additions'            => __('Additions', 'lrsd-school-facilities'),
-        'enrolment'            => __('Enrolment', 'lrsd-school-facilities'),
-        'capacity'             => __('Capacity', 'lrsd-school-facilities'),
+        'enrolment'            => __('Enrolment & Capacity', 'lrsd-school-facilities'),
         'history'              => __('Historic Enrolment', 'lrsd-school-facilities'),
         'projection'           => __('Projected Enrolment', 'lrsd-school-facilities'),
         'building_systems'     => __('Building Systems', 'lrsd-school-facilities'),
@@ -837,17 +838,35 @@ function lrsd_sf_render_bulk_update_page() {
                                 <td><textarea name="lrsd_bulk_schools[<?php echo esc_attr($row_id); ?>][custom_notes]" rows="3" class="large-text"><?php echo esc_textarea((string) ($custom_entry['notes'] ?? '')); ?></textarea></td>
                             <?php endif; ?>
                         <?php else : ?>
-                            <?php foreach ($cat_fields as $fk => $field) :
+                            <?php
+                            $raw_custom_bulk = get_option('lrsd_sf_custom_dropdown_options', []);
+                            foreach ($cat_fields as $fk => $field) :
                                 $val  = lrsd_sf_get_nested_value($sdata, $field['path'], '');
                                 $name = 'lrsd_bulk_schools[' . esc_attr($row_id) . '][' . esc_attr($fk) . ']';
                             ?>
                                  <td>
                                 <?php if ($field['type'] === 'int') : ?>
                                     <input type="number" class="small-text" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr((string)(int)$val); ?>" />
+                                <?php elseif ($field['type'] === 'media') :
+                                    $bulk_media_id = 'bulk-' . esc_attr($row_id) . '-' . esc_attr($fk);
+                                ?>
+                                    <div class="lrsd-sf-media-wrap">
+                                        <input type="text" id="<?php echo $bulk_media_id; ?>" name="<?php echo esc_attr($name); ?>"
+                                               value="<?php echo esc_attr((string)$val); ?>"
+                                               class="regular-text lrsd-sf-media-input" />
+                                        <button type="button" class="button lrsd-sf-media-btn"
+                                                data-target="<?php echo $bulk_media_id; ?>">
+                                            <?php esc_html_e('Choose Media', 'lrsd-school-facilities'); ?>
+                                        </button>
+                                        <?php if ($val) : ?>
+                                            <span class="description"><?php echo esc_html($val); ?></span>
+                                        <?php endif; ?>
+                                    </div>
                                 <?php elseif ($field['type'] === 'select') :
                                     $opts = (lrsd_sf_get_dropdown_options())[$field['options_key']] ?? [];
                                     if ($val !== '' && !in_array((string)$val, $opts, true)) { $opts[] = (string)$val; }
-                                    $bulk_select_id = 'bulk-' . esc_attr($row_id) . '-' . esc_attr($fk);
+                                    $bulk_select_id  = 'bulk-' . esc_attr($row_id) . '-' . esc_attr($fk);
+                                    $key_custom_bulk = (is_array($raw_custom_bulk) && isset($raw_custom_bulk[$field['options_key']])) ? array_values((array)$raw_custom_bulk[$field['options_key']]) : [];
                                 ?>
                                     <div class="lrsd-sf-select-wrap">
                                         <select id="<?php echo $bulk_select_id; ?>"
@@ -864,6 +883,19 @@ function lrsd_sf_render_bulk_update_page() {
                                             title="<?php esc_attr_e('Add a custom option to this dropdown', 'lrsd-school-facilities'); ?>">
                                             <?php esc_html_e('+ Custom', 'lrsd-school-facilities'); ?>
                                         </button>
+                                        <?php if (!empty($key_custom_bulk)) : ?>
+                                            <div class="lrsd-sf-custom-opts-list">
+                                                <?php foreach ($key_custom_bulk as $custom_opt_b) : ?>
+                                                    <span class="lrsd-sf-custom-opt-chip">
+                                                        <span><?php echo esc_html($custom_opt_b); ?></span>
+                                                        <button type="button" class="lrsd-sf-delete-option-btn"
+                                                                data-option-key="<?php echo esc_attr($field['options_key']); ?>"
+                                                                data-option-val="<?php echo esc_attr($custom_opt_b); ?>"
+                                                                title="<?php esc_attr_e('Remove this custom option', 'lrsd-school-facilities'); ?>">&times;</button>
+                                                    </span>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 <?php else : ?>
                                     <input type="text" class="regular-text" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr((string)$val); ?>" />

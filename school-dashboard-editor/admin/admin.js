@@ -122,6 +122,78 @@
                             $select.append($('<option>').val(addedVal).text(addedVal));
                         }
                         $select.val(addedVal);
+                        // Add a delete chip to every select-wrap that shares this option key
+                        // (only if this chip doesn't already exist for this value)
+                        var deleteNonce = lrsdSfAdmin ? lrsdSfAdmin.deleteOptionNonce : '';
+                        $('select[data-option-key="' + optKey + '"]').each(function () {
+                            var $wrap = $(this).closest('.lrsd-sf-select-wrap');
+                            var $list = $wrap.find('.lrsd-sf-custom-opts-list');
+                            var chipExists = false;
+                            $list.find('.lrsd-sf-delete-option-btn').each(function () {
+                                if ($(this).data('option-val') === addedVal) { chipExists = true; }
+                            });
+                            if (!chipExists) {
+                                if (!$list.length) {
+                                    $list = $('<div class="lrsd-sf-custom-opts-list"></div>');
+                                    $wrap.append($list);
+                                }
+                                var $chip = $(
+                                    '<span class="lrsd-sf-custom-opt-chip">' +
+                                        '<span>' + $('<span>').text(addedVal).html() + '</span>' +
+                                        '<button type="button" class="lrsd-sf-delete-option-btn"' +
+                                            ' data-option-key="' + optKey + '"' +
+                                            ' data-option-val="' + addedVal.replace(/"/g, '&quot;') + '"' +
+                                            ' title="Remove this custom option">&times;</button>' +
+                                    '</span>'
+                                );
+                                $list.append($chip);
+                            }
+                        });
+                    } else {
+                        alert(i18n.error || 'An error occurred. Please try again.');
+                    }
+                }
+            ).fail(function () {
+                alert(i18n.error || 'An error occurred. Please try again.');
+            });
+        });
+    }
+
+    // ── Delete Custom Dropdown Options ────────────────────────────────────────
+
+    function initDeleteCustomOption() {
+        $(document).on('click', '.lrsd-sf-delete-option-btn', function (e) {
+            e.preventDefault();
+            var $btn   = $(this);
+            var optKey = $btn.data('option-key');
+            var optVal = $btn.data('option-val');
+            var nonce  = lrsdSfAdmin ? lrsdSfAdmin.deleteOptionNonce : '';
+
+            if (!confirm(i18n.confirmDeleteOption || 'Remove this custom option from all dropdowns? This cannot be undone.')) {
+                return;
+            }
+
+            $.post(
+                lrsdSfAdmin.ajaxUrl,
+                {
+                    action:     'lrsd_sf_delete_custom_option',
+                    nonce:      nonce,
+                    option_key: optKey,
+                    option_val: optVal,
+                },
+                function (response) {
+                    if (response.success) {
+                        // Remove option from every matching select on the page
+                        $('select[data-option-key="' + optKey + '"]').each(function () {
+                            var $sel = $(this);
+                            if ($sel.val() === optVal) {
+                                $sel.val('');
+                            }
+                            $sel.find('option[value="' + optVal + '"]').remove();
+                        });
+                        // Remove all matching chips on the page
+                        $('.lrsd-sf-delete-option-btn[data-option-key="' + optKey + '"][data-option-val="' + optVal + '"]')
+                            .closest('.lrsd-sf-custom-opt-chip').remove();
                     } else {
                         alert(i18n.error || 'An error occurred. Please try again.');
                     }
@@ -418,6 +490,7 @@
         initSections();
         initMediaPicker();
         initCustomDropdownOptions();
+        initDeleteCustomOption();
         initCardOrderSortable();
         initPreSubmit();
         initBulkUpdate();

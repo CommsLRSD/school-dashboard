@@ -30,10 +30,9 @@ function lrsd_sf_get_simple_field_map() {
         'details_built'   => ['label' => 'Year Built',        'path' => ['details', 'Built'],  'type' => 'int',  'section' => 'details'],
         'details_size'    => ['label' => 'Building Size',     'path' => ['details', 'Size'],   'type' => 'text', 'section' => 'details'],
         'details_modular' => ['label' => 'Modular Rooms',     'path' => ['details', 'Modular'],'type' => 'int',  'section' => 'details'],
-        // ── Enrolment
+        // ── Enrolment & Capacity
         'enrolment_current'  => ['label' => 'Current Enrolment',  'path' => ['enrolment', 'current'],  'type' => 'int', 'section' => 'enrolment'],
-        // ── Capacity
-        'enrolment_capacity' => ['label' => 'Classroom Capacity', 'path' => ['enrolment', 'capacity'], 'type' => 'int', 'section' => 'capacity'],
+        'enrolment_capacity' => ['label' => 'Classroom Capacity', 'path' => ['enrolment', 'capacity'], 'type' => 'int', 'section' => 'enrolment'],
         // ── Building Systems
         'building_air_conditioning' => ['label' => 'Air Conditioning', 'path' => ['building', 'Air Conditioning'], 'type' => 'text', 'section' => 'building_systems'],
         'building_heating'          => ['label' => 'Heating',          'path' => ['building', 'Heating'],          'type' => 'text', 'section' => 'building_systems'],
@@ -201,10 +200,12 @@ function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options)
                     $opts[] = (string)$value;
                 }
 
-                $nonce_val = wp_create_nonce('lrsd_sf_custom_option_nonce');
+                $nonce_val  = wp_create_nonce('lrsd_sf_custom_option_nonce');
+                $raw_custom = get_option('lrsd_sf_custom_dropdown_options', []);
+                $key_custom = (is_array($raw_custom) && isset($raw_custom[$field['options_key']])) ? array_values((array)$raw_custom[$field['options_key']]) : [];
                 ?>
                 <div class="lrsd-sf-select-wrap">
-                    <select id="<?php echo $id; ?>" name="<?php echo esc_attr($name); ?>" class="lrsd-sf-select">
+                    <select id="<?php echo $id; ?>" name="<?php echo esc_attr($name); ?>" class="lrsd-sf-select" data-option-key="<?php echo esc_attr($field['options_key']); ?>">
                         <option value=""><?php esc_html_e('— Select —', 'lrsd-school-facilities'); ?></option>
                         <?php foreach ($opts as $opt) : ?>
                             <option value="<?php echo esc_attr($opt); ?>"<?php selected((string)$value, $opt); ?>><?php echo esc_html($opt); ?></option>
@@ -219,6 +220,19 @@ function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options)
                     </button>
                     <?php if ($field['options_key'] === 'familyOfSchools') : ?>
                         <span class="description" style="display:block;margin-top:4px;"><?php esc_html_e('When adding a custom Family of Schools, you will be asked for its catchment map path so the dashboard can display the correct map.', 'lrsd-school-facilities'); ?></span>
+                    <?php endif; ?>
+                    <?php if (!empty($key_custom)) : ?>
+                        <div class="lrsd-sf-custom-opts-list">
+                            <?php foreach ($key_custom as $custom_opt) : ?>
+                                <span class="lrsd-sf-custom-opt-chip">
+                                    <span><?php echo esc_html($custom_opt); ?></span>
+                                    <button type="button" class="lrsd-sf-delete-option-btn"
+                                            data-option-key="<?php echo esc_attr($field['options_key']); ?>"
+                                            data-option-val="<?php echo esc_attr($custom_opt); ?>"
+                                            title="<?php esc_attr_e('Remove this custom option', 'lrsd-school-facilities'); ?>">&times;</button>
+                                </span>
+                            <?php endforeach; ?>
+                        </div>
                     <?php endif; ?>
                 </div>
                 <?php
@@ -427,25 +441,12 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         </tbody></table>
         <?php lrsd_sf_render_section_footer(); ?>
 
-        <!-- ── Enrolment ───────────────────────────────────────── -->
-        <?php lrsd_sf_render_section_header('lrsd-sec-enrolment', __('Enrolment', 'lrsd-school-facilities')); ?>
+        <!-- ── Enrolment & Capacity ─────────────────────────────────── -->
+        <?php lrsd_sf_render_section_header('lrsd-sec-enrolment', __('Enrolment & Capacity', 'lrsd-school-facilities')); ?>
         <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
         <?php
         foreach ($field_map as $fk => $field) {
             if (($field['section'] ?? '') !== 'enrolment') continue;
-            $val = lrsd_sf_get_nested_value($school_data, $field['path'], '');
-            lrsd_sf_render_field_row($fk, $field, $val, $dropdown_options);
-        }
-        ?>
-        </tbody></table>
-        <?php lrsd_sf_render_section_footer(); ?>
-
-        <!-- ── Capacity ─────────────────────────────────────────── -->
-        <?php lrsd_sf_render_section_header('lrsd-sec-capacity', __('Capacity', 'lrsd-school-facilities')); ?>
-        <table class="form-table lrsd-sf-editor-table" role="presentation"><tbody>
-        <?php
-        foreach ($field_map as $fk => $field) {
-            if (($field['section'] ?? '') !== 'capacity') continue;
             $val = lrsd_sf_get_nested_value($school_data, $field['path'], '');
             lrsd_sf_render_field_row($fk, $field, $val, $dropdown_options);
         }

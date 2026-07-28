@@ -671,3 +671,35 @@ function lrsd_sf_ajax_add_custom_option() {
 
     wp_send_json_success(['option_val' => $option_val]);
 }
+
+function lrsd_sf_ajax_delete_custom_option() {
+    check_ajax_referer('lrsd_sf_custom_option_nonce', 'nonce');
+
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error(['message' => __('Permission denied.', 'lrsd-school-facilities')], 403);
+    }
+
+    $option_key = isset($_POST['option_key']) ? sanitize_key($_POST['option_key']) : '';
+    $option_val = isset($_POST['option_val']) ? sanitize_text_field(wp_unslash($_POST['option_val'])) : '';
+
+    $valid_keys = ['familyOfSchools', 'schoolLevel', 'program', 'busLoop', 'elevator'];
+    if (!in_array($option_key, $valid_keys, true) || $option_val === '') {
+        wp_send_json_error(['message' => __('Invalid data.', 'lrsd-school-facilities')], 400);
+    }
+
+    $custom = get_option('lrsd_sf_custom_dropdown_options', []);
+    if (!is_array($custom)) {
+        $custom = [];
+    }
+    if (isset($custom[$option_key]) && is_array($custom[$option_key])) {
+        $custom[$option_key] = array_values(array_filter($custom[$option_key], static function ($opt) use ($option_val) {
+            return $opt !== $option_val;
+        }));
+        if (empty($custom[$option_key])) {
+            unset($custom[$option_key]);
+        }
+    }
+    update_option('lrsd_sf_custom_dropdown_options', $custom);
+
+    wp_send_json_success(['option_val' => $option_val]);
+}
