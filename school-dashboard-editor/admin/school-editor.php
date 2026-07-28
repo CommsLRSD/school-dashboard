@@ -777,7 +777,8 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                     targetUrl.searchParams.set('confirm_name', expectedDeleteName);
                     confirmBtn.setAttribute('href', targetUrl.toString());
                 } catch (error) {
-                    confirmBtn.setAttribute('href', deleteUrl + '&confirm_name=' + encodeURIComponent(expectedDeleteName));
+                    var separator = deleteUrl.indexOf('?') === -1 ? '?' : '&';
+                    confirmBtn.setAttribute('href', deleteUrl + separator + 'confirm_name=' + encodeURIComponent(expectedDeleteName));
                 }
                 confirmBtn.removeAttribute('aria-disabled');
                 confirmBtn.style.pointerEvents = '';
