@@ -68,7 +68,16 @@ function lrsd_sf_register_admin_pages() {
 }
 
 function lrsd_sf_enqueue_admin_assets($hook_suffix) {
-    $is_school_editor = (strpos((string)$hook_suffix, 'lrsd-school-facilities') !== false || get_post_type() === 'lr_school');
+    // get_post_type() relies on $GLOBALS['post'] which is not yet set when
+    // admin_enqueue_scripts fires on post.php (it is set later in post.php
+    // after admin.php has already run). Use get_current_screen()->post_type
+    // as the reliable source of truth, the same way lrsd_sf_enqueue_media_folders_compat does.
+    $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+    $is_school_editor = (
+        strpos((string)$hook_suffix, 'lrsd-school-facilities') !== false
+        || get_post_type() === 'lr_school'
+        || (null !== $screen && $screen->post_type === 'lr_school')
+    );
     if (!$is_school_editor) {
         return;
     }
@@ -117,7 +126,8 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
     ]);
 
     // Enqueue WP media on the school editor screen and bulk update page
-    if (get_post_type() === 'lr_school' || strpos((string)$hook_suffix, 'lrsd-school-facilities-bulk') !== false) {
+    $screen_post_type = ($screen && $screen->post_type) ? $screen->post_type : get_post_type();
+    if ($screen_post_type === 'lr_school' || strpos((string)$hook_suffix, 'lrsd-school-facilities-bulk') !== false) {
         wp_enqueue_media();
     }
 

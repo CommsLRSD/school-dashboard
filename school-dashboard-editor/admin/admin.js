@@ -111,12 +111,29 @@
             });
 
             mediaFrame.on('select', function () {
-                var attachment = mediaFrame.state().get('selection').first().toJSON();
+                var selection = mediaFrame.state().get('selection');
+                var first     = selection && selection.first();
+                if (!first) {
+                    return;
+                }
+                var attachment = first.toJSON();
                 if ($mediaTarget && $mediaTarget.length) {
                     $mediaTarget.val(attachment.url);
-                    $mediaTarget.siblings('.description').text(attachment.url);
+                    // Ensure the description element exists so the URL is visible
+                    var $desc = $mediaTarget.siblings('.description');
+                    if (!$desc.length) {
+                        $desc = $('<span class="description" style="display:block;margin-top:4px;"></span>');
+                        $mediaTarget.closest('.lrsd-sf-media-wrap').append($desc);
+                    }
+                    $desc.text(attachment.url);
                 }
-                // Reset so next open picks the right target
+                // Clear both our reference and the global one so the next
+                // button click creates a fresh frame rather than reusing a
+                // potentially stale one (important when the folder plugin is
+                // active — it may inspect wp.media.frame when opening the picker).
+                if (typeof wp !== 'undefined' && wp.media && wp.media.frame === mediaFrame) {
+                    wp.media.frame = null;
+                }
                 mediaFrame = null;
             });
 

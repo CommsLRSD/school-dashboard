@@ -749,10 +749,19 @@
         });
         applyMediaFolderSupport(frame);
         frame.on('select', function () {
-            var attachment = frame.state().get('selection').first().toJSON();
+            var selection = frame.state().get('selection');
+            var first     = selection && selection.first();
+            if (!first) {
+                return;
+            }
+            var attachment = first.toJSON();
             var url = attachment.url || '';
             if (!url) {
                 return;
+            }
+            // Clear the global frame reference so the next call creates a fresh frame.
+            if (window.wp.media && window.wp.media.frame === frame) {
+                window.wp.media.frame = null;
             }
             ensureIconInRegistry(url);
             ui.icon.val(url);
@@ -774,10 +783,19 @@
         });
         applyMediaFolderSupport(frame);
         frame.on('select', function () {
-            var attachment = frame.state().get('selection').first().toJSON();
+            var selection = frame.state().get('selection');
+            var first     = selection && selection.first();
+            if (!first) {
+                return;
+            }
+            var attachment = first.toJSON();
             var url = attachment.url || '';
             if (!url) {
                 return;
+            }
+            // Clear the global frame reference so the next call creates a fresh frame.
+            if (window.wp.media && window.wp.media.frame === frame) {
+                window.wp.media.frame = null;
             }
             $('#lrsd-sf-card-image-url').val(url);
             persistFormToCurrent();
