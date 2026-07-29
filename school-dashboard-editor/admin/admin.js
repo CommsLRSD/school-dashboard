@@ -51,12 +51,15 @@
             }
 
             mediaFrameType = mediaLibraryType;
-            mediaFrame = wp.media({
+            var mediaFrameArgs = {
                 title: i18n.chooseMedia || 'Choose or Upload Media',
                 button: { text: i18n.useMedia || 'Use this file' },
                 multiple: false,
-                library: mediaLibraryType ? { type: mediaLibraryType } : {},
-            });
+            };
+            if (mediaLibraryType) {
+                mediaFrameArgs.library = { type: mediaLibraryType };
+            }
+            mediaFrame = wp.media(mediaFrameArgs);
 
             mediaFrame.on('select', function () {
                 var attachment = mediaFrame.state().get('selection').first().toJSON();
@@ -66,6 +69,7 @@
                 }
                 // Reset so next open picks the right target
                 mediaFrame = null;
+                mediaFrameType = '';
             });
 
             mediaFrame.open();
