@@ -28,9 +28,7 @@
 
     // ── Media Picker ──────────────────────────────────────────────────────────
 
-    var mediaFrame = null;
     var $mediaTarget = null;
-    var mediaFrameType = '';
 
     function initMediaPicker() {
         $(document).on('click', '.lrsd-sf-media-btn', function (e) {
@@ -45,18 +43,6 @@
             var mediaLibraryType = $(this).data('media-library-type') || '';
             $mediaTarget = $('#' + targetId);
 
-            if (mediaFrame && mediaFrameType === mediaLibraryType) {
-                mediaFrame.open();
-                return;
-            }
-            if (mediaFrame) {
-                mediaFrame.off('select');
-                if (typeof mediaFrame.detach === 'function') {
-                    mediaFrame.detach();
-                }
-            }
-
-            mediaFrameType = mediaLibraryType;
             var mediaFrameArgs = {
                 title: i18n.chooseMedia || 'Choose or Upload Media',
                 button: { text: i18n.useMedia || 'Use this file' },
@@ -65,7 +51,7 @@
             if (mediaLibraryType) {
                 mediaFrameArgs.library = { type: mediaLibraryType };
             }
-            mediaFrame = wp.media(mediaFrameArgs);
+            var mediaFrame = wp.media(mediaFrameArgs);
 
             mediaFrame.on('select', function () {
                 var attachment = mediaFrame.state().get('selection').first().toJSON();
@@ -73,9 +59,6 @@
                     $mediaTarget.val(attachment.url);
                     $mediaTarget.siblings('.description').text(attachment.url);
                 }
-                // Reset so next open picks the right target
-                mediaFrame = null;
-                mediaFrameType = '';
             });
 
             mediaFrame.open();
