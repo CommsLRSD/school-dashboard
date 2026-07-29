@@ -74,14 +74,6 @@
         });
     }
 
-    /** Hide "Move to folder" UI elements injected by lrsd-media-folders. */
-    function hideMoveToFolderUI($modal) {
-        $modal.find(
-            '.lrsd-move-to-folder, .lrsd-media-folder-move, .lrsd-folder-move-btn, ' +
-            '.lrsd-attachment-move-folder, [class*="lrsd"][class*="move-folder"]'
-        ).hide();
-    }
-
     function initMediaPicker() {
         initFolderQueryProp();
 
@@ -113,18 +105,9 @@
 
             mediaFrame.on('open', function () {
                 var $modal = mediaFrame.$el;
-
                 bindMediaModalFolderFilter($modal);
-                hideMoveToFolderUI($modal);
-
-                // Re-run after lazy-rendered DOM additions from the folder plugin
-                if (window.MutationObserver) {
-                    var obs = new MutationObserver(function () {
-                        hideMoveToFolderUI($modal);
-                    });
-                    obs.observe($modal[0], { childList: true, subtree: true });
-                    mediaFrame.once('close', function () { obs.disconnect(); });
-                }
+                // Note: "Move to folder" UI is hidden via CSS in admin.css
+                // (display:none !important) — no JS hiding needed here.
             });
 
             mediaFrame.on('select', function () {

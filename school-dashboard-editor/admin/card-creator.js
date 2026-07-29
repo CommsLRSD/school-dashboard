@@ -690,8 +690,8 @@
      * - Registers lrsd_media_folder in Attachments.defaultProps so props.set()
      *   triggers a re-query when a folder is selected.
      * - Exposes the frame as wp.media.frame so the folder plugin can find it.
-     * - On open: delegates folder-select change events to update the library query
-     *   and hides any "Move to folder" UI the folder plugin injects.
+     * - On open: delegates folder-select change events to update the library query.
+     * Note: "Move to folder" UI is suppressed via CSS (admin.css), not JS.
      */
     function applyMediaFolderSupport(frame) {
         var wp = window.wp;
@@ -732,20 +732,8 @@
                     library.props.set('lrsd_media_folder', folderId);
                 }
             });
-
-            // Hide "Move to folder" UI; re-run after lazy renders
-            function hideMoveUI() {
-                $modal.find(
-                    '.lrsd-move-to-folder, .lrsd-media-folder-move, .lrsd-folder-move-btn, ' +
-                    '.lrsd-attachment-move-folder, [class*="lrsd"][class*="move-folder"]'
-                ).hide();
-            }
-            hideMoveUI();
-            if (window.MutationObserver) {
-                var obs = new MutationObserver(hideMoveUI);
-                obs.observe($modal[0], { childList: true, subtree: true });
-                frame.once('close', function () { obs.disconnect(); });
-            }
+            // Note: "Move to folder" UI is hidden via CSS in admin.css
+            // (display:none !important) — no JS hiding needed here.
         });
     }
 
