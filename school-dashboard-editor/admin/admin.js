@@ -54,18 +54,21 @@
                     mediaFrameArgs.library = { type: mediaLibraryType };
                 }
                 frame = wp.media(mediaFrameArgs);
-                frame.on('select', function () {
-                    var attachment = frame.state().get('selection').first().toJSON();
-                    var $target = frame.lrsdSfTarget;
-                    if ($target && $target.length) {
-                        $target.val(attachment.url);
-                        $target.siblings('.description').text(attachment.url);
-                    }
-                });
                 mediaFrames[frameKey] = frame;
             }
 
-            frame.lrsdSfTarget = $('#' + targetId);
+            if (frame.lrsdSfSelectHandler) {
+                frame.off('select', frame.lrsdSfSelectHandler);
+            }
+            var $target = $('#' + targetId);
+            frame.lrsdSfSelectHandler = function () {
+                var attachment = frame.state().get('selection').first().toJSON();
+                if ($target && $target.length) {
+                    $target.val(attachment.url);
+                    $target.siblings('.description').text(attachment.url);
+                }
+            };
+            frame.on('select', frame.lrsdSfSelectHandler);
             frame.open();
         });
     }
