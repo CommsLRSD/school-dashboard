@@ -31,7 +31,60 @@
     var mediaFrame = null;
     var $mediaTarget = null;
 
+    /**
+     * Extend wp.media's attachment query props once so that the
+     * lrsd_media_folder taxonomy filter is tracked as a recognised prop.
+     * Without this entry in defaultProps, calling library.props.set() with
+     * the folder value won't trigger a re-query of the attachment collection.
+     */
+    function initFolderQueryProp() {
+        if (
+            typeof wp !== 'undefined' &&
+            wp.media &&
+            wp.media.model &&
+            wp.media.model.Attachments &&
+            !wp.media.model.Attachments.defaultProps.hasOwnProperty('lrsd_media_folder')
+        ) {
+            wp.media.model.Attachments.defaultProps.lrsd_media_folder = 0;
+        }
+    }
+
+    /**
+     * Delegate change events on any folder-related <select> that the
+     * lrsd-media-folders plugin renders inside the media modal.  When one
+     * changes, propagate the value to the library's props so a re-query fires.
+     */
+    function bindMediaModalFolderFilter($modal) {
+        $modal.off('change.lrsdMF').on('change.lrsdMF', 'select', function () {
+            var $sel = $(this);
+            var hint = [
+                $sel.attr('name') || '',
+                $sel.attr('id') || '',
+                $sel.attr('class') || '',
+            ].join(' ');
+            if (!/folder/i.test(hint)) {
+                return;
+            }
+            var folderId = parseInt($sel.val(), 10) || 0;
+            var state   = mediaFrame && mediaFrame.state && mediaFrame.state();
+            var library = state && state.get('library');
+            if (library && library.props) {
+                library.props.set('lrsd_media_folder', folderId);
+            }
+        });
+    }
+
+    /** Hide "Move to folder" UI elements injected by lrsd-media-folders. */
+    function hideMoveToFolderUI($modal) {
+        $modal.find(
+            '.lrsd-move-to-folder, .lrsd-media-folder-move, .lrsd-folder-move-btn, ' +
+            '.lrsd-attachment-move-folder, [class*="lrsd"][class*="move-folder"]'
+        ).hide();
+    }
+
     function initMediaPicker() {
+        initFolderQueryProp();
+
         $(document).on('click', '.lrsd-sf-media-btn', function (e) {
             e.preventDefault();
 
@@ -52,6 +105,26 @@
                 title: i18n.chooseMedia || 'Choose or Upload Media',
                 button: { text: i18n.useMedia || 'Use this file' },
                 multiple: false,
+            });
+
+            // Expose as the active frame so lrsd-media-folders can reference it
+            // via wp.media.frame (some folder plugins rely on this global).
+            wp.media.frame = mediaFrame;
+
+            mediaFrame.on('open', function () {
+                var $modal = mediaFrame.$el;
+
+                bindMediaModalFolderFilter($modal);
+                hideMoveToFolderUI($modal);
+
+                // Re-run after lazy-rendered DOM additions from the folder plugin
+                if (window.MutationObserver) {
+                    var obs = new MutationObserver(function () {
+                        hideMoveToFolderUI($modal);
+                    });
+                    obs.observe($modal[0], { childList: true, subtree: true });
+                    mediaFrame.once('close', function () { obs.disconnect(); });
+                }
             });
 
             mediaFrame.on('select', function () {

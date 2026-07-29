@@ -685,6 +685,70 @@
         ui.iconModal.prop('hidden', true);
     }
 
+    /**
+     * Prepare a wp.media() frame with lrsd-media-folders folder-filtering support.
+     * - Registers lrsd_media_folder in Attachments.defaultProps so props.set()
+     *   triggers a re-query when a folder is selected.
+     * - Exposes the frame as wp.media.frame so the folder plugin can find it.
+     * - On open: delegates folder-select change events to update the library query
+     *   and hides any "Move to folder" UI the folder plugin injects.
+     */
+    function applyMediaFolderSupport(frame) {
+        var wp = window.wp;
+        if (!wp || !wp.media) {
+            return;
+        }
+
+        // Register the folder prop once so changes trigger a re-query
+        if (
+            wp.media.model &&
+            wp.media.model.Attachments &&
+            !wp.media.model.Attachments.defaultProps.hasOwnProperty('lrsd_media_folder')
+        ) {
+            wp.media.model.Attachments.defaultProps.lrsd_media_folder = 0;
+        }
+
+        // Expose as the active frame so lrsd-media-folders can reference it
+        wp.media.frame = frame;
+
+        frame.on('open', function () {
+            var $modal = frame.$el;
+
+            // Delegate folder-select changes → update the library query
+            $modal.off('change.lrsdMF').on('change.lrsdMF', 'select', function () {
+                var $sel = $(this);
+                var hint = [
+                    $sel.attr('name') || '',
+                    $sel.attr('id') || '',
+                    $sel.attr('class') || '',
+                ].join(' ');
+                if (!/folder/i.test(hint)) {
+                    return;
+                }
+                var folderId = parseInt($sel.val(), 10) || 0;
+                var state   = frame.state && frame.state();
+                var library = state && state.get('library');
+                if (library && library.props) {
+                    library.props.set('lrsd_media_folder', folderId);
+                }
+            });
+
+            // Hide "Move to folder" UI; re-run after lazy renders
+            function hideMoveUI() {
+                $modal.find(
+                    '.lrsd-move-to-folder, .lrsd-media-folder-move, .lrsd-folder-move-btn, ' +
+                    '.lrsd-attachment-move-folder, [class*="lrsd"][class*="move-folder"]'
+                ).hide();
+            }
+            hideMoveUI();
+            if (window.MutationObserver) {
+                var obs = new MutationObserver(hideMoveUI);
+                obs.observe($modal[0], { childList: true, subtree: true });
+                frame.once('close', function () { obs.disconnect(); });
+            }
+        });
+    }
+
     function openMediaLibraryPicker() {
         if (!window.wp || !window.wp.media) {
             showStatus(getI18n('mediaLibraryUnavailable', 'Media library is not available. Please reload the page and try again.'), 'error');
@@ -695,6 +759,7 @@
             button: { text: getI18n('mediaLibraryButton', 'Use as Icon') },
             multiple: false,
         });
+        applyMediaFolderSupport(frame);
         frame.on('select', function () {
             var attachment = frame.state().get('selection').first().toJSON();
             var url = attachment.url || '';
@@ -719,6 +784,7 @@
             button: { text: getI18n('mediaLibraryImageButton', 'Use Image') },
             multiple: false,
         });
+        applyMediaFolderSupport(frame);
         frame.on('select', function () {
             var attachment = frame.state().get('selection').first().toJSON();
             var url = attachment.url || '';
