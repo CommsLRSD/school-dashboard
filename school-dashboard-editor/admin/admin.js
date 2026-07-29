@@ -49,6 +49,12 @@
                 mediaFrame.open();
                 return;
             }
+            if (mediaFrame) {
+                mediaFrame.off('select');
+                if (typeof mediaFrame.detach === 'function') {
+                    mediaFrame.detach();
+                }
+            }
 
             mediaFrameType = mediaLibraryType;
             var mediaFrameArgs = {
