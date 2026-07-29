@@ -71,7 +71,7 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
     // get_post_type() relies on $GLOBALS['post'] which is not yet set when
     // admin_enqueue_scripts fires on post.php (it is set later in post.php
     // after admin.php has already run). Use get_current_screen()->post_type
-    // as the reliable source of truth, the same way lrsd_sf_enqueue_media_folders_compat does.
+    // as the reliable source of truth.
     $screen = function_exists('get_current_screen') ? get_current_screen() : null;
     $is_school_editor = (
         strpos((string)$hook_suffix, 'lrsd-school-facilities') !== false
@@ -239,61 +239,6 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
                 'editNote'            => __('Edit Note', 'lrsd-school-facilities'),
             ],
         ]);
-    }
-}
-
-// ─── LRSD Media Folders Compatibility ────────────────────────────────────────
-
-/**
- * Enqueue the LRSD Media Folders plugin assets on any school-dashboard admin page
- * that calls wp_enqueue_media().
- *
- * The lrsd-media-folders plugin may limit its own script enqueue to upload.php.
- * This function, registered at admin_enqueue_scripts priority 20 (after the
- * folder plugin's own priority-10 registration), ensures its assets are present
- * wherever the School Dashboard Editor opens a wp.media() modal.
- *
- * If you update the folder plugin's internal script/style handle names, add them
- * to the $handles array below and they will be enqueued automatically.
- *
- * @param string $hook_suffix Current admin page hook.
- */
-function lrsd_sf_enqueue_media_folders_compat($hook_suffix) {
-    $screen = function_exists('get_current_screen') ? get_current_screen() : null;
-    $is_school_editor = (
-        strpos((string) $hook_suffix, 'lrsd-school-facilities') !== false
-        || (null !== $screen && $screen->post_type === 'lr_school')
-    );
-    if (!$is_school_editor) {
-        return;
-    }
-
-    if (!function_exists('is_plugin_active')) {
-        require_once ABSPATH . 'wp-admin/includes/plugin.php';
-    }
-    if (!is_plugin_active('lrsd-media-folders/lrsd-media-folders.php')) {
-        return;
-    }
-
-    // Give the folder plugin a chance to enqueue via its own dedicated action.
-    do_action('lrsd_media_folders_enqueue_assets');
-
-    // Enqueue any scripts/styles the folder plugin has registered but not yet
-    // enqueued on this page. The primary handle matches the plugin slug; the
-    // '-admin' variant is included because some plugins use a separate handle
-    // for admin-only scripts. Add any additional handles here if the plugin's
-    // internals change.
-    $handles = [
-        'lrsd-media-folders',
-        'lrsd-media-folders-admin',
-    ];
-    foreach ($handles as $handle) {
-        if (wp_script_is($handle, 'registered') && !wp_script_is($handle, 'enqueued')) {
-            wp_enqueue_script($handle);
-        }
-        if (wp_style_is($handle, 'registered') && !wp_style_is($handle, 'enqueued')) {
-            wp_enqueue_style($handle);
-        }
     }
 }
 
@@ -914,13 +859,15 @@ function lrsd_sf_render_bulk_update_page() {
                                     <input type="number" class="small-text" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr((string)(int)$val); ?>" />
                                 <?php elseif ($field['type'] === 'media') :
                                     $bulk_media_id = 'bulk-' . esc_attr($row_id) . '-' . esc_attr($fk);
+                                    $bulk_media_library_type = isset($field['media_library_type']) ? (string) $field['media_library_type'] : '';
                                 ?>
                                     <div class="lrsd-sf-media-wrap">
                                         <input type="text" id="<?php echo $bulk_media_id; ?>" name="<?php echo esc_attr($name); ?>"
                                                value="<?php echo esc_attr((string)$val); ?>"
                                                class="regular-text lrsd-sf-media-input" />
                                         <button type="button" class="button lrsd-sf-media-btn"
-                                                data-target="<?php echo $bulk_media_id; ?>">
+                                                data-target="<?php echo $bulk_media_id; ?>"
+                                                <?php if ($bulk_media_library_type !== '') : ?>data-media-library-type="<?php echo esc_attr($bulk_media_library_type); ?>"<?php endif; ?>>
                                             <?php esc_html_e('Choose Media', 'lrsd-school-facilities'); ?>
                                         </button>
                                         <?php if ($val) : ?>

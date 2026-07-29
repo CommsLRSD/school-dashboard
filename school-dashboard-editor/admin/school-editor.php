@@ -19,7 +19,7 @@ function lrsd_sf_get_simple_field_map() {
     return [
         // ── Header / School Photo
         'schoolName'      => ['label' => 'School Name',       'path' => ['schoolName'],       'type' => 'text',  'section' => 'school_header'],
-        'headerImage'     => ['label' => 'Header Image',      'path' => ['headerImage'],       'type' => 'media', 'section' => 'school_header'],
+        'headerImage'     => ['label' => 'Header Image',      'path' => ['headerImage'],       'type' => 'media', 'media_library_type' => 'image', 'section' => 'school_header'],
         // ── Details
         'address'         => ['label' => 'Address',           'path' => ['address'],           'type' => 'text',   'section' => 'details'],
         'phone'           => ['label' => 'Phone',             'path' => ['phone'],             'type' => 'text',   'section' => 'details'],
@@ -51,7 +51,7 @@ function lrsd_sf_get_simple_field_map() {
         'accessibility_door_operators'      => ['label' => 'Auto Entrance Door Ops',    'path' => ['accessibility', 'Automatic entrance door operators'], 'type' => 'text',   'section' => 'accessibility'],
         // ── Catchment Map
         'catchment_migration' => ['label' => 'Catchment Migration', 'path' => ['catchment', 'migration'], 'type' => 'text',  'section' => 'catchment_map'],
-        'catchment_map'       => ['label' => 'Catchment Map',       'path' => ['catchment', 'map'],       'type' => 'media', 'section' => 'catchment_map'],
+        'catchment_map'       => ['label' => 'Catchment Map',       'path' => ['catchment', 'map'],       'type' => 'media', 'media_library_type' => 'image/svg+xml', 'section' => 'catchment_map'],
     ];
 }
 
@@ -239,13 +239,15 @@ function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options)
                 break;
 
             case 'media':
+                $media_library_type = isset($field['media_library_type']) ? (string) $field['media_library_type'] : '';
                 ?>
                 <div class="lrsd-sf-media-wrap">
                     <input type="text" id="<?php echo $id; ?>" name="<?php echo esc_attr($name); ?>"
                            value="<?php echo esc_attr((string)$value); ?>"
                            class="regular-text lrsd-sf-media-input" />
                     <button type="button" class="button lrsd-sf-media-btn"
-                            data-target="<?php echo $id; ?>">
+                            data-target="<?php echo $id; ?>"
+                            <?php if ($media_library_type !== '') : ?>data-media-library-type="<?php echo esc_attr($media_library_type); ?>"<?php endif; ?>>
                         <?php esc_html_e('Choose Media', 'lrsd-school-facilities'); ?>
                     </button>
                     <?php if ($value) : ?>
@@ -687,7 +689,7 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                         <td>
                             <div class="lrsd-sf-media-wrap">
                                 <input type="text" id="<?php echo esc_attr('lrsd_custom_' . $custom_index . '_image_url'); ?>" name="<?php echo esc_attr('lrsd_sf_custom_card_values[' . $custom_card_id . '][imageUrl]'); ?>" value="<?php echo esc_attr((string) ($custom_value_entry['imageUrl'] ?? '')); ?>" class="regular-text lrsd-sf-media-input" />
-                                <button type="button" class="button lrsd-sf-media-btn" data-target="<?php echo esc_attr('lrsd_custom_' . $custom_index . '_image_url'); ?>"><?php esc_html_e('Choose Media', 'lrsd-school-facilities'); ?></button>
+                                <button type="button" class="button lrsd-sf-media-btn" data-target="<?php echo esc_attr('lrsd_custom_' . $custom_index . '_image_url'); ?>" data-media-library-type="image"><?php esc_html_e('Choose Media', 'lrsd-school-facilities'); ?></button>
                             </div>
                         </td>
                     </tr>

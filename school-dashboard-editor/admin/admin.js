@@ -28,8 +28,7 @@
 
     // ── Media Picker ──────────────────────────────────────────────────────────
 
-    var mediaFrame = null;
-    var $mediaTarget = null;
+    var mediaFrames = {};
 
     function initMediaPicker() {
         $(document).on('click', '.lrsd-sf-media-btn', function (e) {
@@ -41,30 +40,36 @@
             }
 
             var targetId = $(this).data('target');
-            $mediaTarget = $('#' + targetId);
+            var mediaLibraryType = $(this).data('media-library-type') || '';
+            var frameKey = mediaLibraryType || '__default';
+            var frame = mediaFrames[frameKey];
 
-            if (mediaFrame) {
-                mediaFrame.open();
-                return;
+            if (!frame) {
+                var mediaFrameArgs = {
+                    title: i18n.chooseMedia || 'Choose or Upload Media',
+                    button: { text: i18n.useMedia || 'Use this file' },
+                    multiple: false,
+                };
+                if (mediaLibraryType) {
+                    mediaFrameArgs.library = { type: mediaLibraryType };
+                }
+                frame = wp.media(mediaFrameArgs);
+                mediaFrames[frameKey] = frame;
             }
 
-            mediaFrame = wp.media({
-                title: i18n.chooseMedia || 'Choose or Upload Media',
-                button: { text: i18n.useMedia || 'Use this file' },
-                multiple: false,
-            });
-
-            mediaFrame.on('select', function () {
-                var attachment = mediaFrame.state().get('selection').first().toJSON();
-                if ($mediaTarget && $mediaTarget.length) {
-                    $mediaTarget.val(attachment.url);
-                    $mediaTarget.siblings('.description').text(attachment.url);
+            if (frame.lrsdSfSelectHandler) {
+                frame.off('select', frame.lrsdSfSelectHandler);
+            }
+            var $target = $('#' + targetId);
+            frame.lrsdSfSelectHandler = function () {
+                var attachment = frame.state().get('selection').first().toJSON();
+                if ($target && $target.length) {
+                    $target.val(attachment.url);
+                    $target.siblings('.description').text(attachment.url);
                 }
-                // Reset so next open picks the right target
-                mediaFrame = null;
-            });
-
-            mediaFrame.open();
+            };
+            frame.on('select', frame.lrsdSfSelectHandler);
+            frame.open();
         });
     }
 
