@@ -28,7 +28,7 @@
 
     // ── Media Picker ──────────────────────────────────────────────────────────
 
-    var $mediaTarget = null;
+    var mediaFrames = {};
 
     function initMediaPicker() {
         $(document).on('click', '.lrsd-sf-media-btn', function (e) {
@@ -41,26 +41,31 @@
 
             var targetId = $(this).data('target');
             var mediaLibraryType = $(this).data('media-library-type') || '';
-            $mediaTarget = $('#' + targetId);
+            var frameKey = mediaLibraryType || '__default';
+            var frame = mediaFrames[frameKey];
 
-            var mediaFrameArgs = {
-                title: i18n.chooseMedia || 'Choose or Upload Media',
-                button: { text: i18n.useMedia || 'Use this file' },
-                multiple: false,
-            };
-            if (mediaLibraryType) {
-                mediaFrameArgs.library = { type: mediaLibraryType };
-            }
-            var frame = wp.media(mediaFrameArgs);
-
-            frame.on('select', function () {
-                var attachment = frame.state().get('selection').first().toJSON();
-                if ($mediaTarget && $mediaTarget.length) {
-                    $mediaTarget.val(attachment.url);
-                    $mediaTarget.siblings('.description').text(attachment.url);
+            if (!frame) {
+                var mediaFrameArgs = {
+                    title: i18n.chooseMedia || 'Choose or Upload Media',
+                    button: { text: i18n.useMedia || 'Use this file' },
+                    multiple: false,
+                };
+                if (mediaLibraryType) {
+                    mediaFrameArgs.library = { type: mediaLibraryType };
                 }
-            });
+                frame = wp.media(mediaFrameArgs);
+                frame.on('select', function () {
+                    var attachment = frame.state().get('selection').first().toJSON();
+                    var $target = frame.lrsdSfTarget;
+                    if ($target && $target.length) {
+                        $target.val(attachment.url);
+                        $target.siblings('.description').text(attachment.url);
+                    }
+                });
+                mediaFrames[frameKey] = frame;
+            }
 
+            frame.lrsdSfTarget = $('#' + targetId);
             frame.open();
         });
     }
