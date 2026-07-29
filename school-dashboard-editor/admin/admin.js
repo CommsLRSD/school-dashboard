@@ -31,52 +31,7 @@
     var mediaFrame = null;
     var $mediaTarget = null;
 
-    /**
-     * Extend wp.media's attachment query props once so that the
-     * lrsd_media_folder taxonomy filter is tracked as a recognised prop.
-     * Without this entry in defaultProps, calling library.props.set() with
-     * the folder value won't trigger a re-query of the attachment collection.
-     */
-    function initFolderQueryProp() {
-        if (
-            typeof wp !== 'undefined' &&
-            wp.media &&
-            wp.media.model &&
-            wp.media.model.Attachments &&
-            !wp.media.model.Attachments.defaultProps.hasOwnProperty('lrsd_media_folder')
-        ) {
-            wp.media.model.Attachments.defaultProps.lrsd_media_folder = 0;
-        }
-    }
-
-    /**
-     * Delegate change events on any folder-related <select> that the
-     * lrsd-media-folders plugin renders inside the media modal.  When one
-     * changes, propagate the value to the library's props so a re-query fires.
-     */
-    function bindMediaModalFolderFilter($modal) {
-        $modal.off('change.lrsdMF').on('change.lrsdMF', 'select', function () {
-            var $sel = $(this);
-            var hint = [
-                $sel.attr('name') || '',
-                $sel.attr('id') || '',
-                $sel.attr('class') || '',
-            ].join(' ');
-            if (!/folder/i.test(hint)) {
-                return;
-            }
-            var folderId = parseInt($sel.val(), 10) || 0;
-            var state   = mediaFrame && mediaFrame.state && mediaFrame.state();
-            var library = state && state.get('library');
-            if (library && library.props) {
-                library.props.set('lrsd_media_folder', folderId);
-            }
-        });
-    }
-
     function initMediaPicker() {
-        initFolderQueryProp();
-
         $(document).on('click', '.lrsd-sf-media-btn', function (e) {
             e.preventDefault();
 
@@ -99,41 +54,13 @@
                 multiple: false,
             });
 
-            // Expose as the active frame so lrsd-media-folders can reference it
-            // via wp.media.frame (some folder plugins rely on this global).
-            wp.media.frame = mediaFrame;
-
-            mediaFrame.on('open', function () {
-                var $modal = mediaFrame.$el;
-                bindMediaModalFolderFilter($modal);
-                // Note: "Move to folder" UI is hidden via CSS in admin.css
-                // (display:none !important) — no JS hiding needed here.
-            });
-
             mediaFrame.on('select', function () {
-                var selection = mediaFrame.state().get('selection');
-                var first     = selection && selection.first();
-                if (!first) {
-                    return;
-                }
-                var attachment = first.toJSON();
+                var attachment = mediaFrame.state().get('selection').first().toJSON();
                 if ($mediaTarget && $mediaTarget.length) {
                     $mediaTarget.val(attachment.url);
-                    // Ensure the description element exists so the URL is visible
-                    var $desc = $mediaTarget.siblings('.description');
-                    if (!$desc.length) {
-                        $desc = $('<span class="description" style="display:block;margin-top:4px;"></span>');
-                        $mediaTarget.closest('.lrsd-sf-media-wrap').append($desc);
-                    }
-                    $desc.text(attachment.url);
+                    $mediaTarget.siblings('.description').text(attachment.url);
                 }
-                // Clear both our reference and the global one so the next
-                // button click creates a fresh frame rather than reusing a
-                // potentially stale one (important when the folder plugin is
-                // active — it may inspect wp.media.frame when opening the picker).
-                if (typeof wp !== 'undefined' && wp.media && wp.media.frame === mediaFrame) {
-                    wp.media.frame = null;
-                }
+                // Reset so next open picks the right target
                 mediaFrame = null;
             });
 
