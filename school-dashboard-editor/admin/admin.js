@@ -51,17 +51,17 @@
             if (mediaLibraryType) {
                 mediaFrameArgs.library = { type: mediaLibraryType };
             }
-            var mediaFrame = wp.media(mediaFrameArgs);
+            var frame = wp.media(mediaFrameArgs);
 
-            mediaFrame.on('select', function () {
-                var attachment = mediaFrame.state().get('selection').first().toJSON();
+            frame.on('select', function () {
+                var attachment = frame.state().get('selection').first().toJSON();
                 if ($mediaTarget && $mediaTarget.length) {
                     $mediaTarget.val(attachment.url);
                     $mediaTarget.siblings('.description').text(attachment.url);
                 }
             });
 
-            mediaFrame.open();
+            frame.open();
         });
     }
 
