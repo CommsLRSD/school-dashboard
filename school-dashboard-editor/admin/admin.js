@@ -30,6 +30,7 @@
 
     var mediaFrame = null;
     var $mediaTarget = null;
+    var mediaFrameType = '';
 
     function initMediaPicker() {
         $(document).on('click', '.lrsd-sf-media-btn', function (e) {
@@ -41,17 +42,20 @@
             }
 
             var targetId = $(this).data('target');
+            var mediaLibraryType = $(this).data('media-library-type') || '';
             $mediaTarget = $('#' + targetId);
 
-            if (mediaFrame) {
+            if (mediaFrame && mediaFrameType === mediaLibraryType) {
                 mediaFrame.open();
                 return;
             }
 
+            mediaFrameType = mediaLibraryType;
             mediaFrame = wp.media({
                 title: i18n.chooseMedia || 'Choose or Upload Media',
                 button: { text: i18n.useMedia || 'Use this file' },
                 multiple: false,
+                library: mediaLibraryType ? { type: mediaLibraryType } : {},
             });
 
             mediaFrame.on('select', function () {
