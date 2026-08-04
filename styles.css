@@ -533,6 +533,25 @@ body {
     border-color: var(--accent-red);
 }
 
+/* Links rendered inside cards (school website, address, phone) */
+.card-link {
+    color: inherit;
+    text-decoration: underline;
+    position: relative;
+    z-index: 3;
+    pointer-events: auto;
+}
+
+.card-link:hover,
+.card-link:focus {
+    color: var(--primary-red);
+}
+
+.school-header-card .card-link:hover,
+.school-header-card .card-link:focus {
+    color: #ffffff;
+}
+
 /* Tile size classes */
 .data-card.tile-double-width { grid-column: span 2; }
 .data-card.tile-double-height { grid-row: span 2; }
