@@ -100,6 +100,7 @@
                             '<button type="button" class="button button-secondary lrsd-sf-custom-option-cancel" hidden></button>' +
                         '</div>' +
                     '</form>' +
+                    '<p class="lrsd-sf-custom-option-order-help"></p>' +
                     '<div class="lrsd-sf-custom-option-list"></div>' +
                 '</div>' +
             '</div>';
@@ -113,7 +114,8 @@
             targetSelectId: '',
             editingValue: '',
             customOptions: [],
-            maps: {}
+            maps: {},
+            draggedValue: ''
         };
         var $title = $('#lrsd-sf-custom-option-title');
         var $intro = $('#lrsd-sf-custom-option-intro');
@@ -125,6 +127,7 @@
         var $mapInput = $('#lrsd-sf-custom-option-map');
         var $saveBtn = $form.find('.lrsd-sf-custom-option-save');
         var $cancelBtn = $form.find('.lrsd-sf-custom-option-cancel');
+        var $orderHelp = $modal.find('.lrsd-sf-custom-option-order-help');
         var $list = $modal.find('.lrsd-sf-custom-option-list');
 
         function escapeAttr(value) {
@@ -155,6 +158,65 @@
                     $sel.val(newVal);
                 }
             });
+            syncOptionOrderAcrossSelects(optKey);
+        }
+
+        function syncOptionOrderAcrossSelects(optKey) {
+            $('select[data-option-key="' + optKey + '"]').each(function () {
+                var $sel = $(this);
+                var selectedValue = $sel.val();
+                var placeholderOptions = [];
+                var customOptionElements = [];
+
+                $sel.find('option').each(function () {
+                    var optionValue = $(this).val();
+                    var $option = $(this);
+                    if (optionValue === '') {
+                        placeholderOptions.push($option.detach());
+                    } else if (state.customOptions.indexOf(optionValue) !== -1) {
+                        customOptionElements.push($option.detach());
+                    }
+                });
+
+                state.customOptions.forEach(function (optionVal) {
+                    var matched = null;
+                    customOptionElements = customOptionElements.filter(function ($option) {
+                        if (!matched && $option.val() === optionVal) {
+                            matched = $option;
+                            return false;
+                        }
+                        return true;
+                    });
+                    if (!matched) {
+                        matched = $('<option>').val(optionVal).text(optionVal);
+                    }
+                    $sel.append(matched);
+                });
+
+                if (selectedValue && optionExists($sel, selectedValue)) {
+                    $sel.val(selectedValue);
+                }
+                if (!selectedValue && optionExists($sel, '')) {
+                    $sel.val('');
+                }
+                placeholderOptions.forEach(function ($option) {
+                    $sel.prepend($option);
+                });
+            });
+        }
+
+        function persistOptionOrder() {
+            return $.post(
+                lrsdSfAdmin.ajaxUrl,
+                {
+                    action: 'lrsd_sf_sort_custom_options',
+                    nonce: lrsdSfAdmin ? lrsdSfAdmin.customOptionNonce : '',
+                    option_key: state.optionKey,
+                    option_order: state.customOptions
+                }
+            ).fail(function () {
+                alert(i18n.error || 'An error occurred. Please try again.');
+            });
         }
 
         function renderList() {
@@ -166,12 +228,13 @@
             state.customOptions.forEach(function (optionVal) {
                 var mapText = state.optionKey === (lrsdSfAdmin ? lrsdSfAdmin.isFosKey : 'familyOfSchools') ? (state.maps[optionVal] || '') : '';
                 var html = '' +
-                    '<div class="lrsd-sf-custom-option-item">' +
-                        '<div>' +
+                    '<div class="lrsd-sf-custom-option-item" draggable="true" data-option-val="' + escapeAttr(optionVal) + '">' +
+                        '<div class="lrsd-sf-custom-option-item-label">' +
                             '<strong>' + escapeAttr(optionVal) + '</strong>' +
                             (mapText ? '<span class="lrsd-sf-custom-option-item-meta">' + escapeAttr(mapText) + '</span>' : '') +
                         '</div>' +
                         '<div class="lrsd-sf-custom-option-item-actions">' +
+                            '<button type="button" class="button-link lrsd-sf-custom-option-drag-handle" aria-label="' + (i18n.reorderOption || 'Reorder option') + '">&#x2630;</button>' +
                             '<button type="button" class="button button-secondary lrsd-sf-edit-option-btn" data-option-val="' + escapeAttr(optionVal) + '">' + (i18n.editOption || 'Edit option') + '</button>' +
                             '<button type="button" class="button lrsd-sf-btn-danger lrsd-sf-delete-option-btn" data-option-val="' + escapeAttr(optionVal) + '">' + (i18n.deleteOption || 'Delete') + '</button>' +
                         '</div>' +
@@ -195,7 +258,8 @@
             state.customOptions = ($btn.data('custom-options') || []).slice();
             state.maps = $.extend({}, $btn.data('custom-maps') || {});
             $title.text(i18n.customOptionsTitle || 'Manage Custom Options');
-            $intro.text(i18n.customOptionsIntro || 'Add, edit, or delete custom dropdown options for this field.');
+            $intro.text(i18n.customOptionsIntro || 'Add, edit, delete, or reorder custom dropdown options for this field.');
+            $orderHelp.text(i18n.customOptionsOrderHelp || 'Drag options to change the order they appear in the dropdown.');
             $inputLabel.text(i18n.newOption || 'New option');
             $mapLabel.text(i18n.fosMapLabel || 'Catchment map path');
             $mapInput.attr('placeholder', i18n.fosMapPlaceholder || 'public/maps/my-fos-map.svg');
@@ -267,6 +331,7 @@
                             syncOptionsAcrossSelects(state.optionKey, '', addedVal, false);
                         }
                         $targetSelect.val(addedVal);
+                        syncOptionOrderAcrossSelects(state.optionKey);
                         renderList();
                         resetForm();
                     } else {
@@ -291,6 +356,56 @@
             $saveBtn.text(i18n.saveOption || 'Save Changes');
             $cancelBtn.text(i18n.cancelEdit || 'Cancel').prop('hidden', false);
             $input.trigger('focus');
+        });
+
+        $(document).on('dragstart', '.lrsd-sf-custom-option-item', function (e) {
+            state.draggedValue = $(this).data('option-val');
+            $(this).addClass('is-dragging');
+            if (e.originalEvent && e.originalEvent.dataTransfer) {
+                e.originalEvent.dataTransfer.effectAllowed = 'move';
+                e.originalEvent.dataTransfer.setData('text/plain', state.draggedValue);
+            }
+        });
+
+        $(document).on('dragend', '.lrsd-sf-custom-option-item', function () {
+            state.draggedValue = '';
+            $list.find('.lrsd-sf-custom-option-item').removeClass('is-dragging is-drag-over');
+        });
+
+        $(document).on('dragover', '.lrsd-sf-custom-option-item', function (e) {
+            if (!state.draggedValue) {
+                return;
+            }
+            e.preventDefault();
+            $(this).addClass('is-drag-over');
+        });
+
+        $(document).on('dragleave', '.lrsd-sf-custom-option-item', function () {
+            $(this).removeClass('is-drag-over');
+        });
+
+        $(document).on('drop', '.lrsd-sf-custom-option-item', function (e) {
+            var targetValue;
+            var fromIndex;
+            var toIndex;
+            if (!state.draggedValue) {
+                return;
+            }
+            e.preventDefault();
+            $(this).removeClass('is-drag-over');
+            targetValue = $(this).data('option-val');
+            if (!targetValue || targetValue === state.draggedValue) {
+                return;
+            }
+            fromIndex = state.customOptions.indexOf(state.draggedValue);
+            toIndex = state.customOptions.indexOf(targetValue);
+            if (fromIndex === -1 || toIndex === -1) {
+                return;
+            }
+            state.customOptions.splice(toIndex, 0, state.customOptions.splice(fromIndex, 1)[0]);
+            syncOptionOrderAcrossSelects(state.optionKey);
+            renderList();
+            persistOptionOrder();
         });
 
         $(document).on('click', '.lrsd-sf-delete-option-btn', function () {

@@ -110,7 +110,9 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
             'chooseMedia'         => __('Choose or Upload Media', 'lrsd-school-facilities'),
             'useMedia'            => __('Use this file', 'lrsd-school-facilities'),
             'customOptionsTitle'  => __('Manage Custom Options', 'lrsd-school-facilities'),
-            'customOptionsIntro'  => __('Add, edit, or delete custom dropdown options for this field.', 'lrsd-school-facilities'),
+            'customOptionsIntro'  => __('Add, edit, delete, or reorder custom dropdown options for this field.', 'lrsd-school-facilities'),
+            'customOptionsOrderHelp' => __('Drag options to change the order they appear in the dropdown.', 'lrsd-school-facilities'),
+            'reorderOption'      => __('Reorder option', 'lrsd-school-facilities'),
             'newOption'           => __('New option', 'lrsd-school-facilities'),
             'editOption'          => __('Edit option', 'lrsd-school-facilities'),
             'addOption'           => __('Add Option', 'lrsd-school-facilities'),
@@ -914,8 +916,8 @@ function lrsd_sf_render_bulk_update_page() {
                                             data-nonce="<?php echo esc_attr(wp_create_nonce('lrsd_sf_custom_option_nonce')); ?>"
                                             data-custom-options="<?php echo esc_attr(wp_json_encode($key_custom_bulk)); ?>"
                                             data-custom-maps="<?php echo esc_attr(wp_json_encode($bulk_custom_maps)); ?>"
-                                            title="<?php esc_attr_e('Add a custom option to this dropdown', 'lrsd-school-facilities'); ?>">
-                                            <?php esc_html_e('+ Custom', 'lrsd-school-facilities'); ?>
+                                            title="<?php esc_attr_e('Edit custom options for this dropdown', 'lrsd-school-facilities'); ?>">
+                                            <?php esc_html_e('Edit', 'lrsd-school-facilities'); ?>
                                         </button>
                                     </div>
                                 <?php else : ?>

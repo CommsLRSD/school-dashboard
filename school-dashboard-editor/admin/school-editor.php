@@ -222,11 +222,11 @@ function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options)
                         data-nonce="<?php echo esc_attr($nonce_val); ?>"
                         data-custom-options="<?php echo esc_attr(wp_json_encode($key_custom)); ?>"
                         data-custom-maps="<?php echo esc_attr(wp_json_encode($custom_maps)); ?>"
-                        title="<?php esc_attr_e('Add a custom option to this dropdown', 'lrsd-school-facilities'); ?>">
-                        <?php esc_html_e('+ Custom', 'lrsd-school-facilities'); ?>
+                        title="<?php esc_attr_e('Edit custom options for this dropdown', 'lrsd-school-facilities'); ?>">
+                        <?php esc_html_e('Edit', 'lrsd-school-facilities'); ?>
                     </button>
                     <?php if ($field['options_key'] === 'familyOfSchools') : ?>
-                        <span class="description" style="display:block;margin-top:4px;"><?php esc_html_e('When adding a custom Family of Schools, you will be asked for its catchment map path so the dashboard can display the correct map.', 'lrsd-school-facilities'); ?></span>
+                        <span class="description" style="display:block;margin-top:4px;"><?php esc_html_e('When managing a custom Family of Schools, you can set its catchment map path so the dashboard can display the correct map.', 'lrsd-school-facilities'); ?></span>
                     <?php endif; ?>
                 </div>
                 <?php
