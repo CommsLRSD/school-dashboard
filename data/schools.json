@@ -180,7 +180,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/archwood",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=800%20Archibald%20St.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/archwood/contact",
+        "phone_url": "tel:+12042337983"
     },
     "beliveau": {
         "id": "beliveau",
@@ -347,7 +351,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/cb",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=296%20Speers%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/cb/contact",
+        "phone_url": "tel:+12042553205"
     },
     "cjs": {
         "id": "cjs",
@@ -507,7 +515,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/cjs",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=1128%20Dakota%20St.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/cjs/contact",
+        "phone_url": "tel:+12042570124"
     },
     "dakota": {
         "id": "dakota",
@@ -666,7 +678,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/dakota",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=661%20Dakota%20St.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/dakota/contact",
+        "phone_url": "tel:+12042564366"
     },
     "darwin": {
         "id": "darwin",
@@ -803,7 +819,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/darwin",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=175%20Darwin%20St.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/darwin/contact",
+        "phone_url": "tel:+12042572904"
     },
     "drdwpenner": {
         "id": "drdwpenner",
@@ -946,7 +966,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/penner",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=121%20Hazelwood%20Cres.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/penner/contact",
+        "phone_url": "tel:+12042561135"
     },
     "frontenac": {
         "id": "frontenac",
@@ -1112,7 +1136,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/frontenac",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=866%20Autumnwood%20Dr.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/frontenac/contact",
+        "phone_url": "tel:+12042570609"
     },
     "generalvanier": {
         "id": "generalvanier",
@@ -1266,7 +1294,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/vanier",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=18%20Lomond%20Blvd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/vanier/contact",
+        "phone_url": "tel:+12042551400"
     },
     "glenlawn": {
         "id": "glenlawn",
@@ -1427,7 +1459,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/glenlawn",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=770%20St.%20Mary%27s%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/glenlawn/contact",
+        "phone_url": "tel:+12042333986"
     },
     "glenwood": {
         "id": "glenwood",
@@ -1584,7 +1620,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/glenwood",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=51%20Blenheim%20Ave.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/glenwood/contact",
+        "phone_url": "tel:+12042333619"
     },
     "hspaul": {
         "id": "hspaul",
@@ -1727,7 +1767,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/paul",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=160%20Southglen%20Blvd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/paul/contact",
+        "phone_url": "tel:+12042547477"
     },
     "hastings": {
         "id": "hastings",
@@ -1871,7 +1915,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/hastings",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=50%20Hastings%20Blvd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/hastings/contact",
+        "phone_url": "tel:+12042531371"
     },
     "highbury": {
         "id": "highbury",
@@ -2034,7 +2082,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/highbury",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=99%20Highbury%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/highbury/contact",
+        "phone_url": "tel:+12042545078"
     },
     "islandlakes": {
         "id": "islandlakes",
@@ -2184,7 +2236,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/islandlakes",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=445%20Island%20Shore%20Blvd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/islandlakes/contact",
+        "phone_url": "tel:+12042546247"
     },
     "jhbruns": {
         "id": "jhbruns",
@@ -2338,7 +2394,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/jhbruns",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=250%20Lakewood%20Blvd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/jhbruns/contact",
+        "phone_url": "tel:+12042572928"
     },
     "lavallee": {
         "id": "lavallee",
@@ -2479,7 +2539,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/lavallee",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=505%20St.%20Anne%27s%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/lavallee/contact",
+        "phone_url": "tel:+12042571388"
     },
     "louisrielartstech": {
         "id": "louisrielartstech",
@@ -2624,7 +2688,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/lratc",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=5%20deBourmont%20Ave.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/lratc/contact",
+        "phone_url": "tel:+12042378951"
     },
     "marion": {
         "id": "marion",
@@ -2784,7 +2852,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/marion",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=619%20Des%20Meurons%20St.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/marion/contact",
+        "phone_url": "tel:+12042332893"
     },
     "minnetonka": {
         "id": "minnetonka",
@@ -2939,7 +3011,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/minnetonka",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=200%20Minnetonka%20St.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/minnetonka/contact",
+        "phone_url": "tel:+12042578114"
     },
     "nelsonmcintyre": {
         "id": "nelsonmcintyre",
@@ -3108,7 +3184,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/nmc",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=188%20St.%20Mary%27s%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/nmc/contact",
+        "phone_url": "tel:+12042370219"
     },
     "niakwaplace": {
         "id": "niakwaplace",
@@ -3252,7 +3332,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/niakwaplace",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=200%20Pebblebeach%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/niakwaplace/contact",
+        "phone_url": "tel:+12042570640"
     },
     "nordale": {
         "id": "nordale",
@@ -3411,7 +3495,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/nordale",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=99%20Birchdale%20Ave.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/nordale/contact",
+        "phone_url": "tel:+12042370202"
     },
     "sagecreek": {
         "id": "sagecreek",
@@ -3545,7 +3633,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/sagecreek",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=315%20Sage%20Creek%20Blvd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/sagecreek/contact",
+        "phone_url": "tel:+12042538199"
     },
     "samuelburland": {
         "id": "samuelburland",
@@ -3691,7 +3783,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/burland",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=192%20Burland%20Ave.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/burland/contact",
+        "phone_url": "tel:+12042540124"
     },
     "shamrock": {
         "id": "shamrock",
@@ -3845,7 +3941,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/shamrock",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=831%20Beaverhill%20Blvd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/shamrock/contact",
+        "phone_url": "tel:+12042570637"
     },
     "stgeorge": {
         "id": "stgeorge",
@@ -4003,7 +4103,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/stgeorge",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=151%20St.%20George%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/stgeorge/contact",
+        "phone_url": "tel:+12042532646"
     },
     "victorhlwyatt": {
         "id": "victorhlwyatt",
@@ -4147,7 +4251,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/wyatt",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=485%20Meadowood%20Dr.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/wyatt/contact",
+        "phone_url": "tel:+12042557880"
     },
     "victormager": {
         "id": "victormager",
@@ -4297,7 +4405,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/mager",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=81%20Beliveau%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/mager/contact",
+        "phone_url": "tel:+12042539873"
     },
     "windsorpark": {
         "id": "windsorpark",
@@ -4446,7 +4558,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/windsorpark",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=1015%20Cottonwood%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/windsorpark/contact",
+        "phone_url": "tel:+12042567316"
     },
     "windsor": {
         "id": "windsor",
@@ -4602,7 +4718,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/windsor",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=80%20Cunnington%20Ave.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/windsor/contact",
+        "phone_url": "tel:+12042374057"
     },
     "ecolegeorgemcdowell": {
         "id": "ecolegeorgemcdowell",
@@ -4751,7 +4871,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/georgemcdowell",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=366%20Paddington%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/georgemcdowell/contact",
+        "phone_url": "tel:+12042531492"
     },
     "ecoleguyot": {
         "id": "ecoleguyot",
@@ -4896,7 +5020,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/guyot",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=400%20Willowlake%20Cres.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/guyot/contact",
+        "phone_url": "tel:+12042572540"
     },
     "ecolehenribergeron": {
         "id": "ecolehenribergeron",
@@ -5037,7 +5165,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/henribergeron",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=363%20Enfield%20Cres.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/henribergeron/contact",
+        "phone_url": "tel:+12042337079"
     },
     "ecolehowden": {
         "id": "ecolehowden",
@@ -5192,7 +5324,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/howden",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=150%20Howden%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/howden/contact",
+        "phone_url": "tel:+12042570656"
     },
     "ecolejulieriel": {
         "id": "ecolejulieriel",
@@ -5328,7 +5464,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/julieriel",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=316%20Ashworth%20St.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/julieriel/contact",
+        "phone_url": "tel:+12042532363"
     },
     "ecolemarieannegaboury": {
         "id": "ecolemarieannegaboury",
@@ -5488,7 +5628,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/gaboury",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=95%20Pulberry%20St.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/gaboury/contact",
+        "phone_url": "tel:+12042539704"
     },
     "ecolemazinagiizhik": {
         "id": "ecolemazinagiizhik",
@@ -5601,7 +5745,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/mazinagiizhik",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=355%20Des%20Hivernants%20Blvd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/mazinagiizhik/contact",
+        "phone_url": ""
     },
     "ecoleprovencher": {
         "id": "ecoleprovencher",
@@ -5755,7 +5903,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/provencher",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=320%20ave%20de%20la%20Cathedrale%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/provencher/contact",
+        "phone_url": "tel:+12042330222"
     },
     "ecolestgermain": {
         "id": "ecolestgermain",
@@ -5903,7 +6055,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/stgermain",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=77%20John%20Forsyth%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/stgermain/contact",
+        "phone_url": "tel:+12042540120"
     },
     "ecolevanbelleghem": {
         "id": "ecolevanbelleghem",
@@ -6061,7 +6217,11 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/vanbelleghem",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=10%20Vermillion%20Rd.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/vanbelleghem/contact",
+        "phone_url": "tel:+12042551134"
     },
     "ecolevarennes": {
         "id": "ecolevarennes",
@@ -6226,6 +6386,10 @@
             "projects_local"
         ],
         "customCards": [],
-        "customCardValues": []
+        "customCardValues": [],
+        "school_website_url": "https://www.lrsd.net/varennes",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=22%20Varennes%20Ave.%2C%20Winnipeg%2C%20MB%2C%20Canada",
+        "contact_page_url": "https://www.lrsd.net/varennes/contact",
+        "phone_url": "tel:+12042531375"
     }
 }

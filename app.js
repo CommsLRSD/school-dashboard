@@ -655,11 +655,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Sanitize data to prevent XSS
                 const headerImage = sanitizeHTML(school.headerImage || '');
                 const schoolName = sanitizeHTML(school.schoolName || '');
+                const schoolWebsiteUrl = sanitizeHTML(school.school_website_url || '');
                 // Photo credit is a static string (not user input), so sanitization is not required
                 const photoCredit = SCHOOLS_WITH_PHOTO_CREDIT.includes(schoolName) 
                     ? '<div class="photo-credit">Photo: Winnipeg Architecture Foundation Collection</div>' 
                     : '';
-                return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${headerImage}" alt="${schoolName}">${photoCredit}<h2 class="school-name-title">${schoolName}</h2></div></div>`;
+                const schoolNameHtml = schoolWebsiteUrl
+                    ? `<a href="${schoolWebsiteUrl}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:inherit;">${schoolName}</a>`
+                    : schoolName;
+                return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${headerImage}" alt="${schoolName}">${photoCredit}<h2 class="school-name-title">${schoolNameHtml}</h2></div></div>`;
             
             case 'details': {
                 // Calculate age dynamically from Built year
@@ -670,11 +674,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Use separate grades and program fields from school data
                 const grades = school.grades || '';
                 const program = school.program || '';
+
+                // Wrap address/phone in links if URLs are provided
+                const googleMapsUrl = sanitizeHTML(school.google_maps_url || '');
+                const phoneUrl = sanitizeHTML(school.phone_url || '');
+                const addressDisplay = googleMapsUrl
+                    ? `<a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:inherit;">${sanitizeHTML(school.address || '')}</a>`
+                    : sanitizeHTML(school.address || '');
+                const phoneDisplay = phoneUrl
+                    ? `<a href="${phoneUrl}" style="color:inherit;text-decoration:inherit;">${sanitizeHTML(school.phone || '')}</a>`
+                    : sanitizeHTML(school.phone || '');
                 
                 // Create details object with calculated age, renamed Modular field, and separated Grades/Program
                 const detailsData = {
-                    "Address": school.address,
-                    "Phone": school.phone,
+                    "Address": addressDisplay,
+                    "Phone": phoneDisplay,
                     "Grades": grades,
                     "Program": program,
                     "Built": school.details.Built,
@@ -683,7 +697,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     "Modular Classrooms": school.details.Modular
                 };
                 
-                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/details.svg" alt="" class="card-header-icon"><h2 class="card-title">Details</h2></div><div class="card-body"><ul class="detail-list">${Object.entries(detailsData).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${formatNumber(val)}</span></li>`).join('')}</ul></div></div>`;
+                return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/details.svg" alt="" class="card-header-icon"><h2 class="card-title">Details</h2></div><div class="card-body"><ul class="detail-list">${Object.entries(detailsData).map(([key, val]) => `<li class="detail-item"><span class="detail-label">${key}</span><span class="detail-value">${key === 'Address' || key === 'Phone' ? val : formatNumber(val)}</span></li>`).join('')}</ul></div></div>`;
             }
             
             case 'additions': return `<div class="data-card list-card ${sizeClass}"><div class="card-header"><img src="public/icon/additions.svg" alt="" class="card-header-icon"><h2 class="card-title">Additions</h2></div><div class="card-body"><ul class="detail-list">${school.additions.map(a => `<li class="detail-item"><span class="detail-label">${a.year}</span><span class="detail-value">${a.size}</span></li>`).join('') || '<li class="detail-item">No additions on record.</li>'}</ul></div></div>`;
