@@ -186,47 +186,6 @@
     line-height: 26px !important;
 }
 
-/* ── Custom Option Chips ─────────────────────────────────────────────────── */
-.lrsd-sf-custom-opts-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    flex-basis: 100%;
-    margin-top: 2px;
-}
-
-.lrsd-sf-custom-opt-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    padding: 2px 7px 2px 9px;
-    background: #eef3f9;
-    border: 1px solid #c3d3e8;
-    border-radius: 20px;
-    font-size: 12px;
-    color: #1d2327;
-    line-height: 1.4;
-}
-
-.lrsd-sf-delete-option-btn {
-    background: none;
-    border: none;
-    color: #8c9299;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1;
-    padding: 0 0 0 2px;
-    margin: 0;
-    display: inline-flex;
-    align-items: center;
-    transition: color 0.15s;
-}
-
-.lrsd-sf-delete-option-btn:hover {
-    color: #d63638;
-}
-
 /* ── Media Picker ────────────────────────────────────────────────────────── */
 .lrsd-sf-media-wrap {
     display: flex;
@@ -1256,6 +1215,116 @@
     gap: 8px;
     justify-content: flex-end;
     flex-wrap: wrap;
+}
+
+/* ── Custom option modal ─────────────────────────────────────────────────── */
+.lrsd-sf-custom-option-modal {
+    position: fixed;
+    z-index: 100002;
+    inset: 0;
+    background: rgba(30, 35, 40, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.lrsd-sf-custom-option-modal[hidden] {
+    display: none !important;
+}
+
+.lrsd-sf-custom-option-dialog {
+    width: min(640px, 100%);
+    max-height: 85vh;
+    overflow: auto;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #dcdcde;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.18);
+}
+
+.lrsd-sf-custom-option-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.lrsd-sf-custom-option-header h2 {
+    margin: 0 0 4px;
+    font-size: 20px;
+}
+
+.lrsd-sf-custom-option-header p {
+    margin: 0;
+    color: #50575e;
+}
+
+.lrsd-sf-custom-option-close {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+    color: #50575e;
+    padding: 0;
+}
+
+.lrsd-sf-custom-option-form {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.lrsd-sf-custom-option-form label {
+    font-weight: 600;
+}
+
+.lrsd-sf-custom-option-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.lrsd-sf-custom-option-list {
+    display: grid;
+    gap: 10px;
+}
+
+.lrsd-sf-custom-option-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.lrsd-sf-custom-option-item strong,
+.lrsd-sf-custom-option-item span {
+    display: block;
+}
+
+.lrsd-sf-custom-option-item-meta {
+    color: #646970;
+    font-size: 12px;
+    margin-top: 4px;
+    word-break: break-all;
+}
+
+.lrsd-sf-custom-option-item-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.lrsd-sf-custom-option-empty {
+    margin: 0;
+    color: #646970;
 }
 
 /* ── lrsd-media-folders: suppress "Move to folder" button in all wp.media() pickers ── */

@@ -109,9 +109,23 @@ function lrsd_sf_enqueue_admin_assets($hook_suffix) {
         'i18n'             => [
             'chooseMedia'         => __('Choose or Upload Media', 'lrsd-school-facilities'),
             'useMedia'            => __('Use this file', 'lrsd-school-facilities'),
-            'newOption'           => __('Enter the new option value:', 'lrsd-school-facilities'),
+            'customOptionsTitle'  => __('Manage Custom Options', 'lrsd-school-facilities'),
+            'customOptionsIntro'  => __('Add, edit, or delete custom dropdown options for this field.', 'lrsd-school-facilities'),
+            'newOption'           => __('New option', 'lrsd-school-facilities'),
+            'editOption'          => __('Edit option', 'lrsd-school-facilities'),
+            'addOption'           => __('Add Option', 'lrsd-school-facilities'),
+            'saveOption'          => __('Save Changes', 'lrsd-school-facilities'),
+            'cancelEdit'          => __('Cancel', 'lrsd-school-facilities'),
+            'noCustomOptions'     => __('No custom options yet.', 'lrsd-school-facilities'),
             'fosCatchmentHint'    => __('Enter the catchment map file path for this Family of Schools (e.g. public/maps/my-fos-map.svg). Leave blank if not applicable.', 'lrsd-school-facilities'),
+            'fosMapLabel'         => __('Catchment map path', 'lrsd-school-facilities'),
+            'fosMapPlaceholder'   => __('public/maps/my-fos-map.svg', 'lrsd-school-facilities'),
             'confirmDeleteOption' => __('Remove this custom option from all dropdowns? This cannot be undone.', 'lrsd-school-facilities'),
+            'confirmDeleteTitle'  => __('Delete Custom Option', 'lrsd-school-facilities'),
+            'confirmDeleteBody'   => __('Are you sure you want to delete this custom option?', 'lrsd-school-facilities'),
+            'deleteOption'        => __('Delete', 'lrsd-school-facilities'),
+            'closeDialog'         => __('Close dialog', 'lrsd-school-facilities'),
+            'customOptionRequired'=> __('Enter an option value before saving.', 'lrsd-school-facilities'),
             'saved'               => __('Saved.', 'lrsd-school-facilities'),
             'error'               => __('An error occurred. Please try again.', 'lrsd-school-facilities'),
             'confirmBulk'         => __('Save changes to all schools in this category?', 'lrsd-school-facilities'),
@@ -879,6 +893,11 @@ function lrsd_sf_render_bulk_update_page() {
                                     if ($val !== '' && !in_array((string)$val, $opts, true)) { $opts[] = (string)$val; }
                                     $bulk_select_id  = 'bulk-' . esc_attr($row_id) . '-' . esc_attr($fk);
                                     $key_custom_bulk = (is_array($raw_custom_bulk) && isset($raw_custom_bulk[$field['options_key']])) ? array_values((array)$raw_custom_bulk[$field['options_key']]) : [];
+                                    $bulk_custom_maps = [];
+                                    if ($field['options_key'] === 'familyOfSchools') {
+                                        $bulk_raw_maps = get_option('lrsd_sf_fos_catchment_maps', []);
+                                        $bulk_custom_maps = is_array($bulk_raw_maps) ? $bulk_raw_maps : [];
+                                    }
                                 ?>
                                     <div class="lrsd-sf-select-wrap">
                                         <select id="<?php echo $bulk_select_id; ?>"
@@ -892,22 +911,12 @@ function lrsd_sf_render_bulk_update_page() {
                                         <button type="button" class="button lrsd-sf-add-option-btn"
                                             data-option-key="<?php echo esc_attr($field['options_key']); ?>"
                                             data-target-select="<?php echo $bulk_select_id; ?>"
+                                            data-nonce="<?php echo esc_attr(wp_create_nonce('lrsd_sf_custom_option_nonce')); ?>"
+                                            data-custom-options="<?php echo esc_attr(wp_json_encode($key_custom_bulk)); ?>"
+                                            data-custom-maps="<?php echo esc_attr(wp_json_encode($bulk_custom_maps)); ?>"
                                             title="<?php esc_attr_e('Add a custom option to this dropdown', 'lrsd-school-facilities'); ?>">
                                             <?php esc_html_e('+ Custom', 'lrsd-school-facilities'); ?>
                                         </button>
-                                        <?php if (!empty($key_custom_bulk)) : ?>
-                                            <div class="lrsd-sf-custom-opts-list">
-                                                <?php foreach ($key_custom_bulk as $custom_opt_b) : ?>
-                                                    <span class="lrsd-sf-custom-opt-chip">
-                                                        <span><?php echo esc_html($custom_opt_b); ?></span>
-                                                        <button type="button" class="lrsd-sf-delete-option-btn"
-                                                                data-option-key="<?php echo esc_attr($field['options_key']); ?>"
-                                                                data-option-val="<?php echo esc_attr($custom_opt_b); ?>"
-                                                                title="<?php esc_attr_e('Remove this custom option', 'lrsd-school-facilities'); ?>">&times;</button>
-                                                    </span>
-                                                <?php endforeach; ?>
-                                            </div>
-                                        <?php endif; ?>
                                     </div>
                                 <?php else : ?>
                                     <input type="text" class="regular-text" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr((string)$val); ?>" />
