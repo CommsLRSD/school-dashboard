@@ -661,7 +661,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     ? '<div class="photo-credit">Photo: Winnipeg Architecture Foundation Collection</div>' 
                     : '';
                 const schoolNameHtml = schoolWebsiteUrl
-                    ? `<a href="${schoolWebsiteUrl}" target="_blank" rel="noopener noreferrer" class="school-name-link">${schoolName}</a>`
+                    ? `<a href="${schoolWebsiteUrl}" target="_blank" rel="noopener noreferrer">${schoolName}</a>`
                     : schoolName;
                 return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${headerImage}" alt="${schoolName}">${photoCredit}<h2 class="school-name-title">${schoolNameHtml}</h2></div></div>`;
             
@@ -679,10 +679,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const googleMapsUrl = sanitizeHTML(school.google_maps_url || '');
                 const phoneUrl = sanitizeHTML(school.phone_url || '');
                 const addressDisplay = googleMapsUrl
-                    ? `<a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="detail-value-link">${sanitizeHTML(school.address || '')}</a>`
+                    ? `<a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer">${sanitizeHTML(school.address || '')}</a>`
                     : sanitizeHTML(school.address || '');
                 const phoneDisplay = phoneUrl
-                    ? `<a href="${phoneUrl}" target="_blank" rel="noopener noreferrer" class="detail-value-link">${sanitizeHTML(school.phone || '')}</a>`
+                    ? `<a href="${phoneUrl}" target="_blank" rel="noopener noreferrer">${sanitizeHTML(school.phone || '')}</a>`
                     : sanitizeHTML(school.phone || '');
                 
                 // Create details object with calculated age, renamed Modular field, and separated Grades/Program
