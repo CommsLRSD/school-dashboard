@@ -18,11 +18,15 @@ function lrsd_sf_register_school_meta_box() {
 function lrsd_sf_get_simple_field_map() {
     return [
         // ── Header / School Photo
-        'schoolName'      => ['label' => 'School Name',       'path' => ['schoolName'],       'type' => 'text',  'section' => 'school_header'],
-        'headerImage'     => ['label' => 'Header Image',      'path' => ['headerImage'],       'type' => 'media', 'media_library_type' => 'image', 'section' => 'school_header'],
+        'schoolName'          => ['label' => 'School Name',         'path' => ['schoolName'],          'type' => 'text',    'section' => 'school_header'],
+        'school_website_url'  => ['label' => 'School Website URL',  'path' => ['school_website_url'],  'type' => 'url',     'section' => 'school_header'],
+        'headerImage'         => ['label' => 'Header Image',        'path' => ['headerImage'],         'type' => 'media',   'media_library_type' => 'image', 'section' => 'school_header'],
         // ── Details
-        'address'         => ['label' => 'Address',           'path' => ['address'],           'type' => 'text',   'section' => 'details'],
-        'phone'           => ['label' => 'Phone',             'path' => ['phone'],             'type' => 'text',   'section' => 'details'],
+        'address'             => ['label' => 'Address',             'path' => ['address'],             'type' => 'text',    'section' => 'details'],
+        'google_maps_url'     => ['label' => 'Google Maps URL',     'path' => ['google_maps_url'],     'type' => 'url',     'section' => 'details'],
+        'phone'               => ['label' => 'Phone',               'path' => ['phone'],               'type' => 'text',    'section' => 'details'],
+        'phone_url'           => ['label' => 'Phone URL',           'path' => ['phone_url'],           'type' => 'url_tel', 'section' => 'details'],
+        'contact_page_url'    => ['label' => 'Contact Page URL',    'path' => ['contact_page_url'],    'type' => 'url',     'section' => 'details'],
         'familyOfSchools' => ['label' => 'Family of Schools', 'path' => ['familyOfSchools'],   'type' => 'select', 'options_key' => 'familyOfSchools', 'section' => 'details'],
         'schoolLevel'     => ['label' => 'School Level',      'path' => ['schoolLevel'],       'type' => 'select', 'options_key' => 'schoolLevel',     'section' => 'details'],
         'grades'          => ['label' => 'Grades',            'path' => ['grades'],            'type' => 'text',   'section' => 'details'],
@@ -253,6 +257,11 @@ function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options)
 
             case 'int':
                 echo '<input type="number" id="' . $id . '" name="' . esc_attr($name) . '" value="' . esc_attr((string)(int)$value) . '" class="small-text" />';
+                break;
+
+            case 'url':
+            case 'url_tel':
+                echo '<input type="url" id="' . $id . '" name="' . esc_attr($name) . '" value="' . esc_attr((string)$value) . '" class="regular-text" />';
                 break;
 
             default: // text
@@ -943,6 +952,14 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
 
         if ($field['type'] === 'int') {
             $value = is_numeric($raw_value) ? (int)$raw_value : 0;
+        } elseif ($field['type'] === 'url') {
+            $value = esc_url_raw(sanitize_text_field((string)$raw_value));
+        } elseif ($field['type'] === 'url_tel') {
+            $raw = sanitize_text_field((string)$raw_value);
+            // Allow tel: URIs in addition to http/https
+            $value = (strncmp($raw, 'tel:', 4) === 0)
+                ? 'tel:' . preg_replace('/[^0-9+\-().ext ]/', '', substr($raw, 4))
+                : esc_url_raw($raw);
         } elseif ($field['type'] === 'select' || $field['type'] === 'text' || $field['type'] === 'media') {
             $value = sanitize_text_field((string)$raw_value);
         } else {
