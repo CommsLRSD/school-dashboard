@@ -487,6 +487,24 @@ document.addEventListener('DOMContentLoaded', function() {
         div.textContent = str;
         return div.innerHTML;
     };
+
+    /**
+     * Sanitizes a URL for use in an href attribute.
+     * Only allows http://, https://, tel:, and mailto: schemes.
+     * Returns an empty string for disallowed schemes to prevent XSS via javascript: URLs.
+     * Unlike sanitizeHTML, this function does NOT HTML-encode the URL so that
+     * query-string ampersands (&) are preserved as literal characters in the href.
+     * @param {string} url - URL string to sanitize
+     * @returns {string} Safe URL string, or empty string if disallowed
+     */
+    const sanitizeUrl = (url) => {
+        if (!url) return '';
+        const trimmed = String(url).trim();
+        if (/^(https?:\/\/|tel:|mailto:)/i.test(trimmed)) {
+            return trimmed;
+        }
+        return '';
+    };
     
     /**
      * Creates a flippable card with front and back faces
@@ -655,7 +673,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Sanitize data to prevent XSS
                 const headerImage = sanitizeHTML(school.headerImage || '');
                 const schoolName = sanitizeHTML(school.schoolName || '');
-                const schoolWebsiteUrl = sanitizeHTML((school.school_website_url || '').trim());
+                const schoolWebsiteUrl = sanitizeUrl(school.school_website_url || '');
                 // Photo credit is a static string (not user input), so sanitization is not required
                 const photoCredit = SCHOOLS_WITH_PHOTO_CREDIT.includes(schoolName) 
                     ? '<div class="photo-credit">Photo: Winnipeg Architecture Foundation Collection</div>' 
@@ -676,8 +694,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const program = school.program || '';
 
                 // Wrap address/phone in links if URLs are provided
-                const googleMapsUrl = sanitizeHTML((school.google_maps_url || '').trim());
-                const phoneUrl = sanitizeHTML((school.phone_url || '').trim());
+                const googleMapsUrl = sanitizeUrl(school.google_maps_url || '');
+                const phoneUrl = sanitizeUrl(school.phone_url || '');
                 const addressDisplay = googleMapsUrl
                     ? `<a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer">${sanitizeHTML(school.address || '')}</a>`
                     : sanitizeHTML(school.address || '');
