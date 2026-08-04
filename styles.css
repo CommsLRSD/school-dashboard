@@ -771,6 +771,27 @@ body {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
+.school-name-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.school-name-link:hover {
+    text-decoration: underline;
+    opacity: 0.85;
+}
+
+.detail-value-link {
+    color: var(--primary, #2563eb);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.detail-value-link:hover {
+    opacity: 0.8;
+}
+
 /* Photo Credit */
 .photo-credit {
     position: absolute;
