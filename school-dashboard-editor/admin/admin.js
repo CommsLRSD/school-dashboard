@@ -86,6 +86,15 @@
             customOptions: [],
             maps: {}
         };
+        function updateButtonData(optionKey, customOptions, maps) {
+            $('.lrsd-sf-add-option-btn').filter(function () {
+                return $(this).data('option-key') === optionKey;
+            }).each(function () {
+                $(this)
+                    .attr('data-custom-options', JSON.stringify(customOptions))
+                    .attr('data-custom-maps', JSON.stringify(maps));
+            });
+        }
         var $title = $('#lrsd-sf-custom-option-title');
         var $intro = $('#lrsd-sf-custom-option-intro');
         var $form = $panel.find('.lrsd-sf-custom-option-form');
@@ -174,7 +183,10 @@
             resetForm();
             renderList();
             $activeButton = $btn;
-            $panel.insertAfter($btn.closest('.lrsd-sf-select-wrap'));
+            var $anchor = $btn.closest('.lrsd-sf-select-wrap, .lrsd-sf-bulk-column-heading');
+            if ($anchor.length) {
+                $panel.insertAfter($anchor);
+            }
             $panel.prop('hidden', false);
             $input.trigger('focus');
         }
@@ -222,8 +234,7 @@
                                 delete state.maps[addedVal];
                             }
                         }
-                        $activeButton.attr('data-custom-options', JSON.stringify(state.customOptions));
-                        $activeButton.attr('data-custom-maps', JSON.stringify(state.maps));
+                        updateButtonData(state.optionKey, state.customOptions, state.maps);
                         syncOptionsAcrossSelects(state.optionKey, '', addedVal, false);
                         $targetSelect.val(addedVal);
                         renderList();
@@ -238,8 +249,13 @@
         });
 
         $(document).on('click', '.lrsd-sf-delete-option-btn', function () {
-            var optionVal = $(this).data('option-val');
+            var optionVal = ($(this).data('option-val') || '').toString();
             var nonce = lrsdSfAdmin ? lrsdSfAdmin.deleteOptionNonce : '';
+            var optionKey = state.optionKey || ($activeButton.data('option-key') || '');
+            if (!optionKey || !optionVal) {
+                alert(i18n.error || 'An error occurred. Please try again.');
+                return;
+            }
             if (!window.confirm((i18n.confirmDeleteTitle || 'Delete Custom Option') + '\n\n' + (i18n.confirmDeleteBody || 'Are you sure you want to delete this custom option?'))) {
                 return;
             }
@@ -248,16 +264,15 @@
                 {
                     action: 'lrsd_sf_delete_custom_option',
                     nonce: nonce,
-                    option_key: state.optionKey,
+                    option_key: optionKey,
                     option_val: optionVal
                 },
                 function (response) {
                     if (response.success) {
                         state.customOptions = state.customOptions.filter(function (item) { return item !== optionVal; });
                         delete state.maps[optionVal];
-                        $activeButton.attr('data-custom-options', JSON.stringify(state.customOptions));
-                        $activeButton.attr('data-custom-maps', JSON.stringify(state.maps));
-                        syncOptionsAcrossSelects(state.optionKey, optionVal, '', true);
+                        updateButtonData(optionKey, state.customOptions, state.maps);
+                        syncOptionsAcrossSelects(optionKey, optionVal, '', true);
                         renderList();
                     } else {
                         alert((response.data && response.data.message) || i18n.error || 'An error occurred. Please try again.');

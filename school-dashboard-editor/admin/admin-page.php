@@ -716,8 +716,34 @@ function lrsd_sf_render_bulk_update_page() {
                                 <th><?php esc_html_e('Notes', 'lrsd-school-facilities'); ?></th>
                             <?php endif; ?>
                         <?php else : ?>
-                            <?php foreach ($cat_fields as $fk => $field) : ?>
-                                <th><?php echo esc_html($field['label']); ?></th>
+                            <?php
+                            $raw_custom_bulk = get_option('lrsd_sf_custom_dropdown_options', []);
+                            $bulk_raw_maps = get_option('lrsd_sf_fos_catchment_maps', []);
+                            $bulk_custom_maps = is_array($bulk_raw_maps) ? $bulk_raw_maps : [];
+                            $first_post = reset($posts);
+                            $first_sid = $first_post ? get_post_meta($first_post->ID, 'lrsd_school_id', true) : '';
+                            $first_row_id = $first_sid ? sanitize_key($first_sid) : '';
+                            foreach ($cat_fields as $fk => $field) :
+                            ?>
+                                <th>
+                                    <div class="lrsd-sf-bulk-column-heading">
+                                        <span><?php echo esc_html($field['label']); ?></span>
+                                        <?php if ($field['type'] === 'select' && $first_row_id !== '') :
+                                            $header_select_id = 'bulk-' . $first_row_id . '-' . esc_attr($fk);
+                                            $key_custom_bulk = (is_array($raw_custom_bulk) && isset($raw_custom_bulk[$field['options_key']])) ? array_values((array)$raw_custom_bulk[$field['options_key']]) : [];
+                                            $header_custom_maps = $field['options_key'] === 'familyOfSchools' ? $bulk_custom_maps : [];
+                                        ?>
+                                            <button type="button" class="button lrsd-sf-add-option-btn lrsd-sf-add-option-btn--bulk-header"
+                                                data-option-key="<?php echo esc_attr($field['options_key']); ?>"
+                                                data-target-select="<?php echo esc_attr($header_select_id); ?>"
+                                                data-custom-options="<?php echo esc_attr(wp_json_encode($key_custom_bulk)); ?>"
+                                                data-custom-maps="<?php echo esc_attr(wp_json_encode($header_custom_maps)); ?>"
+                                                title="<?php esc_attr_e('Add custom options for this dropdown', 'lrsd-school-facilities'); ?>">
+                                                <?php esc_html_e('Add', 'lrsd-school-facilities'); ?>
+                                            </button>
+                                        <?php endif; ?>
+                                    </div>
+                                </th>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </tr>
@@ -860,7 +886,6 @@ function lrsd_sf_render_bulk_update_page() {
                             <?php endif; ?>
                         <?php else : ?>
                             <?php
-                            $raw_custom_bulk = get_option('lrsd_sf_custom_dropdown_options', []);
                             foreach ($cat_fields as $fk => $field) :
                                 $val  = lrsd_sf_get_nested_value($sdata, $field['path'], '');
                                 $name = 'lrsd_bulk_schools[' . esc_attr($row_id) . '][' . esc_attr($fk) . ']';
@@ -889,12 +914,6 @@ function lrsd_sf_render_bulk_update_page() {
                                     $opts = (lrsd_sf_get_dropdown_options())[$field['options_key']] ?? [];
                                     if ($val !== '' && !in_array((string)$val, $opts, true)) { $opts[] = (string)$val; }
                                     $bulk_select_id  = 'bulk-' . esc_attr($row_id) . '-' . esc_attr($fk);
-                                    $key_custom_bulk = (is_array($raw_custom_bulk) && isset($raw_custom_bulk[$field['options_key']])) ? array_values((array)$raw_custom_bulk[$field['options_key']]) : [];
-                                    $bulk_custom_maps = [];
-                                    if ($field['options_key'] === 'familyOfSchools') {
-                                        $bulk_raw_maps = get_option('lrsd_sf_fos_catchment_maps', []);
-                                        $bulk_custom_maps = is_array($bulk_raw_maps) ? $bulk_raw_maps : [];
-                                    }
                                 ?>
                                     <div class="lrsd-sf-select-wrap">
                                         <select id="<?php echo $bulk_select_id; ?>"
@@ -905,15 +924,6 @@ function lrsd_sf_render_bulk_update_page() {
                                                 <option value="<?php echo esc_attr($opt); ?>"<?php selected((string)$val, $opt); ?>><?php echo esc_html($opt); ?></option>
                                             <?php endforeach; ?>
                                         </select>
-                                        <button type="button" class="button lrsd-sf-add-option-btn"
-                                            data-option-key="<?php echo esc_attr($field['options_key']); ?>"
-                                            data-target-select="<?php echo $bulk_select_id; ?>"
-                                            data-nonce="<?php echo esc_attr(wp_create_nonce('lrsd_sf_custom_option_nonce')); ?>"
-                                            data-custom-options="<?php echo esc_attr(wp_json_encode($key_custom_bulk)); ?>"
-                                            data-custom-maps="<?php echo esc_attr(wp_json_encode($bulk_custom_maps)); ?>"
-                                            title="<?php esc_attr_e('Add custom options for this dropdown', 'lrsd-school-facilities'); ?>">
-                                            <?php esc_html_e('Add', 'lrsd-school-facilities'); ?>
-                                        </button>
                                     </div>
                                 <?php else : ?>
                                     <input type="text" class="regular-text" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr((string)$val); ?>" />

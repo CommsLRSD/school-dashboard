@@ -789,18 +789,31 @@ function lrsd_sf_ajax_delete_custom_option() {
     }
 
     $custom = get_option('lrsd_sf_custom_dropdown_options', []);
-    if (!is_array($custom)) {
-        $custom = [];
+    if (!is_array($custom) || !isset($custom[$option_key]) || !is_array($custom[$option_key])) {
+        wp_send_json_error(['message' => __('Custom option not found.', 'lrsd-school-facilities')], 404);
     }
-    if (isset($custom[$option_key]) && is_array($custom[$option_key])) {
-        $custom[$option_key] = array_values(array_filter($custom[$option_key], function ($opt) use ($option_val) {
-            return $opt !== $option_val;
-        }));
-        if (empty($custom[$option_key])) {
-            unset($custom[$option_key]);
-        }
+
+    $before_count = count($custom[$option_key]);
+    $custom[$option_key] = array_values(array_filter($custom[$option_key], function ($opt) use ($option_val) {
+        return $opt !== $option_val;
+    }));
+
+    if (count($custom[$option_key]) === $before_count) {
+        wp_send_json_error(['message' => __('Custom option not found.', 'lrsd-school-facilities')], 404);
+    }
+
+    if (empty($custom[$option_key])) {
+        unset($custom[$option_key]);
     }
     update_option('lrsd_sf_custom_dropdown_options', $custom);
+
+    if ($option_key === 'familyOfSchools') {
+        $maps = get_option('lrsd_sf_fos_catchment_maps', []);
+        if (is_array($maps) && isset($maps[$option_val])) {
+            unset($maps[$option_val]);
+            update_option('lrsd_sf_fos_catchment_maps', $maps);
+        }
+    }
 
     wp_send_json_success(['option_val' => $option_val]);
 }

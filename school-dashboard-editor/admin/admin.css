@@ -250,6 +250,18 @@
     flex-shrink: 0;
 }
 
+
+.lrsd-sf-bulk-column-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.lrsd-sf-add-option-btn--bulk-header {
+    flex-shrink: 0;
+}
+
 /* ── Bulk Update Page ─────────────────────────────────────────────────────── */
 .lrsd-sf-bulk-tabs {
     display: flex;
