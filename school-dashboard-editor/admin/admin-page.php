@@ -931,6 +931,34 @@ function lrsd_sf_render_bulk_update_page() {
                 </tbody>
             </table>
 
+            <div id="lrsd-sf-custom-option-modal" class="lrsd-sf-custom-option-modal" hidden>
+                <div class="lrsd-sf-custom-option-dialog" role="dialog" aria-modal="true" aria-labelledby="lrsd-sf-custom-option-title">
+                    <div class="lrsd-sf-custom-option-header">
+                        <div>
+                            <h2 id="lrsd-sf-custom-option-title"></h2>
+                            <p id="lrsd-sf-custom-option-intro"></p>
+                        </div>
+                        <button type="button" class="lrsd-sf-custom-option-close" aria-label="<?php esc_attr_e('Close dialog', 'lrsd-school-facilities'); ?>">&times;</button>
+                    </div>
+                    <form class="lrsd-sf-custom-option-form">
+                        <div>
+                            <label for="lrsd-sf-custom-option-input"></label>
+                            <input type="text" id="lrsd-sf-custom-option-input" class="regular-text" />
+                        </div>
+                        <div class="lrsd-sf-custom-option-map-wrap" hidden>
+                            <label for="lrsd-sf-custom-option-map"></label>
+                            <input type="text" id="lrsd-sf-custom-option-map" class="regular-text" />
+                        </div>
+                        <div class="lrsd-sf-custom-option-actions">
+                            <button type="submit" class="button button-primary lrsd-sf-custom-option-save"></button>
+                            <button type="button" class="button button-secondary lrsd-sf-custom-option-cancel" hidden></button>
+                        </div>
+                    </form>
+                    <p class="lrsd-sf-custom-option-order-help"></p>
+                    <div class="lrsd-sf-custom-option-list"></div>
+                </div>
+            </div>
+
             <div class="lrsd-sf-page-actions lrsd-sf-page-actions--bottom">
                 <p class="lrsd-sf-page-actions-copy"><?php esc_html_e('Save &amp; publish from either action bar—top or bottom.', 'lrsd-school-facilities'); ?></p>
                 <button type="submit" class="button button-primary lrsd-sf-bulk-save-action">
