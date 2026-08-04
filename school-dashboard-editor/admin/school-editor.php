@@ -340,7 +340,21 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
         : [];
 
     // Playground lines
-    $playground_lines = implode("\n", (array)lrsd_sf_get_nested_value($school_data, ['playground'], []));
+    $playground_items = (array) lrsd_sf_get_nested_value($school_data, ['playground'], []);
+    $playground_lines = [];
+    $city_property_items = '';
+    foreach ($playground_items as $playground_item) {
+        $playground_item = trim((string) $playground_item);
+        if ($playground_item === '') {
+            continue;
+        }
+        if (stripos($playground_item, 'City Property:') === 0) {
+            $city_property_items = trim(substr($playground_item, strlen('City Property:')));
+            continue;
+        }
+        $playground_lines[] = $playground_item;
+    }
+    $playground_lines = implode("\n", $playground_lines);
 
     // Projects
     $project_paths = [
@@ -542,6 +556,13 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                 <td>
                     <textarea id="playground_lines" name="lrsd_sf_playground_lines" rows="7" class="large-text code"><?php echo esc_textarea($playground_lines); ?></textarea>
                     <p class="description"><?php esc_html_e('Enter each piece of playground equipment or feature on its own line.', 'lrsd-school-facilities'); ?></p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="playground_city_property"><?php esc_html_e('City Property (optional)', 'lrsd-school-facilities'); ?></label></th>
+                <td>
+                    <input type="text" id="playground_city_property" name="lrsd_sf_playground_city_property" class="large-text" value="<?php echo esc_attr($city_property_items); ?>" />
+                    <p class="description"><?php esc_html_e('Optional. Enter city property items as a comma-separated list. Leave blank to hide City Property in the web app.', 'lrsd-school-facilities'); ?></p>
                 </td>
             </tr>
         </tbody></table>
@@ -924,6 +945,13 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
         $playground_lines = array_values(array_filter(array_map('trim', $playground_lines), static function ($line) {
             return $line !== '';
         }));
+        $city_property_items = isset($_POST['lrsd_sf_playground_city_property'])
+            ? sanitize_text_field(wp_unslash($_POST['lrsd_sf_playground_city_property']))
+            : '';
+        $city_property_items = trim($city_property_items);
+        if ($city_property_items !== '') {
+            $playground_lines[] = 'City Property: ' . $city_property_items;
+        }
         lrsd_sf_set_nested_value($school_data, ['playground'], $playground_lines);
     }
 
