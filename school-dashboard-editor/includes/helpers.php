@@ -672,6 +672,107 @@ function lrsd_sf_ajax_add_custom_option() {
     wp_send_json_success(['option_val' => $option_val]);
 }
 
+function lrsd_sf_ajax_update_custom_option() {
+    check_ajax_referer('lrsd_sf_custom_option_nonce', 'nonce');
+
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error(['message' => __('Permission denied.', 'lrsd-school-facilities')], 403);
+    }
+
+    $option_key = isset($_POST['option_key']) ? sanitize_key($_POST['option_key']) : '';
+    $old_val    = isset($_POST['old_option_val']) ? sanitize_text_field(wp_unslash($_POST['old_option_val'])) : '';
+    $new_val    = isset($_POST['new_option_val']) ? sanitize_text_field(wp_unslash($_POST['new_option_val'])) : '';
+    $map_path   = isset($_POST['map_path']) ? sanitize_text_field(wp_unslash($_POST['map_path'])) : '';
+
+    $valid_keys = ['familyOfSchools', 'schoolLevel', 'program', 'busLoop', 'elevator'];
+    if (!in_array($option_key, $valid_keys, true) || $old_val === '' || $new_val === '') {
+        wp_send_json_error(['message' => __('Invalid data.', 'lrsd-school-facilities')], 400);
+    }
+
+    $custom = get_option('lrsd_sf_custom_dropdown_options', []);
+    if (!is_array($custom) || !isset($custom[$option_key]) || !is_array($custom[$option_key])) {
+        wp_send_json_error(['message' => __('Custom option not found.', 'lrsd-school-facilities')], 404);
+    }
+
+    $old_index = array_search($old_val, $custom[$option_key], true);
+    if ($old_index === false) {
+        wp_send_json_error(['message' => __('Custom option not found.', 'lrsd-school-facilities')], 404);
+    }
+
+    $existing_index = array_search($new_val, $custom[$option_key], true);
+    if ($existing_index !== false && $existing_index !== $old_index) {
+        wp_send_json_error(['message' => __('That option already exists.', 'lrsd-school-facilities')], 400);
+    }
+
+    $custom[$option_key][$old_index] = $new_val;
+    $custom[$option_key] = array_values(array_unique($custom[$option_key]));
+    update_option('lrsd_sf_custom_dropdown_options', $custom);
+
+    if ($option_key === 'familyOfSchools') {
+        $maps = get_option('lrsd_sf_fos_catchment_maps', []);
+        if (!is_array($maps)) {
+            $maps = [];
+        }
+        if ($old_val !== $new_val && isset($maps[$old_val])) {
+            unset($maps[$old_val]);
+        }
+        if ($map_path !== '') {
+            $maps[$new_val] = $map_path;
+        } elseif ($old_val !== $new_val && isset($maps[$new_val])) {
+            unset($maps[$new_val]);
+        }
+        update_option('lrsd_sf_fos_catchment_maps', $maps);
+    }
+
+    wp_send_json_success([
+        'old_option_val' => $old_val,
+        'option_val'     => $new_val,
+    ]);
+}
+
+function lrsd_sf_ajax_sort_custom_options() {
+    check_ajax_referer('lrsd_sf_custom_option_nonce', 'nonce');
+
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error(['message' => __('Permission denied.', 'lrsd-school-facilities')], 403);
+    }
+
+    $option_key   = isset($_POST['option_key']) ? sanitize_key($_POST['option_key']) : '';
+    $option_order = isset($_POST['option_order']) ? (array) wp_unslash($_POST['option_order']) : [];
+
+    $valid_keys = ['familyOfSchools', 'schoolLevel', 'program', 'busLoop', 'elevator'];
+    if (!in_array($option_key, $valid_keys, true)) {
+        wp_send_json_error(['message' => __('Invalid data.', 'lrsd-school-facilities')], 400);
+    }
+
+    $custom = get_option('lrsd_sf_custom_dropdown_options', []);
+    if (!is_array($custom) || !isset($custom[$option_key]) || !is_array($custom[$option_key])) {
+        wp_send_json_error(['message' => __('Custom option not found.', 'lrsd-school-facilities')], 404);
+    }
+
+    $current_options = array_values(array_map('sanitize_text_field', $custom[$option_key]));
+    $sanitized_order = [];
+    foreach ($option_order as $option_val) {
+        $option_val = sanitize_text_field($option_val);
+        if ($option_val !== '' && in_array($option_val, $current_options, true) && !in_array($option_val, $sanitized_order, true)) {
+            $sanitized_order[] = $option_val;
+        }
+    }
+
+    if (count($sanitized_order) !== count($current_options)) {
+        foreach ($current_options as $option_val) {
+            if (!in_array($option_val, $sanitized_order, true)) {
+                $sanitized_order[] = $option_val;
+            }
+        }
+    }
+
+    $custom[$option_key] = $sanitized_order;
+    update_option('lrsd_sf_custom_dropdown_options', $custom);
+
+    wp_send_json_success(['option_order' => $sanitized_order]);
+}
+
 function lrsd_sf_ajax_delete_custom_option() {
     check_ajax_referer('lrsd_sf_custom_option_nonce', 'nonce');
 
@@ -688,18 +789,31 @@ function lrsd_sf_ajax_delete_custom_option() {
     }
 
     $custom = get_option('lrsd_sf_custom_dropdown_options', []);
-    if (!is_array($custom)) {
-        $custom = [];
+    if (!is_array($custom) || !isset($custom[$option_key]) || !is_array($custom[$option_key])) {
+        wp_send_json_error(['message' => __('Custom option not found.', 'lrsd-school-facilities')], 404);
     }
-    if (isset($custom[$option_key]) && is_array($custom[$option_key])) {
-        $custom[$option_key] = array_values(array_filter($custom[$option_key], function ($opt) use ($option_val) {
-            return $opt !== $option_val;
-        }));
-        if (empty($custom[$option_key])) {
-            unset($custom[$option_key]);
-        }
+
+    $before_count = count($custom[$option_key]);
+    $custom[$option_key] = array_values(array_filter($custom[$option_key], function ($opt) use ($option_val) {
+        return $opt !== $option_val;
+    }));
+
+    if (count($custom[$option_key]) === $before_count) {
+        wp_send_json_error(['message' => __('Custom option not found.', 'lrsd-school-facilities')], 404);
+    }
+
+    if (empty($custom[$option_key])) {
+        unset($custom[$option_key]);
     }
     update_option('lrsd_sf_custom_dropdown_options', $custom);
+
+    if ($option_key === 'familyOfSchools') {
+        $maps = get_option('lrsd_sf_fos_catchment_maps', []);
+        if (is_array($maps) && isset($maps[$option_val])) {
+            unset($maps[$option_val]);
+            update_option('lrsd_sf_fos_catchment_maps', $maps);
+        }
+    }
 
     wp_send_json_success(['option_val' => $option_val]);
 }

@@ -203,6 +203,11 @@ function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options)
                 $nonce_val  = wp_create_nonce('lrsd_sf_custom_option_nonce');
                 $raw_custom = get_option('lrsd_sf_custom_dropdown_options', []);
                 $key_custom = (is_array($raw_custom) && isset($raw_custom[$field['options_key']])) ? array_values((array)$raw_custom[$field['options_key']]) : [];
+                $custom_maps = [];
+                if ($field['options_key'] === 'familyOfSchools') {
+                    $raw_maps = get_option('lrsd_sf_fos_catchment_maps', []);
+                    $custom_maps = is_array($raw_maps) ? $raw_maps : [];
+                }
                 ?>
                 <div class="lrsd-sf-select-wrap">
                     <select id="<?php echo $id; ?>" name="<?php echo esc_attr($name); ?>" class="lrsd-sf-select" data-option-key="<?php echo esc_attr($field['options_key']); ?>">
@@ -215,24 +220,13 @@ function lrsd_sf_render_field_row($field_key, $field, $value, $dropdown_options)
                         data-option-key="<?php echo esc_attr($field['options_key']); ?>"
                         data-target-select="<?php echo $id; ?>"
                         data-nonce="<?php echo esc_attr($nonce_val); ?>"
-                        title="<?php esc_attr_e('Add a custom option to this dropdown', 'lrsd-school-facilities'); ?>">
-                        <?php esc_html_e('+ Custom', 'lrsd-school-facilities'); ?>
+                        data-custom-options="<?php echo esc_attr(wp_json_encode($key_custom)); ?>"
+                        data-custom-maps="<?php echo esc_attr(wp_json_encode($custom_maps)); ?>"
+                        title="<?php esc_attr_e('Add custom options for this dropdown', 'lrsd-school-facilities'); ?>">
+                        <?php esc_html_e('Add', 'lrsd-school-facilities'); ?>
                     </button>
                     <?php if ($field['options_key'] === 'familyOfSchools') : ?>
-                        <span class="description" style="display:block;margin-top:4px;"><?php esc_html_e('When adding a custom Family of Schools, you will be asked for its catchment map path so the dashboard can display the correct map.', 'lrsd-school-facilities'); ?></span>
-                    <?php endif; ?>
-                    <?php if (!empty($key_custom)) : ?>
-                        <div class="lrsd-sf-custom-opts-list">
-                            <?php foreach ($key_custom as $custom_opt) : ?>
-                                <span class="lrsd-sf-custom-opt-chip">
-                                    <span><?php echo esc_html($custom_opt); ?></span>
-                                    <button type="button" class="lrsd-sf-delete-option-btn"
-                                            data-option-key="<?php echo esc_attr($field['options_key']); ?>"
-                                            data-option-val="<?php echo esc_attr($custom_opt); ?>"
-                                            title="<?php esc_attr_e('Remove this custom option', 'lrsd-school-facilities'); ?>">&times;</button>
-                                </span>
-                            <?php endforeach; ?>
-                        </div>
+                        <span class="description" style="display:block;margin-top:4px;"><?php esc_html_e('When managing a custom Family of Schools, you can set its catchment map path so the dashboard can display the correct map.', 'lrsd-school-facilities'); ?></span>
                     <?php endif; ?>
                 </div>
                 <?php
@@ -772,6 +766,25 @@ function lrsd_sf_render_school_meta_box(WP_Post $post) {
                 id="lrsd-sf-delete-trigger"
         ><?php esc_html_e('Delete School', 'lrsd-school-facilities'); ?></button>
         <p class="description"><?php esc_html_e('Permanently removes this school from the dashboard side nav. This action moves the record to Trash.', 'lrsd-school-facilities'); ?></p>
+    </div>
+
+    <div id="lrsd-sf-custom-option-panel" class="lrsd-sf-custom-option-panel" hidden>
+        <h2 id="lrsd-sf-custom-option-title"></h2>
+        <p id="lrsd-sf-custom-option-intro"></p>
+        <form class="lrsd-sf-custom-option-form">
+            <div>
+                <label for="lrsd-sf-custom-option-input"></label>
+                <input type="text" id="lrsd-sf-custom-option-input" class="regular-text" />
+            </div>
+            <div class="lrsd-sf-custom-option-map-wrap" hidden>
+                <label for="lrsd-sf-custom-option-map"></label>
+                <input type="text" id="lrsd-sf-custom-option-map" class="regular-text" />
+            </div>
+            <div class="lrsd-sf-custom-option-actions">
+                <button type="submit" class="button button-primary lrsd-sf-custom-option-save"></button>
+            </div>
+        </form>
+        <div class="lrsd-sf-custom-option-list"></div>
     </div>
 
     <div id="lrsd-sf-delete-modal" class="lrsd-sf-delete-modal" hidden>

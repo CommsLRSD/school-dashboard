@@ -186,47 +186,6 @@
     line-height: 26px !important;
 }
 
-/* ── Custom Option Chips ─────────────────────────────────────────────────── */
-.lrsd-sf-custom-opts-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    flex-basis: 100%;
-    margin-top: 2px;
-}
-
-.lrsd-sf-custom-opt-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    padding: 2px 7px 2px 9px;
-    background: #eef3f9;
-    border: 1px solid #c3d3e8;
-    border-radius: 20px;
-    font-size: 12px;
-    color: #1d2327;
-    line-height: 1.4;
-}
-
-.lrsd-sf-delete-option-btn {
-    background: none;
-    border: none;
-    color: #8c9299;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1;
-    padding: 0 0 0 2px;
-    margin: 0;
-    display: inline-flex;
-    align-items: center;
-    transition: color 0.15s;
-}
-
-.lrsd-sf-delete-option-btn:hover {
-    color: #d63638;
-}
-
 /* ── Media Picker ────────────────────────────────────────────────────────── */
 .lrsd-sf-media-wrap {
     display: flex;
@@ -288,6 +247,18 @@
 .lrsd-sf-order-item .dashicons {
     color: #a7aaad;
     font-size: 18px !important;
+    flex-shrink: 0;
+}
+
+
+.lrsd-sf-bulk-column-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.lrsd-sf-add-option-btn--bulk-header {
     flex-shrink: 0;
 }
 
@@ -1256,6 +1227,91 @@
     gap: 8px;
     justify-content: flex-end;
     flex-wrap: wrap;
+}
+
+/* ── Custom option panel ─────────────────────────────────────────────────── */
+.lrsd-sf-custom-option-panel[hidden] {
+    display: none !important;
+}
+
+.lrsd-sf-custom-option-panel {
+    margin-top: 12px;
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid #dcdcde;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+
+.lrsd-sf-custom-option-panel h2 {
+    margin: 0 0 4px;
+    font-size: 18px;
+}
+
+.lrsd-sf-custom-option-panel > p {
+    margin: 0;
+    color: #50575e;
+    margin-bottom: 12px;
+}
+
+.lrsd-sf-custom-option-form {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.lrsd-sf-custom-option-form label {
+    font-weight: 600;
+}
+
+.lrsd-sf-custom-option-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.lrsd-sf-custom-option-list {
+    display: grid;
+    gap: 10px;
+}
+
+.lrsd-sf-custom-option-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.lrsd-sf-custom-option-item-label {
+    flex: 1;
+    min-width: 0;
+}
+
+.lrsd-sf-custom-option-item strong,
+.lrsd-sf-custom-option-item span {
+    display: block;
+}
+
+.lrsd-sf-custom-option-item-meta {
+    color: #646970;
+    font-size: 12px;
+    margin-top: 4px;
+    word-break: break-all;
+}
+
+.lrsd-sf-custom-option-item-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.lrsd-sf-custom-option-empty {
+    margin: 0;
+    color: #646970;
 }
 
 /* ── lrsd-media-folders: suppress "Move to folder" button in all wp.media() pickers ── */

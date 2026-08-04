@@ -76,132 +76,221 @@
     // ── Custom Dropdown Options ────────────────────────────────────────────────
 
     function initCustomDropdownOptions() {
+        var $panel = $('#lrsd-sf-custom-option-panel');
+        if (!$panel.length) {
+            return;
+        }
+        var state = {
+            optionKey: '',
+            targetSelectId: '',
+            customOptions: [],
+            maps: {}
+        };
+        function updateButtonData(optionKey, customOptions, maps) {
+            $('.lrsd-sf-add-option-btn').filter(function () {
+                return $(this).data('option-key') === optionKey;
+            }).each(function () {
+                $(this)
+                    .attr('data-custom-options', JSON.stringify(customOptions))
+                    .attr('data-custom-maps', JSON.stringify(maps));
+            });
+        }
+        var $title = $('#lrsd-sf-custom-option-title');
+        var $intro = $('#lrsd-sf-custom-option-intro');
+        var $form = $panel.find('.lrsd-sf-custom-option-form');
+        var $inputLabel = $form.find('label[for="lrsd-sf-custom-option-input"]');
+        var $input = $('#lrsd-sf-custom-option-input');
+        var $mapWrap = $form.find('.lrsd-sf-custom-option-map-wrap');
+        var $mapLabel = $form.find('label[for="lrsd-sf-custom-option-map"]');
+        var $mapInput = $('#lrsd-sf-custom-option-map');
+        var $saveBtn = $form.find('.lrsd-sf-custom-option-save');
+        var $list = $panel.find('.lrsd-sf-custom-option-list');
+        var $activeButton = $();
+
+        function escapeAttr(value) {
+            return $('<div>').text(value || '').html();
+        }
+
+        function optionExists($sel, val) {
+            var found = false;
+            $sel.find('option').each(function () {
+                if ($(this).val() === val) { found = true; }
+            });
+            return found;
+        }
+
+        function syncOptionsAcrossSelects(optKey, oldVal, newVal, removeOld) {
+            $('select[data-option-key="' + optKey + '"]').each(function () {
+                var $sel = $(this);
+                if (removeOld && oldVal) {
+                    if ($sel.val() === oldVal) {
+                        $sel.val('');
+                    }
+                    $sel.find('option').filter(function () { return $(this).val() === oldVal; }).remove();
+                }
+                if (newVal && !optionExists($sel, newVal)) {
+                    $sel.append($('<option>').val(newVal).text(newVal));
+                }
+            });
+        }
+
+        function renderList() {
+            $list.empty();
+            if (!state.customOptions.length) {
+                $list.append($('<p class="lrsd-sf-custom-option-empty"></p>').text(i18n.noCustomOptions || 'No custom options yet.'));
+                return;
+            }
+            state.customOptions.forEach(function (optionVal) {
+                var mapText = state.optionKey === (lrsdSfAdmin ? lrsdSfAdmin.isFosKey : 'familyOfSchools') ? (state.maps[optionVal] || '') : '';
+                var html = '' +
+                    '<div class="lrsd-sf-custom-option-item" data-option-val="' + escapeAttr(optionVal) + '">' +
+                        '<div class="lrsd-sf-custom-option-item-label">' +
+                            '<strong>' + escapeAttr(optionVal) + '</strong>' +
+                            (mapText ? '<span class="lrsd-sf-custom-option-item-meta">' + escapeAttr(mapText) + '</span>' : '') +
+                        '</div>' +
+                        '<div class="lrsd-sf-custom-option-item-actions">' +
+                            '<button type="button" class="button lrsd-sf-btn-danger lrsd-sf-delete-option-btn" data-option-val="' + escapeAttr(optionVal) + '">' + (i18n.deleteOption || 'Delete') + '</button>' +
+                        '</div>' +
+                    '</div>';
+                $list.append(html);
+            });
+        }
+
+        function resetForm() {
+            $input.val('');
+            $mapInput.val('');
+            $inputLabel.text(i18n.newOption || 'New option');
+            $saveBtn.text(i18n.addOption || 'Add Option');
+        }
+
+        function hidePanel() {
+            $panel.prop('hidden', true);
+            $activeButton.removeClass('is-active');
+            $activeButton = $();
+            resetForm();
+        }
+
+        function showPanel($btn) {
+            state.optionKey = $btn.data('option-key');
+            state.targetSelectId = $btn.data('target-select');
+            state.customOptions = ($btn.data('custom-options') || []).slice();
+            state.maps = $.extend({}, $btn.data('custom-maps') || {});
+            $title.text(i18n.customOptionsTitle || 'Add Custom Options');
+            $intro.text(i18n.customOptionsIntro || 'Add a custom dropdown option, or delete one you no longer need.');
+            $mapLabel.text(i18n.fosMapLabel || 'Catchment map path');
+            $mapInput.attr('placeholder', i18n.fosMapPlaceholder || 'public/maps/my-fos-map.svg');
+            $mapWrap.prop('hidden', state.optionKey !== (lrsdSfAdmin ? lrsdSfAdmin.isFosKey : 'familyOfSchools'));
+            resetForm();
+            renderList();
+            $activeButton = $btn;
+            var $anchor = $btn.closest('.lrsd-sf-select-wrap, .lrsd-sf-bulk-column-heading');
+            if ($anchor.length) {
+                $panel.insertAfter($anchor);
+            }
+            $panel.prop('hidden', false);
+            $input.trigger('focus');
+        }
+
         $(document).on('click', '.lrsd-sf-add-option-btn', function (e) {
             e.preventDefault();
             var $btn = $(this);
-            var optKey = $btn.data('option-key');
-            var nonce  = $btn.data('nonce') || (lrsdSfAdmin ? lrsdSfAdmin.customOptionNonce : '');
-            var targetSelectId = $btn.data('target-select');
-            var $select = $('#' + targetSelectId);
-
-            var newVal = prompt(i18n.newOption || 'Enter the new option value:');
-            if (!newVal || !newVal.trim()) {
+            if (!$panel.prop('hidden') && $activeButton.length && $activeButton.is($btn)) {
+                hidePanel();
                 return;
             }
-            newVal = newVal.trim();
+            showPanel($btn);
+        });
 
-            var mapPath = '';
-            if (optKey === (lrsdSfAdmin ? lrsdSfAdmin.isFosKey : 'familyOfSchools')) {
-                mapPath = prompt(i18n.fosCatchmentHint || 'Enter the catchment map file path (e.g. public/maps/my-fos-map.svg). Leave blank if not applicable.') || '';
-                mapPath = mapPath.trim();
+        $form.on('submit', function (e) {
+            e.preventDefault();
+            var value = ($input.val() || '').trim();
+            var mapPath = ($mapInput.val() || '').trim();
+            var nonce = lrsdSfAdmin ? lrsdSfAdmin.customOptionNonce : '';
+            var $targetSelect = $('#' + state.targetSelectId);
+            if (!value) {
+                alert(i18n.customOptionRequired || 'Enter an option value before saving.');
+                return;
             }
-
             $.post(
                 lrsdSfAdmin.ajaxUrl,
                 {
                     action: 'lrsd_sf_add_custom_option',
                     nonce: nonce,
-                    option_key: optKey,
-                    option_val: newVal,
-                    map_path: mapPath,
+                    option_key: state.optionKey,
+                    option_val: value,
+                    map_path: mapPath
                 },
                 function (response) {
                     if (response.success) {
                         var addedVal = response.data.option_val;
-                        // Helper: check if option value already exists in a select
-                        function optionExists($sel, val) {
-                            var found = false;
-                            $sel.find('option').each(function () {
-                                if ($(this).val() === val) { found = true; }
-                            });
-                            return found;
-                        }
-                        // Add option to all selects sharing this option key on the page
-                        $('select[data-option-key="' + optKey + '"]').each(function () {
-                            if (!optionExists($(this), addedVal)) {
-                                $(this).append($('<option>').val(addedVal).text(addedVal));
-                            }
+                        state.customOptions.push(addedVal);
+                        state.customOptions = state.customOptions.filter(function (item, index, arr) {
+                            return arr.indexOf(item) === index;
                         });
-                        // Ensure it is in the target select and select it
-                        if (!optionExists($select, addedVal)) {
-                            $select.append($('<option>').val(addedVal).text(addedVal));
-                        }
-                        $select.val(addedVal);
-                        // Add a delete chip to every select-wrap that shares this option key
-                        // (only if this chip doesn't already exist for this value)
-                        $('select[data-option-key="' + optKey + '"]').each(function () {
-                            var $wrap = $(this).closest('.lrsd-sf-select-wrap');
-                            var $list = $wrap.find('.lrsd-sf-custom-opts-list');
-                            var chipExists = false;
-                            $list.find('.lrsd-sf-delete-option-btn').each(function () {
-                                if ($(this).data('option-val') === addedVal) { chipExists = true; }
-                            });
-                            if (!chipExists) {
-                                if (!$list.length) {
-                                    $list = $('<div class="lrsd-sf-custom-opts-list"></div>');
-                                    $wrap.append($list);
-                                }
-                                var $deleteBtn = $('<button type="button" class="lrsd-sf-delete-option-btn" title="Remove this custom option">&times;</button>')
-                                    .attr('data-option-key', optKey)
-                                    .attr('data-option-val', addedVal);
-                                var $chip = $('<span class="lrsd-sf-custom-opt-chip"></span>')
-                                    .append($('<span>').text(addedVal))
-                                    .append($deleteBtn);
-                                $list.append($chip);
+                        if (state.optionKey === (lrsdSfAdmin ? lrsdSfAdmin.isFosKey : 'familyOfSchools')) {
+                            if (mapPath) {
+                                state.maps[addedVal] = mapPath;
+                            } else {
+                                delete state.maps[addedVal];
                             }
-                        });
+                        }
+                        updateButtonData(state.optionKey, state.customOptions, state.maps);
+                        syncOptionsAcrossSelects(state.optionKey, '', addedVal, false);
+                        $targetSelect.val(addedVal);
+                        renderList();
+                        resetForm();
                     } else {
-                        alert(i18n.error || 'An error occurred. Please try again.');
+                        alert((response.data && response.data.message) || i18n.error || 'An error occurred. Please try again.');
                     }
                 }
             ).fail(function () {
                 alert(i18n.error || 'An error occurred. Please try again.');
             });
         });
-    }
 
-    // ── Delete Custom Dropdown Options ────────────────────────────────────────
-
-    function initDeleteCustomOption() {
-        $(document).on('click', '.lrsd-sf-delete-option-btn', function (e) {
-            e.preventDefault();
-            var $btn   = $(this);
-            var optKey = $btn.data('option-key');
-            var optVal = $btn.data('option-val');
-            var nonce  = lrsdSfAdmin ? lrsdSfAdmin.deleteOptionNonce : '';
-
-            if (!confirm(i18n.confirmDeleteOption || 'Remove this custom option from all dropdowns? This cannot be undone.')) {
+        $(document).on('click', '.lrsd-sf-delete-option-btn', function () {
+            var optionVal = ($(this).data('option-val') || '').toString();
+            var nonce = lrsdSfAdmin ? lrsdSfAdmin.deleteOptionNonce : '';
+            var optionKey = state.optionKey || ($activeButton.data('option-key') || '');
+            if (!optionKey || !optionVal) {
+                alert(i18n.error || 'An error occurred. Please try again.');
                 return;
             }
-
+            if (!window.confirm((i18n.confirmDeleteTitle || 'Delete Custom Option') + '\n\n' + (i18n.confirmDeleteBody || 'Are you sure you want to delete this custom option?'))) {
+                return;
+            }
             $.post(
                 lrsdSfAdmin.ajaxUrl,
                 {
-                    action:     'lrsd_sf_delete_custom_option',
-                    nonce:      nonce,
-                    option_key: optKey,
-                    option_val: optVal,
+                    action: 'lrsd_sf_delete_custom_option',
+                    nonce: nonce,
+                    option_key: optionKey,
+                    option_val: optionVal
                 },
                 function (response) {
                     if (response.success) {
-                        // Remove option from every matching select on the page
-                        $('select[data-option-key="' + optKey + '"]').each(function () {
-                            var $sel = $(this);
-                            if ($sel.val() === optVal) {
-                                $sel.val('');
-                            }
-                            $sel.find('option[value="' + optVal + '"]').remove();
-                        });
-                        // Remove all matching chips on the page
-                        $('.lrsd-sf-delete-option-btn[data-option-key="' + optKey + '"][data-option-val="' + optVal + '"]')
-                            .closest('.lrsd-sf-custom-opt-chip').remove();
+                        state.customOptions = state.customOptions.filter(function (item) { return item !== optionVal; });
+                        delete state.maps[optionVal];
+                        updateButtonData(optionKey, state.customOptions, state.maps);
+                        syncOptionsAcrossSelects(optionKey, optionVal, '', true);
+                        renderList();
                     } else {
-                        alert(i18n.error || 'An error occurred. Please try again.');
+                        alert((response.data && response.data.message) || i18n.error || 'An error occurred. Please try again.');
                     }
                 }
             ).fail(function () {
                 alert(i18n.error || 'An error occurred. Please try again.');
             });
+        });
+
+        $(document).on('click', function (e) {
+            if ($panel.prop('hidden')) {
+                return;
+            }
+            if ($(e.target).closest('#lrsd-sf-custom-option-panel, .lrsd-sf-add-option-btn').length) {
+                return;
+            }
+            hidePanel();
         });
     }
 
@@ -491,7 +580,6 @@
         initSections();
         initMediaPicker();
         initCustomDropdownOptions();
-        initDeleteCustomOption();
         initCardOrderSortable();
         initPreSubmit();
         initBulkUpdate();
