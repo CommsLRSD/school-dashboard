@@ -655,7 +655,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Sanitize data to prevent XSS
                 const headerImage = sanitizeHTML(school.headerImage || '');
                 const schoolName = sanitizeHTML(school.schoolName || '');
-                const schoolWebsiteUrl = sanitizeHTML(school.school_website_url || '');
+                const schoolWebsiteUrl = sanitizeHTML((school.school_website_url || '').trim());
                 // Photo credit is a static string (not user input), so sanitization is not required
                 const photoCredit = SCHOOLS_WITH_PHOTO_CREDIT.includes(schoolName) 
                     ? '<div class="photo-credit">Photo: Winnipeg Architecture Foundation Collection</div>' 
@@ -676,8 +676,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const program = school.program || '';
 
                 // Wrap address/phone in links if URLs are provided
-                const googleMapsUrl = sanitizeHTML(school.google_maps_url || '');
-                const phoneUrl = sanitizeHTML(school.phone_url || '');
+                const googleMapsUrl = sanitizeHTML((school.google_maps_url || '').trim());
+                const phoneUrl = sanitizeHTML((school.phone_url || '').trim());
                 const addressDisplay = googleMapsUrl
                     ? `<a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer">${sanitizeHTML(school.address || '')}</a>`
                     : sanitizeHTML(school.address || '');
