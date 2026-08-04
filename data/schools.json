@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2026-07-18",
+    "lastUpdated": "2026-08-04",
     "fosMapLookup": {
         "J.H. BRUNS FOS": "public/maps/bruns-fos-map.svg",
         "BÉLIVEAU FOS": "public/maps/beliveau-fos-map.svg",
@@ -1058,7 +1058,7 @@
             "Gender neutral washrooms": 4,
             "Universal Washroom": "YES",
             "Elevator": "YES",
-            "Accessible parking stalls": 1,
+            "Accessible parking stalls": 2,
             "Accessible entrance": "YES",
             "Automatic entrance door operators": "YES"
         },
@@ -1070,12 +1070,12 @@
             "Tetherball"
         ],
         "childcare": {
-            "Infant (0-23 months)": 0,
-            "Pre-school (2-6 years)": 30,
-            "School-age (5+ years)": 0,
-            "School-age (7+ years)": 30,
-            "Special Needs (12+ years)": 0,
-            "BLAST": 0
+            "Infant (0-23 months)": "0",
+            "Pre-school (2-6 years)": "30",
+            "School-age (5+ years)": "0",
+            "School-age (7+ years)": "30",
+            "Special Needs (12+ years)": "0",
+            "BLAST": "0"
         },
         "projects": {
             "provincial": {
@@ -4082,7 +4082,7 @@
         },
         "familyOfSchools": "GLENLAWN FOS",
         "schoolLevel": "Elementary School",
-        "grades": "K-6 (Grades 7 & 8 moved to Windsor School in 2024-25)",
+        "grades": "K-6 (Grades 7 & 8 moved to Windsor School)",
         "program": "English Program",
         "cardOrder": [
             "school_header",
@@ -5044,10 +5044,10 @@
                     "2030_31"
                 ],
                 "values": [
-                    318,
-                    345,
-                    365,
-                    371
+                    322,
+                    357,
+                    388,
+                    402
                 ]
             },
             "history": {
@@ -5078,7 +5078,8 @@
         },
         "catchment": {
             "migration": "-1.0",
-            "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)"
+            "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)",
+            "map": ""
         },
         "transportation": {
             "Parking spots": "Not specified",
@@ -5100,12 +5101,12 @@
             "Play structure"
         ],
         "childcare": {
-            "Infant (0-23 months)": 0,
-            "Pre-school (2-6 years)": 0,
-            "School-age (5+ years)": 30,
-            "School-age (7+ years)": 0,
-            "Special Needs (12+ years)": 0,
-            "BLAST": 0
+            "Infant (0-23 months)": "0",
+            "Pre-school (2-6 years)": "0",
+            "School-age (5+ years)": "30",
+            "School-age (7+ years)": "0",
+            "Special Needs (12+ years)": "0",
+            "BLAST": "0"
         },
         "projects": {
             "provincial": {
@@ -6103,7 +6104,7 @@
         "details": {
             "Built": 1967,
             "Size": "37212 ft²",
-            "Modular": 2
+            "Modular": 0
         },
         "additions": [
             {
@@ -6112,13 +6113,14 @@
             }
         ],
         "building": {
-            "Air Conditioning": "Office, multipurpose room, band room, staff room",
+            "Air Conditioning": "Office, multipurpose room, band room, staff room, classrooms (8)",
             "Heating": "Natural gas, electric",
             "LED Lighting": "Kindergarten, library, music, MPR, classrooms (18)"
         },
         "catchment": {
             "migration": "-1.4",
-            "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)"
+            "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)",
+            "map": ""
         },
         "transportation": {
             "Parking spots": "20",
@@ -6137,38 +6139,36 @@
         "playground": [
             "Basketball action play system",
             "Basketball Court",
-            "Nature playground",
             "Tree climbing system",
             "Zipline",
             "Honeycomb structure",
             "Play structures",
             "Swings",
             "Bike cage",
-            "City Property: Baseball field, Soccer nets"
+            "Baseball field",
+            "Soccer nets"
         ],
         "childcare": {
-            "Infant (0-23 months)": 0,
-            "Pre-school (2-6 years)": 19,
-            "School-age (5+ years)": 0,
-            "School-age (7+ years)": 0,
-            "Special Needs (12+ years)": 0,
-            "BLAST": 32
+            "Infant (0-23 months)": "0",
+            "Pre-school (2-6 years)": "19",
+            "School-age (5+ years)": "0",
+            "School-age (7+ years)": "0",
+            "Special Needs (12+ years)": "0",
+            "BLAST": "32"
         },
         "projects": {
             "provincial": {
                 "requested": [
                     "New Elementary School: Precinct K neighbourhood",
-                    "Universal washrooms",
                     "Roof replacement (Partial)"
                 ],
-                "inProgress": [
+                "inProgress": [],
+                "completed": [
                     "Relocation of Modular Classrooms to Island Lakes Community School"
-                ],
-                "completed": []
+                ]
             },
             "local": {
                 "requested": [
-                    "Replace Lockers",
                     "Lighting upgrade",
                     "Operable windows",
                     "Asphalt play area replacement",
@@ -6182,6 +6182,7 @@
                 ],
                 "inProgress": [],
                 "completed": [
+                    "Added Lockers",
                     "Door and frame replacement",
                     "Flooring replacement (library)",
                     "General renovations",
@@ -6196,8 +6197,8 @@
         },
         "familyOfSchools": "BÉLIVEAU FOS",
         "schoolLevel": "Elementary School",
-        "grades": "K-8",
-        "program": "French Immersion",
+        "grades": "K-8 (Late Immersion 6-8)",
+        "program": "French Immersion & Late Immersion",
         "cardOrder": [
             "school_header",
             "details",
@@ -6241,10 +6242,10 @@
                     "2030_31"
                 ],
                 "values": [
-                    437,
-                    439,
-                    439,
-                    433
+                    375,
+                    370,
+                    359,
+                    337
                 ]
             },
             "history": {
@@ -6288,7 +6289,8 @@
         },
         "catchment": {
             "migration": "-1.1",
-            "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)"
+            "description": "Net annual movement of youth population (birth to age 16) in and out of catchment (5-yr. avg.)",
+            "map": ""
         },
         "transportation": {
             "Parking spots": "38",
@@ -6316,12 +6318,12 @@
             "Sharing circle"
         ],
         "childcare": {
-            "Infant (0-23 months)": 0,
-            "Pre-school (2-6 years)": 0,
-            "School-age (5+ years)": 37,
-            "School-age (7+ years)": 0,
-            "Special Needs (12+ years)": 0,
-            "BLAST": 0
+            "Infant (0-23 months)": "0",
+            "Pre-school (2-6 years)": "0",
+            "School-age (5+ years)": "37",
+            "School-age (7+ years)": "0",
+            "Special Needs (12+ years)": "0",
+            "BLAST": "0"
         },
         "projects": {
             "provincial": {
