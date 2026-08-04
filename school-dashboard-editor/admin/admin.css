@@ -1217,70 +1217,35 @@
     flex-wrap: wrap;
 }
 
-/* ── Custom option modal ─────────────────────────────────────────────────── */
-.lrsd-sf-custom-option-modal {
-    position: fixed;
-    z-index: 100002;
-    inset: 0;
-    background: rgba(30, 35, 40, 0.55);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.lrsd-sf-custom-option-modal[hidden] {
+/* ── Custom option panel ─────────────────────────────────────────────────── */
+.lrsd-sf-custom-option-panel[hidden] {
     display: none !important;
 }
 
-.lrsd-sf-custom-option-dialog {
-    width: min(640px, 100%);
-    max-height: 85vh;
-    overflow: auto;
+.lrsd-sf-custom-option-panel {
+    margin-top: 12px;
     background: #fff;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 1px solid #dcdcde;
-    padding: 24px;
-    box-shadow: 0 8px 32px rgba(0,0,0,.18);
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
 }
 
-.lrsd-sf-custom-option-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.lrsd-sf-custom-option-header h2 {
+.lrsd-sf-custom-option-panel h2 {
     margin: 0 0 4px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
-.lrsd-sf-custom-option-header p {
+.lrsd-sf-custom-option-panel > p {
     margin: 0;
     color: #50575e;
-}
-
-.lrsd-sf-custom-option-close {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    font-size: 24px;
-    line-height: 1;
-    color: #50575e;
-    padding: 0;
+    margin-bottom: 12px;
 }
 
 .lrsd-sf-custom-option-form {
     display: grid;
     gap: 12px;
     margin-bottom: 20px;
-}
-
-.lrsd-sf-custom-option-order-help {
-    margin: 0 0 12px;
-    color: #50575e;
 }
 
 .lrsd-sf-custom-option-form label {
@@ -1309,15 +1274,6 @@
     padding: 12px;
 }
 
-.lrsd-sf-custom-option-item.is-dragging {
-    opacity: 0.55;
-}
-
-.lrsd-sf-custom-option-item.is-drag-over {
-    border-color: #2271b1;
-    box-shadow: 0 0 0 1px #2271b1;
-}
-
 .lrsd-sf-custom-option-item-label {
     flex: 1;
     min-width: 0;
@@ -1333,18 +1289,6 @@
     font-size: 12px;
     margin-top: 4px;
     word-break: break-all;
-}
-
-.lrsd-sf-custom-option-drag-handle {
-    cursor: grab;
-    color: #50575e;
-    font-size: 18px;
-    text-decoration: none;
-}
-
-.lrsd-sf-custom-option-drag-handle:hover,
-.lrsd-sf-custom-option-drag-handle:focus {
-    color: #1d2327;
 }
 
 .lrsd-sf-custom-option-item-actions {
