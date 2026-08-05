@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const YEAR_DETECTION_MIN = 1800;
     const YEAR_DETECTION_MAX = 2100;
     const NUMBER_FORMAT_THRESHOLD = 1000;
+    // Units that identify a measurement value (e.g. "91566 ft²"). Only values with one of
+    // these units get thousands separators; free text such as an address is left untouched.
+    const MEASUREMENT_UNIT_PATTERN = /^(ft²|ft2|sq\.?\s*ft\.?|m²|m2|sq\.?\s*m\.?|students?|seats?|stalls?|spots?|classrooms?)(?![A-Za-z])/i;
     const CHART_Y_AXIS_ROUNDING = 50;
     const BANNER_AUTO_HIDE_DELAY = 3000; // Auto-hide banner after 3 seconds
     const BANNER_SCROLL_THRESHOLD = 100; // Show banner when scrolling more than 100px
@@ -104,6 +107,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (match) {
                 const number = parseInt(match[1], 10);
                 const unit = match[2];
+                // Only measurement units are formatted. Anything else (for example an
+                // address such as "1128 Dakota St.") is returned exactly as entered.
+                if (unit && !MEASUREMENT_UNIT_PATTERN.test(unit)) {
+                    return num;
+                }
                 // Don't format years in the string
                 if (number >= YEAR_DETECTION_MIN && number <= YEAR_DETECTION_MAX && match[1].length === 4 && !unit) {
                     return num;
@@ -487,6 +495,51 @@ document.addEventListener('DOMContentLoaded', function() {
         div.textContent = str;
         return div.innerHTML;
     };
+
+    /**
+     * Prepares a URL for safe use inside an href attribute.
+     * Only http(s), tel: and mailto: URLs are allowed; anything else returns ''.
+     * Characters that could break out of the attribute are escaped, but query string
+     * separators are preserved so links such as Google Maps searches keep working.
+     * @param {string} url - Raw URL value
+     * @returns {string} Attribute-safe URL, or '' when the URL is unusable
+     */
+    const sanitizeURL = (url) => {
+        if (!url) return '';
+        const trimmed = String(url).trim();
+        if (!trimmed) return '';
+        if (!/^(https?:\/\/|tel:|mailto:)/i.test(trimmed)) return '';
+        return trimmed
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    };
+
+    /**
+     * Builds a Google Maps search URL for a school when none is supplied by the data source.
+     * @param {Object} school - School data object
+     * @returns {string} Google Maps URL or ''
+     */
+    const buildGoogleMapsUrl = (school) => {
+        const address = (school?.address || '').trim();
+        if (!address) return '';
+        const query = [(school?.schoolName || '').trim(), address, 'Winnipeg, MB']
+            .filter(Boolean)
+            .join(' ');
+        return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+    };
+
+    /**
+     * Builds a tel: URL from a displayed phone number when none is supplied by the data source.
+     * @param {string} phone - Displayed phone number
+     * @returns {string} tel: URL or ''
+     */
+    const buildPhoneUrl = (phone) => {
+        const digits = String(phone || '').replace(/[^0-9+]/g, '');
+        return digits ? `tel:${digits}` : '';
+    };
     
     /**
      * Creates a flippable card with front and back faces
@@ -655,13 +708,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Sanitize data to prevent XSS
                 const headerImage = sanitizeHTML(school.headerImage || '');
                 const schoolName = sanitizeHTML(school.schoolName || '');
-                const schoolWebsiteUrl = sanitizeHTML((school.school_website_url || '').trim());
+                const schoolWebsiteUrl = sanitizeURL(school.school_website_url);
                 // Photo credit is a static string (not user input), so sanitization is not required
                 const photoCredit = SCHOOLS_WITH_PHOTO_CREDIT.includes(schoolName) 
                     ? '<div class="photo-credit">Photo: Winnipeg Architecture Foundation Collection</div>' 
                     : '';
                 const schoolNameHtml = schoolWebsiteUrl
-                    ? `<a href="${schoolWebsiteUrl}" target="_blank" rel="noopener noreferrer">${schoolName}</a>`
+                    ? `<a href="${schoolWebsiteUrl}" class="card-link" target="_blank" rel="noopener noreferrer">${schoolName}</a>`
                     : schoolName;
                 return `<div class="data-card school-header-card ${sizeClass}"><div class="card-body"><img src="${headerImage}" alt="${schoolName}">${photoCredit}<h2 class="school-name-title">${schoolNameHtml}</h2></div></div>`;
             
@@ -675,14 +728,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const grades = school.grades || '';
                 const program = school.program || '';
 
-                // Wrap address/phone in links if URLs are provided
-                const googleMapsUrl = sanitizeHTML((school.google_maps_url || '').trim());
-                const phoneUrl = sanitizeHTML((school.phone_url || '').trim());
+                // Wrap address/phone in links if URLs are provided, otherwise derive them
+                const googleMapsUrl = sanitizeURL(school.google_maps_url) || sanitizeURL(buildGoogleMapsUrl(school));
+                const phoneUrl = sanitizeURL(school.phone_url) || sanitizeURL(buildPhoneUrl(school.phone));
                 const addressDisplay = googleMapsUrl
-                    ? `<a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer">${sanitizeHTML(school.address || '')}</a>`
+                    ? `<a href="${googleMapsUrl}" class="card-link" target="_blank" rel="noopener noreferrer">${sanitizeHTML(school.address || '')}</a>`
                     : sanitizeHTML(school.address || '');
                 const phoneDisplay = phoneUrl
-                    ? `<a href="${phoneUrl}" target="_blank" rel="noopener noreferrer">${sanitizeHTML(school.phone || '')}</a>`
+                    ? `<a href="${phoneUrl}" class="card-link" rel="noopener noreferrer">${sanitizeHTML(school.phone || '')}</a>`
                     : sanitizeHTML(school.phone || '');
                 
                 // Create details object with calculated age, renamed Modular field, and separated Grades/Program

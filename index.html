@@ -190,7 +190,10 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./public/service-worker.js', {
-                    scope: './'
+                    scope: './',
+                    // Always revalidate the service worker script itself so a new
+                    // version is picked up without the user hard refreshing.
+                    updateViaCache: 'none'
                 })
                     .then((registration) => {
                         console.log('Service Worker registered successfully:', registration.scope);

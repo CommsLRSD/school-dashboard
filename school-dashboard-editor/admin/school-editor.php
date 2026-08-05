@@ -955,10 +955,11 @@ function lrsd_sf_save_school_meta($post_id, WP_Post $post) {
         } elseif ($field['type'] === 'url') {
             $value = esc_url_raw(sanitize_text_field((string)$raw_value));
         } elseif ($field['type'] === 'url_tel') {
-            $raw = sanitize_text_field((string)$raw_value);
-            // Allow tel: URIs in addition to http/https
-            $value = (strncmp($raw, 'tel:', 4) === 0)
-                ? 'tel:' . preg_replace('/[^0-9+\-().ext ]/', '', substr($raw, 4))
+            $raw = trim(sanitize_text_field((string)$raw_value));
+            // Allow tel: URIs in addition to http/https. Percent-encoded sequences
+            // (e.g. "tel:(204)%20233-7983") must survive re-saving unchanged.
+            $value = (stripos($raw, 'tel:') === 0)
+                ? 'tel:' . preg_replace('/[^0-9+\-().ext%\s]/i', '', substr($raw, 4))
                 : esc_url_raw($raw);
         } elseif ($field['type'] === 'select' || $field['type'] === 'text' || $field['type'] === 'media') {
             $value = sanitize_text_field((string)$raw_value);
