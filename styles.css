@@ -547,6 +547,10 @@ body {
     color: var(--primary-red);
 }
 
+.school-name-title .card-link {
+    text-decoration: none;
+}
+
 .school-header-card .card-link:hover,
 .school-header-card .card-link:focus {
     color: #ffffff;

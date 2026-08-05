@@ -43,7 +43,7 @@
     
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="styles.css?v=1.3.0">
+    <link rel="stylesheet" href="styles.css">
     
     <!-- Chart.js Libraries -->
     <script src="public/vendor/chart.umd.min.js"></script>
@@ -173,13 +173,13 @@
     </div>
 
     <!-- Shared card renderer -->
-    <script src="card-renderer.js?v=1.3.0"></script>
+    <script src="card-renderer.js"></script>
 
     <!-- Main JavaScript File -->
-    <script src="app.js?v=1.3.0"></script>
+    <script src="app.js"></script>
     
     <!-- Translation Widget Configuration -->
-    <script src="config.js?v=1.3.0"></script>
+    <script src="config.js"></script>
     
     <!-- JigsawStack Translation Widget -->
     <script src="https://cdn.jigsawstack.com/jigts-widget.js" crossorigin="anonymous"></script>
@@ -190,10 +190,14 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./public/service-worker.js', {
-                    scope: './'
+                    scope: './',
+                    // Always revalidate the service worker script itself so a new
+                    // version is picked up without the user hard refreshing.
+                    updateViaCache: 'none'
                 })
                     .then((registration) => {
                         console.log('Service Worker registered successfully:', registration.scope);
+                        registration.update();
                     })
                     .catch((error) => {
                         console.log('Service Worker registration failed:', error);
