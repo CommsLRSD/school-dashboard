@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2026-08-04",
+    "lastUpdated": "2026-08-05",
     "fosMapLookup": {
         "J.H. BRUNS FOS": "public/maps/bruns-fos-map.svg",
         "BÉLIVEAU FOS": "public/maps/beliveau-fos-map.svg",
@@ -107,12 +107,12 @@
             "Baseball Diamond"
         ],
         "childcare": {
-            "Infant (0-23 months)": 0,
-            "Pre-school (2-6 years)": 0,
-            "School-age (5+ years)": 0,
-            "School-age (7+ years)": 0,
-            "Special Needs (12+ years)": 0,
-            "BLAST": 32
+            "Infant (0-23 months)": "0",
+            "Pre-school (2-6 years)": "0",
+            "School-age (5+ years)": "0",
+            "School-age (7+ years)": "0",
+            "Special Needs (12+ years)": "0",
+            "BLAST": "32"
         },
         "projects": {
             "provincial": {
@@ -182,9 +182,9 @@
         "customCards": [],
         "customCardValues": [],
         "school_website_url": "https://www.lrsd.net/archwood/",
-        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Archwood%20School%20800%20Archibald%20St%20Winnipeg%2C%20MB%20R2J%200Y4",
+        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=ArchwoodSchool800ArchibaldStWinnipegMBR2J0Y4",
         "contact_page_url": "https://www.lrsd.net/archwood/contact",
-        "phone_url": "tel:(204)%20233-7983"
+        "phone_url": "tel:(204)233-7983"
     },
     "beliveau": {
         "id": "beliveau",
